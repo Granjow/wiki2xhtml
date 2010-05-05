@@ -1,0 +1,65 @@
+* {
+	padding: 0;
+	margin: 0;
+}
+body {
+	font: 12px  Verdana,sans-serif;
+	line-height: 1.6em;
+	background: url(bg.png) repeat top left;
+}
+#wrap {
+	margin: auto;
+	width: 800px;
+	text-align: center;
+}
+#image {
+	float: left;
+	width: 800px;
+	border: 1px solid #e1c7bf;
+	margin-top: 20px;
+	padding-bottom: 20px;
+	background: url(bg2.png) top left repeat;
+	display: block;
+	text-decoration: none;
+	color: #000;
+}
+#image img {
+	background: url(bg3.png) top left repeat;
+	border: 1px solid #e1c7bf;
+	padding: 20px;
+}
+#name {
+	float: left;
+	text-align: center;
+	width: 800px;
+}
+#name h1 {
+	font-family: DejaVu, FreeSans, "Century Gothic", Verdana, sans-serif;
+	padding: 2em 0 .5em 10px;
+	margin-bottom: 1.5em;
+	border-bottom: 3px dotted #464f92;
+	font-weight: bold;
+}
+#desc {
+	float: left;
+	text-align: center;
+	width: 800px;
+	padding-bottom: 2em;
+	background: url(bg4.png) top left repeat;
+	border: 1px solid #b75f4a;
+}
+#desc dd {
+	font-weight: bold;
+}
+#desc table a {
+	text-decoration: none;
+	font-weight: bold;
+	padding-top: .25em;
+	padding-bottom: .25em;
+	margin: .5em auto;;
+	border: 1px solid #e1c7bf;
+	background: url(bg2.png) top left repeat;
+	color: #000;
+	display: block;
+	width: 95%;
+}

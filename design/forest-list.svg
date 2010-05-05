@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="16"
+   height="16"
+   id="svg2"
+   sodipodi:version="0.32"
+   inkscape:version="0.46"
+   version="1.0"
+   sodipodi:docbase="/home/simon/workspace/wiki2xhtml-current/design"
+   sodipodi:docname="forest-list.svg"
+   inkscape:export-filename="/data/workspace/svn-wiki2xhtml-current/style/forest/list2.png"
+   inkscape:export-xdpi="90"
+   inkscape:export-ydpi="90"
+   inkscape:output_extension="org.inkscape.output.svg.inkscape">
+  <defs
+     id="defs4">
+    <inkscape:perspective
+       sodipodi:type="inkscape:persp3d"
+       inkscape:vp_x="0 : 8 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_z="16 : 8 : 1"
+       inkscape:persp3d-origin="8 : 5.3333333 : 1"
+       id="perspective9" />
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#1a1d27"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="1"
+     inkscape:pageshadow="2"
+     inkscape:zoom="22.4"
+     inkscape:cx="8.4344641"
+     inkscape:cy="4.1215407"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     width="16px"
+     height="16px"
+     inkscape:window-width="1672"
+     inkscape:window-height="995"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     showgrid="true"
+     gridtolerance="5">
+    <inkscape:grid
+       type="xygrid"
+       id="grid3154"
+       visible="true"
+       enabled="true" />
+  </sodipodi:namedview>
+  <metadata
+     id="metadata7">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Ebene 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     style="display:none">
+    <g
+       id="g1971"
+       inkscape:label="Ebene 1"
+       transform="translate(-17.082943,-9.6878269e-2)"
+       style="fill:#3e4c61;fill-opacity:1;stroke:#a5c3e6;stroke-opacity:1">
+      <path
+         sodipodi:nodetypes="cssss"
+         id="path1890"
+         d="M 2.3550085,1.2985612 C 5.5289646,1.4773906 13.898612,6.0921377 13.87427,8.1856115 C 13.849927,10.279085 4.1713461,13.93813 2.102215,14.108528 C 1.0676492,14.193727 5.5543421,11.252179 5.4780229,8.2492275 C 5.4017037,5.2462747 1.6741613,1.2604073 2.3550085,1.2985612 z"
+         style="fill:#3e4c61;fill-opacity:1;fill-rule:evenodd;stroke:#a5c3e6;stroke-width:1.47522616;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+    </g>
+    <path
+       style="opacity:1;fill:none;fill-opacity:1;fill-rule:evenodd;stroke:#a5c3e6;stroke-width:1;stroke-linecap:butt;stroke-linejoin:round;marker:none;marker-start:none;marker-mid:none;marker-end:none;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+       d="M 2,3 C 3,6 0,10 13,10 C 0,10 3,12 2,15"
+       id="path2382"
+       sodipodi:nodetypes="ccc" />
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="layer2"
+     style="display:inline">
+    <path
+       style="opacity:1;fill:none;fill-opacity:1;fill-rule:evenodd;stroke:#a5c3e6;stroke-width:0.73586309;stroke-linecap:butt;stroke-linejoin:round;marker:none;marker-start:none;marker-mid:none;marker-end:none;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+       d="M 12.830357,6.5375744 C 10.622768,7.2734375 7.6793155,5.0658482 7.6793155,14.632068 C 7.6793155,5.0658482 5.2075893,7.2734375 3,6.5375744"
+       id="path3157"
+       sodipodi:nodetypes="ccc" />
+  </g>
+</svg>

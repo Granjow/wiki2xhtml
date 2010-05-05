@@ -1,0 +1,195 @@
+<!--head-->
+{{:tplNavStyle.txt}}
+<!--/head-->
+{{H1:Quick Reference}}
+{{Title:Quick Reference %s}}
+{{Description:All important wiki2xhtml commands at one glance}}
+{{Keywords:wiki2xhtml, window title, meta tags, author, language}}
+
+{{:tplLang.txt|de=quickref-de.html}}
+
+{| id="navTable" style="width: 100%" cellpadding="0" cellspacing="2";
+|- style="background-color: #fa0;"
+| colspan="2" | [[quickstart.html Quickstart]]
+| colspan="2" class="mark" | [[quickref.html Quickref]]
+| style="background-color: #fff; color: #000; text-align: left;" | Introduction
+|- style="background-color: #f80;"
+| colspan="4" | [[doc.html Doku]]
+| style="background-color: #fff; color: #000; text-align: left;" | Documentation
+|- style="background-color: #f60;"
+| style="width: 20%" | [[usage.html Usage]]
+| style="width: 20%" colspan="2" | [[doc-design.html Design]]
+| style="width: 20%" | [[php.html PHP]]
+| style="background-color: #fff; color: #000; text-align: left;" | Immersion
+|}
+
+An overview over the most important formatting commands is written down in the '''[[Cheatsheet.pdf cheat sheet]]'''.
+
+== Document settings ==
+All settings, except for the first two, can be defined both globally in the commons file (valid for all files) and in single pages (where they will temporarily override the global settings). The marked settings can also be set for a whole design in the file css-settings.txt in the design’s directory.
+
+Measures have to be set in px or in %.
+{|
+| class="cs" | <code>&#123;&#123;'''GalleryThumbWidth:'''&hellip;&#125;&#125;</code> || Width of the thumbnails in galleries
+|-
+| class="cs" | <code>&#123;&#123;'''ImageWidthImagepage:'''&hellip;&#125;&#125;</code> || Width of images on image pages
+|-
+| class="cs" | <code>&#123;&#123;'''GalleryImagesPerLine:'''&hellip;&#125;&#125;</code> || Number of images per line. Setting to 0 will leave positioning of the images to the browser.
+|-
+| class="cs" | <code>&#123;&#123;'''ThumbWidthImages:'''&hellip;&#125;&#125;</code> || Width of thumbnails which are not in a gallery
+|-
+| <code>&#123;&#123;'''Author:'''&hellip;&#125;&#125;</code> || Author
+|-
+| <code>&#123;&#123;'''DescForCaption'''(:false)&#125;&#125;</code> || Image pages: Uses the image description as caption, if no caption is given (Default)
+|-
+| <code>&#123;&#123;'''Desc:&hellip;'''&#125;&#125;</code> || Page description (Meta argument)
+|-
+| <code>&#123;&#123;'''DefaultTitle:'''&hellip;&#125;&#125;</code> || Standard window title (only commons)
+|-
+| <code>&#123;&#123;'''DirImages:'''&hellip;&#125;&#125;</code> || Standard directory for images
+|-
+| <code>&#123;&#123;'''DirImagepages:'''&hellip;&#125;&#125;</code> || Directory for generated image pages
+|-
+| <code>&#123;&#123''';H1:'''&hellip;&#125;&#125;</code> || Page title
+|-
+| <code>&#123;&#123;'''Homelink:'''&hellip;&#125;&#125;</code> || Link to start page
+|-
+| <code>&#123;&#123;'''Icon:'''&hellip;&#125;&#125;</code> || Page icon
+|-
+| <code>&#123;&#123;'''Keywords:'''&hellip;&#125;&#125;</code> || Keywords
+|-
+| <code>&#123;&#123;'''AddKeywords:'''&hellip;&#125;&#125;</code> || Appends further keywords 
+|-
+| <code>&#123;&#123;'''Lang:'''&hellip;&#125;&#125;</code> || Language
+|-
+| <code>&#123;&#123;'''Meta:'''name&#124;&#124;content&#125;&#125;</code> || Further meta tags
+|-
+| <code>&#123;&#123;'''Meta:'''name="&hellip;" content="&hellip;"&#125;&#125;</code> || Further meta tags
+|-
+| <code>&#123;&#123;'''NameForCaption'''(:false)&#125;&#125;</code> || Image pages: Uses the image name as caption, if no caption is given
+|-
+| <code>&#123;&#123;'''Namespace:'''key=val(&#124;cut)&#125;&#125;</code> || ~~namespace~~ Namespaces for links. Example: $$<nowiki>w=http://en.wikipedia.org/wiki/%s</nowiki>$$. The $$%s$$ will be replaced by the link name (e.g. Sun in $$<nowiki>[[w:Sun]]</nowiki>$$). As with [http://support.mozilla.com/en-US/kb/Smart+keywords Firefox&#x2019;s Smart Keywords] which work quite the same way :) <br />The optional argument $$cut$$ decides whether to keep the keyword (omit argument) or not.
+|-
+| <code>&#123;&#123;'''ReckAlternative:'''&hellip;&#125;&#125;</code> || ~~reckalternative~~ Alternative reck file (e.g. a special one for php files)
+|-
+| <code>&#123;&#123;'''Thumbnails:'''&hellip;&#125;&#125;</code> || [[doc.html#h_Thumbnails Location of the thumbnails]]
+|-
+| <code>&#123;&#123;'''TextHeader:'''&hellip;&#125;&#125;</code> || Text in header (if supported)
+|-
+| <code>&#123;&#123;'''TitleRule:'''&hellip;&#125;&#125;</code> || [[doc.html#titlerule Rule for window titles of image pages]]
+|-
+| <code>&#123;&#123;'''Title:'''&hellip;&#125;&#125;</code> || Window title
+|}
+
+== Special tags ==
+{|
+|&#123;&#123;$Version}}||Inserts the version number: {{$Version}}
+|- 
+|&#123;&#123;$Pagename}}||Inserts the name of the current page: {{$Pagename}}
+|- 
+|&#123;&#123;$SplitPageNav}}||Inserts the navigation between split pages
+|-
+|~&#x007e;name&#x007e;~||Inserts an anchor
+|-
+|&#123;&#123;$Wiki2xhtml}} || Address to the webpage of wiki2xhtml: {{$wiki2xhtml}}
+|}
+
+
+== Arguments ==
+'''Help and Output'''
+{|
+| --help, -h || Help output
+|-
+| --helpfiles || Settings to generate help files
+|-
+| --standard || Standard settings
+|-
+| --debug || Show debug information
+|-
+| -v, --verbose || Show a lot of information
+|-
+| -s, --silent || Show only few information
+|-
+| --dead || Don't output any text
+|}
+'''Files'''
+{|
+| ''filename'' || File to parse
+|-
+| -m ''menufile'', --menu-file=''menufile'' || Set the menu file
+|-
+| -s ''name'', --style=''name'' || Use style ''name''
+|-
+| -c ''file'', --common=''file'' || Set ''file'' as common file
+|-
+| --sd ''dir'', --source-dir=''dir'' ~~source-dir~~ || Source directory of all files
+|-
+| --td ''dir'', --target-dir''dir'' || Target directory
+|-
+| -f ''file'', --footer=''file'' || Set footer file
+|}
+'''Various Flags'''
+{|
+| --incremental || Incremental; only write edited files
+|-
+| --www || Show updates
+|-
+| --noupdatecheck || Doesn’t perform an update check when starting the GUI
+|-
+| --only-code || Output code only (without head and body)
+|-
+| --remove-linebreaks || Remove linebreaks
+|-
+| --stdout || Output code in stdout (usually command line)
+|-
+| --gui || Opens the GUI
+|}
+
+== Shortcuts in the GUI ==
+{|
+! General
+|-
+| Ctrl-O || Open
+|-
+| Ctrl-S || Save
+|-
+| Ctrl-Q || Quit
+|-
+| Ctrl-, || Settings
+|-
+| F1 || Help
+|-
+! Menu File
+|-
+| Alt-f o || Open
+|-
+| Alt-f s || Save
+|-
+| Alt-f e || Export
+|-
+| Alt-f q || Quit
+|-
+! Menu Export
+|-
+| Alt-f e u || .sh (Unix)
+|-
+| Alt-f e w || .bat (Windows)
+|-
+! Menu Settings
+|-
+| Alt-s p || Settings
+|-
+| Alt-s l || Language
+|-
+! Menu Info
+|-
+| Alt-i h || Help
+|-
+| Alt-i a || About
+|-
+! Tabs
+|-
+| Ctrl-left/right || Navigation between tabs
+|-
+| Alt-c || Toggle Code Window
+|}

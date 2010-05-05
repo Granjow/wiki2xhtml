@@ -1,0 +1,194 @@
+<!--head-->
+{{:tplNavStyle.txt}}
+<!--/head-->
+{{H1:Schnellübersicht}}
+{{Title:Schnellübersicht %s}}
+{{Description:Alle wichtigen Befehle für wiki2xhtml auf einen Blick}}
+{{Keywords:wiki2xhtml, fenstertitel, meta tags, autor, sprache}}
+
+{{:tplLang-de.txt|en=quickref.html}}
+
+{| id="navTable" style="width: 100%" cellpadding="0" cellspacing="2";
+|- style="background-color: #fa0;"
+| colspan="2" | [[quickstart-de.html Quickstart]]
+| colspan="2" class="mark" | [[quickref-de.html Quickref]]
+| style="background-color: #fff; color: #000; text-align: left;" | Einstieg
+|- style="background-color: #f80;"
+| colspan="4" | [[doc-de.html Doku]]
+| style="background-color: #fff; color: #000; text-align: left;" | Dokumentation
+|- style="background-color: #f60;"
+| style="width: 20%" | [[usage-de.html Usage]]
+| style="width: 20%" colspan="2" | [[doc-design-de.html Design]]
+| style="width: 20%" | [[php-de.html PHP]]
+| style="background-color: #fff; color: #000; text-align: left;" | Vertiefung
+|}
+
+Eine Übersicht über die wichtigsten Formatierungsbefehle steht im '''[[Cheatsheet-de.pdf Spickzettel]].'''
+
+== Dokumenteinstellungen ==
+Alle Einstellungen ausser den ersten zwei können sowohl in der Commons-Datei (für alle Seiten geltend) als auch in einzelnen Seiten (überschreibt die Einstellungen in der Commons-Datei kurzfristig) gesetzt werden. Die orange markierten Einstellungen können auch für ein Design in der Datei css-settings.txt im Verzeichnis desjenigen Designs gesetzt werden. 
+
+Masseinheiten müssen in px oder in % angegeben werden.
+{|
+| class="cs" | <code>&#123;&#123;'''GalleryImagesPerLine:'''&hellip;&#125;&#125;</code> || Anzahl Bilder pro Zeile in Galerien. Auf 0 gesetzt wird die Positionierung der Bilder dem Browser überlassen.
+|-
+| class="cs" | <code>&#123;&#123;'''GalleryThumbWidth:'''&hellip;&#125;&#125;</code> || Breite der Bilder in der Galerie
+|-
+| class="cs" | <code>&#123;&#123;'''ImageWidthImagepage:'''&hellip;&#125;&#125;</code> || Breite der Bilder auf der Bilderseite
+|-
+| class="cs" | <code>&#123;&#123;'''ThumbWidthImages:'''&hellip;&#125;&#125;</code> || Breite der Vorschaubilder, die nicht in einer Galerie sind
+|-
+| <code>&#123;&#123;'''Author:'''&hellip;&#125;&#125;</code> || Autor
+|-
+| <code>&#123;&#123;'''DescForCaption'''(:false)&#125;&#125;</code> || Bilderseiten: Verwendet die Beschreibung als Überschrift, falls keine Bildüberschrift gesetzt wurde
+|-
+| <code>&#123;&#123;'''Desc:'''&hellip;&#125;&#125;</code> || Seitenbeschreibung (Meta-Argument)
+|-
+| <code>&#123;&#123;'''DefaultTitle:'''&hellip;&#125;&#125;</code> || Standard-Fenstertitel (nur Commons)
+|-
+| <code>&#123;&#123;'''H1:'''&hellip;&#125;&#125;</code> || Seitentitel
+|-
+| <code>&#123;&#123;'''Icon:'''&hellip;&#125;&#125;</code> || Seiten-Icon
+|-
+| <code>&#123;&#123;'''Homelink:'''&hellip;&#125;&#125;</code> || Link zur Startseite
+|-
+| <code>&#123;&#123;'''DirImages:'''&hellip;&#125;&#125;</code> || Standardverzeichnis für Bilder
+|-
+| <code>&#123;&#123;'''DirImagepages:'''&hellip;&#125;&#125;</code> || Verzeichnis für generierte Bilderseiten
+|-
+| <code>&#123;&#123;'''Keywords:'''&hellip;&#125;&#125;</code> || Keywords
+|-
+| <code>&#123;&#123;'''AddKeywords:'''&hellip;&#125;&#125;</code> || Hängt weitere Keywords an
+|-
+| <code>&#123;&#123;'''Lang:'''&hellip;&#125;&#125;</code> || Sprache
+|-
+| <code>&#123;&#123;'''Meta:'''name&#124;&#124;content&#125;&#125;</code> || Weitere Meta-Tags
+|-
+| <code>&#123;&#123;'''Meta:'''name="&hellip;" content="&hellip;"&#125;&#125;</code> || Weitere Meta-Tags
+|-
+| <code>&#123;&#123;'''NameForCaption'''(:false)&#125;&#125;</code> || Bilderseiten: Verwendet den Namen des Bildes als Überschrift, falls keine Bildüberschrift gesetzt wurde
+|-
+| <code>&#123;&#123;'''Namespace:'''schlüssel=wert(&#124;cut)&#125;&#125;</code> || ~~namespace~~ Namespaces für Links. Beispiel: $$<nowiki>w=http://de.wikipedia.org/wiki/%s</nowiki>$$. Das $$%s$$ wird durch den Linknamen ersetzt (zum Beispiel Sonne in $$<nowiki>[[w:Sonne]]</nowiki>$$). Genau wie bei [http://support.mozilla.com/de/kb/Smart+keywords Intelligenten Schlüsselwörtern] in Firefox :) <br />Das optionale Argument $$cut$$ entscheidet, ob das Schlüsselwort im Link beibehalten werden soll (= Argument weglassen) oder nicht.
+|-
+| <code>&#123;&#123;'''ReckAlternative:'''&hellip;&#125;&#125;</code> || ~~reckalternative~~ Alternative reck-Datei (zum Beispiel eine spezielle für PHP-Dateien)
+|-
+| <code>&#123;&#123;'''TextHeader:'''&hellip;&#125;&#125;</code> || Text im Header (falls unterstützt)
+|-
+| <code>&#123;&#123;'''TitleRule:'''&hellip;&#125;&#125;</code> || [[doc-de.html#titlerule Regel für den Fenstertitel von Bilderseiten]]
+|-
+| <code>&#123;&#123;'''Thumbnails:'''&hellip;&#125;&#125;</code> || [[doc-de.html#h_Thumbnails Pfad der Vorschaubilder]]
+|-
+| <code>&#123;&#123;'''Title:'''&hellip;&#125;&#125;</code> || Fenstertitel
+|}
+
+== Spezielle Tags ==
+{|
+|&#123;&#123;$Version}}||Fügt die Versionsnummer ein: {{$Version}}
+|- 
+|&#123;&#123;$Pagename}}||Fügt den Namen der aktuellen Seite ein: {{$Pagename}}
+|- 
+|&#123;&#123;$SplitPageNav}}||Fügt die Navigation zwischen aufgeteilten Seiten ein
+|-
+|~#x007e;name#x007e;~||Fügt einen Anker ein
+|-
+|&#123;&#123;$Wiki2xhtml}} || Fügt die Adresse des wiki2xhtml-Webauftrittes ein
+|}
+
+== Argumente ==
+'''Hilfe und Kommentare'''
+{|
+| --help, -h || Ausgabe der Hilfe
+|-
+| --helpfiles || Einstellungen zum Generieren der Hilfedateien
+|-
+| --standard || Standardargumente
+|-
+| --debug || Debug-Informationen anzeigen
+|-
+| -v, --verbose || Viel Informationen anzeigen
+|-
+| -s, --silent || Nur wenige Informationen anzeigen
+|-
+| --dead || Gar keinen Text ausgeben
+|}
+'''Dateien'''
+{|
+| ''Dateiname'' || Eingabedatei setzen
+|-
+| -m ''menufile'', --menu-file=''menufile'' || Menu-Datei setzen
+|-
+| -s ''name'', --style=''name'' || Benutze Design ''name''
+|-
+| -c ''file'', --common=''file'' || ''file'' als Commons-Datei setzen
+|-
+| --sd ''dir'', --source-dir=''dir'' ~~source-dir~~ || Quellverzeichnis aller Dateien
+|-
+| --td ''dir'', --target-dir=''dir'' || Zielverzeichnis 
+|-
+| -f ''file'', --footer=''file'' || Footer-Datei setzen
+|}
+'''Verschiedenes'''
+{|
+| --incremental || Inkrementell; nur geänderte Dateien neu schreiben
+|-
+| --www || Updates anzeigen
+|-
+| --noupdatecheck || Führt beim Starten des GUI keine Prüfung auf Updates durch
+|-
+| --only-code || Nur Code ohne HTML-Gerüst (head, body) ausgeben
+|-
+| --remove-linebreaks || Zeilenumbrüche entfernen
+|-
+| --stdout || Code in den stdout ausgeben (normalerweise Kommandozeile)
+|-
+| --gui || GUI öffnen
+|}
+
+== Shortcuts im GUI ==
+{|
+! Allgemein
+|-
+| Ctrl-O || Öffnen
+|-
+| Ctrl-S || Speichern
+|-
+| Ctrl-Q || Beenden
+|-
+| Ctrl-, || Einstellungen
+|-
+| F1 || Hilfe 
+|-
+! Menu Datei
+|-
+| Alt-f o || Öffnen
+|-
+| Alt-f s || Speichern
+|-
+| Alt-f e || Exportieren
+|-
+| Alt-f q || Beenden
+|-
+! Menu Exportieren
+|-
+| Alt-f e u || .sh (Unix)
+|-
+| Alt-f e w || .bat (Windows)
+|-
+! Menu Einstellungen
+|-
+| Alt-s p || Einstellungen
+|-
+| Alt-s l || Sprache
+|-
+! Menu Info
+|-
+| Alt-i h || Hilfe
+|-
+| Alt-i a || About
+|-
+! Tabs
+|-
+| Ctrl-links/rechts || Navigation zwischen Tabs
+|-
+| Alt-c || Code-Fenster ein/aus
+|}

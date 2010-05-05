@@ -1,0 +1,81 @@
+<!--head-->
+{{:tplNavStyle.txt}}
+<!--/head-->
+{{Title:Schnellstart %s}}
+{{Keywords:wiki2xhtml, quick start, schnellstart}}
+{{H1:› wiki2xhtml, Schnellstart}}
+
+{{:tplLang-de.txt|en=quickstart.html|others=[[quickstart-it.html it]] [[quickstart-ru.html ru]]}}
+
+{| id="navTable" style="width: 100%" cellpadding="0" cellspacing="2";
+|- style="background-color: #fa0;"
+| colspan="2" class="mark" | [[quickstart-de.html Quickstart]]
+| colspan="2" | [[quickref-de.html Quickref]]
+| style="background-color: #fff; color: #000; text-align: left;" | Einstieg
+|- style="background-color: #f80;"
+| colspan="4" | [[doc-de.html Doku]]
+| style="background-color: #fff; color: #000; text-align: left;" | Dokumentation
+|- style="background-color: #f60;"
+| style="width: 20%" | [[usage-de.html Usage]]
+| style="width: 20%" colspan="2" | [[doc-design-de.html Design]]
+| style="width: 20%" | [[php-de.html PHP]]
+| style="background-color: #fff; color: #000; text-align: left;" | Vertiefung
+|}
+
+Was braucht es nun wirklich, um mit wiki2xhtml eine Seite zu erstellen? Hier ein kurzer Überblick und Einstieg, der die Möglichkeiten von wiki2xhtml zeigen soll. 
+
+{{TOC}}
+== XHTML-Dateien erstellen ==
+Du wirst dich jetzt vielleicht fragen: «Warum nicht HTML?». xhtml<ref>[http://de.wikipedia.org/wiki/Extensible_Hypertext_Markup_Language Wikipedia: XHTML]</ref> ist im Grunde das Selbe wie html, der Unterschied ist, dass der Code sauberer sein muss. So kann man etwas sicherer sein, dass der Browser, der die Datei liest, auch das anzeigt, was man will.
+
+wiki2xhtml liest Text aus beliebigen ''Textdateien.'' Binäre Dateien<ref>Binärdateien: Siehe [http://de.wikipedia.org/wiki/Bin%C3%A4r-_und_Textdatei Wikipedia: Binär- und Textdatei]</ref> (wie Bilder), die keinen Text enthalten, werden nicht akzeptiert. Um Textdateien zu bearbeiten und zu schreiben, empfiehlt sich für Windows ein Programm wie [http://sourceforge.net/project/showfiles.php?group_id=95717&amp;package_id=102072 Notepad++], [http://www.pspad.com/de/ PS''Pad''], oder [http://www.flos-freeware.ch/notepad2.html Notepad2] (bitte nicht den bei Windows mitgelieferten Notepad nehmen, damit lässt sich nicht arbeiten). Gute plattformunabhängige Editoren sind etwa [http://jedit.org/ jEdit] (Java) und [http://www.vim.org/ Vim] (für Tastaturfans).
+
+Die Dateiendung der Textdatei spielt eigentlich keine Rolle, am besten ist trotzdem .txt, damit man sofort sieht, dass es eine Textdatei ist. Falls du gerade keinen Text zur Hand hast, aus dem du eine xhtml-Datei erstellen willst, kannst du zum Beispiel einen Blindtext<ref>Ein [http://de.wikipedia.org/wiki/Blindtext Blindtext] wird verwendet, um zum Beispiel eine Seite mit Text zu füllen, damit man schauen kann, wie das Resultat aussieht.</ref> nehmen. Speichere ihn nun in eine Datei (vielleicht $$index.txt$$; daraus wird nachher $$index.html,$$ die im Internet automatisch erscheint, wenn kein spezieller Dateiname angegeben wird) in einem separaten Verzeichnis. In dieses Verzeichnis (zum Beispiel «page» im Programmverzeichnis) werden alle Dateien gespeichert, die später für die Seite benötigt werden. So ist nachher alles beieinander, und man muss nicht lange suchen.
+
+Das Programm wird folgendermassen gestartet:
+* '''Windows:''' Die Datei wiki2xhtml.jar oder start.bat doppelklicken oder, wer mag, in der Konsole<ref>Kommandozeile unter Windows: [http://de.wikipedia.org/wiki/Cmd.exe cmd.exe]</ref> $$java -jar wiki2xhtml.jar$$ eintippen (im wiki2xhtml-Verzeichnis).
+* '''Linux:''' Im Terminal (im wiki2xhtml-Verzeichnis) $$./wiki2xhtml$$ oder $$java -jar wiki2xhtml.jar$$ eintippen. Eventuell ein & anhängen, um es im Hintergrund auszuführen, damit das Terminal nicht «blockiert» ist.
+
+Im nun erscheinenden Dialogfeld kann bei «Select/Add files» durch einen Klick auf einen der Buttons die Datei (index.txt) hinzugefügt werden. Klicke auf «Next», dann auf «Go!». Die Datei index.html wird nun im Verzeichnis «html» erstellt. 
+
+Falls dir das reicht, kannst du das Programm nun mit «Exit» beenden. Falls nicht, kannst du wieder einen vorherigen Tab<ref>Ein Tab wird auch [http://de.wikipedia.org/wiki/Registerkarte Registerkarte (Wikipedia)] genannt.</ref> anwählen, die Einstellungen ändern und mit dem Schnellstart-Tutorial weiterfahren.
+{{Top}}
+== Ein Menu hinzufügen ==
+Sobald eine Internetseite aus mehr als einer Seite besteht &ndash; was normalerweise der Fall ist &ndash;, benötigt man ein Menu zur Navigation. Damit dies nicht bei jeder Seite neu eingetippt werden muss und so bei einer Änderung alle Seiten geändert werden müssen, wird es in einer separaten Datei gespeichert. Diese ist nach dem Muster «* Titel 1, Dateiname 1 &#x21b5; * Titel 2, Dateiname 2 &#x21b5; &hellip;» aufgebaut (&#x21b5; bezeichnet einen Zeilenumbruch). Erstelle eine zweite Textdatei (blindtext.txt) mit beliebigem Inhalt (je nach Belieben noch eine dritte oder vierte). Dass die Endung der Dateien nach dem Konvertieren nicht mehr $$.txt$$ lautet, sondern $$.html$$, muss berücksichtigt werden! Aus index.txt wird nun also index.html, aus blindtext.txt wird blindtext.html. Die beiden Dateien sollen im Menu den Namen «Home» und «Blindtext» bekommen. Erstelle eine neue Textdatei für das Navigationsmenu (navigation.txt) und schreibe dort nun das Menu hinein:
+$$
+<nowiki>* Home, index.html
+* Blindtext, blindtext.html</nowiki>
+$$
+
+Wähle nun in wiki2xhtml beim Tab «Settings» unter «Set the index file» die Datei navigation.txt und klicke wieder auf «Go!». Die Seite verfügt nun über ein Menu.
+{{Top}}
+== Formatierung ==
+Es gibt noch ein paar wenige Befehle, die du kennen solltest. Eine Übersicht über alle möglichen Befehle findest du bei der [[doc-de.html Dokumentation]].
+
+'''Überschriften''' müssen auf einer separaten Linie stehen. Bei einer Überschrift zweiter Ordnung musst du zwei Gleichheitszeichen an den Anfang und ans Ende der Zeile setzen (für eine Überschrift dritter Ordnung drei Gleichheitszeichen etc., bis 6): 
+$$
+<nowiki>== Frühling ==</nowiki>
+$$
+Die Überschrift erster Ordnung, also die Seitenüberschrift bzw. der Seitentitel, kann irgendwo im Text mit folgendem Befehl gesetzt werden: 
+$$
+&#123;{H1:Jahreszeiten}}
+$$
+
+'''Links''' werden automatisch erkannt, falls sie mit <nowiki>http://</nowiki>, www oder ftp:// beginnen. Soll der Link einen Namen bekommen, kann er folgendermassen beschriftet werden: 
+$$
+<nowiki>[http://freepdfxp.de/fpxp.htm PDF-Dateien erstellen]</nowiki>
+$$
+Liegt das Ziel auf der selben Domain (zum Beispiel wird wiki2xhtml.sourceforge.net/doc.html mit wiki2xhtml.sourceforge.net/doc-de.html verlinkt), kann stattdessen ein interner Link eingefügt werden (hier in doc-de.html): 
+$$
+<nowiki>[[doc.html english]]</nowiki>
+$$
+Daraus resultiert folgender Link: [[doc.html english]]. Bei Problemen mit Links: Vielleicht steht bei der [[doc-de.html#h_Links Dokumentation]] etwas. Falls nicht: Siehe FAQ-Teil bei der Dokumentation.
+
+'''Fett/Kursiv:''' Für diese Auszeichnungen wird der Apostroph verwendet. Umschliesst man Text mit zwei Apostrophen, wird er kursiv gesetzt, mit drei wird er fett. 
+$$
+<nowiki>'''Fett''' und ''kursiv'' zusammen ist '''''schrecklick!'''''</nowiki>
+$$
+{{Top}}
+
+== Fussnoten ==
+<references />

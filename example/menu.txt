@@ -1,0 +1,9 @@
+# This is the menu file which is used on every page for the navigation sidebar.
+# World is a subitem of Hello.
+
+# Note: The .txt files become .html files after parsing with wiki2xhtml,
+#       which is what we have to use here too.
+
+* Home, index.html
+* Hello ..., hello.html
+** ... World, world.html

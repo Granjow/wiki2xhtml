@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://web.resource.org/cc/"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   id="svg9236"
+   sodipodi:version="0.32"
+   inkscape:version="0.45"
+   width="700"
+   height="250"
+   version="1.0"
+   sodipodi:docbase="/home/simon/workspace/svn-wiki2xhtml-current/design"
+   sodipodi:docname="glassborder-gallery.svg"
+   inkscape:output_extension="org.inkscape.output.svg.inkscape"
+   inkscape:export-filename="/home/simon/workspace/svn-wiki2xhtml-current/design/glassborder-gallery.png"
+   inkscape:export-xdpi="90"
+   inkscape:export-ydpi="90"
+   sodipodi:modified="TRUE">
+  <metadata
+     id="metadata9241">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs9239">
+    <filter
+       inkscape:collect="always"
+       x="-0.041940789"
+       width="1.0838816"
+       y="-0.13421053"
+       height="1.2684211"
+       id="filter9416">
+      <feGaussianBlur
+         inkscape:collect="always"
+         stdDeviation="13.421053"
+         id="feGaussianBlur9418" />
+    </filter>
+  </defs>
+  <sodipodi:namedview
+     inkscape:window-height="997"
+     inkscape:window-width="1672"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0.0"
+     guidetolerance="10.0"
+     gridtolerance="10.0"
+     objecttolerance="10.0"
+     borderopacity="1.0"
+     bordercolor="#666666"
+     pagecolor="#ffffff"
+     id="base"
+     inkscape:zoom="1.2887021"
+     inkscape:cx="616.95698"
+     inkscape:cy="-8.0614881"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:current-layer="svg9236"
+     width="700px"
+     height="250px" />
+  <rect
+     style="opacity:1;fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#ffffff;stroke-width:0.625;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+     id="rect9248"
+     width="927.28955"
+     height="377.12363"
+     x="-130.36372"
+     y="-96.909302"
+     ry="30" />
+  <rect
+     ry="30"
+     y="21.158957"
+     x="22.623388"
+     height="200"
+     width="640"
+     id="rect9250"
+     style="opacity:1;fill:#ffffff;fill-opacity:0.79924244;fill-rule:evenodd;stroke:none;stroke-width:0.625;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;filter:url(#filter9416)" />
+  <rect
+     style="opacity:1;fill:#ffffff;fill-opacity:0.20075758;fill-rule:evenodd;stroke:#ffffff;stroke-width:0.625;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+     id="rect9246"
+     width="640"
+     height="200"
+     x="18.623388"
+     y="17.158957"
+     ry="30" />
+</svg>

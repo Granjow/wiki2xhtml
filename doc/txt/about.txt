@@ -1,0 +1,46 @@
+{{H1:About}}
+{{Title:About %s}}
+
+{{:tplLang.txt|de=about-de.html}}
+
+== About wiki2xhtml ==
+wiki2xhtml has its roots in a «Maturaarbeit», a project for the A-levels in Switzerland at the [http://www.ksbg.ch KSBG]. The reason was that I was searching for something to write my webpage without too big efforts. I've used to write it by hand, and after a while I was bored from inserting always the same code block (e.g. in galleries). So I thought of automatizing it a little bit. As a co-author of the [http://de.wikipedia.org/wiki/Benutzer:LivingShadow Wikipedia], the [http://de.wikibooks.org/wiki/Benutzer:Simon Wikibooks], and other Wikimedia projects the search for a suitable &ldquo;input language&rdquo;, which the program should translate, wasn't too hard.
+
+The fact that wiki2xhtml isn't an online CMS means that webpages can also be edited offline and without the constant delays when loading a page. It is therefore also optimized for a single user and not for a page where several users are working on (although this could be realized using SVN and similar things).
+
+== Developers ==
+
+=== Simon Eugster aka ''Granjow'' ===
+* '''Homepage:''' http://granjow.net, http://x.granjow.net, http://ham.granjow.net
+* '''wiki2xhtml:''' Programming, Translation de and en <span style="color: #888;">(and a little fr)</span>
+* '''OS:''' [http://sidux.com sidux]
+* '''About:''' I'm a licensed Swiss ham radio operator (hb9eia) and usually work on my PC or take photographs.
+
+=== Roland Engert aka ''RoEn'' ===
+* '''wiki2xhtml:''' Translation ru
+
+=== Francesca Beatrice Cice ===
+* '''wiki2xhtml:''' Translation it
+
+=== gandia ===
+* '''wiki2xhtml:''' Translation es
+
+=== the_cobra ===
+* '''wiki2xhtml:''' Translation hr
+
+<!--== Translation Progress ==
+{|
+| en || [[Image:progress-en.png]]
+|-
+| de || [[Image:progress-de.png]]
+|-
+| ru || [[Image:progress-ru.png]]
+|-
+| es || [[Image:progress-es.png]]
+|-
+| fr || [[Image:progress-fr.png]]
+|-
+| it || [[Image:progress-it.png]]
+|-
+| hr || [[Image:progress-hr.png]]
+|} -->

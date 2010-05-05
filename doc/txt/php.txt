@@ -1,0 +1,55 @@
+<!--head-->
+{{:tplNavStyle.txt}}
+<!--/head-->
+{{Title:PHP files %s}}
+{{Keywords:wiki2xhtml, php files, java, xhtml}}
+{{Description:Use of PHP files with wiki2xhtml. They can be edited by wiki2xhtml like usual files, that way e.g. the design, the menu and so on can be carried out by wiki2xhtml.}}
+{{H1:Use of PHP files}}
+
+{{:tplLang.txt|de=php-de.html}}
+
+{| id="navTable" style="width: 100%" cellpadding="0" cellspacing="2";
+|- style="background-color: #fa0;"
+| colspan="2" | [[quickstart.html Quickstart]]
+| colspan="2" | [[quickref.html Quickref]]
+| style="background-color: #fff; color: #000; text-align: left;" | Introduction
+|- style="background-color: #f80;"
+| colspan="4" | [[doc.html Doku]]
+| style="background-color: #fff; color: #000; text-align: left;" | Documentation
+|- style="background-color: #f60;"
+| style="width: 20%" | [[usage.html Usage]]
+| style="width: 20%" colspan="2" | [[doc-design.html Design]]
+| style="width: 20%" class="mark" | [[php.html PHP]]
+| style="background-color: #fff; color: #000; text-align: left;" | Immersion
+|}
+
+wiki2xhtml can edit PHP files too. They can be used e.g. for a contact form (like at [http://granjow.net] under &ldquo;About&rdquo;) or for other dymanic applications.
+
+If you want to use PHP, you ought to have at least some basic knowledge. There are some good tutorials in the web and some good books on the market. Take a look at the [http://en.wikibooks.org/wiki/PHP Wikibook about Programming PHP]. The Open Directory project dmoz has got a list of [http://dmoz.org/Computers/Programming/Languages/PHP/Tutorials/ PHP Tutorials]. 
+
+== Integration ==
+Using PHP files with wiki2xhtml requires only two different commands. 
+;<code>&lt;!--nowiki--&gt;</code>
+:This comment can be written anywhere in the file and prevents it from being edited by wiki2xhtml.<ref>If angle brackets are to appear in the text, they can be [[doc.html#escape escaped]]. Then they have no more effect. The closing angle bracket (&gt;) should be escaped too!</ref> It has the same effect like copying the file.
+;<code>&lt;nowiki&gt;, &lt;/nowiki&gt;</code>
+:If PHP code isn't processed correctly, it can be enclosed with <code>nowiki</code>-Tags. This prevents wiki2xhtml from processing the code (and e.g. inserting wrong paragraphs &hellip;).
+;<code>&lt;!--endtop--&gt;</code>
+:For instance if you use sessions with PHP you've got to insert PHP code before the first html tag. All text written before the endtop-tag will be inserted at the top of the file&mdash;''unprocessed.''
+
+== Examples ==
+To start a session<ref>Session: See [http://ch2.php.net/manual/en/ref.session.php php.net: Sessions]</ref>, you have to insert following code at the top of the file:
+$$
+&lt;?php
+session_start();
+?&gt;
+&lt;!--endtop--&gt;
+$$
+
+Further examples can be found in the menu under &ldquo;[[examples.html Examples]]&rdquo;.
+
+== Comments ==
+<references />
+
+== Weblinks ==
+* [http://ch2.php.net/manual/en/ php.net]: The PHP manual
+* [http://en.wikipedia.org/wiki/XAMPP XAMPP]: Setup of a PHP server on the own PC

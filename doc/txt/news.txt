@@ -1,0 +1,55 @@
+{{Title:News %s}}
+{{Keywords:wiki2xhtml, news, releases}}
+{{Description:News from wiki2xhtml}}
+{{H1:News}}
+
+{{:tplLang.txt|de=news-de.html}}
+
+{{:tplBox.txt|New Bugtracker|Should you encounter a bug in wiki2xhtml, please report it on our new [http://apps.sf.net/mantisbt/wiki2xhtml Mantis Bug Tracker for wiki2xhtml]. Wishes for new features are desired too :) Thank you!}}
+
+== wiki2xhtml-svn ==
+''Features in the next release''
+
+Big speedup: Parsing supports incremental mode; This will only process the files you have changed.
+
+Other changes: The functions $$if$$, $$ifeq$$, and $$switch$$ are now supported. This is especially useful in templates. The new argument $$--source-dir$$ allows to have the source files in a different directory. 
+@@
+Example: $$a.txt b.txt c.txt$$ are in the directory $$many/sub/directories/$$. Now the files can be set with\\ 
+$$--source-dir=many/sub/directories/ a.txt b.txt c.txt$$ \\ 
+Previously: \\ 
+$$many/sub/directories/a.txt many/sub/directories/b.txt many/sub/directories/c.txt$$).
+@@
+
+[[changelog.html Complete changelog]]
+
+
+== wiki2xhtml 3.3 ==
+The menu system has been completely rewritten in this version. The menu file can be updated using either the GUI (menu point Tools) or the command line (argument $$menu [menu-file]$$). The CSS file ''cannot'' be adjusted automatically<ref>If you understand CSS, [[doc-design2.html this page]] might help you</ref>, but the designs delivered in this version are updated. If you encounter problems I'd be glad to help you in the [http://forum.granjow.net wiki2xhtml forum].
+
+New is the possibility to insert templates for text pieces which repeat often. In addition, settings can be set both globally for all files and for single ones.
+
+Further changes concern inter alia the Wikitext and the documentation, where some things have been updated and others are new. Also have some image arguments changed and are shorter now.
+
+Thanks to the translation team!
+
+In the version 3.3.1 some inconsistencies have been removed and HTML comments work again. wiki2xhtml 3.3.2 brings few changes for images and scripts.
+
+The complete changelog for version 3.3 is located [[changelog.html#h_wiki2xhtml33 here]]. Please read it through, especially if you have been using an older version before.
+
+== wiki2xhtml 3.2 ==
+'' Feb 16<sup>th</sup>, 2008'' The version 3.2 includes fundamental changes of many parts of the program. The most important amendment is the internationalization which finally allows a translation of wiki2xhtml into other languages. Furthermore I've rewritten parts of it and fixed some bugs. Also the webpage shines in new resplendence (attention, irony) and the structure has been reworked.
+
+Thanks a lot to RoEn and gandia which have already taken time to translate wiki2xhtml into Russian and Spanish, respectively!
+
+In the version 3.2.1, some problems with links have been corrected.
+
+You can find the complete changelog [[changelog.html#h_wiki2xhtml32 here]].
+
+== Looking for translators ==
+'' Feb 10<sup>th</sup>, 2008'' Do you feel like translating wiki2xhtml and also have the time for it? Visit [http://forum.granjow.net/viewtopic.php?f=9&t=26 this thread] in the wiki2xhtml forum! Currently running translations: en, de, it, ru, es, hr.
+
+== Forum is online ==
+The [http://forum.granjow.net/ wiki2xhtml forum] is online from now on. If the documentation doesn't know something, you will find help there, also about other topics around webdesign like CSS or image editing. Bug reports are just as welcome as wishes for new features!
+
+== Footnotes ==
+<references />

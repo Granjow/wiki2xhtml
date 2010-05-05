@@ -1,0 +1,901 @@
+# translation of de.po to Deutsch
+# translation of de.po to
+# Header entry was created by KBabel!
+#
+# Simon Eugster <simon.eu@gmail.com>, 2007, 2008, 2009.
+# Roland Engert <roen@sidux.com>, 2008.
+# Simon A. Eugster <simon.eu@gmail.com>, 2008, 2009, 2010.
+msgid ""
+msgstr ""
+"Project-Id-Version: de\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2010-05-01 17:57+0200\n"
+"PO-Revision-Date: 2010-01-12 16:24+0100\n"
+"Last-Translator: simon\n"
+"Language-Team: American English <kde-i18n-doc@kde.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Lokalize 1.0\n"
+"Plural-Forms:  nplurals=2; plural=(n != 1);\n"
+
+#: src/guiWindows/GuiMenuBar.java:85
+msgid "File"
+msgstr "Datei"
+
+#: src/guiWindows/GuiMenuBar.java:102
+msgid "Export"
+msgstr "Exportieren"
+
+#: src/guiWindows/GuiMenuBar.java:113 src/GUI.java:693
+msgid "Open"
+msgstr "Öffnen"
+
+#: src/guiWindows/GuiMenuBar.java:129 src/GUI.java:677
+msgid "Save"
+msgstr "Speichern"
+
+#: src/guiWindows/GuiMenuBar.java:144
+msgid "Export as .bat Script (Windows)"
+msgstr "Exportiere als .bat-Script (Windows)"
+
+#: src/guiWindows/GuiMenuBar.java:158
+msgid "Export as .sh Script (Unix)"
+msgstr "Exportiere als .sh-Script (Unix)"
+
+#: src/guiWindows/GuiMenuBar.java:172 src/GUI.java:662 src/GUI.java:663
+msgid "Quit"
+msgstr "Beenden"
+
+#: src/guiWindows/GuiMenuBar.java:188 src/GUI.java:234
+msgid "Settings"
+msgstr "Einstellungen"
+
+#: src/guiWindows/GuiMenuBar.java:199
+msgid "Tools"
+msgstr "Werkzeuge"
+
+#: src/guiWindows/GuiMenuBar.java:210
+#: src/guiWindows/DialoguePreferences.java:88
+msgid "Preferences"
+msgstr "Einstellungen"
+
+#: src/guiWindows/GuiMenuBar.java:228
+msgid "Language"
+msgstr "Sprache"
+
+#: src/guiWindows/GuiMenuBar.java:413
+msgid "Info"
+msgstr "Info"
+
+#: src/guiWindows/GuiMenuBar.java:425 src/guiWindows/GuiMenuBar.java:431
+msgid "Help"
+msgstr "Hilfe"
+
+#: src/guiWindows/GuiMenuBar.java:442
+msgid "About"
+msgstr "Über"
+
+#: src/guiWindows/GuiMenuBar.java:447
+msgid "About wiki2xhtml"
+msgstr "Über wiki2xhtml"
+
+#: src/guiWindows/GuiMenuBar.java:457
+msgid "Update Menufile"
+msgstr "Menu-Datei aktualisieren"
+
+#: src/guiWindows/GuiMenuBar.java:462
+msgid "Menufile updated. Backup has been created."
+msgstr "Menu-Datei wurde aktualisiert. Backup wurde erstellt."
+
+#: src/guiWindows/GuiMenuBar.java:471
+msgid "Update template file"
+msgstr "Vorlage-Datei aktualisieren"
+
+#: src/guiWindows/GuiMenuBar.java:476
+msgid "Template file updated. Backup has been created."
+msgstr "Menu-Datei wurde aktualisiert. Backup wurde erstellt."
+
+#: src/guiWindows/MiscWindows.java:40
+#: src/guiWindows/DialogueCommonFileCreater.java:123
+msgid "Yes"
+msgstr "Ja"
+
+#: src/guiWindows/MiscWindows.java:40
+msgid "No"
+msgstr "Nein"
+
+#: src/guiWindows/MiscWindows.java:42
+msgid "Directory “style” not found. Do you want to select an other directory?"
+msgstr ""
+"Verzeichnis «style» nicht gefunden. Willst du ein anderes Verzeichnis "
+"auswählen?"
+
+#: src/guiWindows/MiscWindows.java:43
+msgid "Select different style directory"
+msgstr "Wähle anderes style-Verzeichnis"
+
+#: src/guiWindows/DialoguePreferences.java:133 src/Help.java:104
+msgid "Check for updates"
+msgstr "Auf Updates prüfen"
+
+#: src/guiWindows/DialoguePreferences.java:159
+msgid "Check for updates on Startup?"
+msgstr "Beim Starten auf Updates prüfen?"
+
+#: src/guiWindows/DialoguePreferences.java:182
+#, java-format
+msgid "You''re currently using wiki2xhtml {0} from {1}."
+msgstr "Du benutzt wiki2xhtml {0} vom {1}."
+
+#: src/guiWindows/DialoguePreferences.java:190
+msgid "Ignore Version:"
+msgstr "Ignoriere Version:"
+
+#: src/guiWindows/DialogueCommonFileCreater.java:53
+msgid "common.txt Wizard"
+msgstr "common.txt-Assistent"
+
+#: src/guiWindows/DialogueCommonFileCreater.java:72
+msgid "Author"
+msgstr "Autor"
+
+#: src/guiWindows/DialogueCommonFileCreater.java:74
+msgid "Default title"
+msgstr "Standardtitel"
+
+#: src/guiWindows/DialogueCommonFileCreater.java:76
+msgid "Use image description for caption on image pages"
+msgstr "Verwende Bildbeschreibung als Überschrift auf den Bilderseiten"
+
+#: src/guiWindows/DialogueCommonFileCreater.java:78
+msgid "Number of images per line in the gallery"
+msgstr "Anzahl Bilder pro Linie in der Galerie"
+
+#: src/guiWindows/DialogueCommonFileCreater.java:80
+msgid "Width of thumbnails in the gallery"
+msgstr "Breite der Thumbnails in der Galerie"
+
+#: src/guiWindows/DialogueCommonFileCreater.java:82
+msgid "Link to the start page"
+msgstr "Link auf die Startseite"
+
+#: src/guiWindows/DialogueCommonFileCreater.java:84
+msgid "Path to Favicon"
+msgstr "Pfad zum Favicon"
+
+#: src/guiWindows/DialogueCommonFileCreater.java:86
+msgid "Width of images on image pages"
+msgstr "Breite der Bilder auf den Bilderseiten"
+
+#: src/guiWindows/DialogueCommonFileCreater.java:88
+msgid "Directory for image pages"
+msgstr "Verzeichnis für Bilderseiten"
+
+#: src/guiWindows/DialogueCommonFileCreater.java:90
+msgid "Standard directory for images"
+msgstr "Standardverzeichnis für Bilder"
+
+#: src/guiWindows/DialogueCommonFileCreater.java:92
+msgid "Standard keywords"
+msgstr "Standard-Keywords"
+
+#: src/guiWindows/DialogueCommonFileCreater.java:94
+msgid "Language pages are written in"
+msgstr "Sprache, in der die Seiten geschrieben sind"
+
+#: src/guiWindows/DialogueCommonFileCreater.java:96
+msgid "Use image name for caption on image pages"
+msgstr "Verwende Bildname als Überschrift bei Bilderseiten"
+
+#: src/guiWindows/DialogueCommonFileCreater.java:99
+msgid "Text header"
+msgstr "Text-Header"
+
+#: src/guiWindows/DialogueCommonFileCreater.java:101
+msgid "Directory for thumbnails"
+msgstr "Verzeichnis für Vorschaubilder"
+
+#: src/guiWindows/DialogueCommonFileCreater.java:103
+msgid "Width of normal thumbnails"
+msgstr "Breite von normalen Vorschaubildern"
+
+#: src/guiWindows/DialogueCommonFileCreater.java:105
+msgid "Standard title"
+msgstr "Standard-Titel"
+
+#: src/guiWindows/GuiFunctions.java:50
+msgid "(Existing) Target directory set: "
+msgstr "(Existierendes) Zielverzeichnis gesetzt: "
+
+#: src/guiWindows/GuiFunctions.java:54
+msgid "(New) Target directory set: "
+msgstr "(Neues) Zielverzeichnis gesetzt:"
+
+#: src/UserInterface.java:274
+#, fuzzy, java-format
+msgid "Skipping {0}."
+msgstr "Überspringe"
+
+#: src/UserInterface.java:428
+msgid "done"
+msgstr "fertig"
+
+#: src/UserInterface.java:431
+msgid "Title: %s"
+msgstr "Titel: %s"
+
+#: src/UserInterface.java:450
+msgid ""
+"Files written: %d; characters read/written: %d / %d (%s %%).\n"
+"Time taken: %s."
+msgstr ""
+"Dateien geschrieben: %d; Zeichen gelesen/geschrieben: %d / %d (%s %%).\n"
+"Benötigte Zeit: %s."
+
+#: src/settings/XhtmlSettings.java:274
+#, java-format
+msgid "Page {0} of {1}"
+msgstr "Seite {0} von {1}"
+
+#: src/settings/XhtmlSettings.java:277
+#, java-format
+msgid "Page {0}"
+msgstr "Seite {0}"
+
+#: src/Help.java:95
+msgid ""
+"\n"
+"Usage: java -jar wiki2xhtml [arguments] [files]\n"
+"       java -jar wiki2xhtml"
+msgstr ""
+"\n"
+"Verwendung: java -jar wiki2xhtml [argumente]\n"
+"       java -jar wiki2xhtml"
+
+#: src/Help.java:96
+msgid ""
+"\n"
+"\n"
+"Arguments "
+msgstr ""
+"\n"
+"\n"
+"Argumente "
+
+#: src/Help.java:99
+msgid "Update the menufile"
+msgstr "Menu-Datei aktualisieren"
+
+#: src/Help.java:99
+msgid "(No furhter arguments)"
+msgstr "(Keine weitere Argumente)"
+
+#: src/Help.java:102
+msgid "Print this help message"
+msgstr "Gib diese Hilfemeldung aus"
+
+#: src/Help.java:106
+msgid "Don't check for updates this time"
+msgstr "Dieses Mal nicht auf Updates prüfen"
+
+#: src/Help.java:109
+msgid "Opens the GUI. Giving no arguments has the same effect."
+msgstr "Öffnet das GUI. Keine Argumente haben den selben Effekt."
+
+#: src/Help.java:112
+msgid ""
+"Dead mode (no information), debug, silent (errors only), verbose (a lot of "
+"text)"
+msgstr "Menge der angezeigten Informationen"
+
+#: src/Help.java:115
+msgid "Set the language used in the program. Availible is at the moment: %s"
+msgstr ""
+"Setzt die Sprache, die im Programm verwendet wird. Momentan verfügbar: %s"
+
+#: src/Help.java:120 src/ConstantTexts.java:91
+msgid "Menu file"
+msgstr "Menu-Datei"
+
+#: src/Help.java:123
+msgid "File containing the common settings like the header, the homelink, etc."
+msgstr ""
+"Datei, die gemeinsame Einstellungen wie den Header, den Homelink etc. "
+"enthält."
+
+#: src/Help.java:126 src/ConstantTexts.java:90
+msgid "Footer file"
+msgstr "Footer-Datei"
+
+#: src/Help.java:129
+msgid ""
+"Set a target directory. All the html files are created there and the css "
+"files are copied into this directory."
+msgstr ""
+"Setzt das Zielverzeichnis. Alle HTML-Dateien werden hier erstellt und die "
+"CSS-Dateien werden ins Verzeichnis kopiert."
+
+#: src/Help.java:132
+msgid ""
+"Set the directory which contains the css files and the reck (default: ./"
+"style/*; random style will be selected if none given)"
+msgstr ""
+"Setzt das Verzeichnis, das die CSS-Datei und die reck.html enthält "
+"(Standard: ./style/; zufälliges Design wird ausgewählt, falls keines "
+"ausgewählt)"
+
+#: src/Help.java:139
+msgid "Print the output here instead of writing it into a file"
+msgstr "Gibt das Resultat hier aus, anstatt es in eine Datei zu schreiben"
+
+#: src/Help.java:142
+msgid ""
+"Only write the (X)HTML code without the reck (if you e.g. want to use the "
+"code somewhere else; Means you only want to create plain (X)HTML code "
+"without the header etc.)"
+msgstr ""
+"Schreibt nur XHTML-Code ohne das XHTML-Gerüst, das z. B. den Header oder das "
+"Menu beinhaltet (wenn du den Code sonstwo verwenden willst)"
+
+#: src/Help.java:145
+msgid "Remove all line breaks in the code."
+msgstr "Entferne Zeilenumbrüche in der Ausgabe"
+
+#: src/Help.java:148
+msgid "The same as %s"
+msgstr "Das selbe wie %s"
+
+#: src/Help.java:151 src/GUI.java:233 src/ConstantTexts.java:38
+msgid "Files"
+msgstr "Dateien"
+
+#: src/Help.java:152
+msgid ""
+"\n"
+" All the files which have to be converted. Files ending with .html will be "
+"copied."
+msgstr ""
+"\n"
+" Alle Dateien, die konvertiert werden sollen. Sie sollten nicht mit .html "
+"enden, da diese Dateien momentan ignoriert werden."
+
+#: src/Help.java:154
+msgid ""
+"\n"
+"Examples"
+msgstr ""
+"\n"
+"Beispiele"
+
+#: src/Help.java:155
+msgid ""
+"\n"
+" See the help files for examples (add the argument --helpfiles to create "
+"them)."
+msgstr ""
+"\n"
+"Schaue in den Hilfedateien nach für Beispiele (sie werden mit dem Argument --"
+"helpfile erstellt)"
+
+#: src/Help.java:157
+msgid ""
+"\n"
+"Notes"
+msgstr ""
+"\n"
+"Notitzen"
+
+#: src/Help.java:158
+msgid ""
+"\n"
+" You need at least Java version 1.5 (currently you are using version %s)."
+msgstr ""
+"\n"
+"Du benötigst mindestens Java in der Version 1.5 (momentan benützt du die "
+"Version %s)."
+
+#: src/Help.java:160
+msgid ""
+"If your version is too old, you can get the newest version from %s:\n"
+" "
+msgstr ""
+"Wenn deine Version zu alt ist, kannst du die neueste herunterladen bei %s:\n"
+" "
+
+#: src/Help.java:163
+msgid "Your current working directory is: %s"
+msgstr "Dein momentanes Arbeitsverzeichnis ist: %s"
+
+#: src/Help.java:166
+msgid "Bugs"
+msgstr "Fehler (Bugs)"
+
+#: src/Help.java:167
+msgid ""
+"Please report bugs, feature requests etc. at Sourceforge, %s, or in the "
+"wiki2xhtml forum at %s. Thanks!"
+msgstr ""
+"Bitte melde Bugs und Feature Request bei Sourceforge, %s, oder im wiki2xhtml-"
+"Forum bei %s. Danke!"
+
+#: src/GUI.java:235 src/GUI.java:602
+msgid "Parse"
+msgstr "Parsen"
+
+#: src/GUI.java:266
+msgid "Code Window (leave with Esc)"
+msgstr "Code-Fenster (Verlassen mit Esc)"
+
+#: src/GUI.java:332
+msgid "Code Output Window"
+msgstr "Code-Ausgabe"
+
+#: src/GUI.java:391
+msgid "random"
+msgstr "zufällig"
+
+#: src/GUI.java:452
+msgid "Open menu File …"
+msgstr "Öffne Menu-Datei …"
+
+#: src/GUI.java:463
+msgid "Menu file is now %s"
+msgstr "Menu-Datei ist nun %s"
+
+#: src/GUI.java:466 src/GUI.java:496 src/GUI.java:520
+msgid "Is not a file: %s"
+msgstr "Ist keine Datei: %s"
+
+#: src/GUI.java:482
+msgid "Open title File …"
+msgstr "Öffne Titel-Datei …"
+
+#: src/GUI.java:493
+msgid "Title file is now %s"
+msgstr "Titel-Datei ist nun %s"
+
+#: src/GUI.java:512
+msgid "Open footer file …"
+msgstr "Öffne Footer-Datei …"
+
+#: src/GUI.java:518
+msgid "Footer file is now %s"
+msgstr "Footer-Datei ist nun %s"
+
+#: src/GUI.java:537
+msgid "Open Files to parse …"
+msgstr "Öffne Dateien zum Parsen …"
+
+#: src/GUI.java:574
+msgid "Open Target Directory"
+msgstr "Öffne Zielverzeichnis"
+
+#: src/GUI.java:578
+msgid "Target directory set: %s"
+msgstr "Zielverzeichnis gesetzt: %s"
+
+#: src/GUI.java:581
+msgid ""
+"Note: If you want to create a new directory, add the name in the text field."
+msgstr ""
+"Tip: Wenn du ein neues Verzeichnis erstellen möchtest, hänge den Namen im "
+"Textfeld an."
+
+#: src/GUI.java:584
+msgid "Strange: %s"
+msgstr "Merkwürdig: %s"
+
+#: src/GUI.java:601
+msgid "Go!"
+msgstr "Los!"
+
+#: src/GUI.java:618
+msgid "Tried to process the following expression: "
+msgstr "Versuchte, folgenden Ausdruck zu verarbeiten:"
+
+#: src/GUI.java:629 src/GUI.java:630 src/GUI.java:645 src/GUI.java:646
+msgid "Next"
+msgstr "Weiter"
+
+#: src/GUI.java:678
+msgid "Save settings"
+msgstr "Einstellungen speichern"
+
+#: src/GUI.java:694
+msgid "Open settings file"
+msgstr "Lade Einstellungen"
+
+#: src/GUI.java:727
+msgid "Discard changes?"
+msgstr "Änderungen verwerfen?"
+
+#: src/GUI.java:766
+msgid "Overwrite file “%s”?"
+msgstr "Datei «%s» überschreiben?"
+
+#: src/GUI.java:791
+msgid "Help files"
+msgstr "Hilfedateien"
+
+#: src/GUI.java:815
+msgid "Standard Arguments"
+msgstr "Standard-Argumente"
+
+#: src/GUI.java:835
+msgid "Clear Settings"
+msgstr "Einstellungen zurücksetzen"
+
+#: src/GUI.java:855
+msgid "Code Window"
+msgstr "Code-Fenster"
+
+#: src/GUI.java:856
+msgid "Open the code window"
+msgstr "Öffne Code-Fenster"
+
+#: src/GUI.java:883
+msgid "Big Font"
+msgstr "Grosse Schrift"
+
+#: src/GUI.java:884
+msgid "Big font in the GUI"
+msgstr "Grosse Schrift im GUI"
+
+#: src/GUI.java:908
+msgid "Only Code"
+msgstr "Nur Code"
+
+#: src/GUI.java:942
+msgid "Remove Linebreaks"
+msgstr "Entferne Zeilenumbrüche"
+
+#: src/GUI.java:970
+msgid "Title file is now"
+msgstr "Titel-Datei ist nun"
+
+#: src/GUI.java:974
+msgid "No title file"
+msgstr "Keine Titel-Datei"
+
+#: src/GUI.java:1003
+msgid "Menu file is now"
+msgstr "Menu-Datei ist nun"
+
+#: src/GUI.java:1007
+msgid "No menu file"
+msgstr "Keine Menu-Datei"
+
+#: src/GUI.java:1034
+msgid "Footer file is now"
+msgstr "Footer-Datei ist nun"
+
+#: src/GUI.java:1038
+msgid "No footer file"
+msgstr "Keine Footer-Datei"
+
+#: src/GUI.java:1378
+msgid "Standard settings to generate the help files"
+msgstr "Standardeinstellungen, um die Hilfedateien zu generieren"
+
+#: src/GUI.java:1383
+msgid "Set the standard settings"
+msgstr "Standard-Einstellungen"
+
+#: src/GUI.java:1388
+msgid "Clear the settings"
+msgstr "Eintellungen zurücksetzen"
+
+#: src/GUI.java:1392
+msgid "Remove all Line Breaks"
+msgstr "Entferne alle Zeilenumbrüche"
+
+#: src/GUI.java:1405
+msgid "Select/Add files"
+msgstr "Dateien hinzufügen"
+
+#: src/GUI.java:1409
+msgid ""
+"The files cannot end with .html. Wildcards (e.g. *.txt) are not yet "
+"supported."
+msgstr ""
+"Die Dateien können nicht mit .html enden. Wildcards (z. B. *.txt) werden "
+"noch nicht unterstützt."
+
+#: src/GUI.java:1416 src/ConstantTexts.java:44
+msgid "Target directory"
+msgstr "Zielverzeichnis"
+
+#: src/GUI.java:1420
+msgid ""
+"To create a new directory in the text field, simply write down the path."
+msgstr ""
+"Um ein neues Verzeichnis im Textfeld zu erzeugen, schreibe dessen Pfad "
+"hinein."
+
+#: src/GUI.java:1425
+msgid "Alternatively: Code Windows"
+msgstr "Alternativ: Code-Fenster"
+
+#: src/GUI.java:1444
+msgid "Set the menu file"
+msgstr "Setze Menu-Datei"
+
+#: src/GUI.java:1449
+msgid "Set the common file"
+msgstr "Setze Common-Datei"
+
+#: src/GUI.java:1454
+msgid "Set the footer file"
+msgstr "Setze Footer-Datei"
+
+#: src/GUI.java:1458
+msgid "Select the design"
+msgstr "Wähle das Design (random für ein zufälliges)"
+
+#: src/GUI.java:1462
+msgid "If you want to give the arguments directly."
+msgstr "Wenn du die Argumente direkt bearbeiten willst."
+
+#: src/GUI.java:1468
+msgid ""
+"That are all the arguments the program uses. You can change them either here "
+"or above."
+msgstr ""
+"Das sind alle Argumente, die das Programm verwendet. Du kannst sie entweder "
+"hier oder oben ändern."
+
+#: src/GUI.java:1478
+msgid "Write plain code without the reck (no header, CSS etc.; for PN)"
+msgstr "Schreibe reinen Code ohneohne Header, CSS etc; für PostNuke"
+
+#: src/GUI.java:1519
+#, java-format
+msgid ""
+"New version available: {0}\n"
+"You can download it at {1}.\n"
+"\n"
+"If you don't wish to be notified anymore about this version please check the "
+"preferences dialog."
+msgstr ""
+"Neue Version verfügbar: {0}\n"
+"Sie kann unter {1} heruntergeladen werden.\n"
+"\n"
+"Falls du nicht mehr über Updates informiert werden möchtest, überprüfe den "
+"Einstellungen-Dialog."
+
+#: src/GUI.java:1577
+msgid "Ctrl"
+msgstr "Strg"
+
+#: src/Handler_Arguments.java:52
+msgid "Info: "
+msgstr "Info: "
+
+#: src/Handler_Arguments.java:54
+msgid "WARNING: "
+msgstr "WARNUNG: "
+
+#: src/Handler_Arguments.java:61
+msgid "No file given for the argument Nr. %d (%s). "
+msgstr "Keine Datei gegeben für das Argument Nr. %d (%s). "
+
+#: src/Handler_Arguments.java:62 src/Handler_Arguments.java:67
+msgid "Maybe you set a space before the filename?"
+msgstr "Vielleicht hast du einen Leerschlag vor den Dateinamen gesetzt?"
+
+#: src/Handler_Arguments.java:66
+msgid "No directory given for the argument Nr. %d (%s). "
+msgstr "Kein Verzeichnis gegeben für das Argument Nr. %d (%s). "
+
+#: src/Handler_Arguments.java:71
+msgid "You forgot the %s to the argument Nr. %d (%s). "
+msgstr "Keine Datei gegeben für das Argument Nr. %d (%s). "
+
+#: src/Handler_Arguments.java:75
+msgid "The argument “%s” is obsolete and no longer supported."
+msgstr "Das Argument «%s» ist veraltet und wird nicht mehr unterstützt."
+
+#: src/Handler_Arguments.java:148
+msgid "Opening GUI."
+msgstr "Öffne GUI."
+
+#: src/Handler_Arguments.java:204
+msgid "Could not find file %1!"
+msgstr "Konnte Datei %s nicht finden!"
+
+#: src/Handler_Arguments.java:359
+msgid "Language is now %s"
+msgstr "Sprache ist nun %s"
+
+#: src/Handler_Arguments.java:434
+msgid "The argument %s could not be recognized. "
+msgstr "Das Argument %s konnte nicht erkannt werden. "
+
+#: src/update/UpdateChecker.java:156
+#, java-format
+msgid "<p>New version: <strong>{0}</strong> from {1}.</p>"
+msgstr "<p>Neue Version: <strong>{0}</strong> vom {1}.</p>"
+
+#: src/update/UpdateChecker.java:157
+#, java-format
+msgid "<p>Changes in this version: {0}</p>"
+msgstr "<p>Änderungen in dieser Version: {0}</p>"
+
+#: src/update/UpdateChecker.java:159
+msgid "<p>Your version of wiki2xhtml is up-to-date.</p>"
+msgstr "<p>Deine Version von wiki2xhtml ist aktuell.</p>"
+
+#: src/pagesplitter/SplitPageLinks.java:75
+msgid "Go to page"
+msgstr "Gehe zu Seite"
+
+#: src/ReplaceTags.java:146
+msgid "Warning: Duplicate mark (%s)! Mark removed."
+msgstr "Warnung: Doppelte Marke (%s)! Marke entfernt."
+
+#: src/ReplaceTags.java:148
+msgid "Warning: Mark must not contain such a character (%s)! Mark removed."
+msgstr ""
+"Warnung: Marke darf kein solches Zeichen enthalten (%s)! Marke entfernt."
+
+#: src/typo/Typograph.java:198
+msgid "&Prime;"
+msgstr "&Prime;"
+
+#: src/typo/Typograph.java:226
+msgid "&ldquo;"
+msgstr "„"
+
+#: src/typo/Typograph.java:231
+msgid "&rdquo;"
+msgstr "“"
+
+#: src/ConstantTexts.java:39
+msgid "added"
+msgstr "hinzugefügt"
+
+#: src/ConstantTexts.java:41
+msgid "Not yet supported"
+msgstr "Noch nicht  unterstützt"
+
+#: src/ConstantTexts.java:42
+msgctxt "set (verb, past)"
+msgid "set"
+msgstr "gesetzt"
+
+#: src/ConstantTexts.java:43
+msgid "Style directory"
+msgstr "Style-Verzeichnis"
+
+#: src/ConstantTexts.java:46
+msgid "Language is now"
+msgstr "Sprache ist nun"
+
+#: src/ConstantTexts.java:47
+msgid "See “%s” for help."
+msgstr "Siehe «%s» für Hilfe."
+
+#: src/ConstantTexts.java:49
+msgid "Will come"
+msgstr "Wird kommen"
+
+#: src/ConstantTexts.java:51
+msgid "Newest dev version"
+msgstr "Neueste Entwicklerversion"
+
+#: src/ConstantTexts.java:52
+msgid "Changes in dev version"
+msgstr "Änderungen in Entwicklerversion"
+
+#: src/ConstantTexts.java:53
+msgid "You’re currently using"
+msgstr "Momentan verwendest du"
+
+#: src/ConstantTexts.java:55
+msgid "Cannot connect to host. Check internet connection."
+msgstr "Verbindung zum Host fehlgeschlagen. Überprfüfe die Internetverbindung."
+
+#: src/ConstantTexts.java:56
+msgid "File not found"
+msgstr "Datei nicht gefunden"
+
+#: src/ConstantTexts.java:58
+msgid "Incremental mode; Only changed files will be written."
+msgstr "Inkrementeller Modus; Nur geänderte Dateien werden geschrieben."
+
+#: src/ConstantTexts.java:64
+msgid "found"
+msgstr "gefunden"
+
+#: src/ConstantTexts.java:70
+msgid "See"
+msgstr "Siehe"
+
+#: src/ConstantTexts.java:71
+msgid "Skipping"
+msgstr "Überspringe"
+
+#: src/ConstantTexts.java:77
+msgid "common file"
+msgstr "Common-Datei"
+
+#: src/ConstantTexts.java:78
+msgid "footer file"
+msgstr "Footer-Datei"
+
+#: src/ConstantTexts.java:79
+msgid "menu file"
+msgstr "Menu-Datei"
+
+#: src/ConstantTexts.java:85
+msgid "Date"
+msgstr "Datum"
+
+#: src/ConstantTexts.java:86
+msgid "Error"
+msgstr "Fehler"
+
+#: src/ConstantTexts.java:87
+msgid "Notes"
+msgstr "Notitzen"
+
+#: src/ConstantTexts.java:89
+msgid "Common file"
+msgstr "Common-Datei"
+
+#: src/ConstantTexts.java:92
+msgid "Reck file"
+msgstr "Reck-Datei"
+
+#: src/ConstantTexts.java:93
+msgid "Template file"
+msgstr "Vorlage-Datei"
+
+#~ msgid ""
+#~ "\n"
+#~ "Attention: New line at the end of template {0} might cause problems in "
+#~ "tables."
+#~ msgstr ""
+#~ "\n"
+#~ "Achtung: Neue Zeile am Ende der Vorlage {0} kann zu Problemen in Tabellen "
+#~ "führen."
+
+#, fuzzy
+#~ msgid "Night {0} of 1001"
+#~ msgid_plural "More than 1001 nights! {0} already!"
+#~ msgstr[0] "Seite {0} von {1}"
+#~ msgstr[1] "Seite {0} von {1}"
+
+#~ msgid "Directory"
+#~ msgstr "Verzeichnis"
+
+#~ msgid "not found."
+#~ msgstr "nicht gefunden"
+
+#~ msgid "ldquo"
+#~ msgstr "„"
+
+#~ msgid "rdquo"
+#~ msgstr "“"
+
+#~ msgid "Description of something XXXXXXXXX"
+#~ msgstr "hello world."
+
+#~ msgid "of"
+#~ msgstr "von"
+
+#~ msgid "set (verb, past)"
+#~ msgstr "gesetzt"
+
+#~ msgid "There is a newer version availible on the web"
+#~ msgstr "Es ist eine neuere Version verfügbar"
+
+#~ msgid " from "
+#~ msgstr " von "
+
+#~ msgid "Open File"
+#~ msgstr "Öffne Datei"
+
+#~ msgid "Open Directory"
+#~ msgstr "Öffne Verzeichnis"

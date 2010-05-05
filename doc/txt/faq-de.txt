@@ -1,0 +1,28 @@
+{{Title:FAQ %s}}
+{{Keywords:wiki2xhtml, faq}}
+{{Description:FAQ zu wiki2xhtml}}
+{{H1:› FAQ zu wiki2xhtml}}
+
+{{:tplLang-de.txt|en=faq.html}}
+
+FAQ steht für «Frequently asked Questions», was soviel heisst wie «Häufig gestellte Fragen». Siehe auch [http://de.wikipedia.org/wiki/FAQ Wikipedia:FAQ].
+
+;Wie finde ich Hilfe?
+: Schreibe an die [https://lists.sourceforge.net/lists/listinfo/wiki2xhtml-users wiki2xhtml-Mailingliste].
+;Wo kann ich Bugs melden?
+: Im [http://apps.sf.net/mantisbt/wiki2xhtml/ wiki2xhtml-Bugtracker]. Dies ist auch der richtige Platz, um neue Features vorzuschlagen.
+;wiki2xhtml übersetzen
+: Falls du wiki2xhtml übersetzen willst, lies bitte [[GuidelinesTranslators-de.pdf dieses Dokument]] durch.
+;In einer Aufzählung wird ein Teil des Textes am Anfang abgeschnitten.
+: |Wahrscheinlich wird in dieser Zeile ein Pipe-Symbol («|») verwendet. Alles vor diesem Symbol interpretiert wiki2xhtml als Argumente, um den Listenpunkt zu formatieren. Setze einfach ein | an den Anfang des Textes: <br /><samp class="block"><nowiki>* |So wird das Pipe-Symbol | richtig angezeigt</nowiki></samp><br />Übrigens: Validatoren wie der [http://www.totalvalidator.com/ Total Validator], für den auch eine [https://addons.mozilla.org/en-US/firefox/addon/2318 Firefox-Erweiterung] existiert, finden solche Probleme schnell!
+;Statt Umlauten werden nur viereckige Kästchen angezeigt.
+: Die Quelldateien müssen in UTF-8 geschrieben sein. Editoren wie [http://notepad-plus.sourceforge.net/ Notepad++] können UTF-8-codierte Textdateien schreiben, der bei Windows mitgelieferte Notepad ''nicht!'' ASCII-Dateien können unter Unix mit dem Befehl <code>iconv -f ISO-8859-1 -t UTF-8 input-file -o output-file</code> umgewandelt werden.
+;Ich kann das exportierte Shell-Skript nicht ausführen.
+: Unter Unix müssen Skripte zuerst ausführbar gemacht werden. Dies geschieht mit dem Befehl <code>chmod u+x datei.sh</code>.werden (im Tracker, siehe oben, oder in den News)
+;Ich möchte ein Design etwas abändern oder ein neues erstellen. Wie funktioniert das?
+: Ich werde dazu eine Dokumentationsseite schreiben ;) Das Programm arbeitet mit verschiedenen Dateien. Für den Aufbau der xhtml-Datei selber wird die reck.html verwendet, für die Bilder image-template.html. Die Seite selber wird mit den entsprechenden CSS-Dateien gestaltet. 
+;Wie kann ich PDF-Dateien einfügen?
+: |Entweder als normaler Link, zum Beispiel <code>&#91;document.pdf]</code>, oder als Bild. Hier kann auch ein Vorschaubild verwendet werden: <code>&#91;[Image:document.pdf|thumb=document_thumb.png|PDF-Datei]]</code>
+
+== Referenzen ==
+<references />

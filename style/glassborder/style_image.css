@@ -1,0 +1,105 @@
+* {
+	padding: 0;
+	margin: 0;
+}
+html {
+	height: 100%;
+}
+body {
+	font: 12px  Verdana,sans-serif;
+	line-height: 1.6em;
+	background: #f2c439 url('bg4.png') repeat top left fixed;
+	color: #fff;
+	min-height: 101%;
+}
+#wrap {
+	margin: auto;
+	width: 800px;
+	text-align: center;
+}
+.borderTop {
+	width: 800px;
+	height: 55px;
+	background: url('borderTop.png') top left transparent no-repeat;
+	float: left;
+}
+.borderBg {
+	width: 690px;
+	background: url('borderBg.png') top left repeat-y transparent;	
+	padding: 0 55px;
+	float: left;
+}
+.borderBottom {
+	width: 800px;
+	height: 80px;
+	background: url('borderBottom.png') top left transparent no-repeat;
+	float: left;
+	clear: both;
+}
+#image {
+	width: 682px;
+	float: left;
+	display: block;
+	text-decoration: none;
+	color: #000;
+	overflow: hidden;
+}
+#image:hover {
+}
+#image img {
+}
+#name {
+	float: left;
+	text-align: center;
+	width: 800px;
+}
+#name h1 {
+	font-family: DejaVu, FreeSans, "Century Gothic", Verdana, sans-serif;
+	padding: 2em 0 .5em 10px;
+	margin-bottom: 1.5em;
+	font-weight: bold;
+}
+#desc {
+	float: left;
+	text-align: center;
+	width: 682px;
+	padding-bottom: 2em;
+}
+#desc dd {
+	font-weight: bold;
+}
+#nav span {
+	display: block;
+	float: left;
+	height: 60px;
+}
+#nav span span {
+	display: none;
+}
+span.navLeft {
+	background: url('navLeft.png') top left no-repeat scroll transparent;
+	width: 20px;
+}
+span.navRight {
+	background: url('navRight.png') top left no-repeat scroll transparent;
+	width: 15px;
+}
+span.navBack {
+	background: url('navBack.png') top left no-repeat scroll transparent;
+	width: 45px;
+}
+span.navNext {
+	background: url('navNext.png') top left no-repeat scroll transparent;
+	width: 45px;
+}
+span.navUp {
+	background: url('navUp.png') top left no-repeat scroll transparent;
+	width: 55px;
+}
+#nav {
+	display: block;
+	position: absolute;
+	top: 0px;
+	right: 0px;
+	height: 86px;
+}

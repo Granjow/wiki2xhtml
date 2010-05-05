@@ -1,0 +1,472 @@
+@import url('sLang.css');
+
+* {
+	padding: 0px;
+	margin: 0px;
+}
+html {
+	height: 100%;
+}
+body {
+	font: 12px  Verdana,sans-serif;
+	line-height: 1.6em;
+	background-color: #58180e;
+	height: 100.01%;
+}
+
+a, a:visited {
+	text-decoration: none;
+	border-bottom: 1px dotted #1a1aa8;
+}
+a {
+	color: #333;
+}
+a:active, a:hover, a:focus {
+	color: #1a1aa8;
+	border-bottom-style: solid;
+}	
+img {
+	border: none;
+}
+td, th {
+	padding-left: 0.5em;
+	vertical-align: top;
+}
+#wrap {
+	border: 2px solid #616e9a;
+	width: 800px;
+	margin: 20px 0 20px 160px;
+	text-align: left;
+	background-color: #fff;
+	position: relative;
+}
+#header {
+	float: left;
+	width: 799px;
+	padding-left: 1px;
+	height: 200px;
+	background: url(hd.jpg) no-repeat transparent top left;
+	position: relative;
+	border: none;
+}
+#h1 {
+	padding: 180px 60px 20px 60px;
+	border-bottom: 3px dashed #c4c8d6;
+}
+#menu {
+	float: left;
+	width: 152px;
+	height: 100%;
+	padding: 12px 0 16px 0;
+	margin: 0 5px 5px -155px;
+	border-top: 10px solid #616e9a;
+	border-bottom: 18px solid #616e9a;
+	background-color: #fff;
+	font-size: .9em;
+}
+#content {
+	padding: 20px;
+}
+#footer {
+	padding: 1em 0 2em 0;
+	width: 800px;
+	float: left;
+}
+#footer p {
+	font-size: 0.7em;
+	text-align: center;
+	color: #fff;
+}
+#footer a {
+	color: #fff;
+	border-bottom-color: #fff;
+}
+
+#h1 h1 {
+	font-family: DejaVu, FreeSans, "Century Gothic", Verdana, sans-serif;
+	font-size: 2.2em;
+	color: #8892b4;
+	font-weight: bold;
+}
+
+#menu ul {
+	padding-left: 22px;
+	list-style-image: none;
+	list-style-type: none;
+}
+#menu li {
+	padding-bottom: .4em;
+}
+#menu li a {
+	color: #000;
+	border: none;
+}
+#menu li a:hover {
+	background-color: #fafaf7;
+}
+#menu li.open > a {
+	font-weight: bold;
+}
+
+#menu ul.level2 {
+	padding-left: 10px;
+	list-style: none;
+	display: none;
+}
+#menu ul.level2.openparent, #menu ul.level2.open {
+	display: block;
+}
+#menu ul.level2 li:first-child {
+	padding-top: .4em;
+}
+#menu li.open {
+	list-style-image: url(list.png);
+}
+	
+
+#content h2, h3, h4, h5, h6 {
+	font-family: DejaVu, FreeSans, "Century Gothic", Verdana, sans-serif;
+	color: #9ea6c0;
+	margin: 2em 0 1em 0px;
+	font-weight: bold;
+}
+#content h2 {
+	font-size: 1.6em;
+}
+#content h3 {
+	font-size: 1.3em;
+}
+#content h4 {
+	font-size: 1.3em;
+	font-weight: normal;
+}
+#content h5 {
+	font-size: 1em;
+	font-weight: normal;
+}
+#content h6 {
+	font-size: 1em;
+	font-weight: normal;
+}
+#content p {
+	padding-top: .5em;
+	padding-bottom: .5em;
+}
+#content ul, ol {
+	padding-left: .8em;
+}
+#content ul {
+	list-style-type: square;
+}
+#content ul ul {
+	list-style-type: disc;
+}
+#content li {
+	margin-left: 1em;
+}
+#content dt {
+	font-weight: bold;
+	margin-top: 1em;
+	margin-bottom: .5em;
+}
+#content dd {
+	margin-bottom: 1em;
+	padding-left: 2em;
+}
+#content ul dd {
+	padding-bottom: 0;
+}
+#content td, #content th {
+	padding-right: .5em;
+}
+/* Gallery */
+/* width is: #wrap width minus #content padding minus gallery padding minus gallery border. */
+.gallery {
+	padding: 10px;
+	margin: 1em 0 2em;
+	width: 738px;
+	float: left;
+/*	border: #909099 1px solid;
+	background-color: #fbf4ee;*/
+}
+.gallery h3 {
+	padding: 1em 0 0.5em 0;
+	margin: 0px;
+	margin-bottom: .5em;
+	text-align: center;
+	border-width: 2px;
+}
+.gallery dl {
+	padding: 0px;
+	padding-bottom: 10px;
+	margin: 5px 10px 15px 10px;
+	float: left;
+	width: 220px;
+	background-color: #fff;
+	border: 1px solid #eee;
+}
+.gallery dl:hover {
+	background-color: #36382e;
+	color: #fff;
+}
+.gallery dl:hover * {
+	color: #fff;
+}
+.gallery dt {
+	padding: 11px 11px 6px 11px;
+	margin: 9px 8px 4px 8px;
+	border: 1px solid #eee;
+	border-bottom: 1px solid #ddd;
+	background-color: #fff;
+}
+.gallery dt a {
+	border: none;
+}
+.gallery dt img {
+	width: 180px;
+}
+.gallery dd {
+	padding: 5px 10px 8px 10px;
+	font-size: .8em;
+	line-height: 1.4em;
+}
+.gallery dd.onlyDesc {
+	margin: 25px 15px 25px 0;
+}
+/* Thumbnails */
+.imgthumb {
+	padding: 0px;
+	display: inline;
+}
+.imgthumb:hover {
+	background-color: #e6dddf;
+}
+.imgthumb dl {
+	padding-left: 12px;
+	padding-right: 12px;
+}
+.imgthumb dt img {
+	padding: 12px;
+	margin-top: 8px;
+	background-color: #fff;
+	border: 1px solid #bbb;
+}
+.imgthumb a {
+	border: none;
+}
+.imgthumb dd {
+	padding: 1em 16px 2em 0px;
+	font-size: .8em;
+	line-height: 1.4em;
+}
+.external {
+	background: url(external.png) center right no-repeat;
+	padding-right: 14px;
+}
+.external:visited {
+	background-image: url(external_visited.png);
+}
+.block {
+	white-space: pre;
+	display: block;
+}
+code {
+	background-color: #f7f7f7;
+	border-top: 1px solid #aaa;
+	border-bottom: 1px solid #aaa;
+}
+code.block {
+	padding: 0.5em 1em 0.5em 1em;
+	margin: 1em 0 1em 0;
+	width: auto;
+	background-color: #475239;
+	border: 3px solid #475239;
+	color: #fff;
+	display: block;
+}
+code.block a {
+	color: #fff;
+}
+.code, .command, .example {
+	display: block;
+	background-color: #f00;
+	color: #fff;
+	white-space: pre;
+}
+.code:before, .command:before, .example:before {
+	content: "please use the new tags: $$, @@, ::, 01, --, ++ (see wiki2xhtml help file)\000A bitte benutze die neuen Tags: $$, @@, ::, 01, --, ++ (siehe wiki2xhtml-Hilfedatei)\000A";
+	font-weight: bold;
+	font-style: normal;
+}
+kbd.block {
+	padding: 0.2em 1em 0.2em 1em;
+	margin: .4em 0em 1em 0em;
+	width: auto;
+	background-color: #444;
+	color: #fff;
+	border: 2px solid #444;
+	display: block;
+}
+kbd.block:hover {
+	background-color: #444;
+	border: 2px solid #bbb;
+}
+samp.block {
+	padding: 1em;
+	margin: 0.5em 0 1em 0;
+	background-color: #dfe2eb;
+	border: 3px solid #dfe2eb;
+	font: 12px serif normal;
+	display: block;
+	line-height: 1.5em;
+	white-space: normal;
+}
+samp.block:hover {
+	border: 3px solid #858da6;
+}
+cite.block {
+	padding: 1em 3em;
+	white-space: normal;
+}
+em {
+	padding-left: 0.05em;
+	padding-right: 0.15em;
+}
+.right {
+	float: right;
+	clear: right;
+	margin: 10xp 0 15px 10px;
+}
+.left {
+	float: left;
+	clear: left;
+	margin: 10px 10px 15px 0;
+}
+#toc {
+	padding: 1em;
+	width: 50%;
+	margin-left: auto;
+	margin-right: auto;
+	float: left;
+}
+#toc ol {
+	list-style-type: lower-roman;
+}
+#toc>ol {
+	border-left: 1px solid #aaa;
+	padding-left: 20px;
+}
+#toc a {
+	border-bottom: none;
+}
+#toc h2 {
+	font-size: 1.2em;
+	border-bottom: none;
+	background-image: none;
+	padding-top: 0em;
+	padding-bottom: .2em;
+}
+.toplink {
+	text-align: right;
+	clear: both;
+	display: block;
+}
+.toplink a {
+	padding-right: 22px;
+	background: url(top.png) center right no-repeat;
+	border-bottom: none;
+	color: #3d342f;
+}
+.w1, .wf {
+	border: 1px solid #e9ae2f;
+	background-color: #fcf4e2;
+}
+.w1:focus, .wf:focus {
+	background-color: #faeccd;
+}
+input.w1, input.wf {
+	width: 200px;
+}
+input.w1:focus {
+	width: 320px;
+}
+textarea.w1 {
+	width: 400px;
+	height: 200px;
+}
+.button {
+	border: 1px solid #e9ae2f;
+	background-color: #faeccd;
+}
+#content .err, #content .ok {
+	padding: 2px;
+	margin-bottom: 3px;
+	text-align: center;
+	width: 100%;
+}
+.err {
+	background-color: #f4dfd4;
+	border-top: 2px solid #f00;
+	border-bottom: 2px solid #f00;
+} 
+.ok {
+	background-color: #e4f4d4;
+	border-top: 2px solid #6db32d;
+	border-bottom: 2px solid #6db32d;
+}
+div.multipage {
+	height: 100%;
+	display: block;
+	background: url('multipage.png') no-repeat scroll left top;
+	margin: 35px 180px;
+	padding-left: 20px;
+}
+.multipage ul {
+	list-style-image: none;
+	list-style-type: none !important;
+	float: left;
+}
+.multipage ul li {
+	float: left;
+	padding-right: 1em;
+}
+.green {
+	color: #000;
+	background-color: #ddfde0;
+}
+.green:first-letter {
+	font-weight: bold;
+	color: #349803;
+	border-bottom: 1px solid #349803;
+}
+.green:before {
+	content: "+ ";
+}
+.red {
+	color: #cb3c01;
+}
+.fixed {
+	background-color: #f8e5e3;
+}
+.fixed:before {
+	content: "! Fixed: ";
+	color: #cb3c01;
+}
+.references {
+	font-size: .8em;
+}
+.reference:target, .refmark:target {
+	background-color: #f6efed;
+}
+div.hint {
+	background-color: #eee;
+	border-left: 1.2em solid #616e9a;
+	color: #333;
+	padding-left: .5em;
+	margin-top: 1em;
+	margin-bottom: 1em;
+}
+
+.cs {
+    border-left: .5em solid rgb(255, 170, 0);
+}

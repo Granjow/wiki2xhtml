@@ -1,0 +1,18 @@
+{{Title:Home %s}}
+{{Keywords:wiki2xhtml, wikipedia, convert wikitext, xhtml, java, windows, linux}}
+{{Description:wiki2xhtml: generate your webpage with the wiki-syntax (Wikitext) used also in the Wikipedia!}}
+{{H1:wiki2xhtml}}
+
+{{:tplLang.txt|de=index-de.html}}
+
+{{:tplBox.txt|New SVN builds|To reduce waiting time between releases there will be some SVN builds. They will also be listed on the [[download.html Download page]]. News feed is available [https://sourceforge.net/api/file/index/project-id/182864/package-id/212160/atom here].
+;Download:
+* [https://sourceforge.net/projects/wiki2xhtml/files/wiki2xhtml/wiki2xhtml-3.3.2.7z wiki2xhtml-3.3.2] (stable version)
+* [https://sourceforge.net/projects/wiki2xhtml/files/wiki2xhtml/wiki2xhtml-3.4b8.7z wiki2xhtml-3.4b8] (preview; might be unstable)}}
+
+<span style="float: right; margin: 1em; clear: right;"><img src="wx-icon.png" /></span>
+wiki2xtml is a '''[[w:Web_content_management_system client-side CMS]].''' Pages are written in Wikitext known from the Wikipedia and will then be converted into a webpage by wiki2xhtml.
+
+If required, own code (like XHTML, PHP, JavaScript) can be used inside the pages, like for contact forms, Youtube videos, or animations.
+
+Have fun!

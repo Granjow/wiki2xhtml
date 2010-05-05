@@ -1,0 +1,4 @@
+<div style="border: 2px solid #f00; width: 90%; background-color: #fefefe; color: #333; padding: .5em;">
+<p>The template <strong>{{{1}}}</strong> seems to build a recursion!</p>
+<p><strong>Recursion path:</strong> {{{2}}}</p>
+</div>

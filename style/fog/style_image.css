@@ -1,0 +1,91 @@
+* {
+	padding: 0;
+	margin: 0;
+}
+body {
+	font: 12px  Verdana,sans-serif;
+	line-height: 1.6em;
+	background-color: #cdcbd8;
+}
+#wrap {
+	margin: auto;
+	width: 800px;
+	text-align: center;
+}
+#image {
+	float: left;
+	width: 800px;
+	border: 1px solid #bbb;
+	margin-top: 20px;
+	padding-bottom: 20px;
+	background-color: #ddd;
+	display: block;
+	text-decoration: none;
+	color: #000;
+}
+#image img {
+	background-color: #fff;
+	border: 1px solid #ddd;
+	padding: 20px;
+}
+#name {
+	float: left;
+	text-align: center;
+	width: 800px;
+}
+#name h1 {
+	font-family: DejaVu, FreeSans, "Century Gothic", Verdana, sans-serif;
+	color: #444;
+	padding: 2em 0 .5em 10px;
+	margin: 0 auto 1.5em auto;
+	border-bottom: 1px dashed #999;
+	font-weight: bold;
+	width: 80%;
+}
+#desc {
+	float: left;
+	text-align: center;
+	width: 800px;
+	padding-bottom: 2em;
+}
+#desc dd {
+	font-weight: bold;
+}
+#desc .back {
+	text-decoration: none;
+	font-weight: bold;
+	padding: .5em;
+	margin: .5em auto;;
+	border: 1px solid #ddd;
+	background-color: #dfdfdf;
+	color: #445;
+	display: block;
+	width: 50%;
+}
+#desc .back:hover {
+	background-color: #e2e2e2;
+}
+#nav {
+	display: block;
+	position: top;
+	margin-top: .5em;
+	position: fixed;
+	text-align: right;
+	right: 0px;
+}
+#nav a {
+	text-decoration: none;
+	font-weight: bold;
+	padding: .5em;
+	margin: .5em auto;
+	border: 1px solid #bbb;
+	background-color: #ddd;
+	color: #666;
+	width: 8em;
+	height: 1.5em;
+	position: fixed left;
+	top: .5em;
+}
+#nav a:hover, #nav a:active {
+	background-color: #dfdfdf;
+}

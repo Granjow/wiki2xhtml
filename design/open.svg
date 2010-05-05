@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="256"
+   height="256"
+   id="svg5449"
+   sodipodi:version="0.32"
+   inkscape:version="0.46"
+   version="1.0"
+   sodipodi:docbase="/home/simon/workspace/wiki2xhtml-current/design"
+   sodipodi:docname="open.svg"
+   inkscape:export-filename="/home/simon/workspace/svn-wiki2xhtml-current/resources/open.png"
+   inkscape:export-xdpi="5.625"
+   inkscape:export-ydpi="5.625"
+   inkscape:output_extension="org.inkscape.output.svg.inkscape">
+  <defs
+     id="defs5451">
+    <linearGradient
+       id="linearGradient3159">
+      <stop
+         style="stop-color:#fbfbfb;stop-opacity:1;"
+         offset="0"
+         id="stop3161" />
+      <stop
+         style="stop-color:#ece6b3;stop-opacity:1;"
+         offset="1"
+         id="stop3163" />
+    </linearGradient>
+    <inkscape:perspective
+       sodipodi:type="inkscape:persp3d"
+       inkscape:vp_x="0 : 100 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_z="200 : 100 : 1"
+       inkscape:persp3d-origin="100 : 66.666667 : 1"
+       id="perspective5815" />
+    <linearGradient
+       inkscape:collect="always"
+       id="linearGradient6346">
+      <stop
+         style="stop-color:#8e8e8e;stop-opacity:1;"
+         offset="0"
+         id="stop6348" />
+      <stop
+         style="stop-color:#8e8e8e;stop-opacity:0;"
+         offset="1"
+         id="stop6350" />
+    </linearGradient>
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient6346"
+       id="linearGradient6352"
+       x1="135.48671"
+       y1="35.534538"
+       x2="131.44611"
+       y2="51.570709"
+       gradientUnits="userSpaceOnUse" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient6346"
+       id="linearGradient6360"
+       gradientUnits="userSpaceOnUse"
+       x1="135.48671"
+       y1="35.534538"
+       x2="131.44611"
+       y2="51.570709" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient3159"
+       id="linearGradient3165"
+       x1="44.870743"
+       y1="30.390337"
+       x2="152.88957"
+       y2="247.43542"
+       gradientUnits="userSpaceOnUse" />
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="1.6908929"
+     inkscape:cx="166.10037"
+     inkscape:cy="133.30416"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     inkscape:window-width="1272"
+     inkscape:window-height="976"
+     inkscape:window-x="400"
+     inkscape:window-y="22"
+     width="200px"
+     height="200px"
+     showgrid="true">
+    <inkscape:grid
+       type="xygrid"
+       id="grid5817"
+       visible="true"
+       enabled="true"
+       spacingx="16px"
+       spacingy="16px"
+       empspacing="4" />
+  </sodipodi:namedview>
+  <metadata
+     id="metadata5454">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <cc:license
+           rdf:resource="http://creativecommons.org/licenses/by-nc-sa/3.0/" />
+        <dc:creator>
+          <cc:Agent>
+            <dc:title>Simon A. Eugster, hb9eia</dc:title>
+          </cc:Agent>
+        </dc:creator>
+        <dc:rights>
+          <cc:Agent>
+            <dc:title>cc-by-nc-sa, GFDL</dc:title>
+          </cc:Agent>
+        </dc:rights>
+      </cc:Work>
+      <cc:License
+         rdf:about="http://creativecommons.org/licenses/by-nc-sa/3.0/">
+        <cc:permits
+           rdf:resource="http://creativecommons.org/ns#Reproduction" />
+        <cc:permits
+           rdf:resource="http://creativecommons.org/ns#Distribution" />
+        <cc:requires
+           rdf:resource="http://creativecommons.org/ns#Notice" />
+        <cc:requires
+           rdf:resource="http://creativecommons.org/ns#Attribution" />
+        <cc:prohibits
+           rdf:resource="http://creativecommons.org/ns#CommercialUse" />
+        <cc:permits
+           rdf:resource="http://creativecommons.org/ns#DerivativeWorks" />
+        <cc:requires
+           rdf:resource="http://creativecommons.org/ns#ShareAlike" />
+      </cc:License>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Ebene 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <path
+       style="fill:url(#linearGradient3165);fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:7.54130362999999981;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="M 25.082601,21.790417 C 27.262287,109.95044 23.110538,233.99429 26.136168,233.99429 C 105.88971,231.52991 184.85988,234.98008 184.93029,233.99429 C 181.27312,141.84394 185.77714,31.759429 185.78594,24.591191 C 179.93831,22.182141 126.13519,23.709821 117.27282,23.258336 C 117.27282,23.258336 53.39416,21.550108 25.082601,21.790417 z"
+       id="path5819"
+       sodipodi:nodetypes="cccccc" />
+    <path
+       sodipodi:nodetypes="csccccssc"
+       id="path6334"
+       d="M 186.72544,15.490435 C 201.27817,13.762271 212.93476,55.256827 192.41998,67.446794 C 174.53512,78.07405 174.92326,77.509518 174.92326,77.509518 C 174.92326,77.509518 135.77975,7.009837 125.71646,32.168071 C 126.68185,55.793125 111.47879,129.39794 96.807655,171.30322 L 208.66914,168.63865 C 208.66914,168.63865 181.91021,118.68863 185.47808,116.01274 C 189.04594,113.33684 245.34407,67.792848 228.29237,34.843967 C 215.11878,9.388749 186.66907,4.7193505 186.72544,15.490435 z"
+       style="fill:#95f977;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+    <path
+       sodipodi:nodetypes="csccczssc"
+       id="path6336"
+       d="M 189.62516,10.270071 C 223.32525,8.0975454 227.33195,63.958654 209.49267,74.662228 C 191.65338,85.365802 184.98655,94.491326 184.98655,94.491326 L 145.21409,84.371407 C 144.65631,128.6289 121.60272,150.1615 101.24789,173.70637 C 101.24789,173.70637 237.05611,191.91983 242.54822,186.42773 C 247.71594,181.26001 208.39201,125.22843 211.95988,122.55254 C 215.52774,119.87664 262.05994,68.375628 245.51497,35.428742 C 218.29939,-18.767094 174.79322,11.001965 189.62516,10.270071 z"
+       style="fill:#528e40;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+    <path
+       style="fill:#54e428;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="M 185.87117,10.968408 C 216.22005,16.333919 213.11568,49.263529 205.9486,62.202989 C 195.86841,80.401794 176.18117,89.459678 176.18117,89.459678 L 135.1508,35.941806 C 134.59302,80.199302 126.67113,117.7482 112,159.65346 L 218.69489,173.00378 C 218.69489,173.00378 184.83911,123.05377 188.40697,120.37787 C 191.97484,117.70198 255.62023,57.667888 233.86209,27.618391 C 211.14151,-3.7602945 186.76312,9.1844787 185.87117,10.968408 z"
+       id="path5821"
+       sodipodi:nodetypes="csccccssc" />
+  </g>
+</svg>

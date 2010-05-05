@@ -1,0 +1,4 @@
+<div style="border: 1px solid #f80; border-left-width: 1em; border-right-width: .5em; color: #222; background-color: #fff; padding: .5em; margin-bottom: 1em; clear: right;">
+<p><strong>{{{1}}}</strong><br />
+{{{2}}}</p>
+</div>

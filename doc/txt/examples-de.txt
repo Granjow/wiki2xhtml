@@ -1,0 +1,12 @@
+{{Title:Beispiele %s}}
+{{Keywords:wiki2xhtml, php files, java, xhtml, beispiele}}
+{{Description:Ein paar Beispiele mit wiki2xhtml, die die Möglichkeiten zeigen (wie z. B. der Umgang mit PHP-Dateien).}}
+{{H1:Beispiele für wiki2xhtml}}
+
+{{:tplLang-de.txt|en=examples.html}}
+
+;[[ex-php-reload-de.php Aktualisierungs-Zähler]]
+:Eine PHP-Seite, die zählt, wie viele Male sie neu geladen wurde. Dieses Beispiel arbeitet mit Sessions<ref>Sessions: Siehe the [http://ch2.php.net/manual/en/ref.session.php sessions entry] at php.net.</ref>.
+
+== Fussnoten ==
+<references />

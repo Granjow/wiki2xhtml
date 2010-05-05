@@ -1,0 +1,46 @@
+{{H1:Über}}
+{{Title:Über %s}}
+
+{{:tplLang-de.txt|en=about.html}}
+
+== Über wiki2xhtml ==
+Wiki2xhtml entstand während meiner Maturaarbeit (Matura = Abitur) an der [http://www.ksbg.ch Kantonsschule am Burggraben]. Grund dafür war, dass ich etwas suchte, womit ich meine eigene Internetseiten ohne allzu grossen Aufwand erstellen konnte. Ursprünglich hatte ich diese von Hand geschrieben, und mit der Zeit verleidete es, immer die selben Blöcke (etwa in Galerien) einzufügen. So kam ich auf die Idee, das etwas zu automatisieren. Als Mit-Autor bei der [http://de.wikipedia.org/wiki/Benutzer:LivingShadow Wikipedia], den [http://de.wikibooks.org/wiki/Benutzer:Simon Wikibooks] und anderen Wikiprojekten war die Suche nach der passenden «Eingangssprache», die das Programm übersetzen soll, nicht sehr schwer. 
+
+Dass wiki2xhtml kein Online-CMS ist, hat den Vorteil, dass die Internetseite auch offline und ohne die andauernden Verzögerungen beim Laden einer Seite bearbeitet werden kann. Es ist daher auch für einen Benutzer ausgerichtet und nicht darauf, dass mehrere Benutzer an einer Seite arbeiten (wobei man das natürlich mit SVN und ähnlichem auch realisieren könnte). 
+
+== Entwickler ==
+
+=== Simon Eugster aka ''Granjow'' ===
+* '''Homepage:''' http://granjow.net, http://x.granjow.net, http://ham.granjow.net
+* '''wiki2xhtml:''' Programmierung, Übersetzung de und en <span style="color: #888;">(und etwas fr)</span>
+* '''OS:''' [http://sidux.com sidux]
+* '''Über mich:''' Ich bin lizenzierter schweizer Amateurfunker (hb9eia) und arbeite meistens am PC oder draussen mit der Kamera.
+
+=== Roland Engert aka ''RoEn'' ===
+* '''wiki2xhtml:''' Übersetzung ru
+
+=== Francesca Beatrice Cice ===
+* '''wiki2xhtml:''' Übersetzung it
+
+=== gandia ===
+* '''wiki2xhtml:''' Übersetzung es
+
+=== the_cobra ===
+* '''wiki2xhtml:''' Übersetzung hr
+
+<!--== Übersetzungsfortschritt ==
+{|
+| en || [[Image:progress-en.png]]
+|-
+| de || [[Image:progress-de.png]]
+|-
+| ru || [[Image:progress-ru.png]]
+|-
+| es || [[Image:progress-es.png]]
+|-
+| fr || [[Image:progress-fr.png]]
+|-
+| it || [[Image:progress-it.png]]
+|-
+| hr || [[Image:progress-hr.png]]
+|} -->

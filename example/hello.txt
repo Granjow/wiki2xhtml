@@ -1,0 +1,6 @@
+{{H1:Hello}}
+{{Title:Hello ...}}
+
+Just a friendly hello :)
+
+… with the World as subpage.

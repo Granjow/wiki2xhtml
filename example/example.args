@@ -1,0 +1,9 @@
+# First some arguments, like
+# * Which design to use
+# * Which file is the menu file
+args=--style=../style/hd -m menu.txt
+
+# Then a list of all files which have to be parsed
+index.txt
+hello.txt
+world.txt

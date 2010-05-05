@@ -1,0 +1,74 @@
+* {
+	padding: 0;
+	margin: 0;
+}
+body {
+	font: 12px  Verdana,sans-serif;
+	line-height: 1.6em;
+	background-color: #eff0f1;
+}
+#wrap {
+	margin: auto;
+	width: 800px;
+	text-align: center;
+}
+#image {
+	float: left;
+	width: 800px;
+	border: 1px solid #bbb;
+	margin-top: 20px;
+	margin-bottom: 2em;
+	padding-bottom: 20px;
+	background-color: #d9deb8;
+	display: block;
+	text-decoration: none;
+	color: #000;
+}
+#image:hover {
+	border-color: #666;
+}
+#image img {
+	background-color: #fff;
+	border: 1px solid #fff;
+	padding: 20px;
+}
+#name {
+	float: left;
+	text-align: center;
+	width: 800px;
+}
+#name h1 {
+	font-family: DejaVu, FreeSans, "Century Gothic", Verdana, sans-serif;
+	padding: 2em 0 .5em 10px;
+	margin-bottom: .5em;
+	border-bottom: 1px dotted #535d19;
+	font-weight: bold;
+	width: 90%;
+	margin-right: auto;
+	margin-left: auto;
+}
+#desc, #nav {
+	float: left;
+	text-align: center;
+	width: 800px;
+}
+#desc {
+	padding-bottom: 2em;
+}
+#desc dd {
+	font-weight: bold;
+}
+#nav a {
+	text-decoration: none;
+	font-weight: bold;
+	padding: .5em;
+	margin: .5em auto;;
+	border: 1px solid #ddd;
+	background-color: #fff;
+	color: #000;
+	display: block;
+	width: 90%;
+}
+#nav a:hover {
+	border-color: #aaa;
+}

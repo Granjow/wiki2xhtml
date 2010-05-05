@@ -1,0 +1,64 @@
+* {
+	padding: 0;
+	margin: 0;
+}
+body {
+	font: 12px  Verdana,sans-serif;
+	line-height: 1.6em;
+	background-color: #7e501e;
+}
+#wrap {
+	margin: auto;
+	width: 800px;
+	text-align: center;
+}
+#image {
+	float: left;
+	width: 800px;
+	border: 1px solid #56320a;
+	margin-top: 20px;
+	padding-bottom: 20px;
+	background-color: #57340b;
+	display: block;
+	text-decoration: none;
+	color: #000;
+}
+#image img {
+	background-color: #7e501e;
+	border: 1px solid #7e501e;
+	padding: 16px;
+}
+#name {
+	color: #fedd9f;
+	float: left;
+	text-align: center;
+	width: 800px;
+}
+#name h1 {
+	font-family: DejaVu, FreeSans, "Century Gothic", Verdana, sans-serif;
+	padding: 2em 0 0 10px;
+	margin-bottom: 1.5em;
+	font-weight: bold;
+}
+#desc, #nav {
+	float: left;
+	text-align: center;
+	width: 800px;
+	padding-bottom: 2em;
+}
+#desc dd {
+	font-weight: bold;
+}
+#desc .back, #desc table tr td a  {
+	text-decoration: none;
+	font-weight: bold;
+	padding: .2em 0 .2em 0;
+	margin: .5em 0 auto;;
+	border: 1px solid #ddd;
+	background-color: #b28240;
+	color: #000;
+	display: block;
+}
+#desc .back:hover, #desc table tr td a:hover {
+	background-color: #c68a38;
+}

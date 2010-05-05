@@ -1,0 +1,23 @@
+<p>
+<script type="text/javascript"><!--
+google_ad_client = "pub-0923687027411749";
+google_ad_width = 728;
+google_ad_height = 90;
+google_ad_format = "728x90_as";
+google_ad_type = "text_image";
+//2007-10-21: wiki2xhtml.sf.net
+google_ad_channel = "9790917663";
+google_color_border = "616E9A";
+google_color_bg = "6f2114";
+google_color_link = "5f5698";
+google_color_text = "FFFFCC";
+google_color_url = "FFCC66";
+google_ui_features = "rc:6";
+//-->
+</script>
+<script type="text/javascript"
+  src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+</p>
+<p>%d<br /><a href="http://wiki2xhtml.sf.net">wiki2xhtml</a> (GPL) %v</p>
+<p><a style="border-bottom: none;" href="http://sourceforge.net"><img src="http://sflogo.sourceforge.net/sflogo.php?group_id=182864&amp;type=3" width="125" height="37" alt="SourceForge.net Logo" /></a></p>

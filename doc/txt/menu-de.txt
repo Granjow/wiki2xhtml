@@ -1,0 +1,16 @@
+#!link_deactivate!link_strong
+* Home, index-de.html
+* News, news-de.html
+** Changelog, changelog-de.html
+* Download, download-de.html
+* Dokumentation, doc-de.html
+** Schnellstart, quickstart-de.html
+** Quickref, quickref-de.html
+** Usage, usage-de.html
+** PHP, php-de.html
+** Designs, doc-design-de.html
+* Beispiele, examples-de.html
+** Reload mit PHP, ex-php-reload-de.php
+* FAQ/Links, faq-de.html
+** Links, links.html
+* Über, about-de.html

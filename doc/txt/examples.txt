@@ -1,0 +1,14 @@
+{{Title:Examples %s}}
+{{Keywords:wiki2xhtml, php files, java, xhtml, examples}}
+{{Description:A few examples with wiki2xhtml which show the possibilities you have, e.g. using php files.}}
+{{H1:Examples for wiki2xhtml}}
+
+{{:tplLang.txt|de=examples-de.html}}
+
+;[[ex-php-reload.php Reload example]]
+:A page which counts how many times you've (re-)loaded the page with PHP. This example is working with Sessions<ref>Sessions: See the [http://ch2.php.net/manual/en/ref.session.php sessions entry] at php.net.</ref>.
+
+If you think you've got another good example, feel free to suggest it at the [[faq.html Mailing List]]!
+
+== References ==
+<references />

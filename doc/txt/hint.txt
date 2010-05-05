@@ -1,0 +1,1 @@
+<div class="hint"><strong>Hint:</strong> {{{1}}}</div>

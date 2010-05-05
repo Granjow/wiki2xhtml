@@ -1,0 +1,68 @@
+{{Title: Guida rapida %s}}
+{{Keywords:wiki2xhtml, guida rapida}}
+{{Author:Francesca Beatrice Cice}}
+{{Lang:it}}
+{{H1:› wiki2xhtml, Guida Rapida}}
+
+{{:tplLang-it.txt|de=quickstart-de.html|en=quickstart.html|others=[[quickstart-ru.html ru]]}}
+
+Cosa è realmente necessario per creare una pagina web con wiki2xhtml? Ecco una breve descrizione e introduzione sulle grandi potenzialità di wiki2xhtml.
+
+{{TOC}}
+== Creare file xhtml ==
+«Perché no html?». xhtml <ref>[http://it.wikipedia.org/wiki/XHTML Wikipedia: XHTML]</ref>è all'inizio simile all'html con la differenza che il codice è più pulito. Anche se si deve verificare che il browser legga i file con questo formato. 
+
+wiki2xhtml legge il testo da un ''file di testo''<ref>file di testo: Vedere [http://it.wikipedia.org/wiki/TXT]</ref>. File binari<ref>File Binari: Vedere [http://it.wikipedia.org/wiki/File_binario]</ref> (come le immagini) che non contengono testo non sono accettati. Per modificare e scrivere file di testo, è raccomandato per gli utenti Windows di usare  un editor come  [http://sourceforge.net/project/showfiles.php?group_id=95717&amp;package_id=102072 Notepad++], [http://www.pspad.com/it/ PS''Pad''] o [http://www.flos-freeware.ch/notepad2.html Notepad2] (è consigliato non usare l'editor fornito dalla Microsoft, per alcuni problemi riscontrati). Buoni editor, indipendenti dai sistemi operativi, sono per esempio [http://jedit.org/ jEdit] (Java) e [http://www.vim.org/ Vim] (per tastiere particolari).
+
+L'estensione del file di testo è irrilevante, ma «.txt» è raccomandato, così che immediatamente si sa che è un  file di testo.  Se non si ha un testo tra le mani si può creare un file xhtml, si potrebbe usare  un filtro di testo <ref> [http://en.wikipedia.org/wiki/Filler_text Filter Text] per capire come questo lavora, vedere anche  [http://de.wikipedia.org/wiki/Blindtext Blindtext (de)].</ref> Ora si deposita il testo all'interno di un file (potrebbe essere  $$index.txt$$ che diventerà $$index.html$$ dopo la conversione; questo file è mostrato in automatico se si visita la pagina) in una directory separata. In questa directory (per esempio «page» la directory del programma) può custodire tutti i dati  che necessitano di essere rivisti. 
+
+Questo programma è avviato in questo modo:
+*'''Windows:''' Doppio click sul file wiki2xhtml.jar o start.bat o, se si preferisce, scrivere $$java -jar wiki2xhtml.jar$$ da Linea di Comando<ref>Console di Windows: [http://en.wikipedia.org/wiki/Cmd.exe cmd.exe]</ref> (nella directory del programma).
+*'''Linux:''' Eseguire wiki2xhtml nella Shell con  $$./wiki2xhtml$$ o $$wiki2xhtml.jar$$ (nella directory del programma). Eventualmente sarà il caso di aggiungere un &amp; se si desidera eseguirlo background, così da continuare a lavorare, la Shell non è  «bloccata».
+
+Nella finestra di dialogo che appare si può aggiungere il file desiderato (index.txt) cliccando sul bottone «Select/Add files». Click «Next» e «Vai!». Il file  index.html sarà creato nella directory «html».
+
+Se questo è abbastanza, «Exit». Se no, si può ritornare alla precedente visualizzazione<ref>Wikipedia: [http://it.wikipedia.org/wiki/Interfaccia_grafica Tab].</ref>  e cambia le impostazioni (e si va avanti con la guida rapida).
+{{Top}}
+== Aggiungi un menù ==
+In poco tempo le pagine web aumentano, tutto normale! – sarà necessario un menù per la navigazione. Per evitare di inserire questo menù in ogni pagina e per evitare di modificare ciascuna pagina in caso  di  variazioni, si può salvare il menù in un file separato. E' costruito secondo il pattern «* Title 1, Filename 1 &#x21b5; * Title 2, Filename 2 &#x21b5; &hellip;» (&#x21b5; premere una volta invio). Creare un secondo file di testo (blindtext.txt) vuoto (e ancora un altro). Bisogna considerare che l'estensione del file è  $$.html$$ mentre prima della conversione l'estensione del file era $$.txt$$ ! Così index.txt diventa index.html, blindtext.txt diventa blindtext.html. I nuovi file ora hanno nel menù i nomi «Home» e «Blindtext&rdquo. Creare un nuovo file di testo per la barra del menù (navigation.txt) e inserire il menù:
+
+$$
+<nowiki>* Home, index.html
+* Blindtext, blindtext.html</nowiki>
+$$
+
+Ora (in wiki2xhtml) scegliere il file navigation.txt sotto «Settings > Imposta il file index» e cliccare ancora su «Go!»
+{{Top}}
+== Formattazione ==
+Ci sono ancora pochi comandi da conoscere. Si può avere una completa visione di tutti i possibili comandi in [[doc.html Documentation]].
+
+'''Intestazioni''' devono essere inseriti in linee separate. Per intestazioni di secondo livello si inseriranno due segni di uguale all'inizio e alla fine della linea  (per un terzo livello si inseriranno tre segni di uguale e così via fino ad un massimo di 6): 
+$$
+<nowiki>== La barba di Ali Babà  ==</nowiki>
+$$
+ L'intestazione di secondo livello, sebbene sia l'intestazione della pagina, può essere impostata ovunque nel testo utilizzando il seguente comando: 
+$$
+&#123;{H1:La vita di Ali Babà}}
+$$
+
+
+I '''Link''' sono riconosciuti automaticamente, se iniziano con <nowiki>http://</nowiki>, www, o <nowiki>ftp://</nowiki>. Se si vuole impostare un nome per il link, può essere etichettato così: 
+$$
+<nowiki>[http://freepdfxp.de/fpxp.htm Crea file pdf]</nowiki>
+$$
+ è la pagina presente nello stesso dominio (per esempio  wiki2xhtml.sourceforge.net/doc.html è stata collegata con  wiki2xhtml.sourceforge.net/doc-de.html), si può invece impostare un link interno (qui come doc.html): 
+$$
+<nowiki>[[doc.html English]]</nowiki>
+$$
+ Questo porta al seguente link: [[doc-de.html Italiano]]. Se si hanno problemi con i link, si può dare un'occhiata alla [[doc.html#h_Links Documentation]]. Se non è sufficiente, si potrebbe leggere le FAQ nella documentazione o chiedere in  [http://lists.sourceforge.net/mailman/listinfo/wiki2xhtml-users mailing-list]. 
+
+'''Grassetto/Corsivo:''' Per marcare si usa l'apostrofo. Si imposta il corsivo se si racchiude il testo tra due apostrofi, se si utilizzano tre apostrofi si imposta il grassetto. 
+$$
+<nowiki>'''Bold''' e ''italic'' insieme e'  '''''orrendo!'''''</nowiki>
+$$
+
+{{Top}}
+
+== Footnotes ==
+<references />

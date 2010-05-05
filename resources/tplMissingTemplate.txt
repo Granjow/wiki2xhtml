@@ -1,0 +1,7 @@
+<div style="border: 2px solid #f00; width: 90%; background-color: #fefefe; color: #333; padding: .5em;">
+<p>The template <strong>{{{0}}}</strong> could not be found. Please make sure that
+<ul><li>the file <code style="font-weight: bold; border-bottom: 2px solid #f00;">{{{0}}}</code> exists</li>
+<li>the path is correct.</li>
+</ul></p>
+<p>If it should work, but does not, please report a bug in the <a href="https://sourceforge.net/apps/mantisbt/wiki2xhtml/bug_report_page.php">Mantis Bug Tracker.</a>.</p>
+</div>

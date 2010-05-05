@@ -1,0 +1,78 @@
+<?xml version="1.0"?> 
+<project name="wiki2xhtml" basedir="." default="build">
+
+  <property name="wiki2xhtml.version" value="3.4b8"/>
+  <property name="build.classes" value="build"/>
+  <property name="build.libs" value="build/lib"/>
+  <property name="path.gettext" value="gettext-commons-0.9.6.jar"/>
+  <property name="path.junit" value="junit-4.6.jar"/>
+
+  <path id="classpath">
+    <pathelement location="./"/>
+    <pathelement location="./lib/${path.gettext}"/>
+    <pathelement location="./lib/${path.junit}"/>
+  </path>
+
+  <!-- create a property containing all .jar files, prefix lib/, and seperated with a space -->
+  <!-- Found at http://martin.ankerl.com/2005/11/30/howto-create-manifestmf-classpath-from-ant/ , thanks! -->
+  <pathconvert property="mf.libs" pathsep=" ">
+    <mapper>
+      <chainedmapper>
+
+        <!-- remove absolute path -->
+        <flattenmapper />
+
+        <!-- add lib/ prefix -->
+        <globmapper from="*" to="lib/*" />
+
+      </chainedmapper>
+    </mapper>
+    <path>
+      <fileset dir="lib">
+        <include name="**/*.jar" />
+      </fileset>
+    </path>
+  </pathconvert>
+
+
+  <target name="build" depends="clean" description="Build .jar file">  
+    <mkdir dir="${build.classes}"/>
+    <javac srcdir="."
+	   destdir="${build.classes}"
+	   debug="true"
+	   deprecation="true"
+	   optimize="true">
+      <classpath refid="classpath"/>
+    </javac>
+
+    <mkdir dir="${build.libs}"/>
+    <copy todir="${build.libs}">
+      <fileset dir="lib"/>
+    </copy>
+
+    <jar jarfile="wiki2xhtml.jar">
+      <fileset dir="${build.classes}"/>
+      <fileset dir=".">
+	<include name="resources/*"/>
+	<include name="bin/**"/>
+	<include name="*.txt"/>
+	<include name="*.PHP"/>
+	<include name="*.wx"/>
+	<include name="wiki2xhtml"/>
+	<include name="start.bat"/>
+	<exclude name="howto-RELEASE.txt"/>
+      </fileset>
+      <manifest>
+	<attribute name="Built-By" value="Simon A. Eugster" />
+	<attribute name="Main-Class" value="src.LauncherForJar" />
+	<attribute name="wiki2xhtml-Version" value="${wiki2xhtml.version}"/>
+	<attribute name="Class-Path" value="${mf.libs}"/>
+      </manifest>
+    </jar>
+  </target>
+
+  <target name="clean" description="clean up">
+    <delete dir="${build.classes}"/>
+  </target>
+
+</project>

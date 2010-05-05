@@ -1,0 +1,63 @@
+<!--head-->
+{{:tplNavStyle.txt}}
+<!--/head-->
+
+{{Title:Usage of wiki2xhtml %s}}
+{{Keywords:wiki2xhtml, usage, xhtml}}
+{{H1:Usage of wiki2xhtml}}
+{{:tplLang.txt|de=usage-de.html}}
+
+{| id="navTable" style="width: 100%" cellpadding="0" cellspacing="2";
+|- style="background-color: #fa0;"
+| colspan="2" | [[quickstart.html Quickstart]]
+| colspan="2" | [[quickref.html Quickref]]
+| style="background-color: #fff; color: #000; text-align: left;" | Introduction
+|- style="background-color: #f80;"
+| colspan="4" | [[doc.html Doku]]
+| style="background-color: #fff; color: #000; text-align: left;" | Documentation
+|- style="background-color: #f60;"
+| style="width: 20%" class="mark" | [[usage.html Usage]]
+| style="width: 20%" colspan="2" | [[doc-design.html Design]]
+| style="width: 20%" | [[php.html PHP]]
+| style="background-color: #fff; color: #000; text-align: left;" | Immersion
+|}
+
+wiki2xhtml is a little bit different to most other programs. It doesn't have to be installed, and that simplifies the transport of a web page project extremely: You only have to make sure that Java 1.5 or higher is installed on the target machine, and you can copy the entire directory, containing the program and the source files, on the other computer and go on working—or simply work portable on an usb stick.
+
+== Which components of wiki2xhtml are really needed? ==
+'''wiki2xhtml.jar'''—nothing more!
+
+Further components are optional and individual for every web page. Usually they are:
+* The text files in Wikitext with the content,
+* a design and
+* the configuration files.
+The common file for the standard settings like page title, language and more, the menu and the footer file belong to the configuration files.
+
+== Which directory structure is suggested? ==
+wiki2xhtml works without subdirectories when creating the XHTML files, they are all written into the same directory. It's therefore best to have all source files in one directory too—that way you can just prevent duplicate filenames. A short overview of the directory structure:
+$$
+/ base directory
+  wiki2xhtml.jar
+  ''Wikitext files''
+  ''configuration files''
+  
++ html/
+  + pic/
+    ''images (.jpg, .png, &hellip;)''
+  + thumb/
+    ''image thumbnails''
+  
++ style/
+  + ''design-name/''
+    ''design files''
+$$
+The generated files are written into the directory $$html$$. The used images are put into a subdirectory of this directory, $$pic$$ in this example, and the corresponding thumbnails into the directory $$thumb$$. Use further directories, e.g. one for documents, if the page is bigger. Tip: Use singular names for the directories (or plural, if you like it more)—don't mix it!
+
+The directory $$style$$ contains the design used on the page. It may be an own one or an adjusted copy of an already existing one.
+
+== What is the fastest way to generate my web page? ==
+wiki2xhtml works both in graphical mode and in text mode. The graphical mode is interesting especially for trying it out, the text mode is faster for an existing project.
+
+If wiki2xhtml is started by double-clicking the jar file or $$wiki2xhtml.bat$$ (Windows) respectively $$wiki2xhtml$$ (Unix systems, Mac OS X), the GUI (Graphical User Interface) is opened and wiki2xhtml works in the graphical mode. Files can be chosen in the file browser and the settings chosen with the mouse.
+
+If an already existing project—pages which are no longer used for testing—has to be generated, the settings will often stay the same. In this case it's possible to export a little script in the GUI ''(File > Export)'' which can be double-clicked and which then automatically generates the project. Interested users find more about that in the [[doc.html#h_Commandlinemode Documentation]].

@@ -1,0 +1,16 @@
+#lang {
+	position: absolute;
+	float: right;
+	right: 20px;
+	top: 165px;
+}
+#lang span {
+	height: 29px;
+	float: left;
+	color: #fff;
+	padding-top: 5px;
+}
+#lang span a {
+	color: #fff;
+	border-bottom: none;
+}

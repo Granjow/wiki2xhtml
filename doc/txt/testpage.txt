@@ -1,0 +1,81 @@
+{{H1:Design Test}}
+{{AddKeywords:test page}}
+This page tries to use as much functions of wiki2xhtml<ref>This is a footnote. Use the pseudo-class :target here!</ref> as possible to make it easier to create own designs. Below the TOC, Table of Contents:
+
+{{TOC}}
+
+== So? [heading 2] ==
+Below headings of every number is put some text so that the distances between text and heading can be seen easily.
+
+For external [http://en.wikipedia.org/wiki/Link links] (class .external) you might want to use a background-image with the style-arguments 
+$$
+background:	url(external.png) center right no-repeat;
+padding-right:	14px;
+$$
+, setting the padding-right to a little more than the image width. [[news.html Internal links]] may be formatted too (class internal).
+
+=== Text markups [heading 3] ===
+Often used is ''italic type'' (the <code>em</code> tag<ref>Tags are surrounded by the <code>code</code> tag which is usually written with mono-space fonts.</ref>) perhaps padding-right and padding-left is not too bad if the italic text is in brackets. (An italic ''f'') might touch the bracket!
+
+This is '''bold type''' (the <code>strong</code> tag). It is rarely used '''''together with italic type!'''''
+
+Other formattings which can be used are the --del-- tag, the ++ins++ tag, the $$code$$ tag, the @@cite@@ tag, the ::samp:: tag and the 01kbd01 tag. Additional with the class $$.block$$ are the code tag (see above) and samp, cite and kbd.
+ ::
+If you want whitespaces (including tabs and new lines) to be displayed as they have been entered, you can set the CSS property $$white-space$$ to $$pre$$.
+ ::
+@@
+When politicians are speechless\\ 
+they make a speech.\\ 
+	(unknown)
+@@
+01
+List one file per line:
+$ ls -1
+01
+
+==== Firefox Addons [heading 4] ====
+Addons which simplify designing (and other things, providing a longer list) are e.g. (a unordered list is following):
+* [https://addons.mozilla.org/de/firefox/addon/1843 Firebug]
+** [https://addons.mozilla.org/de/firefox/addon/60 Web Developer]
+*** [https://addons.mozilla.org/en-US/firefox/addon/5809 Firefox Accessibility Extension]
+* [https://addons.mozilla.org/en-US/firefox/addon/427 ScrapBook]
+** [https://addons.mozilla.org/en-US/firefox/addon/39 Mouse Gestures]
+
+===== Lists [heading 5] =====
+Ordered list:
+# 1
+## 2
+### 3
+
+====== Definition lists [heading 6] ======
+More than heading 6 luckily is not allowed.
+
+Definition lists can be used for various things. Like …
+;A special word …
+:And its definition.
+::(perhaps level 2?)
+:Previous level again.
+;Definition lists
+:can be used for other things
+:and are handy :)
+
+== Images ==
+[[Image:mountain_sunrise.jpg|thumb|right|thumb=mountain_sunrise-thumb.jpg|Sunrise in [http://en.wikipedia.org/wiki/Switzerland Swiss] mountains]]
+Image with the class $$.right$$. The image page has to be designed too, don't forget it.
+
+<br style="clear: both; " />
+[[Image:mountain_sunrise.jpg|thumb|left|300px]]
+This is an image without a description and the class $$.left$$. I've used $$&lt;br style="clear: both;" /&gt;$$ above to have a little space between the images. You can see it in the source code of this page.<!--yes, that here is the source code! Always take a look at it if you find something you'd like to use too. Especially the original Wikitext files. - What you see here is an HTML comment.-->
+
+<br style="clear: both; " />
+== And tables ==
+{|
+! Some comments about tables !! Possible solutions
+|-
+| Tables need air to breathe, don't squeeze the things together too much || padding for td/th
+|-
+| Ensure whether you really need the vertical bars || 
+|}
+
+== References [heading 2] ==
+<references />

@@ -1,0 +1,682 @@
+<!--head-->
+{{:tplNavStyle.txt}}
+</style>
+<!--/head-->
+{{Title:Dokumentation %s}}
+{{Keywords:wiki2xhtml, java, xhtml, dokumentation, hilfedatei}}
+{{Description:Eine Übersicht bzw. ein Nachschlagewerk über alle Funktionen von wiki2xhtml, einschliesslich einer kurzen Einführung.}}
+{{H1:› wiki2xhtml-Dokumentation}}
+{{DescForCaption}}
+{{TitleRule:Bild. %caption %s}}
+
+{{:tplLang-de.txt|en=doc.html}}
+
+{| id="navTable" style="width: 100%" cellpadding="0" cellspacing="2";
+|- style="background-color: #fa0;"
+| colspan="2" | [[quickstart-de.html Quickstart]]
+| colspan="2" | [[quickref-de.html Quickref]]
+| style="background-color: #fff; color: #000; text-align: left;" | Einstieg
+|- style="background-color: #f80;"
+| colspan="4" class="mark" | [[doc-de.html Doku]]
+| style="background-color: #fff; color: #000; text-align: left;" | Dokumentation
+|- style="background-color: #f60;"
+| style="width: 20%" | [[usage-de.html Usage]]
+| style="width: 20%" colspan="2" | [[doc-design-de.html Design]]
+| style="width: 20%" | [[php-de.html PHP]]
+| style="background-color: #fff; color: #000; text-align: left;" | Vertiefung
+|}
+
+Dies ist die Hauptdokumentation zu wiki2xhtml. Die Dokumentation ist wie oben zu sehen aufgebaut. Für die ersten Schritte ist es empfehlenswert, mit den Einstiegsseiten zu beginnen. Die Hauptdokumentation (aktuelle Seite) wird am besten zum Nachschlagen verwendet. 
+
+Um wiki2xhtml ausführen zu können, benötigst du die Java Runtime<ref>Java kann kostenlos unter [http://java.com/ java.com] heruntergeladen werden.</ref> Version 1.6 oder höher.
+
+''Sollte hier etwas fehlen oder unverständlich sein, melde es bitte im [http://forum.granjow.net/ wiki2xhtml-Forum]!''
+
+== Letzte Änderungen ==
+Neu seit wiki2xhtml 3.4
+* [[#namespace Namespaces für Links]]
+* [[#h_Menu Kommentare in Menus]]
+* [[#titlerule Regeln für den Fenstertitel von Bilderseiten]]
+* [[doc-design-de.html#toctpl Vorlage für Inhaltsverzeichnis]]
+* [[#h_Bilder Bilder: Argumente]]
+* [[#h_Meta-Informationen Meta-Informationen: Benutzerdefinierter Meta-Inhalt]]
+
+{{TOC|Inhaltsverzeichnis}}
+
+== Neue Seiten erstellen ==
+[[Image:gui.png|thumb|thumb=gui_thumb.png|small|right|Ein Teil des GUI in wiki2xhtml&nbsp;3.2]]
+
+Im GUI kannst du die Dateien, die du parsen willst, sowie die weiteren benötigten Dateien mit den folgenden Buttons auswählen:
+: <img src="open.png" alt="Icon «Öffnen»" /> (Nur eine Datei kann ausgewählt werden, z.&thinsp;B. die header-Datei)
+: <img src="mopen.png" alt="Icon «Mehrere Öffnen»" /> (Um mehrere Dateien auszuwählen; Hier kannst du ''Shift'' oder ''Ctrl'' halten) oder
+: <img src="dir.png" alt="Icon «Ordner wählen»" /> (Um einen Ordner zu wählen)
+{{Top}}
+
+=== Menu ===
+Das Menu wird aus einer Datei gelesen, damit man es nicht bei jeder Seite manuell einfügen muss (und bei einer Änderung auch wieder überall ändern&nbsp;&hellip;). Jeder Eintrag steht auf einer neuen Zeile in Listenform.
+ ::
+<nowiki>
+#!link_deactivate !link_strong<br />
+Menu<br />
+* Links, links.html<br />
+** Hier, here.html<br />
+** Dort, http://granjow.net<br />
+# Dies ist ein Kommentar, da er mit einem # beginnt
+</nowiki>
+ ::
+Hier kommt nach der Überschrift «Menu» ein Eintrag «Links» mit einem Untermenu, das zwei weitere Einträge enthält. Die erste, auch optionale, Zeile beschreibt, was mit Links auf die aktuelle Seite geschehen soll. Sie muss mit $$#!$$ beginnen und kann folgende Befehle beinhalten:
+* $$link_strong$$ — Der Link wird fett dargestellt
+* $$link_deactivate$$ — Der Link wird deaktiviert
+Die oben genannten Einstellungen können auch explizit deaktiviert werden, indem man ihnen eine Null anhängt ($$link_strong0$$).
+
+Zeilen können mit einem # auskommentiert werden und werden dann nicht verarbeitet.
+{{Top}}
+
+=== Fenstertitel === 
+Es bestehen zwei Möglichkeiten, den Fenstertitel, der in der Menuleiste erscheint, zu ändern, und man kann diese beiden Möglichkeiten sogar kombinieren. Die erste ist für viele Seiten gedacht, denn da wird der Titel in die Konfigurationsdatei gespeichert und bei allen Seiten eingefügt. Die zweite Möglichkeit ist, den Titel irgendwo in der Quelldatei mit einem &#123;{Title:&hellip;}} zu übergeben.
+
+Wie bereits gesagt können die Fenstertitel kombiniert werden. Der «allgemeine» Fenstertitel, der mit der Datei übergeben wird, gilt für jede Seite, der andere ist seitenspezifisch und ''ersetzt'' den allgemeinen Fenstertitel. Indem du ein $$%s$$ an der gewünschten Stelle im seitenspezifischen Titel einfügst, kannst du an dieser Stelle das Programm den allgmemeinen Fenstertitel einfügen lassen. Beispiel: Deine Seite kann auf sourceforge.net gefunden werden, also willst du in all deinen Fenstertiteln ein «– .::sourceforge.net» haben. Die aktuelle Seite ist über ein Spiel, sagen wir dem mal «Tetris». Nun willst du, dass im Titel «Tetris – .::sourceforge.net» steht. Dazu benötigst du in der Quelldatei (mit dem Inhalt der Seite) folgenden Code:
+ ::
+&#91;Inhalt]<br />
+&#123;&#123;Title:Tetris, %p %s}}<br />
+&#91;Inhalt]
+ ::
+In der Datei common.txt musst du nun die folgende Zeile, die den allgemeinen Titel enthält &ndash; welcher möglichst alle Zeichen enthalten sollte, die immer wieder vorkommen, also in diesem Beispiel auch das «–» &ndash; hinzufügen:
+ ::
+<nowiki>{{DefaultTitle:– .::sourceforge.net}}</nowiki>
+ ::
+Das $$%p$$ wird, falls das Dokument Seitenumbrüche enthält, mit «Seite x von y» ersetzt.
+{{Top}}
+
+=== Header ===
+Der Header wird heute oft dazu verwendet, Benutzer wieder zurück auf die Startseite zu führen -- eine nützliche Hilfe! Der Link zurück zur Startseite kann mit &#123;{Homelink:&hellip;}} (irgendwo im Text oder auch in der Konfigurationsdatei) gesetzt werden. Als Beispiel nach sf.net/projects/wiki2xhtml:
+<nowiki>
+$$
+&#123;{Homelink:http://sf.net/projects/wiki2xhtml}}
+$$
+</nowiki>
+Klickt man nun auf den Header (meistens ein Bild), gelangt man hierhin zurück.
+{{Top}}
+
+=== Footer ===
+Der Footer, ein kurzes Stück Text am Ende der Seite, muss auch in eine separate Datei geschrieben werden. Er könnte folgendermassen ausschauen:
+ ::
+&lt;p&gt;Diese Seite wurde erstellt mit &lt;a href="http://sf.net/projects/wiki2xhtml"&gt;wiki2xhtml&lt;/a&gt; %v.&lt;/p&gt;<br />
+&lt;p&gt;Erstellungsdatum: %d&lt;/p&gt;
+ ::
+Das $$%v$$ wird durch die aktuelle Versionsnummer des Programmes ersetzt, das %d mit dem aktuellen Datum und der Zeit. Vergiss die &lt;p&gt; nicht!
+
+Du kannst einen Footer mit dem Argument <code>-f DATEI</code> oder <code>--footer=DATEI</code> hinzufügen:
+01
+$ java -jar wiki2xhtml help.txt --footer=footer.txt
+$ java -jar wiki2xhtml help.txt -f footer.txt
+01
+{{Top}}
+
+=== Inhaltsverzeichnis ===
+Mit &#123;{TOC}} kann an einer beliebigen Stelle im Text ''ein'' Inhaltsverzeichnis eingefügt werden. Der Standardtitel kann durch eine alternative Überschrift ersetzt werden mit {{TOC|Überschrift}}.
+{{Top}}
+
+=== Quellenangaben ===
+Um im Text Fussnoten oder Quellenangaben einzufügen, kann der ref-Befehl verwendet werden. So steht die Erklärung/Quelle nicht störend mitten im Text. Sie können am Ende der Seite mit <code>&lt;references /&gt;</code> wieder eingefügt werden. Im Text sieht das zum Beispiel folgendermassen aus:
+ ::
+Fussnoten&lt;ref&gt;Durch eine Fussnote können Anmerkungen oder Quellenangaben im Fliesstext ausgelagert werden.&lt;/ref&gt; sind oft schwerer zu spielen, da die Füsse weniger beweglich sind als die Hände.<br />
+&hellip;<br />
+<nowiki>== Fussnoten ==</nowiki><br />
+&lt;references /&gt;
+ ::
+Das Resultat: «Fussnoten<ref>Durch eine Fussnote können Anmerkungen oder Quellenangaben im Fliesstext ausgelagert werden.</ref> sind oft schwerer zu spielen, da die Füsse weniger beweglich sind als die Hände.»
+
+{{:hint-de.txt|Vor den Fussnoten werden keine Leerschläge gesetzt.}}
+{{Top}}
+
+=== Konfigurationsdatei ===
+Um die Handhabung der verschiedenen Einstellungen (wie Autor und Sprache, Übersicht in der [[quickref-de.html Quickref]]) etwas zu vereinfachen, können diese Einstellungen nun in einer einzigen Datei gesetzt werden.
+
+Die Konfigurationsdatei (hier common.txt genannt; common steht für «gemeinsam») wird mit dem folgenden Argument übergeben:
+01
+$ java -jar wiki2xhtml.jar -c common.txt
+01
+{{Top}}
+
+== Seitengestaltung ==
+
+=== Überschriften ===
+Überschriften solltest du immer mit dem zweiten Level beginnen -- nebenbei, die erste Überschrift ist hier sowieso deaktiviert &ndash;, da das erste für die Überschrift über die gesamte Seite steht, also einen Seitentitel. Um eine Überschrift auf dem zweiten Level einzufügen, zum Beispiel «Guten Morgen», setzt du vor und nach den Text zwei Gleichheitszeichen (und für das dritte Level drei etc.). Die Überschrift muss auf einer separaten Linie stehen. Das sieht dann folgendermassen aus:
+ ::
+&#x003d;= Guten Morgen ==
+ ::
+Der Seitentitel, also die erste Überschrift, kann mit &#123;{H1:&hellip;}} gesetzt werden. Beispiel:
+ ::
+&#123;{H1:Fotografie ohne Kamera}}
+ ::
+{{Top}}
+
+=== Absätze ===
+Absätze können mit einer neuen (leeren) Linie eingefügt werden.
+ ::
+Er stand alleine im Raum den Arm ausgestreckt, als ob er etwas suchte. Dann&amp;nbsp;&amp;ndash; plötzlich wurde es dunkel um ihn!<br /><br />
+Er konnte einfach nicht schlafen, wenn das Licht an ist.
+ ::
+{{Top}}
+
+=== Zeilenumbrüche  ===
+Zeilenumbrüche können mit zwei Backslashes gefolgt von einem Leerzeichen\\ $$&#92;&#92;&nbsp;$$ \\ eingefügt werden.
+{{Top}}
+
+=== Seitenumbrüche ===
+Seitenumbrüche werden mit folgenden Zeilen eingefügt:
+ ::
+\\//<br />
+---<br />
+//\\
+ ::
+Dieses Muster wurde gewählt, weil es im Text gut sichtbar ist. 
+
+Achtung: Nowiki-Tags werden nicht beachtet!
+
+=== Formatierung ===
+Um Text kursiv oder fett zu formatieren, umschliesse ihn mit entweder zwei oder drei Apostrophen. Benutze Fettschrift nicht zu oft, sie sollte nur verwendet werden, um ein Lemma hervorzuheben. Beispiel:
+ ::
+Ein &#39;&#39;&#39;Lemma&#39;&#39;&#39; is etwas, um das es sich in einem Absatz oder sogar ganzen Text &#39;&#39;handelt.&#39;&#39;
+ ::
+{{Top}}
+
+=== Links ===
+Es gibt zwei Arten von Links: Absolute und relative. Der Unterschied: Ein absoluter oder externer Link führt gewöhnlicherweise zu einer Seite wie http://www.gimp.org. Ein relativer oder interner Link wird benutzt, um zusammengehörende Seiten untereinander zu verlinken, die oft auch im selben Verzeichnis liegen.
+
+URLs wie http://sourceforge.net werden ohne weiteres erkannt und etwaige Punkte oder andere Satzzeichen entfernt. Wenn du einem Link einen anderen Namen geben willst, umschliesse ihn mit eckigen Klammern und füge die Beschreibung nach einem Leerzeichen an: <code>&#91;&#104;ttp://www.scribus.net Scribus]</code> führt zu [http://www.scribus.net Scribus].
+
+Relative Links zur Navigation innerhalb einer Seite werden mit zwei eckigen Klammern gekennzeichnet: $$&#91;&#91;doc.html&#93;&#93;$$ etwa führt zur englischsprachigen Ausgabe dieser Seite: [[doc.html]]. Der Seitenname kann auch mit anderem Text ersetzt werden, indem man diesen Linktext mit einem Leerzeichen oder einem vertikalen Strich («|») vom Link trennt. Siehe auch «[[#h_Zeichenescapen Zeichen escapen]]» für weitere Informationen.
+
+~~namespace~~ Für Links, die immer wieder verwendet werden (etwa zur Wikipedia), kann in der optionalen Konfigurationsdatei [[#h_Konfigurationsdatei common.txt]] einen [[quickref-de.html#namespace Namespace]] definiert werden, zum Beispiel $$<nowiki>&#123;&#123;Namespace:w=http://de.wikipedia.org/wiki/%s|cut&#125;&#125;</nowiki>$$. So wird zum Beispiel $$<nowiki>w:Zahnpaste</nowiki>$$ durch einen Link auf [http://de.wikipedia.org/wiki/Zahnpaste] ersetzt.
+
+Beispiele:
+ ::
+<nowiki>
+http://www.gimp.org ist der Link zum «GNU Image Manipulation Program».<br />
+[http://www.gimp.org GIMP] ersetzt den Linknamen mit «GIMP».<br />
+[[help-de.txt Diese Datei]] ist die Quelle für dieses HTML-Dokument, das du gerade siehst.<br />
+[w:Zahnpaste] ist schlecht für den Zahnarzt.
+</nowiki>
+ ::
+
+Hinweise: 
+* Wenn du einen relativen Link zu einer Seite einfügst, die vom Programm generiert wird, vergiss nicht, dass die Endung nachher .html lautet!
+* Interne Links auf die aktuelle Seite werden deaktiviert: <code><nowiki>[[doc-de.html]]</nowiki></code> wird zu [[doc-de.html]] (siehe auch im Menu).
+* |Link und Beschreibung können entweder mit einem <code>|</code> oder mit einem Leerschlag getrennt werden. Das Pipe-Symbol ist für das Programm «wichtiger» als ein Leerschlag.
+
+~~anchor~~
+=== Anker ===
+Es ist auch möglich, Anker innerhalb einer Seite zu verwenden. In HTML werden dazu Elementen, zum Beispiel einer Überschrift, eine ''einmalige'' ID vergeben, zu der man mit einem Link springen kann. Überschriften bekommen automatisch eine zugewiesen, es können aber auch innerhalb des Textes welche verwendet werden. 
+
+Überschriften haben die ID «h_» gefolgt von der Überschrift selber, in leicht abgeänderter Form. Einige Sonderzeichen wie Leerzeichen werden entfernt (Um genau zu sein: Es wird ein XML-Name verwendet, alle erlaubten Zeichen sind [http://www.w3.org/TR/xml/#NT-Name hier] aufgelistet, in eindeutiger, aber etwas schwer verständlicher Form). Der einfachste Weg, um  herauszufinden, wie die ID einer Überschrift lautet, ist, sie im Code-Fenster im GUI von wiki2xhtml einzufügen. 
+
+Du kannst auch einen eigenen «Anker», also eine Stelle, zu der gesprungen werden kann, im Text einfügen. Dies geschieht mit dem Kommando <code>&#x007e;~''eindeutiger Name''&#x007e;~</code>. Der Name darf dabei nur ein  Mal vorkommen. Danach kannst du (beliebig oft) an diese Stelle verlinken. 
+
+Um nun einen Link auf einen solchen Anker zu setzen, hängt man dem Ziel ein <code>#</code>, gefolgt vom Namen des Ankers, an. Falls sich das Ziel auf der selben Seite befindet, kann der Seitenname weggelassen werden. Folgende Beispiele linken auf die [[#gallery Galerie]] und auf die Überschrift «[[#h_Tabellen Tabellen]]»:
+ ::
+&#x007e;~gallery&#x007e;~<br />&hellip;<br /> &#91;[doc-de.html#gallery Galerie]] hat das selbe Ziel wie &#91;[#gallery Galerie]]<br />&#91;[#'''h_'''Tabellen Tabellen]] (Gross-/Kleinschreibung nicht vergessen!)
+ ::
+{{Top}}
+
+=== Bilder ===
+Es ist einfach, Bilder einzufügen. Wenn du zum Beispiel ein Bild mit dem Namen «img.jpg» hast, füge deiner Seite den Code <code>&#91;&#91;Image:img.jpg&#93;&#93;</code> hinzu. Du kannst an Stelle von <code>Image:</code> auch <code>Bild:</code> verwenden. Eine Beschreibung kannst du nach einem Vertikalen Strich (Pipe-Zeichen) angeben.
+ ::
+&#91;&#91;Image:img.jpg|thumb|Butterwort &#39;&#39;(Pinguicula)&#39;&#39;&#93;&#93;
+ ::
+
+Für Bilder (auch in der Galerie) werden mit dem Argument <code>thumb</code> spezielle '''Bilderseiten''' erzeugt. Wird zwei Mal von einer Seite aus zum selben Bild verlinkt, aber mit unterschiedlicher Beschreibung, wird die letzte Beschreibung verwendet. Wenn es von verschiedenen Seiten aus verlinkt wird, werden seperate Bildbeschreibungsseiten erstellt.
+
+~~ImageArguments~~Den Bildern können auch '''Argumente''' übergeben werden. 
+* ''<code>320px</code>'' &ndash; Setzt die Breite des Bildes, hier 320 px. ''<code>w=auto</code>'' bewirkt auch hier, dass die Originalgrösse des Bildes verwendet wird (und nicht ein voreingestellter Wert).
+* ''<code>caption=&hellip;</code>'' &ndash; Ersetzt die Bildüberschrift, die sonst einfach aus dem Namen des Bildes besteht
+* ''<code>direct</code>'' &mdash; Verlinkt direkt zu einem Bild ohne Bildbeschreibungsseite 
+* ''<code>ld=&hellip;</code>'' &ndash; Setzt eine lange Bildbeschreibung, die nur auf der Bildseite sichtbar ist 
+* ''<code>small</code>'' &ndash; Vergrössert/verkleinert Bilder auf der Bilderseite nicht (falls das Bild zum Beispiel kleiner ist als auf der Seite eingestellt, ist es sinnvoll, es nicht zu vergrössern, umgekehrt jedoch nicht)
+* ''<code>thumb</code>'' &mdash; Fügt ein Vorschaubild<ref>Vorschaubilder müssen manuell erstellt werden!</ref> (Thumbnail) ein und erstellt automatisch eine Bildbeschreibungsseite (diese kann allerdings mit <code>direct</code> unterdrückt werden). 
+
+Ausserdem:
+* ''$$arg=&hellip;$$'' &ndash; Zusätzliche Argumente für das $$img$$-Tag (etwa CSS-Formatierung)
+* ''$$argLink=&hellip;$$'' &ndash; Zusätzliche Argumente für das $$a$$-Tag (etwa für die Verwendung von [http://www.shadowbox-js.com/usage.html ShadowBox])
+* ''$$clear$$, $$clear:before$$, $$clear:after$$'' &ndash; Kann verwendet werden, falls Inhalt (Text/Bild) ins Bild reicht.
+
+{{:hint-de.txt|Der Link zum Thumbnail kann auch für ein Bild separat gesetzt werden; falls ein PDF-Dokument (buch.pdf) zum Beispiel ein spezielles Vorschaubild bekommen soll (cover.png), verwendet man statt $$thumb$$ das Argument $$thumb=cover.png$$. Ansonsten sollte ein [[#thumbs Standardpfad zu den Thumbnails]] gesetzt und einfach das Argument $$thumb$$ verwendet werden.}}
+
+~~titlerule~~ Der '''Fenstertitel''' der Bilderseiten (auch für Bilder in Galerien) kann mit dem Befehl $$&#123;&#123;TitleRule:''Regel''&#125;&#125;$$ angepasst werden. Die Ersetzungsregel gibt dabei vor, wie der Titel aussehen soll. Zusätzlich zu $$%s$$ (siehe [[#h_Fenstertitel Fenstertitel]]) werden auch folgende Ersetzungen unterstützt:
+* $$%caption$$ wird ersetzt durch den Bildtitel
+* $$%path$$ wird ersetzt durch den Pfad zum Bild
+* $$%name$$ wird ersetzt durch den Bildnamen
+ ::
+&#123;&#123;TitleRule:Bild %name: %caption %s&#125;&#125; ''(Regel, zuoberst im Dokument)''<br />
+&hellip;<br />
+&#91;&#91;Image:wolke.jpg|thumb|Cumulus&#93;&#93; ''(Eingefügtes Bild mit Titel «Cumulus»)''<br />
+''führt zu diesem Titel, falls als Standardtitel « - .:MeineSeite» angegeben wurde:''<br />
+Bild wolke.jpg: Cumulus  - .:MeineSeite
+ ::
+
+==== Beispiele zum Einfügen von Bildern ====
+'''Ohne Argumente'''
+
+$$<nowiki>[[Image:ahorn-300.jpg]]</nowiki>$$
+
+Das Bild wird direkt eingefügt, in Originalgrösse.
+
+[[Image:ahorn-300.jpg]]
+\\ 
+
+'''Beschriftet und mit neuer Grösse'''
+
+$$<nowiki>[[Image:ahorn-300.jpg|Ahorn|150px]]</nowiki>$$
+
+Das Bild bekommt die Bildunterschrift «Ahorn» und wird auf eine Breite von 150 Pixel gesetzt.
+
+[[Image:ahorn-300.jpg|Ahorn|150px]]
+\\ 
+
+'''Vorschaubild (Thumbnail)'''
+
+$$<nowiki>[[Image:ahorn-300.jpg|thumb=ahorn-thumb.jpg|Ein Ahornblatt|ld=Silber-Ahorn ''(Acer saccharinum)'']]</nowiki>$$
+
+Das Vorschaubild ahorn-thumb.jpg wird verwendet. Als Bildtitel wird «Ein Ahornblatt» gesetzt, ausserdem eine ausführliche Beschreibung mit dem lateinischen Namen, die auf der verlinkten Bildseite verwendet wird.
+
+[[Image:ahorn-300.jpg|thumb=ahorn-thumb.jpg|Ein Ahornblatt|ld=Silber-Ahorn ''(Acer saccharinum)'']]
+\\ 
+
+'''Direkt verlinktes Vorschaubild'''
+
+$$<nowiki>[[Image:ahorn-300.jpg|thumb|direct|thumb=ahorn-thumb.jpg|Silber-Ahorn]]</nowiki>$$
+
+Die ausfürhliche Beschreibung wurde weggelassen, da durch die direkte Verlinkung keine Bildseite erstellt wird. 
+
+[[Image:ahorn-300.jpg|thumb|direct|thumb=ahorn-thumb.jpg|Silber-Ahorn]]
+
+{{Top}}
+
+{{:hint-de.txt|Du kannst mit $$&#123;&#123;DirImages:…&#125;&#125;$$ ein Standardverzeichnis für die Bilder setzen. Um auf eine Datei zuzugreifen, die nicht in diesem Verzeichnis ist, kann $$./$$ vor den Pfad geschrieben werden ($$.$$ bedeutet das aktuelle Verzeichnis). Siehe [[quickref-de.html Quickref]] für weitere Einstellungen.}}
+
+=== Galerie ===
+Du kannst deiner Seite mit dem $$gallery$$-Tag eine (oder mehrere) Galerie hinzufügen. Zwischen dem öffnenden und schliessenden Tag kannst du Bilder oder Reintext hinzufügen, wie du im Beispiel oben siehst. Mit dem Argument  <code>caption=</code> kannst du eine Überschrift für die Galerie setzen. Beispielcode:
+ ::
+<nowiki>
+&lt;gallery caption="Meine Galerie"&gt;<br />
+Image:ferien.jpg<br />
+Ja, das waren gute Zeiten &amp;hellip; schau dir mal den links an ;)<br />
+Image:meer.jpg|Mein Boot. Ich habe es&amp;nbsp;&amp;hellip; ähm, ausgeliehen.<br />
+&lt;gallery&gt;
+</nowiki>
+ ::
+{{Top}}
+
+~~gallery~~
+<gallery caption="Bildergalerie">
+Image:img2.jpg
+Image:img3.jpg
+Image:img4.jpg
+Image:img5.jpg|Das Zeichen «&#124;» wird benutzt, um einem Bild eine Beschreibung hinzuzufügen.
+Nur Text führt zu einem reinen Textfeld. Auch hier ist es möglich, einen [http://de.wikipedia.org/wiki/Link Link] einzufügen. Die Überschrift kann mit dem Befehl &lt;gallery caption="&hellip;"&gt; gesetzt werden.
+Image:img6.jpg|Segelboote
+Image:img7.jpg|ld=Der Scharfe Rand bei der Sonne deutet auf eine Stratusschicht hin.
+Image:img8.jpg|ld=Beschreibungen, die nur auf der Bildseite erscheinen, können mit dem Argument <code>ld=...</code> eingefügt werden.
+Image:img9.jpg
+</gallery>
+{{Top}}
+
+=== Listen ===
+Listen können hier viel einfacher als mit HTML eingefügt werden: Für ein Element reicht ein * am Anfang der Zeile. Numerierte Listen können mit dem Zeichen # generiert werden.
+ ::
+&#42; Erstes Level<br />
+&#42;&#42; Zweites Level
+ ::
+
+'''Definitionslisten''' sind eine andere Art von Listen. Hier werden sie zum Beispiel bei der [[faq-de.html FAQ]] verwendet.
+;«Defititionspunkte» können mit einem ; eingefügt werden.
+:Mit dem : am Anfang der Zeile kann der Punkt nun erklärt werden.
+
+Den Listenpunkten können Argumente wie zum Beispiel CSS-Definitionen übergeben werden. Alles, was vor einem Pipe-Symbol («|») steht, wird als Argument betrachtet. Das Argument <code>style="color: #f00;"</code> färbt die Zeile zum Beispiel rot ein.
+ ::
+<nowiki>*</nowiki> style="color: #f00;" | Dieser Listeneintrag ist rot gefärbt.
+ ::
+* style="color: #f00;" | Dieser Listeneintrag ist rot gefärbt.
+{{Top}}
+
+=== Tabellen ===
+Tabellen können Tabellenüberschrifte haben. Du kannst Tabellen entsprechend dem folgenden Beispiel einfügen:
+ ::
+<nowiki>
+{|<br />
+! <br />
+! Windows<br />
+! Linux<br />
+|-<br />
+! Musik-Player<br />
+| [http://www.apple.com/itunes/ iTunes]<br />
+| [http://amarok.kde.org/ Amarok]<br />
+|-<br />
+! Fotos<br />
+| [http://picasa.google.com/ Picasa]<br />
+| [http://www.digikam.org/ digikam]<br />
+|}
+</nowiki>
+ ::
+Die erste Zelle wird hier ausgelassen. Das Resultat wäre das Folgende:
+
+{|
+| 
+! Windows
+! Linux
+|-
+! Musik-Player
+| [http://www.apple.com/itunes/ iTunes]
+| [http://amarok.kde.org/ Amarok]
+|-
+! Fotos
+| [http://picasa.google.com/ Picasa]
+| [http://www.digikam.org/ digikam]
+|}
+
+Dies sind die Grundlagen. Um die Übersicht im Quellcode zu erhöhen, kannst du mehr als eine Zelle pro Linie einfügen, indem du die sie mit zwei vertikalen Linien trennst:
+ ::
+<nowiki>
+| Zelle 1<br />
+| Zelle 2<br />
+ist das selbe wie <br />
+| Zelle 1 || Zelle 2
+</nowiki>
+ ::
+
+Du kannst auch Eigenschaften wie die Breite einer Zelle oder ihre Hintergrundfarbe festlegen. In diesem Fall musst du die Argumente mit einer vertikalen Linie ''und einem Leerschlag davor und danach'' von Inhalt trennen.
+ ::
+<nowiki>
+{|<br />
+| style="width: 200px; border: 2px solid #000;" | 200 px breit<br />
+|}
+</nowiki>
+ ::
+{|
+| style="width: 200px; border: 2px solid #000;" | 200 px breit
+|}
+
+Hinweis: Verwechsle Tabellen nicht mit Listen! Sie haben verschiedene Anwendungsbereiche.
+{{Top}}
+\\ 
+'''Weitere Möglichkeiten''' 
+
+Farbiger Rahmen (<code>border: 1px #98e5b3 solid;</code>), links 10 Pixel breit (<code>border-left-width: 10px;</code>), rechts ein Zeichen Abstand (<code>padding-right: 1em;</code>):
+{| cellspacing="0"
+| style="border: 1px #98e5b3 solid; border-left-width: 10px; padding-right: 1em;" | <code>style="border: 1px #98e5b3 solid; border-left-width: 10px; padding-right: 1em;" </code>
+| style="border: 1px #98e5b3 solid; border-left-width: 0px; padding-right: 1em;" | Zelle 2
+|}
+
+ \\ Zwei Pixel Abstand zwischen den Zellen: <code>cellspacing="2"</code> als Argument für die ganze Tabelle
+{| cellspacing="2" style="border: 1px solid;"
+| style="border: 1px solid;" | <code>{| cellspacing="2" style="border: 1px solid;"</code>
+| style="border: 1px solid;" | Zelle 2
+|}
+
+ \\ Einzelne Zeilen können separat formatiert werden, indem man die Argumente nach dem Zeichen für die neue Zeile (<code>|-</code>) anfügt.
+{| cellspacing="2" style="background-color: #fff0c8;"
+! Position der Argumente !! Wirkungsbereich
+|-
+|  | Argumente nach <code>{|</code> || Ganze Tabelle
+|- style="color: #e9713c; background-color: #fff; font-weight: bold;"
+|  | Argumente nach  <code>|-</code> || Formatierungen für eine Zeile
+|-
+| | Argumente nach <code>|</code> || style="font-style: italic;" | einzelne Zelle
+|}
+Der dazu benötigte Code:
+ ::
+<nowiki>
+{| cellspacing="2" style="background-color: #fff0c8;"<br />
+! Position der Argumente !! Wirkungsbereich<br />
+|-<br />
+|  | Argumente nach <code>{|</code> || Ganze Tabelle<br />
+|- style="color: #e9713c; background-color: #fff; font-weight: bold;"<br />
+|  | Argumente nach  <code>|-</code> || Formatierungen für eine Zeile<br />
+|-<br />
+| | Argumente nach <code>|</code> || style="font-style: italic;" | einzelne Zelle<br />
+|}</nowiki>
+ ::
+
+{{:hint-de.txt|<![CDATA[Steht in einer Zelle ein |, wird der Inhalt davor als Argument interpretiert (und abgeschnitten). Setze ein |, mit Leerschlägen getrennt, an den Anfang des Zellinhaltes, um dieses Problem zu vermeiden (siehe auch oben).]]>}}
+{{Top}}
+
+=== Beispiele, Zitate ===
+Siehe auch: [[#h_Zeichenescapen Zeichen «escapen»]]
+
+Text kann mit weiteren Auszeichnungen versehen werden: 
+: $$<nowiki>--text--</nowiki>$$ für --entfernten-- Text, 
+: $$<nowiki>++text++</nowiki>$$ für ++eingefügten++ Text, 
+: $$<nowiki>$$code$$</nowiki>$$ für $$Quellcode$$, 
+: $$<nowiki>@@cite@@</nowiki>$$ für @@Zitate@@
+: $$<nowiki>::samp::</nowiki>$$ für ::Beispiele::
+: $$<nowiki>01kbd01</nowiki>$$ Für 01Tastatureingaben01
+Soll ein separater Absatz dafür verwendet werden (alle obigen Auszeichnungen ausser entfernter/eingefügter Text), müssen die jeweiligen Steuerzeichen auf neuen Linien stehen. Ein Beispiel für Quellcode:
+$$
+Leerzeichen werden so dargestellt, wie sie eingegeben wurden.
+Falls nicht, muss in der CSS-Datei folgender Abschnitt hinzugefügt werden:
+$$<br />code.block {
+	white-space: pre;
+}<br />$$
+$$
+Für Tastatureingaben:
+01
+Vim bedienen lernen unter Debian:<br />01
+$ apt-get install vim
+$ vimtutor<br />01
+01
+Zitate werden demnach so eingefügt:
+@@
+&hellip;&nbsp;Und er sprach: <br />@@
+ZITAT <br />@@
+Und es wurde ein Zitat.
+@@
+Ein Beispiel (Leerzeichen vor den beiden Doppelpunkten beachten! Sonst wird es als Liste interpretiert!):
+ ::
+Der Gedankenstrich – genau der – kann unter Windows über die Tastenkombination &#x0030;1Alt+015001 eingefügt werden.
+ ::
+{{Top}}
+
+=== Horizontale Linien ===
+Du kannst horizontale Linien einfügen, solltest sie aber nur verwenden, wenn es wirklich nötig ist. Der Code:
+ ::
+&#x002d;---
+ ::
+{{Top}}
+
+== Vorlagen ==
+Inhalt, der immer wieder vorkommt (wie hier der Button zum wechseln der Sprache), kann in einer Datei im selben Verzeichnis wie die Quelldateien gespeichert werden. Diese, in diesem Beispiel ''tplLang-de.txt'', kann dann wie folgt eingebaut werden:
+$$
+&#123;&#123;:tplLang-de.txt&#125;&#125;
+$$
+Der Text von der Vorlagenseite läuft auch durch den Parser, Wikitext wird also erkannt. Ausserdem werden [http://de.wikipedia.org/wiki/Wikipedia:Vorlagen#Parameter_einf.C3.BCgen_und_verwenden Parameter] unterstützt. Falls Text Sonderzeichen wie vertikale Striche oder schliessende geschweifte Klammern beinhaltet, die falsch verstanden werden können (eta als Parameter-Trennzeichen), können diese mit $$&lt;![CDATA[''text'']]&gt;$$ maskiert werden:
+$$
+&#123;&#123;:tplLang-de.txt|'''&lt;![CDATA[''' «&#125;&#125;» sind zwei schliessende geschweifte Klammern, «|» ist ein Pipe-Symbol.. ''']]&gt;'''&#125;&#125;
+$$
+{{Top}}
+
+== Tipps ==
+Mein Programm macht nicht alles. Ein paar Dinge sind nur ein wenig HTML und CSS, aber andere kann das Programm nicht oder nur wenig beeinflussen, wie zum Beispiel richtige Typografie.  Ich werde dir nun einen kleinen Überblick über die Möglichkeiten verschaffen, die du hast.
+
+Bemerkung: In den Beispielen, die zeigen, wie man ein Quelldokument parst, werde ich als Beispiel die Datei help-de.txt verwenden. Ein Befehl ist mit einem <code>$</code> am Zeilenanfang markiert. Das Grundkommando ist:
+01
+$ java -jar wiki2xhtml.jar help-de.txt
+01
+Dies würde die Datei doc-de.html erstellen, ohne menu und weitere Specials.
+
+Es ist möglich, mehrere Dateien gleichzeitig zu kompilieren. Da der *-Operator jedoch noch nicht funktioniert, muss jede Datei von Hand eingegeben werden. Oder halt ein Skript schreiben ;)
+{{Top}}
+
+~~escape~~
+=== Zeichen «escapen» ===
+Wenn du etwa ein Beispiel für HTML-Code schreiben willst, kannst du im Quellcode nicht einfach ein &lt;p&gt; hinschreiben, da dies in HTML einen Absatz darstellt. Dazu gibt es gewisse Codes, die trotzdem solche Zeichen generieren können, aber nicht als HTML interpretiert weren. Die wichtigsten Codes sind:
+* '''&lt;'''&nbsp;&rarr;&nbsp;&amp;lt;
+* '''&gt;'''&nbsp;&rarr;&nbsp;&amp;gt; (sollte auch verwendet werden!)
+* '''&amp;'''&nbsp;&rarr;&nbsp;&amp;amp;
+* '''&#91;'''&nbsp;&rarr;&nbsp;&amp;#91;
+* '''&#92;'''&nbsp;&rarr;&nbsp;&amp;#92;
+* '''&#93;'''&nbsp;&rarr;&nbsp;&amp;#93;
+* '''&#123;'''&nbsp;&rarr;&nbsp;&amp;#123;
+* '''&#124;'''&nbsp;&rarr;&nbsp;&amp;#124;
+* '''&#125;'''&nbsp;&rarr;&nbsp;&amp;#125;
+* '''&#39;'''&nbsp;&rarr;&nbsp;&amp;#39;
+* '''&mdash;'''&nbsp;&rarr;&nbsp;&amp;mdash; (m-dash, langer Gedankenstrich)
+* '''&ndash;'''&nbsp;&rarr;&nbsp;&amp;ndash; (n-dash, normaler Gedankenstrich)
+* '''Leerschlag'''&nbsp;&rarr;&nbsp;&amp;nbsp; (geschütztes Leerzeichen)
+* '''0'''&nbsp;&rarr;&nbsp;&amp;#x0030; (eine 0, etwa um 01Tastatureingaben01 zu maskieren)
+* '''$'''&nbsp;&rarr;&nbsp;&amp;#x0024;
+* '''~'''&nbsp;&rarr;&nbsp;&amp;#x007e;
+Um zu verhindern, dass ganze Ausdrücke vom Programm nicht als Wikipedia-Syntax interpretiert werden, kannst du sie mit dem  <code>nowiki-</code>Tag umschliessen. So kannst du zum Beispiel verhindert, dass ein Link (zum Beispiel <nowiki>www.google.com</nowiki>) auch verlinkt wird. Beispielcode:
+ ::
+<nowiki>&lt;nowiki&gt;www.google.com&lt;/nowiki&gt;</nowiki>
+ ::
+Wie kann man diese Codes selber herausfinden? Ganz einfach: Sie werden zum Beispiel in [http://openoffice.org OpenOffice.org]  in der Zeichentabelle ''(Einfügen &gt; Sonderzeichen)'' angezeigt. Für die geschweifte Klammer «{» steht hier zum Beispiel «U+007B (123)». Die Zahl in Klammern kann nun mit &amp;#ZAHL; eingefügt werden. Alternativ kann direkt der Unicode<ref>[http://www.decodeunicode.org/] ist eine riesige Referenz zu Unicode-Zeichen. Hier findet man wohl alles &hellip;</ref> eingefügt werden, in diesem Fall &amp;#x007B;. Dies funktioniert für jedes Zeichen.
+
+In [http://de.wikipedia.org/wiki/Uniform_Resource_Identifier URIs] kann es spezielle Zeichen wie einen Leerschlag haben, was zur Folge haben kann, das zum Beispiel Links nicht mehr korrekt erkannt werden. Diese können auch maskiert werden:
+* '''Leerzeichen'''&nbsp;&rarr;&nbsp;%20
+* '''['''&nbsp;&rarr;&nbsp;%5b
+* ''']'''&nbsp;&rarr;&nbsp;%5d
+* | '''|'''&nbsp;&rarr;&nbsp;%7c
+Ein Beispiellink zu einem (nicht existierenden) Dokument namens «mit leerschlag.html» würde nun so ausschauen: &#91;&#91;mit%20leerschlag.html mit Leerschlag]]. Das Resultat: [[mit%20leerschlag.html mit Leerschlag]]. Alternativ kannst du bei internen Links auch eine vertikale Linie («|») verwenden, um Link und Linkname zu trennen: &#91;&#91;mit leerschlag.html|mit Leerschlag]]. Das führt zum selben Resultat: [[mit leerschlag.html|mit Leerschlag]]
+
+Im Internet gibt es ein sehr gutes Nachschlagewerk, wo beinahe alle Codes, die man braucht, aufgelistet sind:  [http://www.w3schools.com/tags/ref_entities.asp w3schools.com].
+{{Top}}
+
+~~thumbs~~
+=== Thumbnails ===
+Die Ladezeiten von Seiten sollten möglichst gering bleiben. Je mehr beim Betreten einer Seite geladen werden muss, desto länger dauert der Aufbau beim User und desto mehr wird der Server belastet. Darum werden bei Bildern nicht die Originalbilder als Vorschau verwendet, sondern weniger hoch aufgelöste und somit auch von der Dateigrösse her kleinere. Thumbnails können zum Beispiel mit Programmen wie [http://gimp.org GIMP] oder [http://xnview.com/ XnView] generiert werden. Unix-User haben mit [http://www.imagemagick.org/script/convert.php convert] von ImageMagick ein mächtiges Werkzeug in der Hand. 
+
+Thumbnails speichert man am besten in einem separaten Ordner. Damit sie ohne Probleme automatisch eingebunden werden können, sollten sie den Originaldateinamen enthalten. Gute Wahlen sind zum Beispiel «bildname_thumb.jpg», «thumb_bildname.jpg» oder noch einfacher, falls die Thumbnails in einem separaten Ordner sind, «bildname.jpg», also der Name des Bildes selber. Ausnahmen können mit [[#ImageArguments thumb=&hellip;]] manuell gesetzt werden.
+
+Variablen (Beispiel am Bild dir/image.jpg)
+* %n &ndash; voller Name, mit Pfad (dir/image.jpg)
+* %f &ndash; Dateiname (image.jpg)
+* %d &ndash; Pfad (dir)
+* %w &ndash; Ohne Erweiterung (image)
+* %e &ndash; Erweiterung (.jpg)
+
+Beispiele (Originaldateiname: image.jpg):
+{|
+! style="padding-right: 2em;" | Ordnername!! style="padding-right: 2em;" | Thumbnailname !! Eintrag in der Konfigurationsdatei
+|-
+| thumbs || image.jpg || &#123;{Thumbnails:thumbs/%f}}
+|-
+| thumbs || thumb_image.jpg || &#123;{Thumbnails:thumbs/thumb_%f}}
+|-
+| thumbs || image_thumb.jpg || &#123;{Thumbnails:thumbs/%w_thumb%e}}
+|-
+| thumbs || image.png || &#123;{Thumbnails:thumbs/%w.png}}
+|}
+{{Top}}
+
+=== Meta-Informationen  ===
+Den (x)html-Dateien können noch weitere Informationen mitgegeben werden, so genannte [http://de.wikipedia.org/wiki/Meta-Tags Metadaten]. Sie dien(t)en der Unterstützung von Suchmaschinen; heute werden sie jedoch wegen der Anfälligkeit für Manipulationen weitgehend ignoriert und stattdessen der sichtbare Textteil interpretiert. wiki2xhtml unterstützt folgende Informationen:
+* '''Beschreibung:''' Eine kurze Beschreibung des Seiteninhaltes. 
+ ::
+&#123;{Description:&hellip;}}
+ ::
+* '''Schlüsselwörter:''' Was ein Suchender in die Suchmaschine tippen kann, um hierher zu gelangen. Mit Kommas unterteilt.
+ ::
+&#123;{Keywords:&hellip;}}
+ ::
+* '''Autor:''' Der Autor der Seite. 
+ ::
+&#123;{Author:&hellip;}}
+ ::
+* '''Sprache:''' Die auf der Seite verwendete Sprache (zum Beispiel en oder de)
+ ::
+&#123;{Lang:&hellip;}}
+ ::
+* |'''Benutzerdefiniert:''' (Siehe auch [[w:de:Meta-Tag|Meta-Tag]])
+ ::
+&#123;{Meta:name=content}} (name/content-Kombinationen)\\ 
+&#123;{Meta:anything you like}} (irgendwelche Kombinationen)
+ ::
+Diese Informationen können sowohl in der Konfigurationsdatei als auch in der Textdatei selber gesetzt werden.
+{{Top}}
+
+=== Automatische Weiterleitung ===
+Du kannst den Benutzer zu einer anderen Seite weiterleiten, indem du die folgende Zeile einfügst:
+ ::
+&#x0023;REDIRECT 2 index.html
+ ::
+So wird er innerhalb von zwei Sekunden zur Seite index.html weitergeleitet. Vergiss nicht, eine kurze Notitz zu hinterlassen, da die automatische Weiterleitung von einigen Browsern nicht unterstützt wird.
+{{Top}}
+
+=== Icon ===
+Um der Seite ein Icon ([http://de.wikipedia.org Favicon]) zuzuweisen, reicht folgender Befehl (irgendwo im Text oder in der Konfigurationsdatei):
+ ::
+&#123;{Icon:&hellip;}}
+ ::
+{{Top}}
+
+=== PHP, JavaScript und CSS seitenspezifisch ===
+Für seitenspezifisches PHP, JavaScript, CSS und ähnliches können zwei verschiedene Befehle verwendet werden. Falls der Code noch vor die gesamte Seite gehört, auch vor das $$html$$-Tag, wie dies bei PHP notwendig ist, kann der Code am Anfang der Seite eingefügt werden und mit dem Befehl 
+$$
+&lt;!--endtop--&gt;
+$$
+abgeschlossen werden. Zum Einbinden von CSS, JavaScript und ähnlichem umschliesst man den Code mit zwei Tags, wie im folgenden Beispiel für CSS dargestellt:
+$$
+&lt;!--head--&gt;
+&lt;style type="text/css"&gt;
+body {
+	background-color: #fb0;
+}
+&lt;/style&gt;
+&lt;!--/head--&gt;
+$$
+
+Siehe auch die [[php-de.html Dokumentationsseite zu PHP]].
+{{Top}}
+
+
+=== Typografie<ref>Kurzes und präzises Dokument über Typografie: [http://zvisionwelt.de typokurz]</ref> ===
+Es sind wenige Dinge, die beachtet werden sollen, diese sind es jedoch umso mehr wert.
+* '''Gedankenstriche''' haben ungefähr die Länge eines «n» (beim Binde-Strich ist es ungefähr die Hälfte davon) und sowohl davor als auch danach ein Leerzeichen. Sie werden im HTML-Code mit <code>&amp;ndash;</code> angegeben. Bei eingeschobenen Sätzen &ndash;&#9251;wie bei diesem hier&#9251;&ndash; kann auf der «Innenseite» der beiden Gedankenstriche ein geschütztes Leerzeichen (<code>&amp;nbsp;</code>, hier durch ein &#9251; dargestellt) gesetzt werden, damit sie bei einem Zeilenumbruch nicht an der falschen Stelle hängen bleiben. Bei nur einem Gedankenstrich würde das geschützte Leerzeichen davor gesetzt werden&#9251;&ndash; damit man im Falle eines Zeilenumbruches die Gedankenpause früh genug erkennen kann. Weitere Informationen sind auf der [http://de.wikipedia.org/wiki/Gedankenstrich Wikipedia] zu finden.
+* '''Anführungs- und Schlusszeichen''' werden oft falsch gesetzt, da sie auf der Tastatur schlicht und einfach nicht vorkommen. Das Zeichen «"» ist ein Zollzeichen und hat mit einem echten Anführungszeichen wenig gemeinsam. In Deutschland werden hierzu die beiden Zeichen &bdquo;/&rdquo; (gut zu merken mit der Eselsbrücke 99/66) oder &raquo;/&laquo; verwendet, in der Schweiz &laquo;/&raquo; (auch französische Anführungszeichen oder Guillemets genannt). Man bekommt sie im HTML-Code mit &amp;bdquo;/&amp;rdquo; (99/66) oder &amp;laquo;/&amp;raquo; (Guillemets). Weitere Informationen auch zur Eingabe per Tastatur siehe [http://de.wikipedia.org/wiki/Anf%C3%BChrungszeichen Wikipedia: Anführungszeichen]. 
+ ::
+Die &bdquo;Wikipedia&rdquo; gehört zu den zehn am meisten aufgerufenen Seiten im Internet.<br />Das Spiel &laquo;X<sup>3</sup> Reunion&raquo; von [http://www.egosoft.com/ Egosoft]/[http://www.deepsilver.com/ DeepSilver] ist ein eine geniale Weltraumsimulation.
+ ::
+* '''Auslassungspunkte''' sind nicht drei einzelne Punkte, sondern ein separates Zeichen. Im HTML-Code kann es mit der [http://de.wikipedia.org/wiki/Entit%C3%A4t_%28Informatik%29 Entität] <code>&amp;hellip;</code> (steht für «horizontal ellipsis») erzeugt werden. Wird ein Wort durch diese Zeichen unterbrochen (Oh Sch&hellip;), wird ''kein'' Leerzeichen gesetzt, ansonsten ein geschütztes danach oder davor&nbsp;&ndash; so dass es nicht an der falschen Stelle hängen bleibt. Die [http://de.wikipedia.org/wiki/Auslassungspunkte Wikipedia] bietet hierzu weitere Informationen. 
+ ::
+Es regnet&nbsp;&hellip;<br />warum auch nicht?s
+ ::
+{{Top}}
+
+
+== Kommandozeilenmodus ==
+Wenn du wiki2xhtml oft verwendest, möchtest du es vielleicht über die Kommandozeile bedienen, da du da auch Scripts schreiben kannst, wenn du zum Beispiel oft die selben Dateien erstellen musst. So bist du oft viel schneller, auch weil das GUI nicht geladen werden muss.
+
+Du erhältst eine Übersicht über alle möglichen Befehle, indem du das Argument <code>--help</code> oder <code>-h</code> hinzufügst (also <code>java -jar wiki2xhtml.jar --help</code>). Die wichtigsten Befehle will ich hier nun erklären. Ein $ am Anfang eines Code-Beispiel zeigt einen Befehl in der Shell (DOS, bash, ...) an (und wird weggelassen). 
+
+Wenn du die Hilfedateien erstellen willst, rufe das Programm mit dem Argument $$--helpfiles-de$$ auf:
+01
+$ java -jar wiki2xhtml.jar --helpfiles-de
+01
+
+Du kannst das «Gerüst» (mit den html-, head-, body- und weiteren Tags, die von einer kompletten (X)HTML-Datei benötigt werden) mit dem Argument --only-code weglassen, wenn du den HTML-Code sonstwo verwenden willst.
+01
+$ java -jar wiki2xhtml.jar --only-code {Datei(en)}
+01
+
+Wenn du mit wiki2xhtml HTML-Dateien für [http://www.postnuke.com/ PostNuke] generieren willst: Die Zeilenumbrüche können mit --remove-newlines alle weggelassen werden (PostNuke fügt manchmal ein &lt;br /&gt; an jedes Zeilenende an, was zu unerwünschten Resultaten führt). Das Gerüst wird hier auch nicht benötigt. Du kannst die beiden Argumente mit --pn abkürzen; Die beiden folgenden Befehle haben die selbe Bedeutung.
+01
+$ java -jar wiki2xhtml.jar --remove-newlines --only-code {Dateien, Argumente, ...}
+$ java -jar wiki2xhtml.jar --pn {Dateien, Argumente, ...}
+01
+Willst du die Ausgabe direkt in der Shell haben, kannst du zusätzlich das Argument --stdout hinzufügen. 
+01
+$ java -jar wiki2xhtml.jar --remove-newlines --only-code --stdout {Datei(en), Argumente, ...}
+$ java -jar wiki2xhtml.jar --pns {Datei(en), Argumente, ...}
+01
+
+--standard bedeutet das selbe wie $$-m menu.txt -f footer.txt -c common.txt$$. Die Argumente können überschrieben werden (beispielsweise mit einem -v für den verbose-Modus).
+
+
+Mit -v (oder --verbose) werden mehr Informationen zu den durchgeführten Schritten angegeben, mit --silent nur das Notwendigste. --debug ist für die Aufspürung von Fehlern gedacht.
+{{Top}}
+
+
+== Quellen, Bemerkungen ==
+<references />
+{{Top}}

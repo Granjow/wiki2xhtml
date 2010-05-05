@@ -1,0 +1,218 @@
+<!--head-->
+{{:tplNavStyle.txt}}
+<!--/head-->
+{{Title:Eigene Designs, %p %s}}
+{{Keywords:wiki2xhtml, dokumentation, eigenes design, template, css-settings.txt}}
+{{Description:Die nötigen Schritte für ein eigenes Design in wiki2xhtml und die Anpassungsmöglichkeiten werden hier erklärt.}}
+{{H1:Designs erstellen oder bearbeiten}}
+
+{{:tplLang-de.txt|en=doc-design.html}}
+
+{| id="navTable" style="width: 100%" cellpadding="0" cellspacing="2";
+|- style="background-color: #fa0;"
+| colspan="2" | [[quickstart-de.html Quickstart]]
+| colspan="2" | [[quickref-de.html Quickref]]
+| style="background-color: #fff; color: #000; text-align: left;" | Einstieg
+|- style="background-color: #f80;"
+| colspan="4" | [[doc-de.html Doku]]
+| style="background-color: #fff; color: #000; text-align: left;" | Dokumentation
+|- style="background-color: #f60;"
+| style="width: 20%" | [[usage-de.html Usage]]
+| style="width: 20%" colspan="2" class="mark" | [[doc-design-de.html Design]]
+| style="width: 20%" | [[php-de.html PHP]]
+| style="background-color: #fff; color: #000; text-align: left;" | Vertiefung
+|}
+{{$SplitPageNav}}
+
+== Wie erstelle ich ein eigenes Design? ==
+Zuerst einmal solltest du die Grundlagen von CSS und HTML verstehen. Im Internet existieren dazu [[links-de.html viele gute Tutorials]]. 
+
+Dann geht es darum, die Vorgehensweise von wiki2xhtml zu kennen. Beim Erstellen einer neuen Seite greift wiki2xhtml auf die Datei $$style/design-name/reck.html$$, die den grundsätzlichen Aufbau angibt, zurück und fügt dort generierte Inhalte (Titel, Footer, Menu und Text) ein. Durch $$reck.html$$ lassen sich auch verwendete Stylesheets und der Seitenaufbau selbst verwalten. Nachdem so die $$zielverzeichnis/*.html$$-Seiten generiert wurden, werden alle .png-, .jpg-, .gif-, .ico- und .css-Dateien aus $$style/design-name/$$ nach $$zielverzeichnis/style/$$ kopiert. 
+
+Für Bilder werden weitere Vorlagen verwendet, sowohl für die Bilderseiten als auch für die Bilder auf normalen Seiten selber. Das Prinzip ist das selbe.  Hier alle verwendeten Vorlagen:
+
+{|
+! Verwendete Vorlagen !! Anwendung !! optional?
+|-
+| reck.html || Gesamte Seite || nein
+|-
+| image-template.html || Bilderseite || nein
+|-
+| picture.html || Bild alleine || ja
+|-
+| pictureT.html || Bild mit Beschreibung || ja
+|-
+| thumbPicture.html || Vorschaubild || ja
+|-
+| thumbPictureT.html || Vorschaubild mit Beschreibung || ja
+|-
+| galleryContainer.html || Galerie-Container || ja
+|-
+| galleryText.html || Galerie: Text || ja
+|-
+| galleryImageNodesc.html || Galerie: Vorschaubild || ja
+|-
+| galleryImage.html || Galerie: Vorschaubild mit Beschreibung || ja
+|-
+| tplTOC.txt || [[#toctpl Inhaltsverzeichnis]] || ja
+|}
+
+=== Tags ===
+
+Was wo eingefügt werden soll, kann durch Tags gesteuert werden. Einige Tags verfügen zudem über ein Delete-Tag: Falls das Tag leer ist, wird der Inhalt zwischen den beiden Delete-Tags entfernt.
+
+
+Achtung: Seit wiki2xhtml 3.3 sind alle Tags in Kleinschrift. Wenn du wiki2xhtml mit dem Argument $$template [datei]$$ startest, kannst du eine Vorlage aktualisieren. Der Dateiname ist optional.
+
+Für $$reck.html$$ sind folgende Tags verfügbar:
+{|
+! Tag !! Funktion !! Delete-Tag
+|-
+| [meta] || Metadaten im head-Bereich des Dokuments
+|-
+| [title] || Titel für die Fensterleiste
+|-
+| [textheader] || Text-Header (Alternative zu Bild)
+|-
+|| [head],\\ [head|''st*''] || ~~c_head~~ Der [[doc-de.html#h_PHPJavaScriptundCSSseitenspezifisch|spezifische Head]] wird an dieser Stelle eingefügt. Das optionale Argument beschreibt, wie viele Leerschläge und Tabulatoren für ein optimales Aussehen des Quellcodes vorgestellt werden sollen. Beispiel: $$[head|tss]$$  für einen Tabulator gefolgt von zwei Leerschlägen.
+|-
+| [menu] || Menu || &gt;menu&gt; und &lt;menu&lt;
+|-
+| [footer] || Footer || &gt;footer&gt; und &lt;footer&lt;
+|-
+| [h1] || Seitentitel
+|-
+| [homelink] || Link zur Startseite
+|-
+| [content] || Inhalt
+|}
+
+Tags für $$image-template.html$$ (Beispiel: Bild $$gfx/img.jpg$$ wurde auf der Seite $$from.html$$ eingefügt):
+{|
+! Tag !! Funktion !! Delete-Tag
+|-
+| [imagepath] || Pfad zum Bild: gfx/img.jpg
+|-
+| [imagename] || Name des Bildes: img.jpg
+|-
+| [imagecaption] || Überschrift (Argument $$caption=$$)
+|-
+| [alt] || ~~alt~~ Inhalt fürs $$alt$$-Tag (Überschrift ohne HTML-Tags)
+|-
+| [args] || ~~args~~ Zusätzliche Argumente für das Bild (seit 3.4)
+|-
+| [argsLink] || ~~argsLink~~ Zusätzliche Argumente für den Link zum Bild (seit 3.4)
+|-
+| [pre] || ../ (Verzeichnis mit den Internetseiten)
+|-
+| [back] || ../from.html#ID
+|-
+| [title] || Titel (Fensterleiste)
+|-
+| [meta] || Metadaten
+|-
+| [desc] || Bildbeschreibung || &gt;desc&gt; und &lt;desc&lt;
+|-
+| [width] || Standardbreite der Bilder (aus css-settings.txt)
+|-
+| [nextimage] || Link zum nächsten Bild (falls vorhanden)
+|-
+| [previmage] || Link zum vorherigen Bild (falls vorhanden)
+|-
+|  || Navigation, falls das Bild von einer Galerie aus\\ verlinkt wurde || &gt;nav&gt; und &lt;nav&lt;
+|}
+
+Für die eingebetteten Bildervorlagen (thumb*.html, picture*.html und gallery*.html) können folgende Tags verwendet werden:
+{|
+! Tag !! Funktion
+|-
+| [pos] || Position (.right, .left) für CSS-Klassen; nur thumb*.html
+|-
+| [link] || Ziel (Bild oder Bilderseite)
+|-
+| [thumb] || Vorschaubild
+|-
+| [imagepath] || Direktlink zum Bild 
+|-
+| [width] || Breite
+|-
+| [desc] || Beschreibung
+|-
+| [descxmlname] || Beschreibung ohne Sonderzeichen, kann etwa fürs alt-Attribut verwendet werden
+|-
+| [id] || ID (Für Anker beim zurück-linken)
+|}
+
+Die beiden Dateien sowie die CSS-Datei können nun erstellt (oder, einfacher, von einem existierenden Design kopiert und abgeändert) werden. 
+
+~~toctpl~~ Verfügbare Tags für $$tplTOC.txt$$
+{|
+! Tag !! Funktion
+|-
+| [toc] || Inhaltsverzeichnis selbst
+|-
+| __TOC__ || Standardtitel fürs Inhaltsverzeichnis
+|}
+Beispiel:
+ ::
+<nowiki>&lt;div id="toc"&gt;&lt;h2&gt;Inhaltsverzeichnis&lt;/h2&gt;\\ 
+[toc]\\ 
+&lt;/div&gt;&lt;br style="clear: left;" /&gt;
+ ::
+
+== Konfigurationsdateien ==
+
+wiki2xhtml arbeitet mit einigen Konfigurationsdateien, mit denen zum Beispiel eingestellt werden kann, wie viele Bilder in einer Bildergalerie pro Linie angezeigt werden soll. Sie werden von wiki2xhtml in dem Verzeichnis gesucht, wo auch die restlichen Dateien für das Design (wie die CSS-Dateien oder Bilder) liegen (hier: $$$styledir$$). Wird eine Datei nicht gefunden, werden Standardwerte verwendet.
+
+=== styledir/css-settings.txt ===
+
+Masseinheiten werden in px oder % angegeben.
+
+<code>&#123;&#123;GalleryImagesPerLine:''n''&#125;&#125;</code> &mdash; ''n'' gibt an, wie viele Bilder pro Linie in einer Galerie stehen soll. Nach dieser Anzahl Bilder wird ein <code>&lt;br style="clear: both;" /&gt;</code> eingefügt, falls es in der Commons-Datei oder einer einzelnen Seite mit <code>&#123;&#123;ConsistentGallery:false&#125;&#125;</code> abgeschaltet wurde.
+
+<code>&#123;&#123;GalleryThumbWidth:''n(px|%)''&#125;&#125;</code> &mdash; Legt die Breite der Vorschaubilder in Galerien fest.
+
+<code>&#123;&#123;ImageWidthImagepage:''n(px|%)''&#125;&#125;</code> &mdash; Legt die Bilder auf den Bilderseiten fest.
+
+<code>&#123;&#123;thumb-imagewidth:''n(px|%)''&#125;&#125;</code> &mdash; Legt die Standardbreite von Vorschaubildern (nicht von Galerien) fest.
+
+\\//
+---
+//\\
+{{H1:Designs: Menu}}
+{{:tplLang-de.txt|en=doc-design.html}}
+{| id="navTable" style="width: 100%" cellpadding="0" cellspacing="2";
+|- style="background-color: #fa0;"
+| colspan="2" | [[quickstart-de.html Quickstart]]
+| colspan="2" | [[quickref-de.html Quickref]]
+| style="background-color: #fff; color: #000; text-align: left;" | Einstieg
+|- style="background-color: #f80;"
+| colspan="4" | [[doc-de.html Doku]]
+| style="background-color: #fff; color: #000; text-align: left;" | Dokumentation
+|- style="background-color: #f60;"
+| style="width: 20%" | [[usage-de.html Usage]]
+| style="width: 20%" colspan="2" class="mark" | [[doc-design-de.html Design]]
+| style="width: 20%" | [[php-de.html PHP]]
+| style="background-color: #fff; color: #000; text-align: left;" | Vertiefung
+|}
+{{$SplitPageNav}}
+
+Tutorials und Referenzen zu CSS findest du bei den [[links-de.html#h_css Links zu CSS]].
+
+== Menu-Design ==
+Code, um Level-2-Menueinträge nur dann anzuzeigen, wenn sie benötigt werden:
+<nowiki><pre>
+#menu ul.level2 {
+	display: none;
+}
+#menu ul.level2.openparent, #menu ul.level2.open {
+	display: block;
+}
+</pre></nowiki>
+
+Aktive Links fett darstellen:
+<nowiki><pre>
+#menu li.open > a {
+	font-weight: bold;
+}
+</pre></nowiki>

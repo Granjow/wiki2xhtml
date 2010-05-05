@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<XML_DIZ_INFO>
+	<MASTER_PAD_VERSION_INFO>
+		<MASTER_PAD_VERSION>2.011</MASTER_PAD_VERSION>
+		<MASTER_PAD_EDITOR>Online PAD Generator 1.33 - http://www.padbuilder.com</MASTER_PAD_EDITOR>
+		<MASTER_PAD_INFO>Portable Application Description, or PAD for short, is a data set that is used by shareware authors to disseminate information to anyone interested in their software products. To find out more go to http://www.asp-shareware.org/pad</MASTER_PAD_INFO>
+	</MASTER_PAD_VERSION_INFO>
+	<Company_Info>
+		<Company_Name />
+		<Address_1 />
+		<Address_2 />
+		<City_Town />
+		<State_Province />
+		<Zip_Postal_Code />
+		<Country />
+		<Company_WebSite_URL />
+		<Contact_Info>
+			<Author_First_Name>Simon A.</Author_First_Name>
+			<Author_Last_Name>Eugster</Author_Last_Name>
+			<Author_Email>granjow@users.sf.net</Author_Email>
+			<Contact_First_Name>Simon A.</Contact_First_Name>
+			<Contact_Last_Name>Eugster</Contact_Last_Name>
+			<Contact_Email>granjow@users.sf.net</Contact_Email>
+		</Contact_Info>
+		<Support_Info>
+			<Sales_Email />
+			<Support_Email />
+			<General_Email>http://form.granjow.net</General_Email>
+			<Sales_Phone />
+			<Support_Phone />
+			<General_Phone />
+			<Fax_Phone />
+		</Support_Info>
+	</Company_Info>
+	<Program_Info>
+		<Program_Name>wiki2xhtml</Program_Name>
+		<Program_Version>3.3.2</Program_Version>
+		<Program_Release_Month>12</Program_Release_Month>
+		<Program_Release_Day>17</Program_Release_Day>
+		<Program_Release_Year>2008</Program_Release_Year>
+		<Program_Cost_Dollars />
+		<Program_Cost_Other_Code>CHF</Program_Cost_Other_Code>
+		<Program_Cost_Other />
+		<Program_Type>Freeware</Program_Type>
+		<Program_Release_Status>Minor Update</Program_Release_Status>
+		<Program_Install_Support />
+		<Program_OS_Support>WinXP,Windows2000,Windows2003,Unix,Linux,Linux Console,Linux Gnome,Linux GPL,Linux Open Source,Mac OS X,Java</Program_OS_Support>
+		<Program_Language>English,French,German,Italian,Other,Russian</Program_Language>
+		<Program_Change_Info />
+		<Program_Specific_Category>Internet</Program_Specific_Category>
+		<Program_Category_Class>Web Development::Site Administration</Program_Category_Class>
+		<Program_Categories>wiki, xhtml, web</Program_Categories>
+		<Program_System_Requirements>Java 1.5</Program_System_Requirements>
+		<Includes_JAVA_VM>N</Includes_JAVA_VM>
+		<Includes_VB_Runtime>N</Includes_VB_Runtime>
+		<Includes_DirectX>N</Includes_DirectX>
+		<File_Info>
+			<Filename_Versioned>wiki2xhtml-3.4b8</Filename_Versioned>
+			<Filename_Previous>wiki2xhtml-3.3.1</Filename_Previous>
+			<Filename_Generic />
+			<Filename_Long />
+			<File_Size_Bytes>2400000</File_Size_Bytes>
+			<File_Size_K>2441.41</File_Size_K>
+			<File_Size_MB>2.4</File_Size_MB>
+		</File_Info>
+		<Expire_Info>
+			<Has_Expire_Info>N</Has_Expire_Info>
+			<Expire_Count />
+			<Expire_Based_On>Days</Expire_Based_On>
+			<Expire_Other_Info />
+			<Expire_Month />
+			<Expire_Day />
+			<Expire_Year />
+		</Expire_Info>
+	</Program_Info>
+	<Program_Descriptions>
+		<English>
+			<Keywords>wiki xhtml css easy generate webpage offline java</Keywords>
+			<Char_Desc_45>Powerful webpage generator using wikitext</Char_Desc_45>
+			<Char_Desc_80>Powerful webpage generator using wikitext as source and generating xhtml from it</Char_Desc_80>
+			<Char_Desc_250>wiki2xhtml converts wiki syntax into html code and styles the page with CSS. It makes it easy to create good-looking pages without many know-how, and advanced users can use own code. The program can be run either in the console or with a GUI.</Char_Desc_250>
+			<Char_Desc_450>wiki2xtml can create complete Web pages (as this one) and uses a clean XHTML syntax. The pages are created from simple text files written in Wikitext, which is known from Wikipedia. Three configuraion files set the menu, header and footer?and already the page is set up. The design can be selected and adjusted automatically, and, as required, own ones can be created.</Char_Desc_450>
+			<Char_Desc_2000>wiki2xtml can create complete Web pages (as this one) and uses a clean XHTML syntax. The pages are created from simple text files written in Wikitext, which is known from Wikipedia. Three configuraion files set the menu, header and footer?and already the page is set up. The design can be selected and adjusted automatically, and, as required, own ones can be created. Webpages may contain both regular html pages and php/asp pages. Furthermore it is possible to use own code; no characters are ?masqueraded? (if you e.g. write a &lt;br /> in the source, it will cause a new line and nothing else). Another function?the «Code Paste Window»?generates live XHTML-Code from Wikitext which can be used e.g. in PostNuke.</Char_Desc_2000>
+		</English>
+	</Program_Descriptions>
+	<Web_Info>
+		<Application_URLs>
+			<Application_Info_URL>http://wiki2xhtml.sourceforge.net/</Application_Info_URL>
+			<Application_Order_URL />
+			<Application_Screenshot_URL />
+			<Application_Icon_URL />
+			<Application_XML_File_URL>http://wiki2xhtml.sourceforge.net/pad.xml</Application_XML_File_URL>
+		</Application_URLs>
+		<Download_URLs>
+			<Primary_Download_URL>http://downloads.sourceforge.net/wiki2xhtml/wiki2xhtml-3.4b8.zip</Primary_Download_URL>
+			<Secondary_Download_URL>http://downloads.sourceforge.net/wiki2xhtml/wiki2xhtml-3.4b8.7z</Secondary_Download_URL>
+			<Additional_Download_URL_1>http://downloads.sourceforge.net/wiki2xhtml/wiki2xhtml-3.4b8.tar.gz</Additional_Download_URL_1>
+			<Additional_Download_URL_2>http://downloads.sourceforge.net/wiki2xhtml/wiki2xhtml-3.4b8.tar.bz2</Additional_Download_URL_2>
+			<Additional_Download_URL_3>http://downloads.sourceforge.net/wiki2xhtml/wiki2xhtml-3.4b8.exe</Additional_Download_URL_3> 
+		</Download_URLs>
+	</Web_Info>
+	<Permissions>
+		<Distribution_Permissions>GPL</Distribution_Permissions>
+		<EULA />
+	</Permissions>
+</XML_DIZ_INFO>

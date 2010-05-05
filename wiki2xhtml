@@ -1,0 +1,9 @@
+#!/bin/bash
+
+# Get the user dir
+d=$(dirname $0)
+# and change into it
+cd $d
+
+# Run wiki2xhtml. "$@" forwards all additional arguments.
+java -jar wiki2xhtml.jar "$@"

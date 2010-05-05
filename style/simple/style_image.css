@@ -1,0 +1,82 @@
+* {
+	padding: 0;
+	margin: 0;
+}
+body {
+	font: 12px  Verdana,sans-serif;
+	line-height: 1.6em;
+}
+#wrap {
+	margin: auto;
+	width: 800px;
+	text-align: center;
+}
+#image {
+	float: left;
+	width: 800px;
+	margin-top: 20px;
+	padding-bottom: 20px;
+	background-color: #ffefe6;
+	display: block;
+	text-decoration: none;
+	color: #000;
+}
+#image img:hover {
+	background-color: #dbdfff;
+}
+#image img {
+	background-color: #fff;
+	border: 1px solid #ddd;
+	padding: 20px;
+}
+#name {
+	float: left;
+	text-align: center;
+	width: 800px;
+}
+#name h1 {
+	font-family: DejaVu, FreeSans, "Century Gothic", Verdana, sans-serif;
+	padding: 2em 0 .5em 10px;
+	margin-bottom: 1.5em;
+	font-weight: bold;
+}
+#desc {
+	float: left;
+	text-align: center;
+	width: 800px;
+	padding-bottom: 2em;
+}
+#desc dd {
+	font-weight: bold;
+}
+#desc .back {
+	text-decoration: none;
+	font-weight: bold;
+	padding: .5em;
+	margin: .5em auto;;
+	background-color: #ffefe6;
+	color: #000;
+	display: block;
+	width: 50%;
+}
+#desc .back:hover {
+	background-color: #dbdfff;
+}
+#nav {
+	display: block;
+	position: fixed;
+	right: 0px;
+}
+#nav ul {
+	list-style-type: none;
+}
+#nav li {
+	background-color: #ffefe6;
+	padding: .5em 2em .5em 1em;
+	margin-bottom: 1px;
+}
+#nav a {
+	text-decoration: none;
+	color: #000;
+	font-weight: bold;
+}

@@ -1,0 +1,56 @@
+<!--head-->
+{{:tplNavStyle.txt}}
+<!--/head-->
+{{Title:PHP-Dateien %s}}
+{{Keywords:wiki2xhtml, php-dateien, java, xhtml}}
+{{Description:Die Benutzung von PHP-Dateien mit wiki2xhtml. Sie können von wiki2xhtml wie normale Dateien bearbeitet werden, so kann etwa die ganze Gestaltung durch wiki2xhtml vorgenommen werden.}}
+{{H1:Verwendung von PHP-Dateien}}
+
+{{:tplLang-de.txt|en=php.html}}
+
+{| id="navTable" style="width: 100%" cellpadding="0" cellspacing="2";
+|- style="background-color: #fa0;"
+| colspan="2" | [[quickstart-de.html Quickstart]]
+| colspan="2" | [[quickref-de.html Quickref]]
+| style="background-color: #fff; color: #000; text-align: left;" | Einstieg
+|- style="background-color: #f80;"
+| colspan="4" | [[doc-de.html Doku]]
+| style="background-color: #fff; color: #000; text-align: left;" | Dokumentation
+|- style="background-color: #f60;"
+| style="width: 20%" | [[usage-de.html Usage]]
+| style="width: 20%" colspan="2" | [[doc-design-de.html Design]]
+| style="width: 20%" class="mark" | [[php-de.html PHP]]
+| style="background-color: #fff; color: #000; text-align: left;" | Vertiefung
+|}
+
+Mit wiki2xhtml können auch PHP-Dateien bearbeitet werden. Diese können zum Beispiel für ein Kontaktformular verwendet werden (wie bei [http://granjow.net] unter «About») oder für andere dynamische Anwendungen. 
+
+Wenn du PHP verwenden willst, solltest du zumindest über ein grundlegendes Wissen über diese Sprache verfügen. Mit einem guten Tutorial ist PHP aber einfach erlernbar. Galileo Computings stellt ein [http://www.galileocomputing.de/openbook/php4/ Openbook über PHP 4] zur Verfügung. Das [http://de.wikibooks.org/wiki/Websiteentwicklung:_PHP Wikibook über PHP] und das [http://tut.php-q.net/ QuakeNet-Tutorial] sind auch ein Blick wert. Weitere Links befinden sich im Open Directory Project [http://www.dmoz.org/World/Deutsch/Computer/Programmieren/Internet/PHP/Anleitungen,_Hilfen_und_FAQs/ dmoz.org].
+
+== Einbindung ==
+Um PHP mit wiki2xhtml zu verwenden, bedarf es lediglich drei verschiedenen Befehlen.
+;<code>&lt;!--nowiki--&gt;</code>
+:Dieser Kommentar kann irgendwo in einer Datei stehen und verhindert, dass eine Datei bearbeitet wird.<ref>Falls spitze Klammern direkt im Text erscheinen sollen, können sie [[doc-de.html#escape maskiert]] werden. Dann haben sie keine Wirkung mehr. Es sollte auch das schliessende Tag (&gt;) maskiert werden!</ref> Hat den gleichen Effekt wie das Kopieren der Datei.
+;<code>&lt;nowiki&gt;, &lt;/nowiki&gt;</code>
+:Falls PHP-Code falsch verarbeitet wird, kann er von den <code>nowiki</code>-Tags umschlossen werden. Das verhindert, dass der Code bearbeitet wird (und z.&thinsp;B. falsche Absätze eingefügt werden &hellip;).
+;<code>&lt;!--endtop--&gt;</code>
+:Etwa für Sessions muss bei PHP-Dateien Code vor dem ersten html-Tag stehen. Der gesamte Text vor diesem Tag wird ''unbearbeitet'' zuoberst eingefügt.
+
+== Beispiele ==
+Um eine Session<ref>Session: Siehe [http://ch2.php.net/manual/de/ref.session.php php.net: Sessions]</ref> zu starten, fügt man am Anfang der Datei folgenden Code ein:
+$$
+&lt;?php
+session_start();
+?&gt;
+&lt;!--endtop--&gt;
+$$
+
+Weitere Beispiele können im Menu unter «[[examples.html Examples]]» gefunden werden.
+
+== Kommentare ==
+<references />
+
+== Weblinks ==
+* [http://ch2.php.net/manual/de/ php.net]: Das Handbuch zu PHP
+* [http://www.admin-wissen.de/tutorials/eigene-tutorials/webentwicklung/php-tutorial/ admin-wissen.de]: PHP-Tutorial
+* [http://de.wikipedia.org/wiki/XAMPP XAMPP]: PHP-Server auf dem eigenen PC einrichten

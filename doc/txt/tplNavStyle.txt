@@ -1,0 +1,18 @@
+<!-- Template for the navigation inside the documentation pages -->
+<style type="text/css">
+#navTable * td {
+	padding: 2px 4px;
+	text-align: center;
+	color: #fff;
+	font-weight: bold;
+}
+#navTable a {
+	color: #fff;
+	border: none;
+	display: block;
+}
+#navTable .mark {
+	outline: 4px solid #333; 
+	cursor: default;
+}
+</style>

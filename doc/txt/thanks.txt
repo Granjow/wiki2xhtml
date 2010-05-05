@@ -1,0 +1,5 @@
+Some people which have contributed to the project in other ways:
+* Jürg Strassmann, my ex-teacher in History
+* surial, Stephmw and ricky_clarkson from irc.freenode.net##java (i18n)
+* Help on Java: ##java: cybereal, aditsu, ernimril, rcjsuen
+ 

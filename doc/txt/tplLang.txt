@@ -1,0 +1,3 @@
+<div id="lang"><span style="background: url('style/lang-left.png') no-repeat left top; width: 23px; display: block;"></span>
+<span style="background: url('style/lang-center.png') repeat-x left top; display: block;"> Other language: <strong><a href="{{{de}}}">de</a> {{{others|}}}</strong></span>
+<span style="background: url('style/lang-right.png') no-repeat left top; width: 25px; display: block;"></span></div>

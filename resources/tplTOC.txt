@@ -1,0 +1,3 @@
+<div id="toc"><h2>__TOC__</h2>
+[toc]
+</div><br style="clear: left;" />

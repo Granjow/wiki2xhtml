@@ -1,0 +1,29 @@
+{{Title:Links %s}}
+{{Keywords:wiki2xhtml, links, webdesign, css, xhtml}}
+{{H1:› Links around webdesign}}
+
+You want to change a design, create your own one, or simply understand how CSS works? Or you want to write a little PHP script or modify the (X)HTML code? The following links will help you.
+
+== Webdesign in general ==
+;Tutorials
+: [http://www.w3schools.com/ w3schools.com] – HTML, XHTML, CSS and more (like XSL, SQL); tutorials and references
+: [http://jendryschik.de/ XHTML, CSS und Webdesign] is a webpage with an introduction to this topics. German.
+;Design
+: [http://www.principlesofbeautifulwebdesign.com/ The principles of beautiful webdesign] from Jason Beaird, the page to his [http://www.sitepoint.com/books/design1/ ace book]
+
+== CSS ==
+; Tutorials
+: [http://www.howtocreate.co.uk/tutorials/css/introduction CSS tutorial]: Pretty CSS tutorial at howtocreate.co.uk 
+: [http://www.thestyleworks.de/tut-art/index.shtml The Styleworks]: Interesting introduction to CSS. German.
+: [http://www.webmaster-resource.de/tutorials/css/css-tutorial.php CSS Tutorial]: Tutorial explaining CSS at webmaster-resource.de
+; Advanced Tutorials
+: [http://css.maxdesign.com.au/ Tutorials about lists, floating and selectors]
+: [http://www.css-technik.de/ CSS-Technik] provides a lot of very interesting information, e.g. the [http://www.css-technik.de/2003/12/05/css-spickzettel/ Cheatsheet]. German.
+; References
+: [http://www.css4you.de/ CSS: 4you] is a German page with a cool reference and a tutorial. Downloadable for local use.
+: [http://www.mediaevent.de/css/index.html Stil mit {stil}] is another great reference. Also in German.
+: [http://htmldog.com/reference/cssproperties/ CSS Properties] at htmldog.com, short reference
+: [http://www.w3.org/TR/CSS21/ Cascading Style Sheets Level 2 Revision 1 Specification] at w3c.org
+: [http://www.edition-w3c.de/TR/1998/REC-CSS2-19980512/ Cascading Style Sheets, Level 2], German translation
+; Others
+: [http://www.dezwozhere.com/ Link collection] on CSS topics

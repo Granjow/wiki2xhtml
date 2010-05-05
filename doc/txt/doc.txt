@@ -1,0 +1,671 @@
+<!--head-->
+{{:tplNavStyle.txt}}
+</style>
+<!--/head-->
+{{Title:Full Documentation %s}}
+{{Keywords:wiki2xhtml, documentation, help file, java, xhtml}}
+{{Description:The complete help file or reference book to the functions from wiki2xhtml, including a short introduction.}}
+{{H1:› wiki2xhtml Documentation}}
+{{DescForCaption}}
+{{TitleRule:Image. %caption %s}}
+
+{{:tplLang.txt|de=doc-de.html}}
+
+{| id="navTable" style="width: 100%" cellpadding="0" cellspacing="2";
+|- style="background-color: #fa0;"
+| colspan="2" | [[quickstart.html Quickstart]]
+| colspan="2" | [[quickref.html Quickref]]
+| style="background-color: #fff; color: #000; text-align: left;" | Introduction
+|- style="background-color: #f80;"
+| colspan="4" class="mark" | [[doc.html Doku]]
+| style="background-color: #fff; color: #000; text-align: left;" | Documentation
+|- style="background-color: #f60;"
+| style="width: 20%" | [[usage.html Usage]]
+| style="width: 20%" colspan="2" | [[doc-design.html Design]]
+| style="width: 20%" | [[php.html PHP]]
+| style="background-color: #fff; color: #000; text-align: left;" | Immersion
+|}
+
+This is the main documentation. The documentation is built as seen above. For the first steps it's recommended to start with the introduction. The main documentation (current page) is best used for looking up.
+
+To run wiki2xhtml, you will need the Java Runtime<ref>You can get Java for free at [http://java.com/ java.com].</ref>, at least version 1.6. You can either run that program in the command line, or work with the GUI. If you don't set any arguments in the command line (only <code>java -jar wiki2xhtml.jar</code>), the GUI is automatically opened. You get it also by double-clicking the file wiki2xhtml.jar or start.bat, Unix users may execute ./wiki2xhtml.
+
+wiki2xhtml is licensed under the [http://en.wikipedia.org/wiki/GNU_General_Public_License GNU General Public License (GPL)].
+
+''Please let me know in the [http://forum.granjow.net/ wiki2xhtml forum] if there is something wrong, not understandable or missing.''
+
+== Last changes ==
+New since wiki2xhtml 3.4:
+* [[#namespace Namespaces for links]]
+* [[#titlerule Rule for titles of image pages]]
+* [[doc-design.html#toctpl Template for Table of Contents]]
+* [[#h_Images Images: Arguments]]
+* [[#h_Meta-Information Meta Information: Custom meta content]]
+
+{{TOC}}
+
+== Creating new pages ==
+
+In the GUI you can select the files which you want to parse and the other files with the buttons:
+: <img src="open.png" alt="Icon &ldquo;Open&rdquo;" /> (only one file can be selected, e.g. the header file)
+: <img src="mopen.png" alt="Icon &ldquo;Open more&rdquo;"/> (to select multiple files; here you can hold the Keys ''Ctrl'' or ''Shift'') or 
+:<img src="dir.png" alt="Icon &ldquo;Dir&rdquo;" /> (to select a directory).
+
+{{Top}}
+
+=== Menu ===
+The menu is read from a file, so you don't have to add it manually on every page (and after every change&nbsp;&hellip;). Each entry is written on a new line in list form.
+ ::
+<nowiki>
+#!link_deactivate !link_strong<br />
+Menu<br />
+* Links, links.html<br />
+** Here, here.html<br />
+** There, http://granjow.net<br />
+# This line is a comment as it is starting with a #<br />
+</nowiki>
+ ::
+In this example the caption &ldquo;Menu&rdquo; is being followed by the entry &ldquo;Links&rdquo; and a submenu containing two further entries. The first, also optional, line describes how links to the current page are handled. It has to start with $$#!$$ and may contain the following commands:
+* $$link_strong$$ — The link will be displayed in bold type
+* $$link_deactivate$$ — The link will be deactivated
+The settings named above may also be deactivated explicit by appending a zero ($$link_strong0$$).
+
+Lines can be commented by a leading # and won&#2019;t be parsed then.
+{{Top}}
+
+=== Window title ===
+There are two different ways to set the window title which appears in the Menu Bar, but you can combine them. The first and easier for many pages is writing it (without HTML tags!) into the Common File. The second is: Write it down anywhere in the source text according to the pattern &#123;{Title:&hellip;}}.
+
+As I said, you can combine the two possibilities. The title you give in the file is &ldquo;general&rdquo; and valid for every page, the second is page-specific&mdash;and replaces the general title. By setting a <code>'''%s'''</code> in the custom window title you can insert the general title at this position. An example: Your page can be found at sourceforge.net, so you want to set the general title to &ldquo;– .::sourceforge.net&rdquo;. The current page is about a game, let's name it &ldquo;Tetris&rdquo; (what a strange name!). Now you want the title to look like this: &ldquo;Tetris – .::sourceforge.net&rdquo;. What you need is the following code in the source file (with the page's content):
+ ::
+&#91;Content]<br />
+&#123;&#123;Title:Tetris, %p %s}}<br />
+&#91;Content]
+ ::
+Now you have to append the following line containing the general title&mdash;which should contain all characters appearing in every window title, including the &ldquo;–&rdquo;&mdash;in the Common File:
+ ::
+<nowiki>{{DefaultTitle:– .::sourceforge.net}}</nowiki>
+ ::
+The <code>'''%p'''</code> will be replaced by &ldquo;Page x of y&rdquo; if the document contains page breaks.
+{{Top}}
+
+=== Header ===
+Today, the header is often used to lead the user back to the start page&mdash;a nice aid! The link back to the start page can be set with &#123;{Homelink:&hellip;}} (anywhere in the text or in the Common File). For example a link to  sf.net/projects/wiki2xhtml:
+ ::
+<nowiki>
+&#123;{Homelink:http://sf.net/projects/wiki2xhtml}}
+</nowiki>
+ ::
+If you now click the header (usually an image), you get back there.
+{{Top}}
+
+=== Footer ===
+The footer, a little text at the end of the page, has to be written in a separate file too. It could look like that:
+ ::
+&lt;p&gt;This page has been created with &lt;a href="http://sf.net/projects/wiki2xhtml"&gt;wiki2xhtml&lt;/a&gt; %v.&lt;/p&gt;<br />
+&lt;p&gt;Date of creation: %d&lt;/p&gt;
+ ::
+The %v will be replaced with the current program version number, the %d with the current date and time. Don't forget the &lt;p&gt;!
+
+You can add the footer file with the argument <code>-f FILE</code> or <code>--footer=FILE</code>:
+01
+$ java -jar wiki2xhtml help.txt --footer=footer.txt
+$ java -jar wiki2xhtml help.txt -f footer.txt
+01
+{{Top}}
+
+=== Table of Contents  ===
+You can insert ''one'' TOC by inserting a &#123;{TOC}} anywhere in the text. The default heading can be replaced by another via the command {{TOC|Alternative heading}}.
+{{Top}}
+
+=== References ===
+To insert footnotes or references you can use the ref-command. If you use footnotes, its content doesn't disturb in the text. The references can be inserted─usually at the end of the page─with <code>&lt;references /&gt;</code>. In the text that may look like this:
+ ::
+Footnotes&lt;ref&gt;Via footnotes, annotations and references in the continuous text can be rolled out.&lt/ref&gt; are often more demanding to play as the feet are less agile then the hands.<br />
+&hellip;<br />
+<nowiki>== Annotations, References ==</nowiki><br />
+&lt;references /&gt;
+ ::
+The result: &ldquo;Footnotes<ref>Via footnotes, annotations and references in the continuous text can be binned.</ref> are often more demanding to play as the feet are less agile then the hands.&rdquo;
+
+'''Tip:''' You don't set spaces before footnotes.
+{{Top}}
+
+=== Common File ===
+To simplify the handling of the various settings (like author, language and more; An overview is available in the [[quickref.html Quickref]]), this settings can now be set in one single file. 
+
+This &ldquo;Common File&rdquo; (here named common.txt) is being handed over with the following argument:
+01
+$ java -jar wiki2xhtml.jar -c common.txt
+01
+{{Top}}
+
+== Page formatting ==
+
+=== Headings ===
+For headings, you always should begin with the second level, as the first one is the page title and can exist only once on one page. To add a heading (level 2) with the name &ldquo;Good Morning&rdquo;, put two equal signs before and after the name and keep it on an own line(!). The code would look like this: 
+ ::
+&#x003d;= Good Morning ==
+ ::
+The page title&mdash;the first heading&mdash;can be set with &#123;{H1:&hellip;}}. Example:
+ ::
+&#123;{H1:Photographing without a camera}}
+ ::
+{{Top}}
+
+=== Paragraphs ===
+Paragraphs are created when there is an empty line between two lines with text:
+ ::
+He stood alone in the room, holding his arm outstretched, as if he was searching for something. Then&amp;nbsp;&amp;hellip; suddenly, everything got dark around him!<br /><br />
+He simply could not sleep when the light is on.
+ ::
+{{Top}}
+
+=== Line breaks  ===
+Line breaks can be inserted with two backslashes followed by a space:\\ $$&#92;&#92;&nbsp;$$
+{{Top}}
+
+=== Page breaks ===
+Page breaks are inserted with the following lines:
+ ::
+\\//<br />
+---<br />
+//\\
+ ::
+This pattern was selected because of its good visibility in text.
+
+Attention: Nowiki tags are not regarded!
+
+=== Formatting ===
+To format your text cursive or bold, put either two or three apostrophes before and after the text. Do not use boldface too often, you should only use it to highlight (important) lemmas. Example:
+ ::
+A &#39;&#39;&#39;Lemma&#39;&#39;&#39; is something a paragraph or a whole text &#39;&#39;is about.&#39;&#39;
+ ::
+{{Top}}
+
+=== Links ===
+There are two different kinds of links: Absolute and relative ones. The difference between them is: An absolute, or external, link is usually to an other site like http://www.gimp.org. It does not matter, where you have saved your page, the link stays the same. A relative, or internal, link however is used to link your HTML files among themselves. An example is a link to the file help.txt: If this page you are reading now is located on /home/simon/, the absolute link to the file help.txt would be &ldquo;/home/simon/help.txt&rdquo;. And if someone has put this page on a web page (<nowiki>http://anything.org/</nowiki>), the absolute position is &ldquo;http://anything.org/help.txt&rdquo; (The absolute position would be relative! :-S). 
+
+If you write a single URL like http://sourceforge.net, it is converted to a link and a possible dot, comma or bracket at the end is removed. Recognized are links starting with www, http, https or ftp. If you want to add a description, put both the link and the description (separated with a space) into square brackets: <code>&#91;&#104;ttp://www.scribus.net Scribus]</code> leads to [http://www.scribus.net Scribus].
+
+Relative links for navigationning on a web page are marked with two square brackets: $$&#91;&#91;doc-de.html&#93;&#93;$$ for example links to the German version of this document: [[doc-de.html]]. The page name may also be replaced with other text by adding this link text after a space or a pipe symbol (|). See &ldquo;[[#h_Escapingcharacters Escaping Characters]]&rdquo; for further information.
+
+~~namespace~~ For links which are used frequently (e.g. to Wikipedia) you can define a [[quickref.html#namespace Namespace]] in the optional file [[#h_CommonFile common.txt]], e.g. $$<nowiki>&#123;&#123;Namespace:w=http://en.wikipedia.org/wiki/%s|cut&#125;&#125;</nowiki>$$. Then $$<nowiki>w:Toothpaste</nowiki>$$ will replaced by a link to [http://en.wikipedia.org/wiki/Toothpaste].
+
+Examples:
+ ::
+<nowiki>
+http://www.gimp.org is the link to the GNU Image Manipulation Program.<br />
+[http://www.gimp.org GIMP] replaces the link name with &ldquo;GIMP&rdquo;.<br />
+[[help.txt This file]] is the source for the file doc.html.<br />
+[[w:Toothpaste]] is bad for the dentist&#2019;s.
+</nowiki>
+ ::
+
+{{Top}}
+
+{{:hint.txt|<![CDATA[
+* If you insert a relative link to a page which you intend to generate, do not forget that the ending is .html afterwards!
+* Internal links to the current file are deactivated: <code><nowiki>[[doc.html]]</nowiki></code> becomes [[doc.html]] (see the menu too).
+*| Link and description can be parted with eiter a <code>&#124;</code> or a space. For wiki2xhtml, the bar is more important than a space.
+]]>}}
+
+~~anchor~~
+=== Anchors ===
+It is also possible to use anchors inside a page. In HTML you can assign elements (e.g. a heading) an ''unique'' ID to which you can jump with a link. Headings automatically obtain one, but you can use them also in the text.
+
+Headings own the ID &ldquo;h_&rdquo; followed by the heading itself, in slightly changed form. Some special characters like spaces will be removed (More precisely: wiki2xhtml will create an XML Name, all allowed characters are listed [http://www.w3.org/TR/xml/#NT-Name here], in unique but a little cryptic form). The easiest way to find out what an ID of a heading is is to insert the wikitext into the GUI’s code window.
+
+You can also insert an own anchor in your text, at the place you want to jump to. This with the command <code>&#x007e;~''unique name''&#x007e;~</code>. The name mustn't be used more than one time. After that you can link any times to this place. 
+
+To set a link on an anchor, you've got to append the target a <code>#</code> followed by the name of the anchor. If the target is located on the same page, you can leave the page name away. Following examples link to the [[#gallery gallery]] and the heading [[#h_Tables Tables]]:
+ ::
+&#x007e;~gallery&#x007e;~<br />&hellip;<br /> &#91;[doc.html#gallery Galerie]] has got the same target as &#91;[#gallery Galerie]]<br />&#91;[#'''h_'''tables Tables]] (Don't forget capitalisation!
+ ::
+{{Top}}
+
+=== Images ===
+Inserting an image is simple: If you e.g. have got an image named &ldquo;img2.jpg&rdquo;, add the code <code>&#91;&#91;Image:img.jpg&#124;&#93;&#93;</code> to your text. Instead of <code>Image:</code>, <code>Bild:</code> is working too. To add a description to the image, separate it with a vertical line (pipe character) from the image name.
+ ::
+&#91;&#91;Image:img.jpg|thumb|Butterwort &#39;&#39;(Pinguicula)&#39;&#39;&#93;&#93;
+ ::
+You can see the result of this code at the top of the page.
+
+The program creates special '' image pages'' for images (also in the gallery) if you set the argument <code>thumb</code>. If an image is linked twice from the same page, but with different description, the description from the last image is being taken. If it's linked from different pages, wiki2xhtml will create different description pages.
+
+~~ImageArguments~~ The images can also be assigned some '''arguments.'''
+* ''<code>320px</code>'' &ndash; Sets the width of the image, here 320 px. The argument $$w=auto$$ uses the image's original size, rather than a pre-set value.
+* ''<code>caption=&hellip;</code>'' &mdash; Replaces the image caption (which otherwise would be simply the image's name).
+* ''<code>direct</code>'' &mdash; Directly links to the image without an image page between.
+* ''<code>ld=&hellip;</code>'' &mdash; Sets a long image description which only appears on the image page
+* ''<code>small</code>'' &mdash; Doesn't (de)magnifiy images on the image page (if the image is smaller than set in the page, it is reasonable not to magnify images, but not the other way round).
+* ''<code>thumb</code>'' &mdash; Inserts a thumbnail<ref>Thumbnails have to be created manually!</ref> and creates an image description page (which can be avoided with <code>direct</code>)
+
+Additionally:
+* ''$$arg=&hellip;$$'' &ndash; Additional arguments for the $$img$$ tag (like CSS formattings)
+* ''$$argLink=&hellip;$$'' &ndash; Additional arguments for the $$a$$ tag (like for using [http://www.shadowbox-js.com/usage.html ShadowBox] with your images)
+* ''$$clear$$, $$clear:before$$, $$clear:after$$'' &ndash; Can be used if content is written over the image.
+
+{{:hint.txt|The link to the thumbnail can also be set separately for one image; if e.g. a PDF document (book.pdf) needs a special preview image (cover.png) you can replace the argument $$thumb$$ by the specific argument $$thumb=cover.png$$. Apart from that you should set a [[#thumbs default path to thumbnails]] and simply use $$thumb$$.}}
+
+~~titlerule~~ The '''window title''' of image pages (also for images in galleries) can be adjusted with the command  $$&#123;&#123;TitleRule:''rule''&#125;&#125;$$. The rule hereby gives what the title has to look like. Additionally to $$%s$$ (see [[#h_Windowtitle window title]]), the following replacements are supported:
+* $$%caption$$ will be replaced by the image&#x2019;s caption
+* $$%path$$ will be replaced by the image path
+* $$%name$$ will be replaced by the image filename
+ ::
+&#123;&#123;TitleRule:Image %name: %caption %s&#125;&#125; ''(rule, at the top of the document)''<br />
+&hellip;<br />
+&#91;&#91;Image:cloud.jpg|thumb|Cumulus&#93;&#93; ''(Inserted image with title &ldquo;Cumulus&rdquo;)''<br />
+''leads to this title, if &ldquo; - .:MyPage&rdquo; has been set as default title:''<br />
+Image cloud.jpg: Cumulus  - .:MyPage
+ ::
+
+
+==== Examples for inserting images ====
+'''Without arguments'''
+
+$$<nowiki>[[Image:ahorn-300.jpg]]</nowiki>$$
+
+The image is inserted directly, in original size.
+
+[[Image:ahorn-300.jpg]]
+\\ 
+
+'''Labeled and resized'''
+
+$$<nowiki>[[Image:ahorn-300.jpg|Maple|150px]]</nowiki>$$
+
+The image obtains a caption ''Maple'', and the image width is set to 150 pixels.
+
+[[Image:ahorn-300.jpg|Maple|150px]]
+\\ 
+
+'''Thumbnail'''
+
+$$<nowiki>[[Image:ahorn-300.jpg|thumb=ahorn-thumb.jpg|A Maple leaf|ld=Silver Maple ''(Acer saccharinum)'']]</nowiki>$$
+
+The thumbnail ahorn-thumb.jpg is being used. As image title ''A maple leaf'' is set, and additionally a verbose description with the latin name which will be shown on the linked image page.
+
+[[Image:ahorn-300.jpg|thumb=ahorn-thumb.jpg|A Maple leaf|ld=Silver Maple ''(Acer saccharinum)'']]
+\\ 
+
+'''Directly linked thumbnail'''
+
+$$<nowiki>[[Image:ahorn-300.jpg|thumb|direct|thumb=ahorn-thumb.jpg|Silver Maple]]</nowiki>$$
+
+The verbose description has been left away as by direct linking no image page is created.
+
+[[Image:ahorn-300.jpg|thumb|direct|thumb=ahorn-thumb.jpg|Silver Maple]]
+
+{{:hint.txt|You can set a standard image directory with $$&#123;&#123;DirImages:…&#125;&#125;$$. To access a file that is not in this standard directory, write a $$./$$ before it ($$.$$ means the current directory). See the [[quickref.html quickref]] for other settings.}}
+{{Top}}
+
+=== Gallery ===
+You can add a gallery to your page with the tag $$&lt;gallery&gt;$$. Between the opening and the closing tag you can add an image on a new line (or, if you want, plain text)&nbsp;&ndash; see the gallery above. With the argument <code>caption=</code> you can set a caption for the gallery, and if you want to add a description, you can add it after a vertical line. An example code would look like this:
+ ::
+&lt;gallery caption="My Gallery"&gt;<br />
+Image:holiday.jpg<br />
+Yeah, these were nice times &amp;hellip; take a look at the guy on the left ;)<br />
+Image:sea.jpg|My boat. I have&amp;nbsp;&amp;hellip; ehm, borrowed it.<br />
+&lt;/gallery&gt;
+ ::
+{{Top}}
+
+~~gallery~~
+<gallery caption="Image Gallery">
+Image:img2.jpg|caption=Grass
+Image:img3.jpg
+Image:img4.jpg
+Image:img5.jpg|The char &ldquo;&#124;&rdquo; is used to add a description to an image. 
+Only text leads to a simple field. Also here it is possible &ndash;&nbsp;like in the description&nbsp;&ndash; to add a [http://en.wikipedia.org/wiki/Link Link]. The Caption for the gallery is given with the command &lt;gallery caption="&hellip;"&gt;.
+Image:img6.jpg|Sailing boats
+Image:img7.jpg|ld=The sharp borders indicate an Stratus layer.
+Image:img8.jpg
+Image:img9.jpg
+</gallery>
+{{Top}}
+
+=== Lists ===
+Inserting a list is a little easier here than it would be in HTML: You only need to put a * at the beginning of the line. A ** creates a subordered list entry. To insert an ordered list with digits, use the # instead.
+ ::
+&#42; First level<br />
+&#42;&#42; Second level
+ ::
+
+'''Definition lists''' are another kind of lists. Here they are used e.g. in the [[faq.html FAQ]]. You can insert them with:
+; a ; at the beginning to indicate the definition name or
+: a : (or more than one) at the beginning of the line to explain the entry above.
+
+List elements may be committed elements like CSS formattings. Everything standing after a pipe character (&ldquo;|&rdquo;) is regarded as an argument. The argument <code>style="color: #f00;"</code> e.g. colorizes the line red.
+ ::
+<nowiki>*</nowiki> style="color: #f00;" | This list element is colorized red.
+ ::
+* style="color: #f00;" | This list element is colourized red.
+{{Top}}
+
+=== Tables ===
+Tables may have a table header at the top. You insert tables according to the following example:
+ ::
+<nowiki>
+{|<br />
+| <br />
+! Windows<br />
+! Linux<br />
+|-<br />
+! Music Player<br />
+| [http://www.apple.com/itunes/ iTunes]<br />
+| [http://amarok.kde.org/ Amarok]<br />
+|-<br />
+! Photos<br />
+| [http://picasa.google.com/ Picasa]<br />
+| [http://www.digikam.org/ digikam]<br />
+|}
+</nowiki>
+ ::
+
+The first cell is being omitted here. That would result the following table:
+
+{|
+! 
+! Windows
+! Linux
+|-
+! Music Player
+| [http://www.apple.com/itunes/ iTunes]
+| [http://amarok.kde.org/ Amarok]
+|-
+! Photos
+| [http://picasa.google.com/ Picasa]
+| [http://www.digikam.org/ digikam]
+|}
+
+That are the basics. To increase the overview of the code (source) you might like to have more than one cell on one line. In that case you can part them with two vertical lines:
+ ::
+<nowiki>
+| Cell 1<br />
+| Cell 2<br />
+is the same as <br />
+| Cell 1 || Cell 2
+</nowiki>
+ ::
+
+You can also set things like the width of a cell or its background-color. In that case you have to part the arguments from the text content by a vertical line with a space ''before and after.''
+ ::
+<nowiki>
+{|<br />
+| style="width: 200px; border: 2px solid #000;" | Width of 200 px<br />
+|}
+</nowiki>
+ ::
+{|
+| style="width: 200px; border: 2px solid #000;" | Width of 200 px
+|}
+
+
+Note: Do not mistake tables for lists! 
+\\ 
+'''Further possibilities''' 
+
+Coloured border (<code>border: 1px #98e5b3 solid;</code>), left width is 10 pixel (<code>border-left-width: 10px;</code>), a space of one character at the right (<code>padding-right: 1em;</code>):
+{| cellspacing="0"
+| style="border: 1px #98e5b3 solid; border-left-width: 10px; padding-right: 1em;" | <code>style="border: 1px #98e5b3 solid; border-left-width: 10px; padding-right: 1em;" </code>
+| style="border: 1px #98e5b3 solid; border-left-width: 0px; padding-right: 1em;" | Cell 2
+|}
+
+ \\ Two pixel space between the cells: <code>cellspacing="2"</code> as argument for the whole table
+{| cellspacing="2" style="border: 1px solid;"
+| style="border: 1px solid;" | <code>{| cellspacing="2" style="border: 1px solid;"</code>
+| style="border: 1px solid;" | Cell 2
+|}
+
+ \\ Single rows can be formatted separately by inserting the arguments after the sign for the new row (<code>|-</code>).
+{| cellspacing="2" style="background-color: #fff0c8;"
+! Position of the argument !! Scope
+|-
+|  | Arguments after <code>{|</code> || Whole table
+|- style="color: #e9713c; background-color: #fff; font-weight: bold;"
+|  | Arguments after <code>|-</code> || Formattings for one row
+|-
+| | Arguments after <code>|</code> || style="font-style: italic;" | Single cell
+|}
+The necessary code:
+ ::
+<nowiki>
+{| cellspacing="2" style="background-color: #fff0c8;"<br />
+! Position of the argument !! Scope<br />
+|-<br />
+|  | Arguments after <code>{|</code> || Whole table<br />
+|- style="color: #e9713c; background-color: #fff; font-weight: bold;"<br />
+|  | Arguments after <code>|-</code> || Formattings for one row<br />
+|-<br />
+| | Arguments after <code>|</code> || style="font-style: italic;" | Single cell<br />
+|}</nowiki>
+ ::
+
+{{:hint.txt|<![CDATA[If there is a | in the cell, the content before it will be (mis)interpreted as argument and cut off. Put a |, separated with spaces, at the beginning of the cell content to avoid this problem (see also above).]]>}}
+{{Top}}
+
+=== Examples, Cites ===
+See also: [[#h_EscapingCharacters Escaping characters]]
+
+Text can be marked with further distinctions:
+: $$<nowiki>--text--</nowiki>$$ for --removed-- text, 
+: $$<nowiki>++text++</nowiki>$$ for ++inserted++ text, 
+: $$<nowiki>$$code$$</nowiki>$$ for $$code$$, 
+: $$<nowiki>@@cite@@</nowiki>$$ for @@cites@@
+: $$<nowiki>::samp::</nowiki>$$ for ::samples::
+: $$<nowiki>01kbd01</nowiki>$$ for 01keyboard inputs01
+If a separate paragraph is to be used for it (possible with all distinctions except of inserted/deleted text) you've got to write the particular control character on a new line. An example for source code:
+$$
+Spaces are displayed as they are inserted.
+If not, you've got to add the following section to the CSS file:
+$$<br />code.block {
+	white-space: pre;
+}<br />$$
+$$
+For keyboard input:
+01
+Learning to handle vim under debian:<br />01
+$ apt-get install vim
+$ vimtutor<br />01
+01
+Cites are thus inserted the following way:
+@@
+&hellip;&nbsp;And he spoke: <br />@@
+CITE <br />@@
+And it became a cite.
+@@
+An example (mind the spaces in front of the two colons! Otherwise it's regarded as a list):
+ ::
+The dash – exactly this one – can be inserted under windows with the shortcut &#x0030;1Alt+015001.
+ ::
+{{Top}}
+
+=== Horizontal Line ===
+You can insert a horizontal line with four hyphens on a new line. Do not use it, unless it really requires the line.
+ ::
+&#x002d;---
+ ::
+{{Top}}
+
+== Tips and Hints ==
+Not everything is being done by my program. Some things are simply a little HTML and CSS, and others are something only you can make correctly&nbsp;&ndash; e.g. the typography. I will give you a little overview over further possibilities you have got, and how the usual commands sould be used.
+
+Note: In the samples which show you how to compile a source document I will use the file &ldquo;help.txt&rdquo; which has to be compiled. A command is marked with a <code>$</code> at the beginning of the line. The basis command is:
+01
+$ java -jar wiki2xhtml.jar help.txt
+01
+This would create the html file, without a menu and such things.
+
+It is possible to compile as much files simultaneously as you want, but you have to write out every file name by hand. The * is not yet supported.
+{{Top}}
+
+~~escape~~
+=== Escaping characters ===
+If you want to write for instance a code example for HTML, you cannot write a &lt;p&gt; in the source code, as that would be interpreted as a new paragraph. So you need to &ldquo;escape&rdquo; it. The most important chars and their codes are:
+* '''&lt;'''&nbsp;&rarr;&nbsp;&amp;lt;
+* '''&gt;'''&nbsp;&rarr;&nbsp;&amp;gt; (should be used too!)
+* '''&amp;'''&nbsp;&rarr;&nbsp;&amp;amp;
+* '''&#91;'''&nbsp;&rarr;&nbsp;&amp;#91;
+* '''&#92;'''&nbsp;&rarr;&nbsp;&amp;#92;
+* '''&#93;'''&nbsp;&rarr;&nbsp;&amp;#93;
+* '''&#123;'''&nbsp;&rarr;&nbsp;&amp;#123;
+* '''&#124;'''&nbsp;&rarr;&nbsp;&amp;#124;
+* '''&#125;'''&nbsp;&rarr;&nbsp;&amp;#125;
+* '''&#39;'''&nbsp;&rarr;&nbsp;&amp;#39;
+* '''&mdash;'''&nbsp;&rarr;&nbsp;&amp;mdash; (m-dash)
+* '''&ndash;'''&nbsp;&rarr;&nbsp;&amp;ndash; (n-dash)
+* '''space'''&nbsp;&rarr;&nbsp;&amp;nbsp; (non-breaking space)
+* '''0'''&nbsp;&rarr;&nbsp;&amp;#x0030; (a 0, e.g. to mask 01keyboard input01)
+* '''$'''&nbsp;&rarr;&nbsp;&amp;#x0024;
+* '''~'''&nbsp;&rarr;&nbsp;&amp;#x007e;
+An other possibility to escape whole expressions which would be parsed by the program is the <code>nowiki-</code>tag. Put it before and after an expression to avoid it being translated from wiki to (x)html. If you e.g. want to avoid that a link (for instance <nowiki>www.google.com</nowiki>) is being recognized, write: <code><nowiki>&lt;nowiki&gt;www.google.com&lt;/nowiki&gt;</nowiki></code>. The result is that: <nowiki>www.google.com</nowiki>
+How can you find out this codes by yourself? Quite simple. They are displayed in e.g. [http://openoffice.org OpenOffice.org] in the char map ''(Insert &gt; Special Character).'' For the character &ldquo;{&rdquo; e.g. it says &ldquo;U+007B (123)&rdquo;. The number between the brackets can be inserted with &amp;#NUMBER; in the code. Alternatively the Unicode<ref>[http://www.decodeunicode.org/] is a huge reference to Unicode characters. Here you will find everything &hellip;</ref> can be inserted directly, in this case &amp;#x007B;
+
+In [http://en.wikipedia.org/wiki/Uniform_Resource_Identifier URIs] it may have some special characters like a space. If you set a link to such a file, the program can not recognize whether the part after the space belongs to the URI or to the link name. This special characters have got some escape sequences too:
+* '''space'''&nbsp;&rarr;&nbsp;%20
+* '''['''&nbsp;&rarr;&nbsp;%5b
+* ''']'''&nbsp;&rarr;&nbsp;%5d
+* |'''|'''&nbsp;&rarr;&nbsp;%7c
+A sample link to a (not existing) document named &ldquo;with space.html&rdquo; could look like this: &#91;&#91;with%20space.html with space]]. The result of that example: [[with%20space.html with space]]. Alternatively you can use the vertical line (&ldquo;|&rdquo;):  &#91;&#91;with space.html|with space]]. That leads to the same result: [[with space.html|with space]].
+
+There is a very good reference in the web where you find all the codes you need. You can find it at [http://www.w3schools.com/tags/ref_entities.asp w3schools.com].
+{{Top}}
+
+~~thumbs~~
+=== Thumbnails ===
+The charging time of web pages ought to remain as low as possible. The more has to be loaded entering a page, the longer it takes to construct the page and the more the server will be stressed. Thus the (big) original images should not be taken for the (small) preview images─use smaller images of a less resolution and lower file size! Thumbnails may be generated with programs like [http://gimp.org GIMP] or [http://xnview.com/ XnView]. Unix-User have got a powerful tool with [http://www.imagemagick.org/script/convert.php convert] from ImageMagick.
+
+The best way to handle thumbnails is to save them in a separate directory. Their name ought to contain the original file name as then they can be used automatically. Good choices are e.g. &ldquo;imagename_thumb.jpg&rdquo;, &ldquo;thumb_imagename_jpg&rdquo; or, even easier (if the thumbnails are in a separate directory) the filename itself: &ldquo;imagename.jpg&rdquo;. Exceptions may be set with [[#ImageArguments thumb=&hellip;]].
+
+Variables (here for the example image dir/image.jpg)
+* %n &ndash; full name with path (dir/image.jpg)
+* %f &ndash; file name (image.jpg)
+* %d &ndash; path (dir)
+* %w &ndash; without extension (image)
+* %e &ndash; extension (.jpg)
+
+Examples (Original filename: image.jpg):
+{|
+! style="padding-right: 2em;" | Directory name!! style="padding-right: 2em;" | Thumbnail name !! Entry in the configuration file
+|-
+| thumbs || image.jpg || &#123;{Thumbnails:thumbs/%f}}
+|-
+| thumbs || thumb_image.jpg || &#123;{Thumbnails:thumbs/thumb_%f}}
+|-
+| thumbs || image_thumb.jpg || &#123;{Thumbnails:thumbs/%w_thumb%e}}
+|-
+| thumbs || image.png || &#123;{Thumbnails:thumbs/%w.png}}
+|}
+{{Top}}
+
+=== Templates ===
+Content which appears multiple times (like the buttons to change the language on this page) can be written into a file in the same directory where also the sources lie. This, in this example ''tplLang.txt'', can be included as follows:
+$$
+&#123;&#123;:tplLang.txt&#125;&#125;
+$$
+The text from the template page runs through the parser too, which means that Wikitext will be recognized. Furthermore, [http://en.wikipedia.org/wiki/Help:Template#Parameters Parameters] are supported. If text which should be passed as parameter contains a special character like a pipe symbol or closing curly braces, it can be masked with $$&lt;![CDATA[''text'']]&gt;$$.
+$$
+&#123;&#123;:tplLang.txt|'''&lt;![CDATA[''' &ldquo;&#125;&#125;&rdquo; are two closing braces, and &ldquo;|&rdquo; is a pipe symbol.. ''']]&gt;'''&#125;&#125;
+$$
+{{Top}}
+
+=== Meta-Information ===
+The (x)html files can contain some more information (&ldquo;meta-data&rdquo;). It is/was used by search engines, but today they are often ignored, because like that the search engines can be manipulated. Today they usually search the visible text. wiki2xhtml supports the following keywords:
+* '''Description:''' A short description of the page content.
+ ::
+&#123;{Description:&hellip;}}
+ ::
+* '''Keywords:''' The keywords someone could type to find your page, separated with a comma.
+ ::
+&#123;{Keywords:&hellip;}}
+ ::
+* '''Author:''' The author of the site.
+ ::
+&#123;{Author:&hellip;}}
+ ::
+* '''Language:''' The language used on the current page, e.g. en or de
+ ::
+&#123;{Lang:&hellip;}}
+ ::
+* |'''Custom:''' (See also: [[w:Meta element|Wikipedia: Meta element]]
+ ::
+&#123;{Meta:name=content}} (name/content combinations)\\ 
+&#123;{Meta:anything you like}} (any other combination)
+ ::
+
+All these commands work either in the Common File or in the text itself.
+{{Top}}
+
+=== Automatic redirect ===
+You can redirect the user to an other page by inserting the following line in your document:
+ ::
+&#x0023;REDIRECT 2 index.html
+ ::
+This redirects him after 2 seconds to the page index.html. Don't forget to depose a note for browsers which don't support redirection!
+{{Top}}
+
+=== Icon ===
+To use a page icon ([http://en.wikipedia.org/wiki/Favicon Favicon]), the following command (anywhere in the text or in the Common File) works:
+ ::
+&#123;{Icon:&hellip;}}
+ ::
+{{Top}}
+
+=== PHP, JavaScript and CSS page specific ===
+Two different commands may be used for page specific PHP, JavaScript, CSS and similar. If the code has to be just at the beginning of the page, also before the $$html$$ tag as it is necessary for PHP, it can be inserted at the beginning of the page and terminated with the command:
+$$
+&lt;!--endtop--&gt;
+$$
+To include CSS, JavaScript and similar, the code has to be enclosed by two tags as shown in the following example for CSS.
+$$
+&lt;!--head--&gt;
+&lt;style type="text/css"&gt;
+body {
+	background-color: #fb0;
+}
+&lt;/style&gt;
+&lt;!--/head--&gt;
+$$
+
+See also the [[php.html documentation page to PHP]].
+{{Top}}
+
+=== Typography ===
+[http://en.wikipedia.org/wiki/Typography Typography] is important&nbsp;&ndash; also in the web. If you don't consider some simple rules, the text may look terrible or have no sense, but if you do, everything will seem to suit :)  I will explain some of them later here and teach the program how to correct common mistakes.
+{{Top}}
+
+== Command Line Mode ==
+If you often use wiki2xhtml, you might want to use the command line version, as you can write scripts for it or things like that. When often using the same settings, this way will be much faster as the GUI.
+
+You can get an overview over all available arguments in the shell by adding the argument <code>--help</code> or <code>-h.</code> I want to explain the most important ones here. The $ at the beginning indicates a command in a shell (DOS, bash, &hellip;) and does ''not'' have to be written.
+
+If you want to create the help files, execute the program with the argument $$--helpfiles-de$$:
+01
+$ java -jar wiki2xhtml.jar --helpfiles
+01
+
+You can leave the reck away (with the head, body and other tags) if you want to have plain HTML code which can be used somewhere else with the argument --only-code. 
+01
+$ java -jar wiki2xhtml.jar --only-code {FILE(S)}
+01
+
+If you want to use wiki2xhtml to generate HTML code for [http://www.postnuke.com/ PostNuke]: You can remove the line breaks with <code>--remove-newlines</code> (PostNuke sometimes appends a &lt;br /&gt; at the end of every line, what is not desired) and <code>--only-code</code> (which does not insert the HTML code into the reck with the title, header, body tags etc.). The argument --stdout furthermore re-routes the output to the stdout (usually the shell) instead of writing it into a file. The following commands do the same, <code>--pn</code> and <code>--pns</code> are abbreviations.
+01
+$ java -jar wiki2xhtml.jar --remove-newlines --only-code {Files, Arguments, ...}
+$ java -jar wiki2xhtml.jar --pn {Files, Arguments, ...}
+01
+Or:
+01
+$ java -jar wiki2xhtml.jar --remove-newlines --only-code --stdout {File(s), Arguments, ...}
+$ java -jar wiki2xhtml.jar --pns {File(s), Arguments, ...}
+01
+
+The argument --standard means the same as $$-m menu.txt -f footer.txt -c common.txt$$. The arguments can be overwritten (e.g. with a -v for the verbose mode). 
+
+You may also try -v (which is the same as --verbose) for more output. --silent does the opposite; Only the necessary things are printed. --debug enters the debug-mode where you get a lot of (useless) information.
+{{Top}}
+
+== References ==
+<references />
+{{Top}}

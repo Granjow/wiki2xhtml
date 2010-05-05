@@ -1,0 +1,46 @@
+{{Title:Download %s}}
+{{Keywords:wiki2xhtml, download, windows, linux, mac os}}
+{{H1:Download wiki2xhtml}}
+
+{{:tplLang.txt|de=download-de.html}}
+
+wiki2xhtml can be downloaded in the following archive formats:
+* '''wiki2xhtml 3.4b8 (GPL): Preview'''
+** wiki2xhtml.7z (2.4 MB) &ndash; [http://downloads.sourceforge.net/wiki2xhtml/wiki2xhtml-3.4b8.7z Download]
+** wiki2xhtml.tar.bz2 (2.5 MB) &ndash; [http://downloads.sourceforge.net/wiki2xhtml/wiki2xhtml-3.4b8.tar.bz2 Download]
+** wiki2xhtml.tar.gz (2.6 MB) &ndash; [http://downloads.sourceforge.net/wiki2xhtml/wiki2xhtml-3.4b8.tar.gz Download]
+** wiki2xhtml.zip (2.7 MB) &ndash; [http://downloads.sourceforge.net/wiki2xhtml/wiki2xhtml-3.4b8.zip Download]
+** wiki2xhtml.exe (2.8 MB) &ndash; [http://downloads.sourceforge.net/wiki2xhtml/wiki2xhtml-3.4b8.exe Download] (self-extracting 7zip archive)
+* '''wiki2xhtml 3.3.2 (GPL)'''
+** wiki2xhtml.7z (2.4 MB) &ndash; [http://downloads.sourceforge.net/wiki2xhtml/wiki2xhtml-3.3.2.7z Download]
+** wiki2xhtml.tar.bz2 (2.5 MB) &ndash; [http://downloads.sourceforge.net/wiki2xhtml/wiki2xhtml-3.3.2.tar.bz2 Download]
+** wiki2xhtml.tar.gz (2.6 MB) &ndash; [http://downloads.sourceforge.net/wiki2xhtml/wiki2xhtml-3.3.2.tar.gz Download]
+** wiki2xhtml.zip (2.7 MB) &ndash; [http://downloads.sourceforge.net/wiki2xhtml/wiki2xhtml-3.3.2.zip Download]
+** wiki2xhtml.exe (2.8 MB) &ndash; [http://downloads.sourceforge.net/wiki2xhtml/wiki2xhtml-3.3.2.exe Download] (self-extracting 7zip archive)
+
+The archives are platform-independant. An installation isn't required as explained on [[usage.html this page]].
+
+You can use any program to unpack the selected archive format. Should you be looking for a program which is nice to work with, take a look at:
+* [http://tugzip.com/ TugZip] and
+* [http://www.izarc.org/ IZArc]
+* [http://peazip.sourceforge.net/ PeaZip] (also availible for Linux, doesn't need to be installed)
+
+== Java ==
+
+The required Java runtime can be downloaded at [http://java.com/ java.com]. Make sure that you have got at least version 1.6&mdash;anything higher is okay too ;)
+
+== SVN ==
+
+If you'd like to throw an eye on wiki2xhtml: The source code is being managed with Subversion (SVN) on this repository: https://wiki2xhtml.svn.sourceforge.net/svnroot/wiki2xhtml/trunk/wiki2xhtml-current/
+
+The code and the rest can be downloaded directly with svn<ref>[http://de.wikipedia.org/wiki/Subversion%20(Software) Subversion] (SVN) is a version cotrol tool. See also the free [http://svnbook.red-bean.com/ Subversion book].</ref> or with programs like 
+* [http://rapidsvn.tigris.org/ RapidSVN] or
+* [http://tortoisesvn.net/ TortoiseSVN]
+Keep in mind that this version is in development and perhaps doesn't run stable.
+
+Compile the project by running $$javac src/UserInterface.java$$; you need to have Java Development Kit 1.6 or higher installed. 
+
+If you use Linux, you can generate the jar files by executing $$build.sh$$. ant<ref>[http://en.wikipedia.org/wiki/Apache_Ant Ant] is &ldquo;make for Java&rdquo;</ref> needs to be installed.
+
+== Footnotes ==
+<references />

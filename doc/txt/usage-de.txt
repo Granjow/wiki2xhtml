@@ -1,0 +1,64 @@
+<!--head-->
+{{:tplNavStyle.txt}}
+</style>
+<!--/head-->
+{{Title:Arbeiten mit wiki2xhtml %s}}
+{{Keywords:wiki2xhtml, arbeit, xhtml}}
+{{H1:Arbeit mit wiki2xhtml}}
+
+{{:tplLang-de.txt|en=usage.html}}
+
+{| id="navTable" style="width: 100%" cellpadding="0" cellspacing="2";
+|- style="background-color: #fa0;"
+| colspan="2" | [[quickstart-de.html Quickstart]]
+| colspan="2" | [[quickref-de.html Quickref]]
+| style="background-color: #fff; color: #000; text-align: left;" | Einstieg
+|- style="background-color: #f80;"
+| colspan="4" | [[doc-de.html Doku]]
+| style="background-color: #fff; color: #000; text-align: left;" | Dokumentation
+|- style="background-color: #f60;"
+| style="width: 20%" class="mark" | [[usage-de.html Usage]]
+| style="width: 20%" colspan="2" | [[doc-design-de.html Design]]
+| style="width: 20%" | [[php-de.html PHP]]
+| style="background-color: #fff; color: #000; text-align: left;" | Vertiefung
+|}
+
+wiki2xhtml unterscheidet sich ein wenig von den meisten anderen Programmen. Es muss nicht installiert werden, was den Transport von kompletten Webseiten extrem vereinfacht. Du musst nur sicherstellen, dass auf der Zielmaschine Java 1.5 oder höher installiert ist, und kannst das Verzeichnis mit dem Programm und den Quelldateien hinüberkopieren und weiterarbeiten – oder gerade auf einem USB-Stick portabel arbeiten.
+
+== Welche Bestandteile von wiki2xhtml werden wirklich benötigt? ==
+'''wiki2xhtml.jar''' – mehr nicht!
+
+Die weiteren Bestandteile sind optional und für jede Webseite individuell. Normalerweise sind es:
+* Die Textdateien in Wikitext mit dem Inhalt,
+* ein Design und
+* die Konfigurationsdateien.
+Zu den Konfigurationsdateien gehören die common-Datei für die Standardeinstellungen für Seitentitel, Sprache und weiterem, die Menudatei und die Footer-Datei.
+
+== Welche Ordnerstruktur wird empfohlen? ==
+wiki2xhtml arbeitet beim Erstellen der XHTML-Dateien ohne Unterverzeichnisse, sie werden alle in den selben Ordner geschrieben. Daher ist es am besten, die Quelldateien auch in einem Ordner zu haben – so wird auch schon doppelten Dateinamen vorgebeugt. Kurz zur Übersicht die Ordnerstruktur:
+$$
+/ Basisordner
+  wiki2xhtml.jar
+  ''Wikitext-Dateien''
+  ''Konfigurationsdateien''
+ 
++ html/
+  + pic/
+      ''Bilder (.jpg, .png, &hellip;)''
+  + thumb/
+      ''Thumbnails der Bilder''
+ 
++ style/
+  + ''design-name/''
+      ''Design-Dateien'' 
+$$
+In das Verzeichnis $$html$$ werden die generierten XHTML-Dateien geschrieben. Die verwendeten Bilder kommen in ein Unterverzeichnis des Ordners, in diesem Beispiel $$pic$$, die Vorschaubilder dazu in $$thumb$$. Bei grösseren Seiten ist eine weitere Unterteilung emfehlenswert, etwa ein separater Ordner für Dokumente. Tip: Verwende Namen im Singular (oder Plural, falls du das mehr magst) – mische sie nicht, sonst entsteht schnell ein Durcheinander.
+
+Der Ordner $$style$$ enthält das auf der Seite verwendete Design. Es kann ein eigenes oder ein abgeändertes existierendes sein.
+
+== Wie generiere ich meine Webseite am schnellsten? ==
+wiki2xhtml arbeitet sowohl im grafischen Modus als auch im Textmodus. Zum Ausprobieren ist vor allem der grafische Modus interessant, bei einem bestehenden Projekt ist man im Textmodus schneller.
+
+Wird wiki2xhtml per Doppelklick auf die jar-Datei oder auf $$wiki2xhtml.bat$$ (Windows) beziehungsweise $$wiki2xhtml$$ (Unix-Systeme, Mac) gestartet, wird das GUI (Englische Abkürzung für Grafische Benutzeroberfläche) geöffnet und wikixhtml arbeitet im grafischen Modus. Die Dateien können im Ordner-Browser ausgewählt werden, die restlichen Einstellungen mit der Maus gesetzt. 
+
+Falls ein bestehendes Projekt – Seiten, mit denen nicht mehr getestet wird – generiert werden soll, bleiben die Einstellungen meist über längere Zeit gleich. In diesem Fall kann im GUI ein kleines Script exportiert werden (''Datei > Exportieren''), das mit einem Doppelklick ausgeführt wird und dann die Seite generiert. Interessierte finden in der [[doc-de.html#h_Kommandozeilenmodus Dokumentation]] mehr darüber.

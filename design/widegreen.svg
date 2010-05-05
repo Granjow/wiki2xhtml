@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="970"
+   height="850"
+   id="svg2"
+   sodipodi:version="0.32"
+   inkscape:version="0.46"
+   sodipodi:docbase="/home/simon/workspace/svn-wiki2xhtml-current/design"
+   sodipodi:docname="widegreen.svg"
+   inkscape:output_extension="org.inkscape.output.svg.inkscape"
+   version="1.0"
+   inkscape:export-filename="/home/simon/workspace/svn-wiki2xhtml-current/style/widegreen/bg_.png"
+   inkscape:export-xdpi="90"
+   inkscape:export-ydpi="90">
+  <defs
+     id="defs4">
+    <inkscape:perspective
+       sodipodi:type="inkscape:persp3d"
+       inkscape:vp_x="0 : 425 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_z="970 : 425 : 1"
+       inkscape:persp3d-origin="485 : 283.33333 : 1"
+       id="perspective31" />
+    <filter
+       inkscape:collect="always"
+       id="filter3178">
+      <feGaussianBlur
+         inkscape:collect="always"
+         stdDeviation="4.3219687"
+         id="feGaussianBlur3180" />
+    </filter>
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#ffffee"
+     borderopacity="1"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="0.70710678"
+     inkscape:cx="317.75838"
+     inkscape:cy="537.1126"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer2"
+     inkscape:window-width="1581"
+     inkscape:window-height="997"
+     inkscape:window-x="91"
+     inkscape:window-y="1"
+     showguides="true"
+     inkscape:guide-bbox="true"
+     width="970px"
+     height="850px"
+     showgrid="false">
+    <sodipodi:guide
+       orientation="vertical"
+       position="16"
+       id="guide4220" />
+    <sodipodi:guide
+       orientation="vertical"
+       position="950"
+       id="guide4222" />
+    <sodipodi:guide
+       orientation="vertical"
+       position="65"
+       id="guide4244" />
+    <sodipodi:guide
+       orientation="horizontal"
+       position="726"
+       id="guide4246" />
+  </sodipodi:namedview>
+  <metadata
+     id="metadata7">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:groupmode="layer"
+     id="layer2"
+     inkscape:label="1"
+     style="display:inline">
+    <path
+       id="path4141"
+       d="M 24.282465,24.58642 L 24.282465,828.2576 L 949.39877,828.2576 L 949.39877,74.399845 L 860.02097,24.58642 L 24.282465,24.58642 z"
+       style="opacity:0.75000000000000000;fill:#34432e;fill-opacity:0.82745097999999984;stroke:none;stroke-width:1;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;filter:url(#filter3178)" />
+    <path
+       style="fill:#b6dba5;fill-opacity:0.25155281;stroke:#8cd46b;stroke-width:0.98481911;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       d="M 16.52366,10.58616 L 16.52366,814.25734 L 941.63996,814.25734 L 941.63996,60.399585 L 852.26216,10.58616 L 16.52366,10.58616 z"
+       id="rect3134" />
+    <path
+       style="fill:#b2de9c;fill-opacity:1;stroke:none;stroke-width:0.96959651;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       d="M 21.726466,23.364539 L 21.726466,272.15041 L 937.14426,272.15041 L 937.14426,64.459052 L 848.706,23.364539 L 21.726466,23.364539 z M 21.726466,280.15055 L 21.726466,800.03521 L 937.14426,800.03521 L 937.14426,280.15055 L 21.726466,280.15055 z"
+       id="path4139" />
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="layer3"
+     inkscape:label="2"
+     style="display:inline">
+    <text
+       xml:space="preserve"
+       style="font-size:47.27131653px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:condensed;text-align:start;line-height:100%;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:DejaVu Sans"
+       x="63.710503"
+       y="210.11548"
+       id="text4216"
+       sodipodi:linespacing="100%"
+       transform="scale(0.9848008,1.0154338)"><tspan
+         sodipodi:role="line"
+         id="tspan4218"
+         x="63.710503"
+         y="210.11548">It is Green.</tspan></text>
+    <flowRoot
+       xml:space="preserve"
+       id="flowRoot4232"
+       transform="translate(-21.5,-30.85662)"><flowRegion
+         id="flowRegion4234"><rect
+           id="rect4236"
+           width="827"
+           height="298"
+           x="87"
+           y="362.36218" /></flowRegion><flowPara
+         id="flowPara4238">mit man sofort sieht, dass es eine Textdatei ist. Falls du gerade keinen Text zur Hand hast, aus dem du eine xhtml-Datei erstellen willst, kannst du zum Beispiel einen Blindtext[3] nehmen. Speichere ihn nun in eine Datei (vielleicht index.txt; daraus wird nachher index.html, die im Internet automatisch erscheint, wenn kein spezieller Dateiname angegeben wird) in einem separaten Verzeichnis. In dieses Verzeichnis (zum Beispiel «page» im Programmverzeichnis) werden alle Dateien gespeichert, die später für die Seite benötigt werden. So ist nachher alles beieinander, und</flowPara><flowPara
+         id="flowPara4240" /><flowPara
+         id="flowPara4242">Sobald eine Internetseite aus mehr als einer Seite besteht – was normalerweise der Fall ist –, benötigt man ein Menu zur Navigation. Damit dies nicht bei jeder Seite neu eingetippt werden muss und so bei einer Änderung alle Seiten geändert werden müssen, wird es in einer separaten Datei gespeichert. Diese ist nach dem Muster «Dateiname 1 ↵ Titel 1 ↵ Dateiname 2 ↵ Titel 2 ↵ …» aufgebaut (↵ bezeichnet einen Zeilenumbruch). Erstelle eine zweite Textdatei (blindtext.txt) mit beliebigem Inhalt (je nach Belieben noch eine dritte oder vierte). Dass die Endung der Dateien nach dem Konvertieren nicht mehr .txt lautet, sondern .html, muss berücksichtigt werden! Aus index.txt wird nun also index.html, aus blindtext.txt wird blindtext.html. Die beiden Dateien sollen im Menu den Namen «Home» und «Blindtext» bekommen. Erstelle eine</flowPara></flowRoot>    <text
+       xml:space="preserve"
+       style="font-size:24px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:condensed;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#4c357b;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;display:inline;font-family:DejaVu Sans"
+       x="63.9156"
+       y="577.2373"
+       id="text3353"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan3355"
+         x="63.9156"
+         y="577.2373">Überschrift</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:14px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:condensed;text-align:start;line-height:100%;writing-mode:lr-tb;text-anchor:start;fill:#ff651d;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:DejaVu Sans"
+       x="291.328"
+       y="403.81561"
+       id="text3361"
+       sodipodi:linespacing="100%"><tspan
+         sodipodi:role="line"
+         id="tspan3363"
+         x="291.328"
+         y="403.81561">link</tspan></text>
+  </g>
+</svg>

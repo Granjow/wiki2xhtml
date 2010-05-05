@@ -1,0 +1,67 @@
+{{TOC}}
+<gallery>
+Image:bla.jpg
+//Image:bla.jpg
+</gallery>
+
+== bla ==
+ A MemoryUsage{{$Pagename}} object http://contains.four<br /> values: ''www.example.com''.
+#REDIRECT 0 index.html
+{|
+| 1 || 2
+|-
+| 3|| 4 
+|+ style="color: red " | Caption 
+|}
+
+      init 	''represents'' the initial '''amount'' of'' memory''' (in ftps.that.the); Java virtual machine requests from the operating system for memory management during startup. The Java virtual machine may request additional memory from the operating system and may also release memory to the system over time. The value of init may be undefined.
+      used 	represents the amount of memory ''currentl'y'' used (in bytes).
+      committed 	represents the '''amount's'' of''' memory's'' (in bytes) that is guaranteed to be available for use by the Java virtual machine. The amount of committed memory may change over time (increase or decrease). The Java virtual machine may release memory to the system and committed could be less than init. committed will always be greater than or equal to used.
+      max<ref>d 	represents\\ the maximum</ref> amount of memory (in bytes) that can be used for memory management. Its value may be undefined. The maximum amount of memory may change over time if defined. The amount of used and committed memory will always be less than or equal to max if max is defined. A memory allocation may fail if it attempts to increase the used memory such that used > committed even if used <= max would still be true (for example, when the system is low on virtual memory).
+      
+      
+      <references />
+== bla ==
+test
+      
+
+\\//
+---
+//\\
+
+Zur Beachtung: Der Desktop-PC, mit dem täglich gearbeitet wird, soll nicht als Server dienen. Als Server soll ein eigener PC verwendet werden, der ansonsten keine weiteren Aufgaben erfüllt.
+
+{{TOC}}
+{{Title:bla.}}
+{{H1:.bla}}
+Verwendungsmöglichkeiten als Server:
+a) ein lokaler Testserver für Webdesigner ohne Internetverbindung (siehe dieses Kapitel)
+b) ein privater (Daten-)Server mit Internetverbindung
+c) ein privater Webserver mit umfassender Internetverbindung
+d) ein kommerzieller Webserver (nicht behandelt in diesem Handbuch)
+Minimale Voraussetzungen
+Mindestens 256MB RAM. Weniger RAM wird Probleme bereiten, da ein Server mit MySQL viel RAM benötigt, um ansprechend zu laufen. Ohne ausreichenden Speicher gibt MySQL folgende Fehlermeldung aus: "cannot connect to mysql.sock".
+Das sidux-Paket Generic_Server
+
+Das sidux-Paket Generic_Server besteht aus einer vorpaketierten Installation via Meta-Paket-Installer. Folgende Programme werden installiert:
+*apache2
+*apache2-utils
+*apache2-mpm-prefork
+*php5 php5-common
+*mysql-server
+*mysql-common
+*libapache2-mod-php5
+*php5-mysql
+*phpmyadmin
+ACHTUNG!
+=== apt-get ===
+
+apt-get remove --purge splashy
+
+=== splashy ===
+
+Splashy kann nicht mit mysql
+
+Die Konfigurationsdatei für Apache befindet sich hier:/etc/apache2/apache2.conf, und das Web-Verzeichnis ist hier: /var/www
+
+

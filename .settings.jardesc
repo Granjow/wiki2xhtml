@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jardesc>
+<jar path="/home/simon/workspace/wiki2xhtml-current/wiki2xhtml.jar"/>
+<options buildIfNeeded="true" compress="true" descriptionLocation="/wiki2xhtml-current-svn/.settings.jardesc" exportErrors="true" exportWarnings="true" includeDirectoryEntries="true" overwrite="true" saveDescription="true" storeRefactorings="false" useSourceFolders="false"/>
+<storedRefactorings deprecationInfo="true" structuralOnly="false"/>
+<selectedProjects/>
+<manifest generateManifest="false" manifestLocation="/wiki2xhtml-current-svn/MANIFEST.MF" manifestVersion="1.0" reuseManifest="false" saveManifest="false" usesManifest="true">
+<sealing sealJar="false">
+<packagesToSeal/>
+<packagesToUnSeal/>
+</sealing>
+</manifest>
+<selectedElements exportClassFiles="true" exportJavaFiles="true" exportOutputFolder="false">
+<javaElement handleIdentifier="=wiki2xhtml-current-svn/&lt;program{Help.java"/>
+<javaElement handleIdentifier="=wiki2xhtml-current-svn/&lt;program{XhtmlSettings.java"/>
+<javaElement handleIdentifier="=wiki2xhtml-current-svn/&lt;program{FileContainer.java"/>
+<javaElement handleIdentifier="=wiki2xhtml-current-svn/&lt;program{ExtendedUndoManager.java"/>
+<javaElement handleIdentifier="=wiki2xhtml-current-svn/&lt;program{CommentsContainer.java"/>
+<javaElement handleIdentifier="=wiki2xhtml-current-svn/&lt;program{ResourceContainer.java"/>
+<javaElement handleIdentifier="=wiki2xhtml-current-svn/&lt;program{SettingsContainer.java"/>
+<javaElement handleIdentifier="=wiki2xhtml-current-svn/&lt;program{ArgumentHandler.java"/>
+<javaElement handleIdentifier="=wiki2xhtml-current-svn/&lt;resources"/>
+<javaElement handleIdentifier="=wiki2xhtml-current-svn/&lt;program{Resources.java"/>
+<javaElement handleIdentifier="=wiki2xhtml-current-svn/&lt;program{RegExp.java"/>
+<javaElement handleIdentifier="=wiki2xhtml-current-svn/&lt;program{IOUtils.java"/>
+<javaElement handleIdentifier="=wiki2xhtml-current-svn/&lt;program{Headings.java"/>
+<javaElement handleIdentifier="=wiki2xhtml-current-svn/&lt;program{IORead.java"/>
+<javaElement handleIdentifier="=wiki2xhtml-current-svn/&lt;program{Images.java"/>
+<javaElement handleIdentifier="=wiki2xhtml-current-svn/&lt;program{XHTML.java"/>
+<javaElement handleIdentifier="=wiki2xhtml-current-svn/&lt;program{ColorContainer.java"/>
+<javaElement handleIdentifier="=wiki2xhtml-current-svn/&lt;program{Links.java"/>
+<javaElement handleIdentifier="=wiki2xhtml-current-svn/&lt;program{Paragraphs.java"/>
+<javaElement handleIdentifier="=wiki2xhtml-current-svn/&lt;program{ImageSettings.java"/>
+<javaElement handleIdentifier="=wiki2xhtml-current-svn/&lt;program{FileDialogues.java"/>
+<javaElement handleIdentifier="=wiki2xhtml-current-svn/&lt;program{IOWrite.java"/>
+<javaElement handleIdentifier="=wiki2xhtml-current-svn/&lt;program{GetSettingsContainer.java"/>
+<javaElement handleIdentifier="=wiki2xhtml-current-svn/&lt;program{StringTools.java"/>
+<javaElement handleIdentifier="=wiki2xhtml-current-svn/&lt;program{Threads.java"/>
+<javaElement handleIdentifier="=wiki2xhtml-current-svn/&lt;program{NoWiki.java"/>
+<javaElement handleIdentifier="=wiki2xhtml-current-svn/&lt;program{BlockLevels.java"/>
+<javaElement handleIdentifier="=wiki2xhtml-current-svn/&lt;program{GetCssSettings.java"/>
+<javaElement handleIdentifier="=wiki2xhtml-current-svn/&lt;program{LanguageContainer.java"/>
+<javaElement handleIdentifier="=wiki2xhtml-current-svn/&lt;program{GenerateID.java"/>
+<javaElement handleIdentifier="=wiki2xhtml-current-svn/&lt;program{Menu.java"/>
+<javaElement handleIdentifier="=wiki2xhtml-current-svn/&lt;program{Tables.java"/>
+<javaElement handleIdentifier="=wiki2xhtml-current-svn/&lt;program{CssSettings.java"/>
+<javaElement handleIdentifier="=wiki2xhtml-current-svn/&lt;program{Timer.java"/>
+<javaElement handleIdentifier="=wiki2xhtml-current-svn/&lt;program{GUI.java"/>
+<javaElement handleIdentifier="=wiki2xhtml-current-svn/&lt;program{GetSettings.java"/>
+<javaElement handleIdentifier="=wiki2xhtml-current-svn/&lt;program{UserInterface.java"/>
+</selectedElements>
+</jardesc>

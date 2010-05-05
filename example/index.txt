@@ -1,0 +1,19 @@
+<!--Set the page title (visible in the window bar at the very top)-->
+{{Title:Home @ example.org}}
+
+<!--Set Home to be the main page heading. -->
+{{H1:Home}}
+
+This page (index.html) is the first page you will see when calling the URL of your web site.
+
+== Some examples ==
+Lists:
+* “Unordered” bullet list: Lines starting with a star
+** May have subitems (use 2 or more stars)
+** (just here for example)
+
+That isn’t everything yet.
+# Lists can also be “ordered”
+# Work the same way, but with a # instead of a *
+
+Next, a [http://example.org Link to example.org]: External, links away from this URL. [[hello.html]] however is part of the same web page.

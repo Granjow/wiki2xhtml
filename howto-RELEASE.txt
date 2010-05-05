@@ -1,0 +1,24 @@
+Steps to consider:
+
+* Update cheatsheets
+
+* Update resources/gui-about.html
+
+* Update pad.xml
+* Update granjow.net/wiki2xhtml
+
+* Update news*.txt and changelog*.txt and download*.txt
+* Update version number on index.txt
+* Update Constants.Wiki2xhtml
+
+* Check: Java Version 1.6 must be taken for compiling!
+
+* Update build.xml (Version, ...)
+* Run ./lang-update.sh && ./create-l10n.sh && ant to create the jar file
+
+* update SVN
+* execute the release.sh script with the command ./release.sh versionnumber (e.g. ./release.sh 3.0.3)
+
+* Upload it!
+
+* Upload pad.xml

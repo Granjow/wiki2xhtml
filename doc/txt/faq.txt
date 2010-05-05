@@ -1,0 +1,28 @@
+{{Title:FAQ %s}}
+{{Keywords:wiki2xhtml, faq}}
+{{Description:FAQs to wiki2xhtml}}
+{{H1:› FAQ to wiki2xhtml}}
+
+{{:tplLang.txt|de=faq-de.html}}
+
+&ldquo;FAQ&rdquo; is short for &ldquo;Frequently Asked Questions&rdquo;. See [http://en.wikipedia.org/wiki/FAQ Wikipedia:FAQ].
+
+;How can I get help?
+: Write to the [https://lists.sourceforge.net/lists/listinfo/wiki2xhtml-users wiki2xhtml Mailing List].
+;Where can I report a bug?
+: In the [http://apps.sf.net/mantisbt/wiki2xhtml/ wiki2xhtml Bug Tracker]. This is also the right place for suggesting new features.
+;Translating wiki2xhtml
+: If you would like to translate wiki2xhtml, please read through [[GuidelinesTranslators.pdf this document]].
+;In a listing text is cut away from the beginning of the line!
+: |Probably you used a pipe character (&ldquo;|&rdquo;) in the line. Everything before this character is interpreted as arguments to format the listing entry. Simply put a | at the beginning of the text: <br /><samp class="block"> <nowiki>* |That way the pipe character | is being displayed correctly.</nowiki></samp> <br />By the way: Validators like the [http://www.totalvalidator.com/ Total Validator], wherefore you can get also a [https://addons.mozilla.org/en-US/firefox/addon/2318 Firefox Extension], usually find such problems rapidly.
+;Instead of umlaut, the browser only displays squares. 
+: The source files have to be written in UTF-8. Editors like [http://notepad-plus.sourceforge.net/ Notepad++] can write UTF-8 coded text files, the Windows Notepad ''cannot!'' Under Unix, ASCII files can be converted to UTF-8 with the command: <code>iconv -f ISO-8859-1 -t UTF-8 input-file -o output-file</code> 
+;I can't execute the exported shell script.
+: If you're using Unix, you've got to make the script executable at first. Do that with the command <code>chmod u+x script.sh</code>.
+;I'd like to alter a design or create a new one. How do I do that?
+: I will create a manual for that ;) The program uses several files; recks like the reck.html or image-template.html and css files for the design. Feel free to play around with them&mdash;if you destroy someting, there is still the original file on the server&nbsp;&hellip;
+;How can I insert PDF files?
+: |Either as a usual link, for example <code>&#91;document.pdf]</code>, or as an image. Here you can also use a thumbnail: <code>&#91;[Image:document.pdf|thumb=document_thumb.png|PDF file]]</code>
+
+== References ==
+<references />

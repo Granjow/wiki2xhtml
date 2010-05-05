@@ -1,0 +1,196 @@
+{{Title:Changelog %s}}
+{{Keywords:wiki2xhtml, changelog, releases}}
+{{Description:Changelogs from wiki2xhtml}}
+{{H1:Changelog}}
+
+{{:tplLang.txt|de=changelog-de.html}}
+
+The versions of wiki2xhtml and its changelogs.
+
+== wiki2xhtml-svn ==
+The most up-to-date version of wiki2xhtml can be found on the Subversion repository. See [[download.html#h_SVN Building from SVN]] for details.
+
+'''Attention:''' wiki2xhtml requires '''Java 1.6''' now. Java 1.5 will not work anymore.
+
+* class="green" | wiki2xhtml only parses changed files if the flag $$--incremental$$ is set; makes it much faster when only few files have been edited
+* class="green" | Functions $$if$$, $$ifeq$$, and $$switch$$ are now supported. See also: [http://www.mediawiki.org/wiki/Help:Extension:ParserFunctions mediawiki:ParserFunctions]
+* class="green" | New argument $$--source-dir$$ to choose the directory containing all files. wiki2xhtml.jar no longer needs to be in the same directory as the files. See [[quickref.html#source-dir|here]].
+* class="green" | [[doc.html#h_Images Arguments for images]] and links allowing to use custom formatting or plugins like [http://www.shadowbox-js.com/ Shadowbox]
+* class="green" | Namespaces for Links: You can define namespaces such that e.g. $$<nowiki>[[wiki:Sun]]</nowiki>$$ is automatically replaced by a link to Wikipedia&#x2019;s Sun page
+* class="green" | [[doc.html#titlerule Titles for image pages]] can now be adjusted with $$&#123;&#123;TitleRule:''rule''&#125;&#125;$$.
+* Templates also work in the [[doc.html#h_PHPJavaScriptandCSSpagespecific head area]]. 
+* Recursions in templates (a template calling itself or building an infinite loop via another way) are detected and you will be warned
+* wiki2xhtml uses a minimalistic standard reck file if no design is available
+* GUI improved; bigger argument field
+* Using the [http://www.jdotsoft.com/JarClassLoader.php JarClassLoader] for the jar file to include the gettext commons library warned.
+* class="fixed" | CDATA sections in templates are correctly inserted now (content was deleted sometimes due to IDs occuring multiple times)
+* class="fixed" | wiki2xhtml is now able to run without style directory
+* class="fixed" | Access to files in .jar corrected (for standalone use of the .jar file)
+* class="fixed" | wiki2xhtml won&#x2019;t generate two links from $$<nowiki>[http://example.com http://example.com]</nowiki>$$ anymore.
+* class="fixed" | Menu entries without a link, but with a *, are now correctly recognized (correct level) and no longer inserted as a heading.
+* class="fixed" | Templates with a newline at the end of the file cannot break tables anymore
+
+Various notes:
+* Tag $$&#123;&#123;ConsistentGallery&#125;&#125;$$ disabled; acessible by setting number of images per line to zero ($$&#123;&#123;GalleryImagesPerLine:0&#125;&#125;$$).
+* Keyword $$AddKeywords$$ has been removed and replaced by $$Keywords$$.
+* Custom metadata now with $$Meta:name=content$$
+* New icons for .zip, .xcf etc. added; will be used in $$<nowiki>[[Image:nothing.zip]]</nowiki>$$
+* Preferences dialog improved
+* New tag for image pages to insert alternative image text: $$<nowiki>[</nowiki>[[doc-design.html#alt alt]]<nowiki>]</nowiki>$$ (only important if you're using a custom style)
+
+== wiki2xhtml 3.3 ==
+Version 3.3. Please take a look at the [[doc.html#h_Lastchanges last changes]] in the documentation.
+
+* '''3.3.2''' ~~332~~ (Dec 17, 2008)
+** class="green" | Argument $$direct$$ for images now works in galleries too.
+** class="green" | [[quickref.html#reckalternative Alternative reck file]] can be set (e.g. a special one for PHP)
+** class="green" | HTML head can be [[doc-design.html#c_head customized]].
+** class="fixed" | German flag no longer upside down
+* '''3.3.1''' ~~331~~ (Oct 7, 2008)
+** class="fixed" | Arguments for [[quickref.html settings]] $$DescForCaption$$ and $$NameForCaption$$ corrected. Is now $$:false$$.
+** class="fixed" | HTML comments ($$<nowiki>&lt;!--like that--&gt;</nowiki>$$) work again. The two dashes were wrongly recognized as --deleted text--.
+* class="green" | '''New Menu system.''' See [[doc-design2.html here]].
+* class="green" | Basic support for '''[[doc.html#h_Templates Templates]].'''
+* class="green" | wiki2xhtml now fully supports spaces in filenames (enclose them with zoll chars "like that") and other directories. This allows wiki2xhtml to use files in directories like $$"C:\\Documents and Settings\…"$$.
+* class="green" | Extended: 
+** $$<nowiki>--text--</nowiki>$$ for --removed text--, 
+** $$<nowiki>++text++</nowiki>$$ for ++inserted text++, 
+** $$<nowiki>$$code$$</nowiki>$$ for $$code$$, 
+** $$<nowiki>@@cite@@</nowiki>$$ for @@cites@@,
+** $$<nowiki>::samp::</nowiki>$$ for ::samples::,
+** $$<nowiki>01kbd01</nowiki>$$ for 01keyboard inputs01
+* class="green" | New tags to [[doc.html#h_PHPJavaScriptandCSSpagespecific include]] CSS/JavaScript/… in the header
+* class="green" | Documentation updated and extended
+* class="green" | New configuration possibilities, see [[quickref.html Quickref]]
+* class="green" | New classes for references (&rarr; allows the use of $$.target$$ in CSS)
+* class="green" | wiki2xhtml [[index.html has a logo]]! 
+* class="green" | Automatic check for updates if enabled
+* class="green" | Last settings are stored
+* class="green" | Image pages: Extended functionality with &gt;desc&gt; and &lt;desc&lt; 
+* class="green" | Updater for reck and image templates
+* Anchors can be inserted with $$&#x007e;&#x007e;text&#x007e;&#x007e;$$ (old: $$&#x007b;{Mark:text}}$$)
+* Management of arguments (Title, Author, Thumbnails, …) rewritten, now works as expected. That means:
+** Settings in $$commons.txt$$ apply on all files
+** Settings on single pages override the ones in $$commons.txt$$ (path of thumbnails e.g. can now be page specific!)
+* Paragraph inserter rewritten. Faster and standard conform.
+* Image handler rewritten, some arguments changed (also arguments in templates!) and are shorter now. Text in galleries doesn’t interrupt linking below image pages anymore.
+* Cheatsheet updated
+* Duplicate keywords are filtered
+* Icons have been refreshed
+* GPL again
+* Exported shellscripts now start with $$#!/bin/sh$$
+* About 15&nbsp;500 lines of code and over 4500 lines documentation
+* Stylesheets extended with the class .noprint (won't be printed)
+* Code/Paste windows no longer always on top
+* class="fixed" | Custom meta data (inserted with &#123;&#123;Meta:…&#125;&#125;) is now inserted correctly without a leading $$Meta:$$.  
+* class="fixed" | A list at the end of the document is closed again
+* class="fixed" | If a table starts with a row ($$|-$$ or $$|+$$, e.g. to apply CSS to it), there won't be an empty $$&lt;tr&gt;$$ tag anymore.
+
+
+== wiki2xhtml 3.2 ==
+Version 3.2 (Sat, Feb 16, 2008)
+
+* class="green" style="font-weight: bold;" | wiki2xhtml is multi-lingual now! 
+* class="green" | A long page can be split into multiple ones
+* class="green" | A new design, &ldquo;Wide Green&rdquo;
+* class="green" | The Style &ldquo;HD&rdquo; has been adjusted
+* class="green" | You've got the possibility to export .sh (Unix) and .bat (Windows) Scripts. 
+* class="green" | Thumbnails can be linked directly to images (without the image page) with the argument &ldquo;direct&rdquo;
+* class="green" | &#123;{$Pagename}} inserts the name of the current page
+* class="green" | #REDIRECT redirects to other pages
+* .html files will be copied now (and no longer ignored) but not processed
+* The comments system has been rewritten completely (concerns primarily command line; arguments <code>-v</code>, <code>--silent</code> and <code>--dead</code>)
+* List parser completely rewritten, heading parser partially rewritten
+* | Tables: <code>| entry 1 !! entry 2</code> is possible 
+* The GUI has been adjusted
+* The documentation has been updated (images) and structurated
+* Images inserted with &#91;&#91;Image:path&#93;&#93; (without the argument thumb) are only resized with the argument width=number or w=number
+* The navigation file (or index file) is now called menu file (menu.txt) for consistency reasons
+* A vertical bar to separate link and Description is possible for both internal and external links surroundet with each one respectively two square brackets
+* <code>&#123;{ID:...}}</code> disabled
+* (Obsolete) styles &ldquo;Nature&rdquo; and &ldquo;Glass&rdquo; removed
+* | <span class="red">Fixed:</span> Unhandsome code in definition lists (<code>:</code> and <code>;</code>) 
+* | <span class="red">Fixed:</span> Direct links in parentheses are recognized now. Example: <nowiki><code>&hellip; in parentheses (http://example.com) are &hellip;</code></nowiki>
+* | <span class="red">Fixed:</span> A tag immediately following a link (like <nowiki><code>http://example.com&lt;br /&gt;</code></nowiki>) isn't added to the link anymore
+* | <span class="red">Fixed:</span> Special patterns (<code>&#91;&#91;Image:</code> followed by anything but the closing square brackets) won't lead to a crash anymore<ref>For interested people. The (quite simplified) original regular expression: <code>\[\[image:([^\]]*)+\]\]</code>. Problematic is that there is a greedy quantifier both within the parentheses and outside: <code>([^\]]*)+</code> (This expression means &ldquo;Any character but a square bracket, any times, and all that at least one time&rdquo;.) When the expression fails (that is, if there are no two final square brackets), every imaginably case is tested through here which lets the required time growing&mdash;due to the nested quantifiers&mdash;exponencially. Note that there is no problem with a successful match! See also: ''Mastering Regular Expressions,'' Jeffrey E.F. Friedl, O'Reilly, Chapter six, ''A Sobering Example''.</ref> 
+* | <span class="red">Fixed:</span> <nowiki><code>''the car's driver''</code></nowiki> is now recognized as italic text (antecendent the ' used to prevent this)
+* | <span class="red">Fixed:</span> Random design is again selectable in the GUI
+* ''3.2.1''
+** Wrong link recognition fixed (now without ' at the end and without " at the beginning)
+** Little mistake in comments system fixed (text wasn't displayed)
+
+=== wiki2xhtml 3.1.0 ===
+Version 3.1.0 (Mon Oct  1 20:42:36 UTC 2007)
+
+* I've changed the license to LGPL
+* The update checker has been extended a little bit
+
+=== wiki2xhtml 3.0.4 ===
+Version 3.0.4 (Son Sep 23 14:04:55 UTC 2007)
+
+* class="green" | Check for updates in the Preferences dialogue and for the command line (argument --www)
+* Compiled with Java 5 (not Java 6) again for better compatibility (runs also on PCs which aren't up-to-date)
+
+=== wiki2xhtml 3.0.3 ===
+Version 3.0.3 (Sa Jul 21 14:38:30 CEST 2007)
+
+* | <span class="red">Fixed:</span> Paragraphs aren't inserted anymore between the tags pre and code. If you want to prevent the text from being edited generally (e.g. links), use the nowiki-tags too. (Bug #1751697)
+
+=== wiki2xhtml 3.0.2 ===
+Version 3.0.2 (Fr Jun 29 23:37:26 CEST 2007)
+
+* class="green" | A custom width for image thumbnails can be set in the css-settings.txt (in the according design directory) with {{thumb-imagewidth:value}}
+* class="green" | Submenu &ldquo;Info&rdquo; added in the GUI
+* Images: w= is now an abbreviation for width=, pw= for pwidth=
+* | <span class="red">Fixed:</span> &#91;&#91;Image:picture.jpg&#93;&#93; inserts picture.jpg and no more its thumbnail (thumbnails need the argument thumb)
+* | <span class="red">Fixed:</span> Argument <code>--consistent-gallery</code> didn't work in the first line, if it was set to two images per line (css-settings.txt: &#91;&#91;Consistent-Gallery:2&#93;&#93;)
+* | <span class="red">Fixed:</span> If a link (without square brackets) stood at the end of a cell, the &lt;/td&gt; was appended to the link target
+* | <span class="red">Fixed:</span> The code paste window is working again (didn't work anymore in 3.0)
+
+== wiki2xhtml 3.0 ==
+Version 3.0 (Sa Jun 23 12:09:26 CEST 2007)
+
+* class="green" | You can use PHP files! The flag ''&lt;!--nowiki--&gt;'' prevents wiki2xhtml from doing anything with it. Text before the (optional) ''&lt;!--endtop--&gt;'' is put at the top of the page (before the html) what is required by some php functions like sessions.
+* class="green" | Templates for galleries and images for more design-possibilities
+* class="green" | New lines (&lt;br /&gt;) can be inserted with &ldquo;\\&nbsp;&rdquo; (two backslashes followed by a space) like in the DokuWiki (Feature Request #1721336)
+* class="green" | Long image descriptions can be inserted with ld=... (only displayed on the image description pages)
+* class="green" | New design: GlassBorder
+* class="green" | You can have headers and normal cells on one line too (e.g. ! header || normal cell !! again header)
+* Curly braces are allowed in the title: {{H1:Here is a } in the title}} (for use in PHP)
+* Changed div in the top link to  span
+* Image argument &ldquo;thumb&rdquo; generates image pages (only &#83;[Image:test.jpg]] does not)
+* Some styles adjusted (HD, Autumn)
+* | <span class="red">Fixed:</span> Text-only gallery entries don't have an ID any more
+* | <span class="red">Fixed:</span> wiki2xhtml crashed when there was a single | on one line (in tables)
+
+== wiki2xhtml 2.6 ==
+Version 2.6 (Fr Mai 18 19:40:57 CEST 2007)
+
+* class="green" | The menu can contain sub-menus; you can insert them with one or two * at the beginning of the line with the target link (Feature Request #1717610)
+* |List entries (*, #, :, ;) may have arguments (Feature Request #1718195)\\ Example: * style="color: #f00;" | red text
+* Designs updated
+* Lists are better looking (indent with spaces) (Feature Request #1651883)
+* gif images in the style directory are copied too 
+* The first {{Language:...}} or {{Lang:...}} is taken, thus further ones don't have to be masqueraded with &amp;#123; (causes a { in HTML). The same for all {{something:text}} tags except AddKeywords and Meta.
+
+=== wiki2xhtml 2.5.1 ===
+Version 2.5.1 (Fr 27. Apr 19:49:24 CEST 2007)
+
+* class="green" | The argument <code>&lt;meta name="robots" content="all" /&gt;</code> is added to the files (thus search engines search the files). It will be possible to determine whether that is to be appended in further releases.
+* &#123;{Language:...}} is now possible too to set the document's language. (Other: &#123;Lang:...}})
+* | <span class="red">Fixed:</span> The last line was cut away
+* | <span class="red">Fixed:</span> NullPointerException in the GUI
+
+=== wiki2xhtml 2.5 ===
+Version 2.5 (So 22. Apr 10:37:17 CEST 2007)
+
+* class="green" | Scrollbars for the Paste/Code windows! (Feature Request #1654117)
+* class="green" | Buttons in the Paste Window: Open, Save, Remove Linebreaks (Feature Request #1654119)
+* class="green" | Added a previous/next button to image pages from galleries
+* Designs have been updated
+* Internal links now have to be written on one line
+* &lt;html&gt; tag added in the designs
+
+== Footnotes ==
+
+<references />

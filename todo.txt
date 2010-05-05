@@ -1,0 +1,33 @@
+cdata in doc.txt#h_Links!
+
+Typo
+delete all files in the style folder before copying
+search engines: follow/nofollow
+paragraphs
+de.wikipedia.org/wiki/Webtypografie
+utf-8 ...
+gui: style dir auwählbar
+
+later:
+doc: LAMP
+Eclipse: tptp
+
+doc:-> siehe changelog
+test: .jar alleine?
+leere zeile in codeblock wird zerrissen
+portabel/stick
+doc: templates
+tabellen: transponieren mit :{| ... |}?
+
+standard-titel: %h1
+
+100 durchläufe: 37.57, 37.9, 37.75
+b) 38.9, 38.4, 38.6
+c2d 2 GHz:
+wiki2xhtml 3.3, 4700 lines	78s, 73s (heading-rewrite)
+not in debug mode: 69 s +- 1 s (Java 6)
+				   51 s +- 1 s (formatting rewritten, Java 6)
+				  183 s +- 9 s (Java 1.5)
+				  165 s +- 9 s (Java 1.5) (beta 5)
+				   51 s +- 1 s (Java 6)
+				   64 s +- 1 s (Java 6)

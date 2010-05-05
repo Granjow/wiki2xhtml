@@ -1,0 +1,216 @@
+<!--head-->
+{{:tplNavStyle.txt}}
+<!--/head-->
+{{Title:Create/edit a design, %p %s}}
+{{Keywords:wiki2xhtml, documentation, own design, template, css-settings.txt}}
+{{Description:The necessary steps to an own design in wiki2xhtml and the adjustment possibilities are explained here.}}
+{{H1:Create or edit designs}}
+
+{{:tplLang.txt|de=doc-design-de.html}}
+
+{| id="navTable" style="width: 100%" cellpadding="0" cellspacing="2";
+|- style="background-color: #fa0;"
+| colspan="2" | [[quickstart.html Quickstart]]
+| colspan="2" | [[quickref.html Quickref]]
+| style="background-color: #fff; color: #000; text-align: left;" | Introduction
+|- style="background-color: #f80;"
+| colspan="4" | [[doc.html Doku]]
+| style="background-color: #fff; color: #000; text-align: left;" | Documentation
+|- style="background-color: #f60;"
+| style="width: 20%" | [[usage.html Usage]]
+| style="width: 20%" colspan="2" class="mark" | [[doc-design.html Design]]
+| style="width: 20%" | [[php.html PHP]]
+| style="background-color: #fff; color: #000; text-align: left;" | Immersion
+|}
+{{$SplitPageNav}} 
+
+== How do I create an own design? ==
+First you've got to understand the basics of CSS and HTML. The web has [[links.html|a lot of good tutorials]].
+
+Then it means knowing how wiki2xhtml works. When creating a new page, wiki2xhtml makes use of $$style/design-name/reck.html$$, which contains the basic structure, and inserts the generated contents there (like title, footer, menu and text). Through this file you can also manage used stylesheets and the page structure. After that the pages $$targetdir/*.html$$ have been generated, all .png, .jpg, .gif, .ico and .css files are copied from $$style/design-name/$$ to $$targetdir/style/$$.
+
+Image pages and thumbnails are based upon the same principle. Here are all used templates:
+
+{|
+! Used template !! Usage !! optional?
+|-
+| reck.html || Whole page || no
+|-
+| image-template.html || Image page || no
+|-
+| picture.html || Image only || yes
+|-
+| pictureT.html || Image with description || yes
+|-
+| thumbPicture.html || Thumbnail || yes
+|-
+| thumbPictureT.html || Thumbnail with description || yes
+|-
+| galleryContainer.html || Gallery container || yes
+|-
+| galleryText.html || Gallery: Text || yes
+|-
+| galleryImageNodesc.html || Gallery: Thumbnail || yes
+|-
+| galleryImage.html || Gallery: Thumbnail with description || yes
+|-
+| tplTOC.txt || [[#toctpl Table of Contents]] || yes
+|}
+
+=== Tags ===
+Tags say what is to be inserted at which position. Some tags also own a delete tag: If the tag is empty, wiki2xhtml removes the content between the two delete tags. 
+
+Note that since wiki2xhtml 3.3 all tags are lowercase. If you start wiki2xhtml with the argument $$template [file]$$, you can update a template. The file is optional.
+
+For $$reck.html$$, following tags are availible:
+{|
+! Tag !! Function !! Delete Tag
+|-
+| [meta] || Meta data in the head area of the document
+|-
+| [title] || Title for the window bar
+|-
+| [textheader] || Text header (Alternative to image)
+|-
+| |[head],\\ [head|''st*''] || ~~c_head~~ [[doc.html#h_PHPJavaScriptandCSSpagespecific|Custom head]] (Script etc.) will be inserted at this place. The optional argument describes how many tabs/spaces have to be prepended for an optimal look of the source code. Example: $$[head|tss]$$ for a tab followed by two spaces.
+|-
+| [menu] || Menu || &gt;menu&gt; und &lt;menu&lt;
+|-
+| [footer] || Footer || &gt;footer&gt; und &lt;footer&lt;
+|-
+| [h1] || Page title
+|-
+| [homelink] || Link to home page
+|-
+| [content] || Content
+|}
+
+Tags for $$image-template.html$$ (Example: Image $$gfx/img.jpg$$ has been inserted on the page $$from.html$$):
+{|
+! Tag !! Function !! Delete Tag
+|-
+| [imagepath] || Full Path to image: gfx/img.jpg
+|-
+| [imagename] || Name of the image: img.jpg
+|-
+| [imagecaption] || Caption (Argument $$caption=$$)
+|-
+| [alt] || ~~alt~~ Content for the $$alt$$ tag (caption without HTML code)
+|-
+| [args] || ~~args~~ Additional arguments for the image (since 3.4)
+|-
+| [argsLink] || ~~argsLink~~ Additional arguments for a link (since 3.4)
+|-
+| [pre] || ../ (directory containing the web pages)
+|-
+| [back] || ../from.html#ID
+|-
+| [title] || Title
+|-
+| [meta] || Metadata
+|-
+| [desc] || Image description || &gt;desc&gt; and &lt;desc&lt;
+|-
+| [width] || Standard width of images (from css-settings.txt)
+|-
+| [nextimage] || Link to next image (if availible)
+|-
+| [previmage] || Link to previous image (if availible)
+|-
+|  || Navigation, if image has been linked\\ from within a gallery || &gt;nav&gt; and &lt;nav&lt;
+|}
+
+Following tags can be used for the embedded image templates (thumb*.html, picture*.html, and gallery*.html):
+{|
+! Tag !! Function
+|-
+| [pos] || Position (.right, .left) for CSS classes; only thumb*.html
+|-
+| [link] || Target (Image or image page)
+|-
+| [thumb] || Thumbnail
+|-
+| [imagepath] || Direct link to the image
+|-
+| [width] || Width
+|-
+| [desc] || Description
+|-
+| [descxmlname] || Description without special characters; may e.g. be used for the alt attribute
+|-
+| [id] || ID (For anchor when linking back)
+|}
+
+The two necessary files may be created now (or, simpler, copied and modified from an existing design).
+
+~~toctpl~~ Available tags for $$tplTOC.txt$$
+{|
+! Tag !! Function
+|-
+| [toc] || Table of Contents itself
+|-
+| __TOC__ || Default title for the TOC
+|}
+Example:
+ ::
+<nowiki>&lt;div id="toc"&gt;&lt;h2&gt;Table of Contents&lt;/h2&gt;\\ 
+[toc]\\ 
+&lt;/div&gt;&lt;br style="clear: left;" /&gt;</nowiki>
+ ::
+
+== Configuration files ==
+
+wiki2xhtml is working with configuration files where you e.g. can set how many pictures have to be displayed per line in the gallery. wiki2xhtml looks for them in the directory where all other files (CSS files, images) for the design are located too ($$$styledir$$ here). If the file isn't found, it uses standard values.
+
+== $styledir/css-settings.txt ==
+
+Measures have to be given in px or %.
+
+<code>&#123;&#123;GalleryImagesPerLine:''n''&#125;&#125;</code> &mdash; ''n'' says how many images have to be on one line in the gallery. After this amount of images wiki2xhtml inserts a <code>&lt;br style="clear: both;" /&gt;</code> (if it is not switched off with <code>&#123;&#123;ConsistentGallery:false&#125;&#125;</code> in the common file or a page file). 
+
+<code>&#123;&#123;GalleryThumbWidth:''n(px|%)''&#125;&#125;</code> &mdash; Sets the width of thumbnails in galleries.
+
+<code>&#123;&#123;ImageWidthImagepage:''n(px|%)''&#125;&#125;</code> &mdash; Sets the width for images on image pages.
+
+<code>&#123;&#123;thumb-imagewidth:''n(px|%)''&#125;&#125;</code> &mdash; Sets the standard width of thumbnails (not in galleries).
+
+\\//
+---
+//\\
+{{H1:Designs: Menu}}
+{{:tplLang.txt|de=doc-design-de.html}}
+{| id="navTable" style="width: 100%" cellpadding="0" cellspacing="2";
+|- style="background-color: #fa0;"
+| colspan="2" | [[quickstart.html Quickstart]]
+| colspan="2" | [[quickref.html Quickref]]
+| style="background-color: #fff; color: #000; text-align: left;" | Introduction
+|- style="background-color: #f80;"
+| colspan="4" | [[doc.html Doku]]
+| style="background-color: #fff; color: #000; text-align: left;" | Documentation
+|- style="background-color: #f60;"
+| style="width: 20%" | [[usage.html Usage]]
+| style="width: 20%" colspan="2" class="mark" | [[doc-design.html Design]]
+| style="width: 20%" | [[php.html PHP]]
+| style="background-color: #fff; color: #000; text-align: left;" | Immersion
+|}
+{{$SplitPageNav}} 
+
+You can find tutorials and references to CSS on the [[links.html#h_css Link page]].
+
+== Menu Design ==
+Code to display level-2-entries only when they are required:
+<nowiki><pre>
+#menu ul.level2 {
+	display: none;
+}
+#menu ul.level2.openparent, #menu ul.level2.open {
+	display: block;
+}
+</pre></nowiki>
+
+Display active links in strong type:
+<nowiki><pre>
+#menu li.open > a {
+	font-weight: bold;
+}
+</pre></nowiki>
