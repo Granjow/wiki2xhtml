@@ -1,8 +1,10 @@
 package src.project;
 
+import src.Constants;
+import src.Constants.SettingsE;
 import src.project.file.WikiFile;
-import src.project.settings.Settings.SettingContext;
-import src.tasks.*;
+import src.project.settings.PageSettings;
+import src.project.settings.Settings;
 
 import java.io.File;
 import java.util.HashMap;
@@ -21,7 +23,7 @@ import java.util.HashMap;
  *   GNU General Public License for more details.
 
  *   You should have received a copy of the GNU General Public License
- *   along with this src.  If not, see <http://www.gnu.org/licenses/>.
+ *   along with this http://www.gnu.org/licenses/.  If not, see <http://www.gnu.org/licenses/>.
  *
  *
  */
@@ -32,17 +34,25 @@ public class WikiProject {
 	// With ID, StringBuffer, etc. for each file
 	
 	// Settings
+	private Settings<SettingsE, String> projectSettings = new PageSettings();
 	
 	private int id = 0;
 	private int nextID() {
 		return id++;
 	}
 	
-	private HashMap<Integer, WikiFile> fileMap;
+	/** All files in the project */
+	private HashMap<Integer, WikiFile> fileMap = new HashMap<Integer, WikiFile>();
 	
 	
 	public WikiProject() {
-		fileMap = new HashMap<Integer, WikiFile>();
+		/** Initialize global settings with default values */
+		projectSettings.set_(SettingsE.imagepagesDir, Constants.Directories.imagePages);
+		projectSettings.set_(SettingsE.imagepageImgWidth, Constants.Standards.widthImgImagepages);
+		projectSettings.set_(SettingsE.thumbWidth, Constants.Standards.widthThumbs);
+		projectSettings.set_(SettingsE.descForCaption, Constants.Standards.useImageDescAsCaption);
+		projectSettings.set_(SettingsE.nameForCaption, Constants.Standards.useImagenameAsCaption);
+		projectSettings.set_(SettingsE.galleryImagesPerLine, Constants.Standards.galleryImagesPerLine);
 	}
 	
 	
@@ -54,18 +64,16 @@ public class WikiProject {
 		fileMap.put(nextID(), f);
 	}
 	
-	public String getSetting(int fileID, String what, SettingContext context) {
-		
+	public String getProperty(SettingsE property) {
+		return projectSettings.get_(property);
 	}
 	
 	
 	
 	public void make() {
 		// Make the project
-		WikiTask task = new WikiLinks();
-		for (int id : fileMap.keySet()) {
-			task.parse(this, id);
-			getFile(id).write();
+		for (WikiFile f : fileMap.values()) {
+			f.parse();
 		}
 	}
 	

@@ -6,7 +6,7 @@ import java.util.regex.Pattern;
 
 import src.Statistics;
 import src.argumentHandler.*;
-import src.project.WikiProject;
+import src.project.file.WikiFile;
 import src.settings.XhtmlSettings;
 
 import static src.Constants.Links.LinksE;
@@ -36,11 +36,15 @@ import static src.resources.RegExpressions.RELink;
  */
 public class WikiLinks extends WikiTask {
 	
+	public String desc() {
+		return "Links";
+	}
+	
 	public WikiTask nextTask() {
 		return null;
 	}
 	
-	public void parse(WikiProject project, int id) {
+	public void parse(WikiFile file) {
 		StringBuffer in;
 		StringBuffer out;
 		Matcher m;
@@ -49,20 +53,20 @@ public class WikiLinks extends WikiTask {
 
 		for (Pattern p : new Pattern[] {RELink.linkExternalWikitype, RELink.linkExternalUri, RELink.linkExternalUriShortened, 
 				RELink.linkInternalShort, RELink.linkInternalDescPipe, RELink.linkInternalDescSpace}) {
-			in = project.getFile(id).getContent();
+			in = file.getContent();
 			m = p.matcher(in.toString());
 			last = 0;
 			out = new StringBuffer();
 			while (m.find()) {
 				out.append(in.subSequence(last, m.start()));
 				last = m.end();
-				out.append(link(m.group(1), m.group(2), project.getFile(id).name));
+				out.append(link(m.group(1), m.group(2), file.name));
 				counter++;
 			}
 			if (last > 0) {
 				// Content has changed; append rest
 				out.append(in.substring(last));
-				project.getFile(id).setContent(out);
+				file.setContent(out);
 			}
 		}
 	}

@@ -3,7 +3,13 @@ package src.project.file;
 import java.io.File;
 import java.io.IOException;
 
+import src.Constants.SettingsE;
+import src.Constants.SettingsLocalE;
 import src.project.WikiProject;
+import src.project.settings.PageSettings;
+import src.project.settings.Settings;
+import src.tasks.WikiLinks;
+import src.tasks.WikiTask;
 import src.utilities.IORead_Stats;
 import src.utilities.IOWrite_Stats;
 
@@ -21,7 +27,7 @@ import src.utilities.IOWrite_Stats;
  *   GNU General Public License for more details.
 
  *   You should have received a copy of the GNU General Public License
- *   along with this src.  If not, see <http://www.gnu.org/licenses/>.
+ *   along with this http://www.gnu.org/licenses/.  If not, see <http://www.gnu.org/licenses/>.
  *
  *
  */
@@ -33,12 +39,18 @@ public class WikiFile {
 	public final boolean sitemap;
 	public final boolean parse;
 	public final String name;
+	public final Generators generators;
 	
 	private final File fSrc;
 	private final File fDest;
 	private final WikiProject project;
 	
 	private boolean alreadyRead = false;
+	private Settings<SettingsE, String> pageSettings = new PageSettings();
+	private Settings<SettingsLocalE, String> localSettings = new Settings<SettingsLocalE, String>() {
+		public String nullValue() {return null;};
+		protected String concatenate(String left, String right) { return left+right; }
+	};
 	
 	
 	/** Needs to be overridden for comparing. */
@@ -58,6 +70,7 @@ public class WikiFile {
 		this.project = project;
 		this.sitemap = sitemap;
 		this.parse = parse;
+		this.generators = new Generators(this);
 	}
 	
 	public StringBuffer getContent() {
@@ -78,8 +91,31 @@ public class WikiFile {
 	
 	public void write() {
 		try {
-			IOWrite_Stats.writeString(fDest, content.toString(), false);
+			IOWrite_Stats.writeString(fDest, getContent().toString(), false);
 		} catch (IOException e) {}
+	}
+	
+	public String getProperty(SettingsE property, boolean fallback) {
+		if (pageSettings.isSet(property)) { return pageSettings.get_(property); }
+		else { return project.getProperty(property); }
+	}
+	public String getProperty(SettingsLocalE property) {
+		return localSettings.get_(property);
+	}
+	
+	public boolean setProperty(SettingsE property, String value) {
+		return pageSettings.set_(property, value);
+	}
+	public boolean setProperty(SettingsLocalE property, String value) {
+		return localSettings.set_(property, value);
+	}
+	
+	public void parse() {
+		if (!parse) return;
+		WikiTask task = new WikiLinks();
+		do {
+			task.parse(this);
+		} while ((task = task.nextTask()) != null);
 	}
 	
 

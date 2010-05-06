@@ -1,6 +1,6 @@
 package src.tasks;
 
-import src.project.*;
+import src.project.file.WikiFile;
 
 /*
  *   Copyright (C) 2007-2009 Simon Eugster <granjow@users.sf.net>
@@ -23,8 +23,13 @@ import src.project.*;
 
 public abstract class WikiTask {
 	
-	public abstract void parse(WikiProject project, int id);
+	/** Parses the content of the file given by its ID. */
+	abstract public void parse(WikiFile file);
 	
-	public abstract WikiTask nextTask();
+	/** null if no next task. */
+	abstract public WikiTask nextTask();
+	
+	/** Kind of a task ID. */
+	abstract public String desc();
 
 }

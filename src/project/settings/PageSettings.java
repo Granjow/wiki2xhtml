@@ -1,53 +1,43 @@
 package src.project.settings;
 
 import src.Constants.SettingsE;
-import src.commentator.CommentAtor;
-import src.commentator.CommentAtor.CALevel;
+
+/*
+ *   Copyright (C) 2007-2009 Simon Eugster <granjow@users.sf.net>
+
+ *   This program is free software: you can redistribute it and/or modify
+ *   it under the terms of the GNU General Public License as published by
+ *   the Free Software Foundation, either version 3 of the License, or
+ *   (at your option) any later version.
+
+ *   This program is distributed in the hope that it will be useful,
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *   GNU General Public License for more details.
+
+ *   You should have received a copy of the GNU General Public License
+ *   along with this http://www.gnu.org/licenses/.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ *
+ */
 
 public class PageSettings extends Settings<SettingsE, String> {
-
-	public void append_(final SettingsE property, final String value) {
-		if (contains(property)) {
-			set_(property, get_(property) + value);
-		} else {
-			set_(property, value);
-		}
+	
+	protected String concatenate(String left, String right) {
+		return left + right;
+	}
+	
+	public PageSettings() {
+		addChecker(new Checker<String>() {
+			public boolean check(String value) {
+				byte b = Byte.parseByte(value);
+				return b > 0;
+			}
+		}, SettingsE.galleryImagesPerLine);
 	}
 	
 	public String nullValue() {
 		return "null";
 	}
-	
-	boolean valid(SettingsE property, String value) {
-		boolean ok = true;
-		// Manage special cases
-		switch (property) {
-		case galleryImagesPerLine: //TODO really here?
-			try {
-				// Don't use negative values
-				byte b = Byte.parseByte(value);
-				if (b < 0) {
-					throw new NegativeValueException(value);
-				}
-			} catch (NumberFormatException e) {
-				ok = false;
-				e.printStackTrace();
-				CommentAtor.getInstance().ol("Number format exception with " + value + ": " + e.getMessage(), CALevel.ERRORS);
-			} catch (NegativeValueException e) {
-				ok = false;
-				CommentAtor.getInstance().ol(e.getMessage(), CALevel.ERRORS);
-			}
-			break;
-		}
-		return ok;
-	}
-	
 
-	public static class NegativeValueException extends Exception {
-		private static final long serialVersionUID = 1L;
-
-		public NegativeValueException(String s) {
-			super("Negative value obtained: " + s);
-		}
-	}
 }

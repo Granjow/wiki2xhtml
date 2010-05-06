@@ -346,6 +346,7 @@ public final class Constants {
 	 * @see {@link XhtmlSettingsReader#autoReadableSettings}
 	 */
 	public static enum SettingsE {
+		/** Footer */						footer ("Footer"),
 		/**
 		 * Number of images per line in the gallery
 		 */									galleryImagesPerLine ("GalleryImagesPerLine"),

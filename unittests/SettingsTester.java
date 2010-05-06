@@ -50,4 +50,19 @@ public class SettingsTester extends junit.framework.TestCase {
 		assertTrue(stgs.set_(Tst.b, null));
 		assertEquals(null, stgs.get_(Tst.b));
 	}
+	
+	@Test public void testGetter() {
+		final String mynull = "nothing!";
+		Settings<Tst, String> stgs = new Settings<Tst,String>() {
+			public String nullValue() {
+				return mynull;
+			}
+		};
+		
+		assertNull(stgs.get_(Tst.a));
+		stgs.set_(Tst.a, "hallo");
+		assertEquals("hallo", stgs.get_(Tst.a));
+		assertTrue(stgs.set_(Tst.a, mynull));
+		assertNull(stgs.get_(Tst.a));
+	}
 }

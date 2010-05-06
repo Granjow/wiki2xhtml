@@ -18,33 +18,64 @@ import java.util.List;
  *   GNU General Public License for more details.
 
  *   You should have received a copy of the GNU General Public License
- *   along with this src.  If not, see <http://www.gnu.org/licenses/>.
+ *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  *
  */
 
 public abstract class Settings<K extends Comparable<?>, V extends Comparable<?>> {
 	
+	/** Checks to run before inserting */
 	private List<CheckerObject> checkerList = new ArrayList<CheckerObject>();
+	/** Settings storage */
 	private HashMap<K, V> settingsMap = new HashMap<K, V>();
 	
-	public static enum SettingContext {
-		page,
-		project
-	}
+//	public static enum SettingContext {
+//		page,
+//		project
+//	}
 
+	
+	/////// TO IMPLEMENT ////////
+	
 	/**
 	 * Calling <code>set_(K, nullValue())</code> removes K from the settingsMap.
 	 * @return The «null value»
 	 */
 	abstract public V nullValue();
 	
-	/**
-	 * @return <code>true</code> if <code>property</code> is available (has been set).
-	 */
-	public boolean contains(final K property) {
+	/** Concatenates two V's */
+	abstract protected V concatenate(V left, V right);
+	
+	
+	
+	//////// BOOL ///////
+	
+	/** @returns true if <code>property</code> is set. */
+	public boolean isSet(final K property) {
 		return settingsMap.containsKey(property);
 	}
+	
+	/**
+	 * <p>Checks with the checkers added via {@link #addChecker(Checker, Comparable)}
+	 * whether the <code>value</code> is valid for the given <code>property</code>.</p>
+	 * <p>Invalid values cannot be set with {@link #set_(Object, Comparable)}.</p>
+	 * @return <code>true</code> if <code>value</code> may be set.
+	 */
+	public boolean isValid(final K property, final V value) {
+		boolean valid = true;
+		for (CheckerObject co : checkerList) {
+			if (!co.valid(property, value)) {
+				valid = false;
+				break;
+			}
+		}
+		return valid;
+	}
+	
+	
+	
+	//////// SETTER/GETTER /////////
 	
 	/**
 	 * @return The value belonging to <code>property</code>
@@ -74,29 +105,24 @@ public abstract class Settings<K extends Comparable<?>, V extends Comparable<?>>
 		}
 		
 		// Add otherwise (if valid)
-		success = valid(property, value);
+		success = isValid(property, value);
 		if (success) {
 			settingsMap.put(property, value);
 		}
 		
 		return success;
 	}
-	
-	/**
-	 * <p>Checks with the checkers added via {@link #addChecker(Checker, Comparable)}
-	 * whether the <code>value</code> is valid for the given <code>property</code>.</p>
-	 * <p>Invalid values cannot be set with {@link #set_(Object, Comparable)}.</p>
-	 * @return <code>true</code> if <code>value</code> may be set.
+
+	/** 
+	 * Appends <code>value</code> to already existing <code>property</code>
+	 * using {@link #concatenate(Comparable, Comparable)}. 
 	 */
-	public boolean valid(final K property, final V value) {
-		boolean valid = true;
-		for (CheckerObject co : checkerList) {
-			if (!co.valid(property, value)) {
-				valid = false;
-				break;
-			}
+	public void append_(final K property, final V value) {
+		if (isSet(property)) {
+			set_(property, concatenate(get_(property), value));
+		} else {
+			set_(property, value);
 		}
-		return valid;
 	}
 	
 	/**
@@ -106,6 +132,11 @@ public abstract class Settings<K extends Comparable<?>, V extends Comparable<?>>
 	public void addChecker(Checker<V> c, K key) {
 		checkerList.add(new CheckerObject(c, key));
 	}
+	
+	
+	
+	
+	////////// CLASSES ///////////
 	
 	/**
 	 * Value checker
