@@ -69,7 +69,7 @@ public abstract class Settings<K, V extends Comparable<?>> {
 			return true;
 		}
 		
-		success = setCheck(property, value);
+		success = setAfterCheck(property, value);
 		
 		if (success) {
 			settingsMap.put(property, value);
@@ -81,11 +81,11 @@ public abstract class Settings<K, V extends Comparable<?>> {
 	/**
 	 * Additional checks for <code>value</code> before it is set. 
 	 * May e.g. test whether a value is > 0 and return false if not;
-	 * in this case {@link #set_(Object, Comparable)} will not set <code>value</code>.
+	 * in this case {@link #set_(Object, Comparable)} should not set <code>value</code>.
 	 * @param property
 	 * @param value
 	 * @return <code>true</code> if <code>value</code> may be set.
 	 */
-	abstract boolean setCheck(final K property, final V value);
+	abstract boolean setAfterCheck(final K property, final V value);
 	
 }

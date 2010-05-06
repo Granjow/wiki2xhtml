@@ -28,6 +28,7 @@ import src.commentator.CommentAtor;
 import src.commentator.CommentAtor.CALevel;
 import src.utilities.Sort;
 import src.utilities.StringTools;
+import src.resources.RegExpressions;
 
 import static src.Constants.SettingsE;
 import static src.Constants.SettingsLocalE;
@@ -108,7 +109,7 @@ public class XhtmlSettings {
 			while ((s = br.readLine()) != null) {
 				if (s.contains("robots=")) addRobots = false;
 				
-				mSimple = Resources.Regex.argMetaSimple.matcher(s);
+				mSimple = RegExpressions.argMetaSimple.matcher(s);
 				metadata.append("\n<meta ");
 				if (mSimple.matches()) {
 					metadata.append("name=\"" + mSimple.group(1) + "\" ");
@@ -148,7 +149,7 @@ public class XhtmlSettings {
 			boolean ok = true;
 			// Manage special cases
 			switch (property) {
-			case galleryImagesPerLine:
+			case galleryImagesPerLine: //TODO really here?
 				try {
 					// Don't use negative values
 					byte b = Byte.parseByte(value);
@@ -433,7 +434,7 @@ public class XhtmlSettings {
 			StringBuffer output = new StringBuffer();
 
 			if (content != null && content.length() > 0) {
-				Matcher m = Resources.Regex.head.matcher(content);
+				Matcher m = RegExpressions.head.matcher(content);
 
 				if (m.find()) {
 					output.append(content.substring(0, m.start()));

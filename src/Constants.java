@@ -13,6 +13,7 @@ import javax.swing.filechooser.FileFilter;
 
 import src.Args.GetPolicyE;
 import src.settings.XhtmlSettingsReader;
+import src.resources.RegExpressions;
 
 
 /*
@@ -328,7 +329,7 @@ public final class Constants {
 		public static final String meta = "[meta]";
 		public static final String title = "[title]";
 		public static final String head = "[head]";
-		public static final Pattern regexHead = Resources.Regex.reckHead;
+		public static final Pattern regexHead = RegExpressions.reckHead;
 		public static final String textheader = "[textheader]";
 		public static final String menu = "[menu]";
 		public static final String footer = "[footer]";
@@ -502,7 +503,7 @@ public final class Constants {
 		public static final String splitPageNav = "{{$SplitPageNav}}";
 		public static final String version = "{{$Version}}";
 		public static final String top = "{{Top}}";
-		public static final Pattern regexToc = Resources.Regex.toc;
+		public static final Pattern regexToc = RegExpressions.toc;
 		public static final String pagename = "{{$Pagename}}";
 		public static final String wiki2xhtml = "{{$wiki2xhtml}}";
 
@@ -583,7 +584,7 @@ public final class Constants {
 		public static final FileFilter scriptFile = new FileFilter() {
 			@Override
 			public boolean accept(File f) {
-				Matcher m = Resources.Regex.scriptModeFile.matcher(f.getName());
+				Matcher m = RegExpressions.scriptModeFile.matcher(f.getName());
 				return m.find();
 			}
 			@Override
