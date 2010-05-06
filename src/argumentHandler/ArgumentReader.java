@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.regex.Matcher;
 
-import src.Resources;
+import src.resources.RegExpressions;
 
 /*
  *   Copyright (C) 2007-2009 Simon Eugster <granjow@users.sf.net>
@@ -46,7 +46,7 @@ public class ArgumentReader {
 		if (!args.startsWith("|"))
 			args = "|" + args;
 
-		Matcher m = Resources.Regex.argument.matcher(args);
+		Matcher m = RegExpressions.argument.matcher(args);
 		int i = 0;
 		while (m.find()) {
 			arguments.add(new ArgumentItem(m.group(1), i));

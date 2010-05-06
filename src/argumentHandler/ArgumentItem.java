@@ -2,7 +2,7 @@ package src.argumentHandler;
 
 import java.util.regex.Matcher;
 
-import src.Resources;
+import src.resources.RegExpressions;
 
 /*
  *   Copyright (C) 2007-2009 Simon Eugster <granjow@users.sf.net>
@@ -43,7 +43,7 @@ public class ArgumentItem {
 	public ArgumentItem(String s, int index) {
 		fullArg = s;
 
-		Matcher m = Resources.Regex.templateParameter.matcher(s);
+		Matcher m = RegExpressions.templateParameter.matcher(s);
 		if (m.find()) {
 			name = m.group(1);
 			argument = m.group(2);

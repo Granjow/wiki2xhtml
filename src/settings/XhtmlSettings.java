@@ -23,7 +23,7 @@ import src.Template;
 import src.WikiHeadings;
 import src.WikiLists;
 import src.Constants.SettingsE;
-import src.WikiLinks.LinkObject;
+import src.tasks.WikiLinks.LinkObject;
 import src.commentator.CommentAtor;
 import src.commentator.CommentAtor.CALevel;
 import src.utilities.Sort;
@@ -63,6 +63,7 @@ import static src.Constants.SettingsLocalE;
  */
 public class XhtmlSettings {
 
+	// move to context; page/project scope
 	public GlobalSettings global = new GlobalSettings();
 
 	public LocalSettings local = new LocalSettings();
@@ -242,7 +243,7 @@ public class XhtmlSettings {
 					allNamespaces.append(get_(SettingsE.namespace));
 				}
 				linkNamespaces = new ArrayList<NamespaceObject>();
-				Matcher m = Resources.Regex.namespace.matcher(allNamespaces.toString());
+				Matcher m = src.resources.RegExpressions.namespace.matcher(allNamespaces.toString());
 				while (m.find()) {
 					linkNamespaces.add(new NamespaceObject(m.group(1), m.group(2)));
 				}

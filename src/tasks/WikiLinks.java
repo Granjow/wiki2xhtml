@@ -4,12 +4,13 @@ import java.util.Iterator;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import src.Statistics;
 import src.argumentHandler.*;
 import src.project.WikiProject;
 import src.settings.XhtmlSettings;
 
 import static src.Constants.Links.LinksE;
-import static src.Resources.Regex;
+import static src.resources.RegExpressions.RELink;
 
 
 /*
@@ -31,44 +32,41 @@ import static src.Resources.Regex;
  */
 
 /**
- *
  * Inserts links (external and internal ones).
- *
- * @author Simon Eugster, hb9eia
  */
 public class WikiLinks extends WikiTask {
 	
-	public void parse(WikiProject project) {
-		
+	public WikiTask nextTask() {
+		return null;
 	}
-
-	private static StringBuffer makeLinks(StringBuffer in, final String pagename) {
+	
+	public void parse(WikiProject project, int id) {
+		StringBuffer in;
 		StringBuffer out;
 		Matcher m;
 		int last;
 		short counter = 0;
-		
-		for (Pattern p : new Pattern[] {Regex.linkExternalWikitype, Regex.linkExternalUri, Regex.linkExternalUriShortened, 
-				Regex.linkInternalShort, Regex.linkInternalDescPipe, Regex.linkInternalDescSpace}) {
+
+		for (Pattern p : new Pattern[] {RELink.linkExternalWikitype, RELink.linkExternalUri, RELink.linkExternalUriShortened, 
+				RELink.linkInternalShort, RELink.linkInternalDescPipe, RELink.linkInternalDescSpace}) {
+			in = project.getFile(id).getContent();
 			m = p.matcher(in.toString());
 			last = 0;
 			out = new StringBuffer();
 			while (m.find()) {
 				out.append(in.subSequence(last, m.start()));
 				last = m.end();
-				out.append(link(m.group(1), m.group(2), pagename));
+				out.append(link(m.group(1), m.group(2), project.getFile(id).name));
 				counter++;
 			}
 			if (last > 0) {
 				// Content has changed; append rest
 				out.append(in.substring(last));
-				in = out;
+				project.getFile(id).setContent(out);
 			}
 		}
-
-		return in;
 	}
-	
+
 	/** 
 	 * @param ignoreQueryFragment Is page#heading or page?a=b to be treated as selflink? See: {@link http://tools.ietf.org/html/rfc3986#section-3}
 	 * @return <code>true</code> if the link is leading to the current page.
@@ -108,7 +106,7 @@ public class WikiLinks extends WikiTask {
 			XhtmlSettings.getInstance().local.applyNamespace(link);
 		}
 		
-		final boolean external = Resources.Regex.linkExternalIndicator.matcher(link.uri).find();
+		final boolean external = RELink.linkExternalIndicator.matcher(link.uri).find();
 		boolean ignoreQueryFragment = false;
 		boolean selflink;
 

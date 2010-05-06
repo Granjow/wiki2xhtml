@@ -4,14 +4,15 @@ import java.io.File;
 import java.io.IOException;
 
 import src.utilities.IORead_Stats;
+import src.utilities.IOWrite_Stats;
 
 public class WikiFile {
 	
 	private StringBuffer content = null;
 	
-	public final int ID;
 	public final boolean sitemap;
 	public final boolean parse;
+	public final String name;
 	
 	private final File fSrc;
 	private final File fDest;
@@ -29,9 +30,9 @@ public class WikiFile {
 		return false;
 	}
 	
-	public WikiFile(File fSrc, File fDest, int id, boolean sitemap, boolean parse) {
-		this.ID = id;
+	public WikiFile(File fSrc, File fDest, String name, boolean sitemap, boolean parse) {
 		this.fSrc = fSrc;
+		this.name = name;
 		this.fDest = fDest;
 		this.sitemap = sitemap;
 		this.parse = parse;
@@ -54,7 +55,9 @@ public class WikiFile {
 	}
 	
 	public void write() {
-		
+		try {
+			IOWrite_Stats.writeString(fDest, content.toString(), false);
+		} catch (IOException e) {}
 	}
 	
 

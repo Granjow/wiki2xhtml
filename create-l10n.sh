@@ -35,3 +35,6 @@ msgfmt --java2 -d . -r bin.l10n.Messages -l es l10n/po/es.po
 echo -n "hr  "
 msgfmt --java2 -d . -r bin.l10n.Messages -l hr l10n/po/hr.po &
 echo
+
+mkdir bin/bin
+cp -r bin/l10n bin/bin/

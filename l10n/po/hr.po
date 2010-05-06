@@ -1,375 +1,42 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-05-01 17:57+0200\n"
+"POT-Creation-Date: 2010-05-05 16:35+0200\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: src/guiWindows/GuiMenuBar.java:85
-msgid "File"
-msgstr ""
-
-#: src/guiWindows/GuiMenuBar.java:102
-msgid "Export"
-msgstr ""
-
-#: src/guiWindows/GuiMenuBar.java:113 src/GUI.java:693
-msgid "Open"
-msgstr "Otvoriti"
-
-#: src/guiWindows/GuiMenuBar.java:129 src/GUI.java:677
-msgid "Save"
-msgstr "Spremiti"
-
-#: src/guiWindows/GuiMenuBar.java:144
-msgid "Export as .bat Script (Windows)"
-msgstr ""
-
-#: src/guiWindows/GuiMenuBar.java:158
-msgid "Export as .sh Script (Unix)"
-msgstr ""
-
-#: src/guiWindows/GuiMenuBar.java:172 src/GUI.java:662 src/GUI.java:663
-msgid "Quit"
-msgstr "Izlaz"
-
-#: src/guiWindows/GuiMenuBar.java:188 src/GUI.java:234
-msgid "Settings"
-msgstr "Postavke"
-
-#: src/guiWindows/GuiMenuBar.java:199
-msgid "Tools"
-msgstr ""
-
-#: src/guiWindows/GuiMenuBar.java:210
-#: src/guiWindows/DialoguePreferences.java:88
-msgid "Preferences"
-msgstr ""
-
-#: src/guiWindows/GuiMenuBar.java:228
-msgid "Language"
-msgstr ""
-
-#: src/guiWindows/GuiMenuBar.java:413
-msgid "Info"
-msgstr ""
-
-#: src/guiWindows/GuiMenuBar.java:425 src/guiWindows/GuiMenuBar.java:431
-msgid "Help"
-msgstr ""
-
-#: src/guiWindows/GuiMenuBar.java:442
-msgid "About"
-msgstr ""
-
-#: src/guiWindows/GuiMenuBar.java:447
-msgid "About wiki2xhtml"
-msgstr ""
-
-#: src/guiWindows/GuiMenuBar.java:457
-msgid "Update Menufile"
-msgstr ""
-
-#: src/guiWindows/GuiMenuBar.java:462
-msgid "Menufile updated. Backup has been created."
-msgstr ""
-
-#: src/guiWindows/GuiMenuBar.java:471
-msgid "Update template file"
-msgstr ""
-
-#: src/guiWindows/GuiMenuBar.java:476
-msgid "Template file updated. Backup has been created."
-msgstr ""
-
-#: src/guiWindows/MiscWindows.java:40
-#: src/guiWindows/DialogueCommonFileCreater.java:123
-msgid "Yes"
-msgstr ""
-
-#: src/guiWindows/MiscWindows.java:40
-msgid "No"
-msgstr ""
-
-#: src/guiWindows/MiscWindows.java:42
-msgid "Directory “style” not found. Do you want to select an other directory?"
-msgstr ""
-
-#: src/guiWindows/MiscWindows.java:43
-msgid "Select different style directory"
-msgstr ""
-
-#: src/guiWindows/DialoguePreferences.java:133 src/Help.java:104
-msgid "Check for updates"
-msgstr ""
-
-#: src/guiWindows/DialoguePreferences.java:159
-msgid "Check for updates on Startup?"
-msgstr ""
-
-#: src/guiWindows/DialoguePreferences.java:182
+#: src/update/UpdateChecker.java:156
 #, java-format
-msgid "You''re currently using wiki2xhtml {0} from {1}."
+msgid "<p>New version: <strong>{0}</strong> from {1}.</p>"
 msgstr ""
 
-#: src/guiWindows/DialoguePreferences.java:190
-msgid "Ignore Version:"
-msgstr ""
-
-#: src/guiWindows/DialogueCommonFileCreater.java:53
-msgid "common.txt Wizard"
-msgstr ""
-
-#: src/guiWindows/DialogueCommonFileCreater.java:72
-msgid "Author"
-msgstr ""
-
-#: src/guiWindows/DialogueCommonFileCreater.java:74
-msgid "Default title"
-msgstr ""
-
-#: src/guiWindows/DialogueCommonFileCreater.java:76
-msgid "Use image description for caption on image pages"
-msgstr ""
-
-#: src/guiWindows/DialogueCommonFileCreater.java:78
-msgid "Number of images per line in the gallery"
-msgstr ""
-
-#: src/guiWindows/DialogueCommonFileCreater.java:80
-msgid "Width of thumbnails in the gallery"
-msgstr ""
-
-#: src/guiWindows/DialogueCommonFileCreater.java:82
-msgid "Link to the start page"
-msgstr ""
-
-#: src/guiWindows/DialogueCommonFileCreater.java:84
-msgid "Path to Favicon"
-msgstr ""
-
-#: src/guiWindows/DialogueCommonFileCreater.java:86
-msgid "Width of images on image pages"
-msgstr ""
-
-#: src/guiWindows/DialogueCommonFileCreater.java:88
-msgid "Directory for image pages"
-msgstr ""
-
-#: src/guiWindows/DialogueCommonFileCreater.java:90
-msgid "Standard directory for images"
-msgstr ""
-
-#: src/guiWindows/DialogueCommonFileCreater.java:92
-#, fuzzy
-msgid "Standard keywords"
-msgstr "Standardni argumenti"
-
-#: src/guiWindows/DialogueCommonFileCreater.java:94
-msgid "Language pages are written in"
-msgstr ""
-
-#: src/guiWindows/DialogueCommonFileCreater.java:96
-msgid "Use image name for caption on image pages"
-msgstr ""
-
-#: src/guiWindows/DialogueCommonFileCreater.java:99
-msgid "Text header"
-msgstr ""
-
-#: src/guiWindows/DialogueCommonFileCreater.java:101
-msgid "Directory for thumbnails"
-msgstr ""
-
-#: src/guiWindows/DialogueCommonFileCreater.java:103
-msgid "Width of normal thumbnails"
-msgstr ""
-
-#: src/guiWindows/DialogueCommonFileCreater.java:105
-#, fuzzy
-msgid "Standard title"
-msgstr "Standardni argumenti"
-
-#: src/guiWindows/GuiFunctions.java:50
-msgid "(Existing) Target directory set: "
-msgstr ""
-
-#: src/guiWindows/GuiFunctions.java:54
-msgid "(New) Target directory set: "
-msgstr ""
-
-#: src/UserInterface.java:274
+#: src/update/UpdateChecker.java:157
 #, java-format
-msgid "Skipping {0}."
+msgid "<p>Changes in this version: {0}</p>"
 msgstr ""
 
-#: src/UserInterface.java:428
-msgid "done"
+#: src/update/UpdateChecker.java:159
+msgid "<p>Your version of wiki2xhtml is up-to-date.</p>"
 msgstr ""
 
-#: src/UserInterface.java:431
-msgid "Title: %s"
-msgstr ""
-
-#: src/UserInterface.java:450
-msgid ""
-"Files written: %d; characters read/written: %d / %d (%s %%).\n"
-"Time taken: %s."
-msgstr ""
-
-#: src/settings/XhtmlSettings.java:274
+#: src/settings/XhtmlSettings.java:275
 #, java-format
 msgid "Page {0} of {1}"
 msgstr ""
 
-#: src/settings/XhtmlSettings.java:277
+#: src/settings/XhtmlSettings.java:278
 #, java-format
 msgid "Page {0}"
 msgstr ""
 
-#: src/Help.java:95
-msgid ""
-"\n"
-"Usage: java -jar wiki2xhtml [arguments] [files]\n"
-"       java -jar wiki2xhtml"
-msgstr ""
-
-#: src/Help.java:96
-msgid ""
-"\n"
-"\n"
-"Arguments "
-msgstr ""
-
-#: src/Help.java:99
-msgid "Update the menufile"
-msgstr ""
-
-#: src/Help.java:99
-msgid "(No furhter arguments)"
-msgstr ""
-
-#: src/Help.java:102
-msgid "Print this help message"
-msgstr ""
-
-#: src/Help.java:106
-msgid "Don't check for updates this time"
-msgstr ""
-
-#: src/Help.java:109
-msgid "Opens the GUI. Giving no arguments has the same effect."
-msgstr ""
-
-#: src/Help.java:112
-msgid ""
-"Dead mode (no information), debug, silent (errors only), verbose (a lot of "
-"text)"
-msgstr ""
-
-#: src/Help.java:115
-msgid "Set the language used in the program. Availible is at the moment: %s"
-msgstr ""
-
-#: src/Help.java:120 src/ConstantTexts.java:91
-msgid "Menu file"
-msgstr ""
-
-#: src/Help.java:123
-msgid "File containing the common settings like the header, the homelink, etc."
-msgstr ""
-
-#: src/Help.java:126 src/ConstantTexts.java:90
-msgid "Footer file"
-msgstr ""
-
-#: src/Help.java:129
-msgid ""
-"Set a target directory. All the html files are created there and the css "
-"files are copied into this directory."
-msgstr ""
-
-#: src/Help.java:132
-msgid ""
-"Set the directory which contains the css files and the reck (default: ./"
-"style/*; random style will be selected if none given)"
-msgstr ""
-
-#: src/Help.java:139
-msgid "Print the output here instead of writing it into a file"
-msgstr ""
-
-#: src/Help.java:142
-msgid ""
-"Only write the (X)HTML code without the reck (if you e.g. want to use the "
-"code somewhere else; Means you only want to create plain (X)HTML code "
-"without the header etc.)"
-msgstr ""
-
-#: src/Help.java:145
-msgid "Remove all line breaks in the code."
-msgstr ""
-
-#: src/Help.java:148
-msgid "The same as %s"
-msgstr ""
-
-#: src/Help.java:151 src/GUI.java:233 src/ConstantTexts.java:38
+#: src/GUI.java:233 src/ConstantTexts.java:38 src/Help.java:151
 msgid "Files"
 msgstr "Datoteke"
 
-#: src/Help.java:152
-msgid ""
-"\n"
-" All the files which have to be converted. Files ending with .html will be "
-"copied."
-msgstr ""
-
-#: src/Help.java:154
-msgid ""
-"\n"
-"Examples"
-msgstr ""
-
-#: src/Help.java:155
-msgid ""
-"\n"
-" See the help files for examples (add the argument --helpfiles to create "
-"them)."
-msgstr ""
-
-#: src/Help.java:157
-msgid ""
-"\n"
-"Notes"
-msgstr ""
-
-#: src/Help.java:158
-msgid ""
-"\n"
-" You need at least Java version 1.5 (currently you are using version %s)."
-msgstr ""
-
-#: src/Help.java:160
-msgid ""
-"If your version is too old, you can get the newest version from %s:\n"
-" "
-msgstr ""
-
-#: src/Help.java:163
-msgid "Your current working directory is: %s"
-msgstr ""
-
-#: src/Help.java:166
-msgid "Bugs"
-msgstr ""
-
-#: src/Help.java:167
-msgid ""
-"Please report bugs, feature requests etc. at Sourceforge, %s, or in the "
-"wiki2xhtml forum at %s. Thanks!"
-msgstr ""
+#: src/GUI.java:234 src/guiWindows/GuiMenuBar.java:188
+msgid "Settings"
+msgstr "Postavke"
 
 #: src/GUI.java:235 src/GUI.java:602
 msgid "Parse"
@@ -460,9 +127,21 @@ msgstr "Pokušajem preraditi sljedeći izraz: "
 msgid "Next"
 msgstr "Dalje"
 
+#: src/GUI.java:662 src/GUI.java:663 src/guiWindows/GuiMenuBar.java:172
+msgid "Quit"
+msgstr "Izlaz"
+
+#: src/GUI.java:677 src/guiWindows/GuiMenuBar.java:129
+msgid "Save"
+msgstr "Spremiti"
+
 #: src/GUI.java:678
 msgid "Save settings"
 msgstr "Spremiti postavke"
+
+#: src/GUI.java:693 src/guiWindows/GuiMenuBar.java:113
+msgid "Open"
+msgstr "Otvoriti"
 
 #: src/GUI.java:694
 msgid "Open settings file"
@@ -665,46 +344,6 @@ msgstr ""
 msgid "The argument %s could not be recognized. "
 msgstr ""
 
-#: src/update/UpdateChecker.java:156
-#, java-format
-msgid "<p>New version: <strong>{0}</strong> from {1}.</p>"
-msgstr ""
-
-#: src/update/UpdateChecker.java:157
-#, java-format
-msgid "<p>Changes in this version: {0}</p>"
-msgstr ""
-
-#: src/update/UpdateChecker.java:159
-msgid "<p>Your version of wiki2xhtml is up-to-date.</p>"
-msgstr ""
-
-#: src/pagesplitter/SplitPageLinks.java:75
-msgid "Go to page"
-msgstr ""
-
-#: src/ReplaceTags.java:146
-#, fuzzy
-msgid "Warning: Duplicate mark (%s)! Mark removed."
-msgstr "Upozorenje: Dvostruka oznaka!"
-
-#: src/ReplaceTags.java:148
-#, fuzzy
-msgid "Warning: Mark must not contain such a character (%s)! Mark removed."
-msgstr "Upozorenje: Oznaka ne smije sadržavati takvo slovo!"
-
-#: src/typo/Typograph.java:198
-msgid "&Prime;"
-msgstr ""
-
-#: src/typo/Typograph.java:226
-msgid "&ldquo;"
-msgstr ""
-
-#: src/typo/Typograph.java:231
-msgid "&rdquo;"
-msgstr ""
-
 #: src/ConstantTexts.java:39
 msgid "added"
 msgstr ""
@@ -798,12 +437,373 @@ msgstr ""
 msgid "Common file"
 msgstr ""
 
+#: src/ConstantTexts.java:90 src/Help.java:126
+msgid "Footer file"
+msgstr ""
+
+#: src/ConstantTexts.java:91 src/Help.java:120
+msgid "Menu file"
+msgstr ""
+
 #: src/ConstantTexts.java:92
 msgid "Reck file"
 msgstr ""
 
 #: src/ConstantTexts.java:93
 msgid "Template file"
+msgstr ""
+
+#: src/UserInterface.java:274
+#, java-format
+msgid "Skipping {0}."
+msgstr ""
+
+#: src/UserInterface.java:428
+msgid "done"
+msgstr ""
+
+#: src/UserInterface.java:431
+msgid "Title: %s"
+msgstr ""
+
+#: src/UserInterface.java:450
+msgid ""
+"Files written: %d; characters read/written: %d / %d (%s %%).\n"
+"Time taken: %s."
+msgstr ""
+
+#: src/pagesplitter/SplitPageLinks.java:75
+msgid "Go to page"
+msgstr ""
+
+#: src/guiWindows/GuiMenuBar.java:85
+msgid "File"
+msgstr ""
+
+#: src/guiWindows/GuiMenuBar.java:102
+msgid "Export"
+msgstr ""
+
+#: src/guiWindows/GuiMenuBar.java:144
+msgid "Export as .bat Script (Windows)"
+msgstr ""
+
+#: src/guiWindows/GuiMenuBar.java:158
+msgid "Export as .sh Script (Unix)"
+msgstr ""
+
+#: src/guiWindows/GuiMenuBar.java:199
+msgid "Tools"
+msgstr ""
+
+#: src/guiWindows/GuiMenuBar.java:210
+#: src/guiWindows/DialoguePreferences.java:88
+msgid "Preferences"
+msgstr ""
+
+#: src/guiWindows/GuiMenuBar.java:228
+msgid "Language"
+msgstr ""
+
+#: src/guiWindows/GuiMenuBar.java:413
+msgid "Info"
+msgstr ""
+
+#: src/guiWindows/GuiMenuBar.java:425 src/guiWindows/GuiMenuBar.java:431
+msgid "Help"
+msgstr ""
+
+#: src/guiWindows/GuiMenuBar.java:442
+msgid "About"
+msgstr ""
+
+#: src/guiWindows/GuiMenuBar.java:447
+msgid "About wiki2xhtml"
+msgstr ""
+
+#: src/guiWindows/GuiMenuBar.java:457
+msgid "Update Menufile"
+msgstr ""
+
+#: src/guiWindows/GuiMenuBar.java:462
+msgid "Menufile updated. Backup has been created."
+msgstr ""
+
+#: src/guiWindows/GuiMenuBar.java:471
+msgid "Update template file"
+msgstr ""
+
+#: src/guiWindows/GuiMenuBar.java:476
+msgid "Template file updated. Backup has been created."
+msgstr ""
+
+#: src/guiWindows/DialoguePreferences.java:133 src/Help.java:104
+msgid "Check for updates"
+msgstr ""
+
+#: src/guiWindows/DialoguePreferences.java:159
+msgid "Check for updates on Startup?"
+msgstr ""
+
+#: src/guiWindows/DialoguePreferences.java:182
+#, java-format
+msgid "You''re currently using wiki2xhtml {0} from {1}."
+msgstr ""
+
+#: src/guiWindows/DialoguePreferences.java:190
+msgid "Ignore Version:"
+msgstr ""
+
+#: src/guiWindows/DialogueCommonFileCreater.java:53
+msgid "common.txt Wizard"
+msgstr ""
+
+#: src/guiWindows/DialogueCommonFileCreater.java:72
+msgid "Author"
+msgstr ""
+
+#: src/guiWindows/DialogueCommonFileCreater.java:74
+msgid "Default title"
+msgstr ""
+
+#: src/guiWindows/DialogueCommonFileCreater.java:76
+msgid "Use image description for caption on image pages"
+msgstr ""
+
+#: src/guiWindows/DialogueCommonFileCreater.java:78
+msgid "Number of images per line in the gallery"
+msgstr ""
+
+#: src/guiWindows/DialogueCommonFileCreater.java:80
+msgid "Width of thumbnails in the gallery"
+msgstr ""
+
+#: src/guiWindows/DialogueCommonFileCreater.java:82
+msgid "Link to the start page"
+msgstr ""
+
+#: src/guiWindows/DialogueCommonFileCreater.java:84
+msgid "Path to Favicon"
+msgstr ""
+
+#: src/guiWindows/DialogueCommonFileCreater.java:86
+msgid "Width of images on image pages"
+msgstr ""
+
+#: src/guiWindows/DialogueCommonFileCreater.java:88
+msgid "Directory for image pages"
+msgstr ""
+
+#: src/guiWindows/DialogueCommonFileCreater.java:90
+msgid "Standard directory for images"
+msgstr ""
+
+#: src/guiWindows/DialogueCommonFileCreater.java:92
+#, fuzzy
+msgid "Standard keywords"
+msgstr "Standardni argumenti"
+
+#: src/guiWindows/DialogueCommonFileCreater.java:94
+msgid "Language pages are written in"
+msgstr ""
+
+#: src/guiWindows/DialogueCommonFileCreater.java:96
+msgid "Use image name for caption on image pages"
+msgstr ""
+
+#: src/guiWindows/DialogueCommonFileCreater.java:99
+msgid "Text header"
+msgstr ""
+
+#: src/guiWindows/DialogueCommonFileCreater.java:101
+msgid "Directory for thumbnails"
+msgstr ""
+
+#: src/guiWindows/DialogueCommonFileCreater.java:103
+msgid "Width of normal thumbnails"
+msgstr ""
+
+#: src/guiWindows/DialogueCommonFileCreater.java:105
+#, fuzzy
+msgid "Standard title"
+msgstr "Standardni argumenti"
+
+#: src/guiWindows/DialogueCommonFileCreater.java:123
+#: src/guiWindows/MiscWindows.java:40
+msgid "Yes"
+msgstr ""
+
+#: src/guiWindows/GuiFunctions.java:50
+msgid "(Existing) Target directory set: "
+msgstr ""
+
+#: src/guiWindows/GuiFunctions.java:54
+msgid "(New) Target directory set: "
+msgstr ""
+
+#: src/guiWindows/MiscWindows.java:40
+msgid "No"
+msgstr ""
+
+#: src/guiWindows/MiscWindows.java:42
+msgid "Directory “style” not found. Do you want to select an other directory?"
+msgstr ""
+
+#: src/guiWindows/MiscWindows.java:43
+msgid "Select different style directory"
+msgstr ""
+
+#: src/ReplaceTags.java:146
+#, fuzzy
+msgid "Warning: Duplicate mark (%s)! Mark removed."
+msgstr "Upozorenje: Dvostruka oznaka!"
+
+#: src/ReplaceTags.java:148
+#, fuzzy
+msgid "Warning: Mark must not contain such a character (%s)! Mark removed."
+msgstr "Upozorenje: Oznaka ne smije sadržavati takvo slovo!"
+
+#: src/typo/Typograph.java:198
+msgid "&Prime;"
+msgstr ""
+
+#: src/typo/Typograph.java:226
+msgid "&ldquo;"
+msgstr ""
+
+#: src/typo/Typograph.java:231
+msgid "&rdquo;"
+msgstr ""
+
+#: src/Help.java:95
+msgid ""
+"\n"
+"Usage: java -jar wiki2xhtml [arguments] [files]\n"
+"       java -jar wiki2xhtml"
+msgstr ""
+
+#: src/Help.java:96
+msgid ""
+"\n"
+"\n"
+"Arguments "
+msgstr ""
+
+#: src/Help.java:99
+msgid "Update the menufile"
+msgstr ""
+
+#: src/Help.java:99
+msgid "(No furhter arguments)"
+msgstr ""
+
+#: src/Help.java:102
+msgid "Print this help message"
+msgstr ""
+
+#: src/Help.java:106
+msgid "Don't check for updates this time"
+msgstr ""
+
+#: src/Help.java:109
+msgid "Opens the GUI. Giving no arguments has the same effect."
+msgstr ""
+
+#: src/Help.java:112
+msgid ""
+"Dead mode (no information), debug, silent (errors only), verbose (a lot of "
+"text)"
+msgstr ""
+
+#: src/Help.java:115
+msgid "Set the language used in the program. Availible is at the moment: %s"
+msgstr ""
+
+#: src/Help.java:123
+msgid "File containing the common settings like the header, the homelink, etc."
+msgstr ""
+
+#: src/Help.java:129
+msgid ""
+"Set a target directory. All the html files are created there and the css "
+"files are copied into this directory."
+msgstr ""
+
+#: src/Help.java:132
+msgid ""
+"Set the directory which contains the css files and the reck (default: ./"
+"style/*; random style will be selected if none given)"
+msgstr ""
+
+#: src/Help.java:139
+msgid "Print the output here instead of writing it into a file"
+msgstr ""
+
+#: src/Help.java:142
+msgid ""
+"Only write the (X)HTML code without the reck (if you e.g. want to use the "
+"code somewhere else; Means you only want to create plain (X)HTML code "
+"without the header etc.)"
+msgstr ""
+
+#: src/Help.java:145
+msgid "Remove all line breaks in the code."
+msgstr ""
+
+#: src/Help.java:148
+msgid "The same as %s"
+msgstr ""
+
+#: src/Help.java:152
+msgid ""
+"\n"
+" All the files which have to be converted. Files ending with .html will be "
+"copied."
+msgstr ""
+
+#: src/Help.java:154
+msgid ""
+"\n"
+"Examples"
+msgstr ""
+
+#: src/Help.java:155
+msgid ""
+"\n"
+" See the help files for examples (add the argument --helpfiles to create "
+"them)."
+msgstr ""
+
+#: src/Help.java:157
+msgid ""
+"\n"
+"Notes"
+msgstr ""
+
+#: src/Help.java:158
+msgid ""
+"\n"
+" You need at least Java version 1.5 (currently you are using version %s)."
+msgstr ""
+
+#: src/Help.java:160
+msgid ""
+"If your version is too old, you can get the newest version from %s:\n"
+" "
+msgstr ""
+
+#: src/Help.java:163
+msgid "Your current working directory is: %s"
+msgstr ""
+
+#: src/Help.java:166
+msgid "Bugs"
+msgstr ""
+
+#: src/Help.java:167
+msgid ""
+"Please report bugs, feature requests etc. at Sourceforge, %s, or in the "
+"wiki2xhtml forum at %s. Thanks!"
 msgstr ""
 
 #~ msgid "Thanks!"
