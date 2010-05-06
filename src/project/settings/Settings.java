@@ -1,6 +1,8 @@
 package src.project.settings;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 /*
  *   Copyright (C) 2007-2009 Simon Eugster <granjow@users.sf.net>
@@ -21,15 +23,16 @@ import java.util.HashMap;
  *
  */
 
-public abstract class Settings<K, V extends Comparable<?>> {
+public abstract class Settings<K extends Comparable<?>, V extends Comparable<?>> {
+	
+	private List<CheckerObject> checkerList = new ArrayList<CheckerObject>();
+	private HashMap<K, V> settingsMap = new HashMap<K, V>();
 	
 	public static enum SettingContext {
 		page,
 		project
 	}
 
-	HashMap<K, V> settingsMap = new HashMap<K, V>();
-	
 	/**
 	 * Calling <code>set_(K, nullValue())</code> removes K from the settingsMap.
 	 * @return The «null value»
@@ -37,7 +40,6 @@ public abstract class Settings<K, V extends Comparable<?>> {
 	abstract public V nullValue();
 	
 	/**
-	 * @param property
 	 * @return <code>true</code> if <code>property</code> is available (has been set).
 	 */
 	public boolean contains(final K property) {
@@ -45,32 +47,34 @@ public abstract class Settings<K, V extends Comparable<?>> {
 	}
 	
 	/**
-	 * @param property
 	 * @return The value belonging to <code>property</code>
 	 */
 	public V get_(final K property) {
 		return settingsMap.get(property);
 	}
 	/**
-	 * @param property
-	 * @param value Value to insert. 
-	 * <ul><li>If <code>value</code> is equal to {@link #nullValue()} then <code>property</code> will be removed.</li> 
-	 * <li>If <code>value</code> is <code>null</code>, nothing will be done.</li></ul>
-	 * @return true if no error occurred (like negative value for GalleryImagesPerLine)
+	 * If <code>value</code> is equal to {@link #nullValue()} then <code>property</code> will be removed.
+	 * @param value Value to insert.  
+	 * @return true if <code>value</code> is valid.
 	 */
 	public boolean set_(final K property, final V value) {
 		
 		boolean success = true;
 
-		if (value == null) return true;
-		
-		if (nullValue().equals(value)) {
+		// Remove if value is the null value
+		boolean isnull = nullValue() == value;
+		if (!isnull) {
+			try {
+				isnull = nullValue().equals(value);
+			} catch (NullPointerException e) {}
+		}
+		if (isnull) {
 			settingsMap.remove(property);
 			return true;
 		}
 		
-		success = setAfterCheck(property, value);
-		
+		// Add otherwise (if valid)
+		success = valid(property, value);
 		if (success) {
 			settingsMap.put(property, value);
 		}
@@ -79,13 +83,53 @@ public abstract class Settings<K, V extends Comparable<?>> {
 	}
 	
 	/**
-	 * Additional checks for <code>value</code> before it is set. 
-	 * May e.g. test whether a value is > 0 and return false if not;
-	 * in this case {@link #set_(Object, Comparable)} should not set <code>value</code>.
-	 * @param property
-	 * @param value
+	 * <p>Checks with the checkers added via {@link #addChecker(Checker, Comparable)}
+	 * whether the <code>value</code> is valid for the given <code>property</code>.</p>
+	 * <p>Invalid values cannot be set with {@link #set_(Object, Comparable)}.</p>
 	 * @return <code>true</code> if <code>value</code> may be set.
 	 */
-	abstract boolean setAfterCheck(final K property, final V value);
+	public boolean valid(final K property, final V value) {
+		boolean valid = true;
+		for (CheckerObject co : checkerList) {
+			if (!co.valid(property, value)) {
+				valid = false;
+				break;
+			}
+		}
+		return valid;
+	}
+	
+	/**
+	 * Adds a checker. The task of the checker is to check values to be assigned to <code>key</code>
+	 * for validity. Invalid values will be rejected.
+	 */
+	public void addChecker(Checker<V> c, K key) {
+		checkerList.add(new CheckerObject(c, key));
+	}
+	
+	/**
+	 * Value checker
+	 */
+	public static interface Checker<V> {
+		/**
+		 * @return true if <code>value</code> is valid.
+		 */
+		public boolean check(V value);
+	}
+	
+	private class CheckerObject  {
+		private final Checker<V> checker;
+		private final K key;
+		public CheckerObject(Checker<V> checker, K key) {
+			this.checker = checker;
+			this.key = key;
+		}
+		public boolean valid(K key, V value) {
+			if (key.equals(this.key)) {
+				return checker.check(value);
+			}
+			return true;
+		}
+	}
 	
 }

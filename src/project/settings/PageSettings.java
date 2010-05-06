@@ -18,7 +18,7 @@ public class PageSettings extends Settings<SettingsE, String> {
 		return "null";
 	}
 	
-	boolean setAfterCheck(SettingsE property, String value) {
+	boolean valid(SettingsE property, String value) {
 		boolean ok = true;
 		// Manage special cases
 		switch (property) {
