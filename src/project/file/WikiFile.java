@@ -7,7 +7,7 @@ import src.Constants.SettingsLocalE;
 import src.project.WikiProject;
 import src.project.settings.PageSettings;
 import src.project.settings.Settings;
-import src.tasks.WikiLinks;
+import src.tasks.WikiPreparser;
 import src.tasks.WikiTask;
 import src.tasks.Tasks.Task;
 
@@ -101,7 +101,7 @@ public abstract class WikiFile {
 	
 	public void parse() {
 		if (!parse) return;
-		WikiTask task = new WikiLinks();
+		WikiTask task = new WikiPreparser();
 		do {
 			if (tasks.contains(task.desc())) {
 				task.parse(this);

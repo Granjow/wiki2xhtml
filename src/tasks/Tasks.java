@@ -4,6 +4,7 @@ public class Tasks {
 	
 	public static enum Task {
 		
+		Preparse ("Preparsing"),
 		Links ("Links"),
 		Lists ("Lists");
 		

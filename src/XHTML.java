@@ -182,7 +182,7 @@ public class XHTML {
 		nowiki.clear();
 		out = xhs.local.content;
 
-		out = makeUnixLines(out);
+//		out = makeUnixLines(out);
 		p(2);
 		out = XhtmlSettingsReader.getXhtml(out);
 		p(4);
@@ -201,9 +201,9 @@ public class XHTML {
 		else
 			out = WikiImages.makeImages(out);
 		p(44);
-		out = WikiLinks.makeLinks(out, fc.currentFilename);
+//		out = WikiLinks.makeLinks(out, fc.currentFilename);
 		p(55);
-		out = WikiLists.makeList(out);
+//		out = WikiLists.makeList(out);
 		p(69);
 		out = WikiImages.makeGallery(out);
 		p(76);

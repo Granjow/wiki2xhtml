@@ -440,6 +440,10 @@ public final class Constants {
 
 	}
 	
+	/** 
+	 * Each of these settings have to be read out in a different way.
+	 * Cannot be done automatically as in SettingsE.
+	 */
 	public static enum SettingsLocalE {
 		/** Header content for JavaScript, CSS and so on 
 		 */										head,
