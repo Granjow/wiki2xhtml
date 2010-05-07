@@ -50,7 +50,7 @@ Measures have to be set in px or in %.
 |-
 | <code>&#123;&#123;'''DirImagepages:'''&hellip;&#125;&#125;</code> || Directory for generated image pages
 |-
-| <code>&#123;&#123''';H1:'''&hellip;&#125;&#125;</code> || Page title
+| <code>&#123;&#123;'''H1:'''&hellip;&#125;&#125;</code> || Page title
 |-
 | <code>&#123;&#123;'''Homelink:'''&hellip;&#125;&#125;</code> || Link to start page
 |-
