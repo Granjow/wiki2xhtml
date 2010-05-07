@@ -66,7 +66,8 @@ public final class Constants {
 	/** wiki2xhtml settings, like the version number */
 	public static final class Wiki2xhtml {
 
-		public static final String revision = "$Revision$";
+		public static final String revision = "$Revision: 1894 $".replace("$", "");
+		public static final String revisionDate = "$Date$".replace("$", "");
 		public static final String progName = "wiki2xhtml";
 		public static final String versionNumber = "3.4b9";
 		public static final String versionDate = "Jan 28, 2010";
@@ -82,6 +83,11 @@ public final class Constants {
 				e.printStackTrace();
 				return null;
 			}
+		}
+		public static final String revisionNumber() {
+			Matcher m = RegExpressions.num.matcher(Constants.Wiki2xhtml.revision);
+			if (m.find()) { return m.group(0); }
+			return "(unknown)";
 		}
 
 	}

@@ -122,7 +122,7 @@ public class UserInterface {
 		UserInterface nonStatic = new UserInterface();
 
 		if (StringTools.stringArrayToSB(cmdLineArgs, " ").indexOf("--dead") < 0 && cmdLineArgs.toString().indexOf("--silent") < 0)
-			ca.ol("wiki2xhtml " + Constants.Wiki2xhtml.version, CALevel.MSG);
+			ca.ol("wiki2xhtml " + Constants.Wiki2xhtml.version + " r" + Constants.Wiki2xhtml.revisionNumber(), CALevel.MSG);
 
 		StringBuffer sb = new StringBuffer();
 		for (String s : cmdLineArgs)

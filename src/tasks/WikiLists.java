@@ -1,41 +1,29 @@
-package src;
+package src.tasks;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.StringReader;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import src.Resources;
+import src.Statistics;
+import src.XHTML;
+import src.project.file.WikiFile;
+import src.resources.RegExpressions;
+import src.tasks.Tasks.Task;
 import src.utilities.HandlerLists;
 
+public class WikiLists extends WikiTask {
 
-
-/*
- *   Copyright (C) 2007-2009 Simon Eugster <granjow@users.sf.net>
-
- *   This program is free software: you can redistribute it and/or modify
- *   it under the terms of the GNU General Public License as published by
- *   the Free Software Foundation, either version 3 of the License, or
- *   (at your option) any later version.
-
- *   This program is distributed in the hope that it will be useful,
- *   but WITHOUT ANY WARRANTY; without even the implied warranty of
- *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *   GNU General Public License for more details.
-
- *   You should have received a copy of the GNU General Public License
- *   along with this src.  If not, see <http://www.gnu.org/licenses/>.
- *
- */
-
-/**
- *
- * Edits block levels (<li> etc)
- * TODO 1 ; a :: b
- *
- * @author Simon Eugster
- */
-public class WikiLists {
-
-	public static final PrintStream o = System.out;
+	public Task desc() {
+		return Task.Lists;
+	}
+	
+	public WikiTask nextTask() {
+		return null;
+	}
+	
 
 	/**
 	 * Build the Lists with a *, # at the beginning.
@@ -43,13 +31,11 @@ public class WikiLists {
 	 * @param in - input
 	 * @return input with lists
 	 */
-	public static StringBuffer makeList(StringBuffer in) {
-		@SuppressWarnings("unused")
-		StringBuffer funcName = new StringBuffer("BlockLevels.makeList");
+	public void parse(WikiFile file) {
 		Statistics.getInstance().sw.timeCreatingLists.continueTime();
 
 		StringBuffer out = new StringBuffer();
-		BufferedReader b = new BufferedReader(new StringReader(in.toString()));
+		BufferedReader b = new BufferedReader(new StringReader(file.getContent().toString()));
 		short counter = 0;
 		String allowedChars = "*#;:";
 
@@ -94,7 +80,7 @@ public class WikiLists {
 				 * Check for an argument for the ul tag
 				 */
 				if (newList.size() > 0) {
-					Matcher m = Resources.Regex.listGroupArguments.matcher(line);
+					Matcher m = RegExpressions.listGroupArguments.matcher(line);
 
 					if (m.find()) {
 						firstArgument =  m.group(1).trim();
@@ -248,24 +234,23 @@ public class WikiLists {
 			e.printStackTrace();
 		}
 
-		in = out;
-		Matcher m = Pattern.compile("\\s*<\\/dl>\\s<dl>\\s*").matcher(in.toString());
+		file.setContent(out);
+		Matcher m = Pattern.compile("\\s*<\\/dl>\\s<dl>\\s*").matcher(file.getContent().toString());
 		if (m.find()) {
 			out = new StringBuffer();
 			int first, last = 0;
 			do {
 				counter++;
 				first = m.start();
-				out.append(in.subSequence(last, first));
+				out.append(file.getContent().subSequence(last, first));
 				out.append(XHTML.lineSep);
 				last = m.end();
 			} while (m.find());
-			out.append(in.subSequence(last, in.length()));
+			out.append(file.getContent().subSequence(last, file.getContent().length()));
 		}
 
 		Statistics.getInstance().sw.timeCreatingLists.stop();
-
-		return out;
 	}
+	
 
 }

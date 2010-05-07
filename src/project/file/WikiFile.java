@@ -1,7 +1,6 @@
 package src.project.file;
 
-import java.io.File;
-import java.io.IOException;
+import java.util.ArrayList;
 
 import src.Constants.SettingsE;
 import src.Constants.SettingsLocalE;
@@ -10,8 +9,7 @@ import src.project.settings.PageSettings;
 import src.project.settings.Settings;
 import src.tasks.WikiLinks;
 import src.tasks.WikiTask;
-import src.utilities.IORead_Stats;
-import src.utilities.IOWrite_Stats;
+import src.tasks.Tasks.Task;
 
 /*
  *   Copyright (C) 2007-2009 Simon Eugster <granjow@users.sf.net>
@@ -32,20 +30,19 @@ import src.utilities.IOWrite_Stats;
  *
  */
 
-public class WikiFile {
+public abstract class WikiFile {
 	
-	private StringBuffer content = null;
+	protected StringBuffer content = null;
 	
 	public final boolean sitemap;
 	public final boolean parse;
 	public final String name;
 	public final Generators generators;
 	
-	private final File fSrc;
-	private final File fDest;
 	private final WikiProject project;
 	
-	private boolean alreadyRead = false;
+	protected boolean alreadyRead = false;
+	private ArrayList<Task> tasks = new ArrayList<Task>();
 	private Settings<SettingsE, String> pageSettings = new PageSettings();
 	private Settings<SettingsLocalE, String> localSettings = new Settings<SettingsLocalE, String>() {
 		public String nullValue() {return null;};
@@ -53,47 +50,29 @@ public class WikiFile {
 	};
 	
 	
-	/** Needs to be overridden for comparing. */
-	public boolean equals(Object obj) {
-		if (this == obj) { return true; }
-		if (obj instanceof WikiFile) {
-			WikiFile wf = (WikiFile) obj;
-			return fSrc.equals(wf.fSrc) && fDest.equals(wf.fDest);
-		}
-		return false;
-	}
-	
-	public WikiFile(File fSrc, File fDest, WikiProject project, String name, boolean sitemap, boolean parse) {
-		this.fSrc = fSrc;
-		this.fDest = fDest;
+	protected WikiFile(WikiProject project, String name, boolean sitemap, boolean parse) {
 		this.name = name;
 		this.project = project;
 		this.sitemap = sitemap;
 		this.parse = parse;
 		this.generators = new Generators(this);
-	}
-	
-	public StringBuffer getContent() {
-		if (!alreadyRead) {
-			try {
-				content = IORead_Stats.readSBuffer(fSrc);
-				alreadyRead = true;
-			} catch (IOException e) {
-				e.printStackTrace();
+		if (parse) {
+			for (Task t : Task.values()) {
+				tasks.add(t);
 			}
 		}
-		return content; 
 	}
+	
+	abstract public boolean equals(Object obj);
+	abstract public void write();
+	abstract public StringBuffer getContent();
+	
 	
 	public void setContent(StringBuffer newContent) {
 		content = newContent;
 	}
 	
-	public void write() {
-		try {
-			IOWrite_Stats.writeString(fDest, getContent().toString(), false);
-		} catch (IOException e) {}
-	}
+	
 	
 	public String getProperty(SettingsE property, boolean fallback) {
 		if (pageSettings.isSet(property)) { return pageSettings.get_(property); }
@@ -110,11 +89,25 @@ public class WikiFile {
 		return localSettings.set_(property, value);
 	}
 	
+	public boolean addTask(Task t) {
+		return tasks.add(t);
+	}
+	public boolean removeTask(Task t) {
+		return tasks.remove(t);
+	}
+	public void removeAllTasks() {
+		tasks.clear();
+	}
+	
 	public void parse() {
 		if (!parse) return;
 		WikiTask task = new WikiLinks();
 		do {
-			task.parse(this);
+			if (tasks.contains(task.desc())) {
+				task.parse(this);
+			} else {
+				System.err.println("Omitted " + task.desc().name);
+			}
 		} while ((task = task.nextTask()) != null);
 	}
 	

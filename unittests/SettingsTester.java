@@ -23,6 +23,9 @@ public class SettingsTester extends junit.framework.TestCase {
 			public String nullValue() {
 				return null;
 			}
+			protected String concatenate(String left, String right) {
+				return left+right;
+			}
 		};
 		stgs.addChecker(c, Tst.a);
 
@@ -35,6 +38,9 @@ public class SettingsTester extends junit.framework.TestCase {
 		Settings<Tst, String> stgs = new Settings<Tst,String>() {
 			public String nullValue() {
 				return null;
+			}
+			protected String concatenate(String left, String right) {
+				return left+right;
 			}
 		};
 		stgs.addChecker(c, Tst.a);
@@ -56,6 +62,9 @@ public class SettingsTester extends junit.framework.TestCase {
 		Settings<Tst, String> stgs = new Settings<Tst,String>() {
 			public String nullValue() {
 				return mynull;
+			}
+			protected String concatenate(String left, String right) {
+				return left+right;
 			}
 		};
 		

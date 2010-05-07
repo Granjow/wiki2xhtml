@@ -6,16 +6,16 @@ import src.utilities.listcomprehension.Filter;
 
 public class ListComprehension {
 	
-	public static <T> void applyInPlace(List<T> in, Func<T, T> f) {
+	public static <T> void mapInPlace(List<T> in, Func<T, T> f) {
 		ListIterator<T> it = in.listIterator();
 		while (it.hasNext()) {
 			it.set(f.apply(it.next()));
 		}
 	}
 	
-	public static <In, Out> List<Out> map(List<In> in, Func<In, Out> f) {
-		List<Out> al = new ArrayList<Out>();
-		ListIterator<In> it = in.listIterator();
+	public static <I, O> List<O> map(List<I> in, Func<I, O> f) {
+		List<O> al = new ArrayList<O>();
+		ListIterator<I> it = in.listIterator();
 		while (it.hasNext()) {
 			al.add(f.apply(it.next()));
 		}

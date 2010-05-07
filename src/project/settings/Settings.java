@@ -30,10 +30,6 @@ public abstract class Settings<K extends Comparable<?>, V extends Comparable<?>>
 	/** Settings storage */
 	private HashMap<K, V> settingsMap = new HashMap<K, V>();
 	
-//	public static enum SettingContext {
-//		page,
-//		project
-//	}
 
 	
 	/////// TO IMPLEMENT ////////

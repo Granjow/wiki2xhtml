@@ -19,6 +19,9 @@ public final class RegExpressions {
 	private static final String rCdataNogroups = "<!\\[CDATA\\[.*?\\]\\]>";
 	
 
+	/** Matches a number. */
+	public static final Pattern num = Pattern.compile("(\\d+)");
+	
 	/** Matches something.args */
 	public static final Pattern argsFile = Pattern.compile(
 			"(?x)" +

@@ -2,11 +2,11 @@ package src.project;
 
 import src.Constants;
 import src.Constants.SettingsE;
+import src.project.file.VirtualWikiFile;
 import src.project.file.WikiFile;
 import src.project.settings.PageSettings;
 import src.project.settings.Settings;
 
-import java.io.File;
 import java.util.HashMap;
 
 /*
@@ -80,8 +80,12 @@ public class WikiProject {
 	
 	public static void main(String[] args) {
 		WikiProject p = new WikiProject();
-		p.addFile(new WikiFile(new File("/tmp/a"), new File("/tmp/out"),p,"myname", false,false));
+		StringBuffer sb = new StringBuffer();
+		sb.append("Hallo. [[link.html]]\n*bla");
+		VirtualWikiFile vf = new VirtualWikiFile(p,"myname", false,true,sb);
+		p.addFile(vf);
 		p.make();
+		System.out.println(vf.getContent());
 	}
 
 }

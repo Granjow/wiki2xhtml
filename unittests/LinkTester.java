@@ -1,10 +1,11 @@
 package unittests;
 
+import src.project.file.VirtualWikiFile;
 import src.settings.XhtmlSettings;
+import src.tasks.Tasks.Task;
 
 public class LinkTester extends junit.framework.TestCase {
 	
-	public static final String thisFile = "this-File.php";
 
 	public void testExternal() {
 		final TestObject[] tests = new TestObject[] {
@@ -47,8 +48,8 @@ public class LinkTester extends junit.framework.TestCase {
 					"{{Namespace:w=http://de.wikipedia.org/wiki/%s}}\n"
 			), true);
 		final TestObject[] tests = new TestObject[] {
-				new TestObject("[[" + thisFile + "?query=bla]]", "<a href=\"this-File.php?query=bla\" class=\"internal\">this-File.php?query=bla</a>"),
-				new TestObject("[[" + thisFile + "?query=bla|disable]]", "<strong class=\"selflink\">this-File.php?query=bla</strong>")
+				new TestObject("[[" + TestObject.thisFile() + "?query=bla]]", "<a href=\"this-File.php?query=bla\" class=\"internal\">this-File.php?query=bla</a>"),
+				new TestObject("[[" + TestObject.thisFile() + "?query=bla|disable]]", "<strong class=\"selflink\">this-File.php?query=bla</strong>")
 			};
 
 		for (TestObject t : tests) {
@@ -56,17 +57,15 @@ public class LinkTester extends junit.framework.TestCase {
 		}
 	}
 	
-	private class TestObject {
-		private final StringBuffer input;
-		private final String output;
+	private static class TestObject extends unittests.TestObject {
 		public TestObject(String test, String result) {
-			input = new StringBuffer(test);
-			output = result;
+			super(test, result);
 		}
-		public String correct() { return output; }
-		public String real() {
-			return src.WikiLinks.makeLinks(input, thisFile).toString();
+		
+		void fillTasks(VirtualWikiFile vf) {
+			vf.addTask(Task.Links);
 		}
+
 	}
 	
 	

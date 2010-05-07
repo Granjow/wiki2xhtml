@@ -8,6 +8,7 @@ import src.Statistics;
 import src.argumentHandler.*;
 import src.project.file.WikiFile;
 import src.settings.XhtmlSettings;
+import src.tasks.Tasks.Task;
 
 import static src.Constants.Links.LinksE;
 import static src.resources.RegExpressions.RELink;
@@ -36,12 +37,12 @@ import static src.resources.RegExpressions.RELink;
  */
 public class WikiLinks extends WikiTask {
 	
-	public String desc() {
-		return "Links";
+	public Task desc() {
+		return Task.Links;
 	}
 	
 	public WikiTask nextTask() {
-		return null;
+		return new WikiLists();
 	}
 	
 	public void parse(WikiFile file) {

@@ -30,6 +30,6 @@ public abstract class WikiTask {
 	abstract public WikiTask nextTask();
 	
 	/** Kind of a task ID. */
-	abstract public String desc();
+	abstract public Tasks.Task desc();
 
 }
