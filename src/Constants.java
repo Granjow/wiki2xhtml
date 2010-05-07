@@ -66,6 +66,7 @@ public final class Constants {
 	/** wiki2xhtml settings, like the version number */
 	public static final class Wiki2xhtml {
 
+		public static final String revision = "$Revision$";
 		public static final String progName = "wiki2xhtml";
 		public static final String versionNumber = "3.4b9";
 		public static final String versionDate = "Jan 28, 2010";
