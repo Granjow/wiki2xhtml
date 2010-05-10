@@ -8,7 +8,7 @@ import javax.swing.JOptionPane;
 import org.xnap.commons.i18n.*;
 
 /*
- *   Copyright (C) 2007-2009 Simon Eugster <granjow@users.sf.net>
+ *   Copyright (C) 2007-2010 Simon Eugster <granjow@users.sf.net>
 
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by

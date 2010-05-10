@@ -28,7 +28,7 @@ import static src.Constants.SettingsImgE;
 import static src.Constants.SettingsImgPageE;
 
 /*
- *   Copyright (C) 2007-2009 Simon Eugster <granjow@users.sf.net>
+ *   Copyright (C) 2007-2010 Simon Eugster <granjow@users.sf.net>
 
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
