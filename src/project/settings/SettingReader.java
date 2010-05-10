@@ -28,6 +28,7 @@ public abstract class SettingReader<K extends Comparable<?>, V extends Comparabl
 	/** The ID will be used for identifying a reader. */
 	abstract public String getID();
 	
+	/** Two Readers are identical if their ID is equal. */
 	public boolean equals(Object obj) {
 		if (obj instanceof SettingReader<?, ?>) {
 			return ((SettingReader<?,?>) obj).getID().equals(this.getID());

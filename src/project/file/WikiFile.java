@@ -2,11 +2,11 @@ package src.project.file;
 
 import java.util.ArrayList;
 
-import src.Constants.SettingsE;
-import src.Constants.SettingsLocalE;
 import src.project.WikiProject;
 import src.project.settings.PageSettings;
 import src.project.settings.Settings;
+import src.resources.ResProjectSettings.SettingsE;
+import src.resources.ResProjectSettings.SettingsLocalE;
 import src.tasks.WikiPreparser;
 import src.tasks.WikiTask;
 import src.tasks.Tasks.Task;

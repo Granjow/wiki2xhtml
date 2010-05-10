@@ -3,28 +3,21 @@ package src.project.settings;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import src.Constants;
-import src.Constants.SettingsE;
+import src.resources.ResProjectSettings.SettingsE;
 
 public class PageSettingsReader  {
 
-	private final SettingsReader<Constants.SettingsE, String> reader;
-	/**
-	 * These settings are read automatically from documents loaded.
-	 */
-	private static final SettingsE[] autoReadableSettings = {
-		SettingsE.author, SettingsE.defaultTitle, SettingsE.desc, SettingsE.galleryImagesPerLine, SettingsE.galleryThumbWidth, 
-		SettingsE.imagesDir, SettingsE.imagepageImgWidth, SettingsE.imagepagesDir,
-		SettingsE.thumbsDir, SettingsE.h1, SettingsE.homelink, SettingsE.icon,
-		SettingsE.keywords, SettingsE.lang, SettingsE.meta, SettingsE.namespace, SettingsE.reckAlternative,
-		SettingsE.textHeader, SettingsE.title, SettingsE.titleRule, SettingsE.thumbWidth };
+	private final SettingsReader<SettingsE, String> reader;
 	
 	//TODO settings: {{k:v1|v2|v3}}
 	
+	/**
+	 * Sets up a settings reader for page settings
+	 */
 	public PageSettingsReader(final StringBuffer content, final PageSettings settings) {
 		reader = new SettingsReader<SettingsE, String>(content, settings);
 		
-		for (final SettingsE p : autoReadableSettings) {
+		for (final SettingsE p : SettingsE.values()) {
 			reader.attachReader(new SettingReader<SettingsE, String>() {
 				
 				public boolean read(Settings<SettingsE, String> settings, StringBuffer in, boolean remove) {
@@ -41,15 +34,13 @@ public class PageSettingsReader  {
 		}
 
 //		xhs.local.set_(SettingsLocalE.redirect, getRedirect(content, false));
-//		xhs.local.set_(SettingsE.descForCaption, useImageDescAsCaption(content, true, true));
-//		xhs.local.set_(SettingsE.nameForCaption, useImagenameAsCaption(content, true, true));
 	}
 	
 	public void readSettings(boolean remove) {
 		reader.readSettings(remove);
 	}
 	
-	private static final String getProperty(Constants.SettingsE property, StringBuffer content, final boolean remove) {
+	private static final String getProperty(SettingsE property, StringBuffer content, final boolean remove) {
 		String value = null;
 		String temp;
 		if (property.loop()) {
@@ -67,7 +58,7 @@ public class PageSettingsReader  {
 			}
 			if (sb.length() > 0) value = sb.toString();
 		} else {
-			// Property only occuring once
+			// Property only occurring once
 			temp = getArg(property.regex(), content, remove, new Pos(0));
 			if (temp != null && temp.length() > 0) value = temp;
 		}

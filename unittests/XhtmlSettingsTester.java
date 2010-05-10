@@ -3,10 +3,9 @@ package unittests;
 import src.Constants;
 import src.commentator.CommentAtor;
 
+import src.resources.ResProjectSettings.SettingsE;
 import src.settings.XhtmlSettings;
 import src.settings.XhtmlSettingsReader;
-
-import static src.Constants.SettingsE;
 
 public class XhtmlSettingsTester extends junit.framework.TestCase {
 	

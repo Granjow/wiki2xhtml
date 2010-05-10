@@ -12,9 +12,10 @@ import javax.swing.KeyStroke;
 import javax.swing.filechooser.FileFilter;
 
 import src.Args.GetPolicyE;
-import src.settings.XhtmlSettingsReader;
 import src.project.settings.Settings.Checker;
+import src.resources.ResProjectSettings;
 import src.resources.RegExpressions;
+import src.resources.ResProjectSettings.ImagepageCaptionAlternatives;
 
 
 /*
@@ -104,8 +105,7 @@ public final class Constants {
 
 		public static String galleryImagesPerLine = "3";
 
-		public static final String useImageDescAsCaption = "true";
-		public static final String useImagenameAsCaption = "false";
+		public static final String imagepageCaption = ResProjectSettings.ImagepageCaptionAlternatives.description.key();
 	}
 
 
@@ -352,179 +352,42 @@ public final class Constants {
 	
 	public static final class Checkers {
 		private static final Pattern pSize = Pattern.compile("^\\d+(?:%|px)$");
+		
+		public static final Checker<String> positiveByteChecker = new Checker<String>() {
+			public boolean check(String value) {
+				byte b = Byte.parseByte(value);
+				return b > 0;
+			}
+		}; 
 		public static final Checker<String> sizeChecker = new Checker<String>() {
 			public boolean check(String value) {
 				Matcher m = pSize.matcher(value);
 				return m.find();
 			}
 		};
-	}
-
-	/**
-	 * @see {@link XhtmlSettingsReader#autoReadableSettings}
-	 * TODO use checkers
-	 */
-	public static enum SettingsE {
-		/** Footer */						footer ("Footer"),
-		/**
-		 * Number of images per line in the gallery
-		 */									galleryImagesPerLine ("GalleryImagesPerLine"),
-		/** Width of thumbnails in galleries 
-		 */									galleryThumbWidth ("GalleryThumbWidth", Checkers.sizeChecker),
-		/** Width for images on image pages 
-		 */									imagepageImgWidth ("ImageWidthImagepage", Checkers.sizeChecker),
-		/** Width of thumbnails */			thumbWidth ("ThumbWidthImages", Checkers.sizeChecker),
-		/** Meta data: Author */			author ("Author"),
-		/**
-		 * Use the image description as caption if no caption available
-		 * @see #nameForCaption
-		 * @see {@link Constants.Standards#useImageDescAsCaption}
-		 */									descForCaption ("DescForCaption"),
-		/** Meta data: Page description */	desc ("Desc(?:ription)?"),
-		/** Default title for all pages */	defaultTitle ("DefaultTitle"),
-		/** Page heading */					h1 ("H1"),
-		/** Link to the index page */		homelink ("Homelink"),
-		/** Meta data: Page favicon */		icon ("Icon"),
-		/** Directory for image pages */	imagepagesDir ("DirImagepages"),
-		/** Directory for images */			imagesDir ("DirImages"),
-		/** Meta data: page keywords */		keywords ("Keywords", true, ","),
-		/** Meta data: Page language */		lang ("Lang"),
-		/** Custom meta data */				meta ("Meta", true, "\n"),//, ":((?:(?!\\}\\})[^\\n])+)"),
-		/**
-		 * Don&#x2019;t use image name as caption if no caption available
-		 * @see #descForCaption
-		 * @see {@link Constants.Standards#useImagenameAsCaption}
-		 */									nameForCaption ("NameForCaption"),
-		/** 
-		 * Namespace for links (Like w=http://de.wikipedia.org/wiki/%s) 
-		 * @since wiki2xhtml 3.4 
-		 */									namespace("Namespace", true, ","),
-		/**
-		 * Alternative reck file to use 
-		 * @since 3.3.2 
-		 */									reckAlternative ("ReckAlternative"),
-		/** Text title/header */			textHeader ("TextHeader"),
-		/** Thumbnails directory */			thumbsDir ("Thumbnails"),
-		/**
-		 * Page title; replacement for %s 
-		 */									title ("Title"),
-		/** Rule for image page titles */	titleRule ("TitleRule");
-
-		private final String property;
-		private boolean loop = false;
-		private final String separator;
-		private String regexExtension = ":((?:(?!\\}\\}).)+)";
-		private Pattern regex = null;
-		private final Checker<String> checker;
-
-		SettingsE(String property) {
-			this(property, false, null, null);
-		}
-		SettingsE(String property, Checker<String> checker) {
-			this(property, false, null, checker);
-		}
-		SettingsE(String property, boolean loop, String separator) {
-			this(property, loop, separator, null);
-		}
-		SettingsE(String property, boolean loop, String separator, Checker<String> checker) {
-			this.property = property;
-			this.loop = loop;
-			this.separator = separator;
-			this.checker = checker;
-		}
-
-		public String keyword() {
-			return property;
-		}
-		public Pattern regex() {
-			if (regex == null) regex = Pattern.compile("(?m)\\{\\{" + keyword() + regexExtension + "\\}\\}");
-			return regex;
-		}
-		/** @return true, if keyword may occur multiple times. 
-		 * @since wiki2xhtml 3.4 */
-		public boolean loop() {
-			return loop;
-		}
-		/** @return The separator used to separate content if found multiple times. 
-		 * @since wiki2xhtml 3.4 */
-		public String separator() {
-			return separator;
-		}
-		/** @return Checker validating values for this property 
-		 * @since wiki2xhtml 3.5
-		 */
-		public Checker<String> checker() {
-			return checker;
-		}
-		
-	}
-	
-	/** 
-	 * Each of these settings have to be read out in a different way.
-	 * Cannot be done automatically as in SettingsE.
-	 */
-	public static enum SettingsLocalE {
-		/** Header content for JavaScript, CSS and so on 
-		 */										head,
-		/** Page menu. Generated outside! */	menu,
-		/** Page number (when multipage) */		pageNumber,
-		/** Total number of pages */			pagesTotal,
-		/** Link to redirected page (given with #REDIRECT [[Link]]) 
-		 */										redirect,
-		/** Script content, e.g. PHP code */	script,
-		/** "true" if the current page contains a script (PHP e.g.) 
-		 */										scriptMode,
-		/** Text title (aka text header) */		textTitle;
-	}
-	 
-	public static enum SettingsImgE {
-		/** Additional arguments */				args,
-		/** Additional link arguments */		argsLink,
-		/** Insert clear=both before */			clearAfter,
-		/** Insert clear=both after */			clearBefore,
-		/** Gallery counter */					galleryCounter,
-		/** Gallery */							galleryEnabled,
-		/** Text (gallery entries) */			galleryText,
-		/** Image caption */					imageCaption,
-		/** Image description */				imageDesc,
-		/** Long image description */			imageLongdesc,
-		/** Image path */						imagePath,
-		/** Has the image page been created? */	imagePageWasCreated,
-		/** Small image? (No with has to be set for the image page) 
-		 */										imageSmall,
-		/** Direct link without image page? */	linkDirect,
-		/** Link to previous image */			linkPrev,
-		/** Link to next image */				linkNext,
-		/** Image width on the image page */	pageWidth,
-		/** Thumbnail? */						thumbEnabled,
-		/** Thumbnail position */				thumbPosition,
-		/** Thumbnail width */					thumbWidth,
-		/** Thumbnail source */					thumbSrc;
-	}
-	
-	public static enum SettingsImgPageE {
-		/** Page name */						pageName;
-	}
-
-	public static final class Settings {
-
-		public static final char separator = ':';
-		public static final String arg = separator + "([^}]+)";
-		public static final String argSize = separator + "(\\d+(?:%|px))";
-		
-		/** For namespaces: If namespace w is defined, then the w: in the name of a link to w:Somewhere will be cut off */
-		public static final String argCut = "|cut";
-
-//		public static final String consistentGallery = "ConsistentGallery";	// Removed in wiki2xhtml 3.4
-
-		/**
-		 * @since 3.1.1
-		 */
-		public static final class Args {
-			// Standard arguments
-			public static final String argFalse = ":false";
-		}
-
+		public static final Checker<String> boolChecker = new Checker<String>() {
+			public boolean check(String value) {
+				if ("true".equals(value) || "false".equals(value)) {
+					return true;
+				} else {
+					System.err.println("Argument must be eiter true or false");
+					return false;
+				}
+			};
+		};
+		public static final Checker<String> captionAlternativeChecker = new Checker<String>() {
+			public boolean check(String value) {
+				String sep = ", ";
+				StringBuilder sb = new StringBuilder();
+				for (ImagepageCaptionAlternatives e : ImagepageCaptionAlternatives.values()) {
+					if (e.key().equals(value)) { return true; }
+					else { sb.append(e.key() + sep); }
+				}
+				if (sb.length() > 0) { sb.delete(sb.length() - sep.length(), sb.length()); }
+				System.err.println("Alternative must be one of the following: " + sb);
+				return false;
+			};
+		};
 	}
 
 	/** Tags which will be replaced in the document, e.g. by the current version */

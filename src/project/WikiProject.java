@@ -1,11 +1,11 @@
 package src.project;
 
 import src.Constants;
-import src.Constants.SettingsE;
 import src.project.file.VirtualWikiFile;
 import src.project.file.WikiFile;
 import src.project.settings.PageSettings;
 import src.project.settings.Settings;
+import src.resources.ResProjectSettings.SettingsE;
 
 import java.util.HashMap;
 
@@ -48,8 +48,7 @@ public class WikiProject {
 		projectSettings.set_(SettingsE.imagepagesDir, Constants.Directories.imagePages);
 		projectSettings.set_(SettingsE.imagepageImgWidth, Constants.Standards.widthImgImagepages);
 		projectSettings.set_(SettingsE.thumbWidth, Constants.Standards.widthThumbs);
-		projectSettings.set_(SettingsE.descForCaption, Constants.Standards.useImageDescAsCaption);
-		projectSettings.set_(SettingsE.nameForCaption, Constants.Standards.useImagenameAsCaption);
+		projectSettings.set_(SettingsE.imagepageTitle, Constants.Standards.imagepageCaption);
 		projectSettings.set_(SettingsE.galleryImagesPerLine, Constants.Standards.galleryImagesPerLine);
 	}
 	

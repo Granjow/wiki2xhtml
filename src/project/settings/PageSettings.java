@@ -1,6 +1,6 @@
 package src.project.settings;
 
-import src.Constants.SettingsE;
+import src.resources.ResProjectSettings.SettingsE;
 
 /*
  *   Copyright (C) 2007-2010 Simon Eugster <granjow@users.sf.net>
@@ -28,12 +28,10 @@ public class PageSettings extends Settings<SettingsE, String> {
 	}
 	
 	public PageSettings() {
-		addChecker(new Checker<String>() {
-			public boolean check(String value) {
-				byte b = Byte.parseByte(value);
-				return b > 0;
-			}
-		}, SettingsE.galleryImagesPerLine);
+		// Add checkers to validate input
+		for (SettingsE p : SettingsE.values()) {
+			addChecker(p.checker(), p);
+		}
 	}
 	
 	public String nullValue() {

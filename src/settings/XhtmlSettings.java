@@ -21,17 +21,14 @@ import src.Resources;
 import src.Statistics;
 import src.Template;
 import src.WikiHeadings;
-import src.Constants.SettingsE;
 import src.tasks.WikiLinks.LinkObject;
 import src.commentator.CommentAtor;
 import src.commentator.CommentAtor.CALevel;
 import src.utilities.Sort;
 import src.utilities.StringTools;
 import src.resources.RegExpressions;
-
-import static src.Constants.SettingsE;
-import static src.Constants.SettingsLocalE;
-
+import src.resources.ResProjectSettings.SettingsE;
+import src.resources.ResProjectSettings.SettingsLocalE;
 
 /*
  *   Copyright (C) 2007-2010 Simon Eugster <granjow@users.sf.net>
@@ -182,8 +179,6 @@ public class XhtmlSettings {
 			set_(SettingsE.imagepagesDir, Constants.Directories.imagePages);
 			set_(SettingsE.imagepageImgWidth, Constants.Standards.widthImgImagepages);
 			set_(SettingsE.thumbWidth, Constants.Standards.widthThumbs);
-			set_(SettingsE.descForCaption, Constants.Standards.useImageDescAsCaption);
-			set_(SettingsE.nameForCaption, Constants.Standards.useImagenameAsCaption);
 			set_(SettingsE.galleryImagesPerLine, Constants.Standards.galleryImagesPerLine);
 		}
 
@@ -534,9 +529,9 @@ public class XhtmlSettings {
 		
 		public NamespaceObject(String key, String value) {
 			this.key = key;
-			if (value.endsWith(Constants.Settings.argCut)) {
+			if (value.endsWith(Settings.argCut)) {
 				cut = true;
-				this.value = value.substring(0, value.length() - Constants.Settings.argCut.length());
+				this.value = value.substring(0, value.length() - Settings.argCut.length());
 			} else {
 				this.value = value;
 			}
