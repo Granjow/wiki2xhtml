@@ -19,6 +19,8 @@ public class PageSettingsReader  {
 		SettingsE.keywords, SettingsE.lang, SettingsE.meta, SettingsE.namespace, SettingsE.reckAlternative,
 		SettingsE.textHeader, SettingsE.title, SettingsE.titleRule, SettingsE.thumbWidth };
 	
+	//TODO settings: {{k:v1|v2|v3}}
+	
 	public PageSettingsReader(final StringBuffer content, final PageSettings settings) {
 		reader = new SettingsReader<SettingsE, String>(content, settings);
 		

@@ -13,6 +13,7 @@ import javax.swing.filechooser.FileFilter;
 
 import src.Args.GetPolicyE;
 import src.settings.XhtmlSettingsReader;
+import src.project.settings.Settings.Checker;
 import src.resources.RegExpressions;
 
 
@@ -348,9 +349,20 @@ public final class Constants {
 		public static final String toc = "[toc]";
 
 	}
+	
+	public static final class Checkers {
+		private static final Pattern pSize = Pattern.compile("^\\d+(?:%|px)$");
+		public static final Checker<String> sizeChecker = new Checker<String>() {
+			public boolean check(String value) {
+				Matcher m = pSize.matcher(value);
+				return m.find();
+			}
+		};
+	}
 
 	/**
 	 * @see {@link XhtmlSettingsReader#autoReadableSettings}
+	 * TODO use checkers
 	 */
 	public static enum SettingsE {
 		/** Footer */						footer ("Footer"),
@@ -358,10 +370,10 @@ public final class Constants {
 		 * Number of images per line in the gallery
 		 */									galleryImagesPerLine ("GalleryImagesPerLine"),
 		/** Width of thumbnails in galleries 
-		 */									galleryThumbWidth ("GalleryThumbWidth", Settings.argSize),
+		 */									galleryThumbWidth ("GalleryThumbWidth", Checkers.sizeChecker),
 		/** Width for images on image pages 
-		 */									imagepageImgWidth ("ImageWidthImagepage", Settings.argSize),
-		/** Width of thumbnails */			thumbWidth ("ThumbWidthImages", Settings.argSize),
+		 */									imagepageImgWidth ("ImageWidthImagepage", Checkers.sizeChecker),
+		/** Width of thumbnails */			thumbWidth ("ThumbWidthImages", Checkers.sizeChecker),
 		/** Meta data: Author */			author ("Author"),
 		/**
 		 * Use the image description as caption if no caption available
@@ -373,11 +385,11 @@ public final class Constants {
 		/** Page heading */					h1 ("H1"),
 		/** Link to the index page */		homelink ("Homelink"),
 		/** Meta data: Page favicon */		icon ("Icon"),
-		/** Directory for iamge pages */	imagepagesDir ("DirImagepages"),
+		/** Directory for image pages */	imagepagesDir ("DirImagepages"),
 		/** Directory for images */			imagesDir ("DirImages"),
 		/** Meta data: page keywords */		keywords ("Keywords", true, ","),
 		/** Meta data: Page language */		lang ("Lang"),
-		/** Custom meta data */				meta ("Meta", true, "\n", ":((?:(?!\\}\\})[^\\n])+)"),
+		/** Custom meta data */				meta ("Meta", true, "\n"),//, ":((?:(?!\\}\\})[^\\n])+)"),
 		/**
 		 * Don&#x2019;t use image name as caption if no caption available
 		 * @see #descForCaption
@@ -403,21 +415,22 @@ public final class Constants {
 		private final String separator;
 		private String regexExtension = ":((?:(?!\\}\\}).)+)";
 		private Pattern regex = null;
+		private final Checker<String> checker;
 
 		SettingsE(String property) {
 			this(property, false, null, null);
 		}
-		SettingsE(String property, String regexExtension) {
-			this(property, false, null, regexExtension);
+		SettingsE(String property, Checker<String> checker) {
+			this(property, false, null, checker);
 		}
 		SettingsE(String property, boolean loop, String separator) {
 			this(property, loop, separator, null);
 		}
-		SettingsE(String property, boolean loop, String separator, String regexExtension) {
-			this.loop = loop;
+		SettingsE(String property, boolean loop, String separator, Checker<String> checker) {
 			this.property = property;
+			this.loop = loop;
 			this.separator = separator;
-			if (regexExtension != null) this.regexExtension = regexExtension;
+			this.checker = checker;
 		}
 
 		public String keyword() {
@@ -437,7 +450,13 @@ public final class Constants {
 		public String separator() {
 			return separator;
 		}
-
+		/** @return Checker validating values for this property 
+		 * @since wiki2xhtml 3.5
+		 */
+		public Checker<String> checker() {
+			return checker;
+		}
+		
 	}
 	
 	/** 
@@ -625,5 +644,5 @@ public final class Constants {
 			return keyword;
 		}
 	}
-
+	
 }

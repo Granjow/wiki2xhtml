@@ -26,7 +26,7 @@ import java.util.List;
 public abstract class Settings<K extends Comparable<?>, V extends Comparable<?>> {
 	
 	/** Checks to run before inserting */
-	private List<CheckerObject> checkerList = new ArrayList<CheckerObject>();
+	private List<CheckerObject<K, V>> checkerList = new ArrayList<CheckerObject<K, V>>();
 	/** Settings storage */
 	private HashMap<K, V> settingsMap = new HashMap<K, V>();
 	
@@ -60,7 +60,7 @@ public abstract class Settings<K extends Comparable<?>, V extends Comparable<?>>
 	 */
 	public boolean isValid(final K property, final V value) {
 		boolean valid = true;
-		for (CheckerObject co : checkerList) {
+		for (CheckerObject<K, V> co : checkerList) {
 			if (!co.valid(property, value)) {
 				valid = false;
 				break;
@@ -126,7 +126,7 @@ public abstract class Settings<K extends Comparable<?>, V extends Comparable<?>>
 	 * for validity. Invalid values will be rejected.
 	 */
 	public void addChecker(Checker<V> c, K key) {
-		checkerList.add(new CheckerObject(c, key));
+		checkerList.add(new CheckerObject<K, V>(c, key));
 	}
 	
 	
@@ -144,7 +144,7 @@ public abstract class Settings<K extends Comparable<?>, V extends Comparable<?>>
 		public boolean check(V value);
 	}
 	
-	private class CheckerObject  {
+	private static class CheckerObject<K, V>  {
 		private final Checker<V> checker;
 		private final K key;
 		public CheckerObject(Checker<V> checker, K key) {

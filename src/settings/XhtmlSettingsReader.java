@@ -7,11 +7,11 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import src.Constants;
-import src.Resources;
 import src.Statistics;
 import src.Constants.SettingsLocalE;
 import src.commentator.CommentAtor;
 import src.commentator.CommentAtor.CALevel;
+import src.resources.RegExpressions;
 import src.utilities.IORead_Stats;
 
 import static src.Constants.SettingsE;
@@ -180,7 +180,7 @@ public class XhtmlSettingsReader {
 	}
 
 	private static final String getRedirect(StringBuffer content, boolean remove) {
-		Matcher m = Resources.Regex.redirect.matcher(content);
+		Matcher m = RegExpressions.redirect.matcher(content);
 		String redirect = "";
 
 		if (m.find()) {

@@ -5,6 +5,8 @@ import java.util.regex.Pattern;
 
 import org.junit.Test;
 
+import src.Constants;
+import src.project.settings.Settings.Checker;
 import src.resources.RegExpressions;
 
 public class RegexTester extends junit.framework.TestCase {
@@ -24,6 +26,16 @@ public class RegexTester extends junit.framework.TestCase {
 		m = p.matcher("123abc1");
 		assertTrue(m.find());
 		assertEquals("123", m.group(0));
+	}
+	
+	@Test public void testCheckers() {
+		Checker<String> c;
+		c = Constants.Checkers.sizeChecker;
+		assertFalse(c.check("px"));
+		assertTrue(c.check("4px"));
+		assertTrue(c.check("55%"));
+		assertFalse(c.check("a4px"));
+		assertFalse(c.check("4pxx"));
 	}
 	
 }
