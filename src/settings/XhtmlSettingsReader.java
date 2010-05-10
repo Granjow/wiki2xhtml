@@ -8,13 +8,12 @@ import java.util.regex.Pattern;
 
 import src.Constants;
 import src.Statistics;
-import src.Constants.SettingsLocalE;
 import src.commentator.CommentAtor;
 import src.commentator.CommentAtor.CALevel;
 import src.resources.RegExpressions;
+import src.resources.ResProjectSettings.SettingsE;
 import src.utilities.IORead_Stats;
 
-import static src.Constants.SettingsE;
 
 
 /*
@@ -91,7 +90,7 @@ public class XhtmlSettingsReader {
 
 		XhtmlSettings.Settings s = global? new XhtmlSettings.GlobalSettings() : new XhtmlSettings.LocalSettings();
 		 
-		for (Constants.SettingsE p : autoReadableSettings) {
+		for (SettingsE p : autoReadableSettings) {
 			s.set_(p, getProperty(p, content, false));
 		}
 		s.set_(SettingsE.defaultTitle, getProperty(SettingsE.defaultTitle, content, false));
@@ -109,11 +108,11 @@ public class XhtmlSettingsReader {
 	public static StringBuffer getXhtml(StringBuffer content) {
 		Statistics.getInstance().sw.timeReadingLocalSettings.continueTime();
 
-		for (Constants.SettingsE p : autoReadableSettings) {
+		for (SettingsE p : autoReadableSettings) {
 			xhs.local.set_(p, getProperty(p, content, true));
 		}
 
-		xhs.local.set_(SettingsE.h1, getProperty(Constants.SettingsE.h1, content, true));
+		xhs.local.set_(SettingsE.h1, getProperty(SettingsE.h1, content, true));
 		xhs.local.set_(SettingsLocalE.redirect, getRedirect(content, false));
 
 		xhs.local.set_(SettingsE.descForCaption, useImageDescAsCaption(content, true, true));
@@ -153,7 +152,7 @@ public class XhtmlSettingsReader {
 	 * @return <strong>null</strong>, if <code>property</code> could not be found or has length 0, 
 	 * 		and the found content otherwise.
 	 */
-	private static final String getProperty(Constants.SettingsE property, StringBuffer content, final boolean remove) {
+	private static final String getProperty(SettingsE property, StringBuffer content, final boolean remove) {
 		String value = null;
 		String temp;
 		if (property.loop()) {
@@ -195,7 +194,7 @@ public class XhtmlSettingsReader {
 
 	private static String useImageDescAsCaption(StringBuffer in, boolean remove, boolean useObject) {
 
-		String tag = "{{" + Constants.SettingsE.descForCaption.keyword() + "}}";
+		String tag = "{{" + SettingsE.descForCaption.keyword() + "}}";
 		int pos;
 		if ((pos = in.indexOf(tag)) > 0) {
 			if (remove) {
@@ -203,7 +202,7 @@ public class XhtmlSettingsReader {
 			}
 			return "true";
 		}
-		tag = "{{" + Constants.SettingsE.descForCaption.keyword() + Constants.Settings.Args.argFalse + "}}";
+		tag = "{{" + SettingsE.descForCaption.keyword() + Constants.Settings.Args.argFalse + "}}";
 		if ((pos = in.indexOf(tag)) > 0) {
 			if (remove) {
 				in.delete(pos, pos + tag.length());
@@ -215,7 +214,7 @@ public class XhtmlSettingsReader {
 
 	private static String useImagenameAsCaption(StringBuffer in, boolean remove, boolean useObject) {
 
-		String tag = "{{" + Constants.SettingsE.nameForCaption.keyword() + "}}";
+		String tag = "{{" + SettingsE.nameForCaption.keyword() + "}}";
 		int pos;
 		if ((pos = in.indexOf(tag)) > 0) {
 			if (remove) {
@@ -223,7 +222,7 @@ public class XhtmlSettingsReader {
 			}
 			return "true";
 		}
-		tag = "{{" + Constants.SettingsE.nameForCaption.keyword() + Constants.Settings.Args.argFalse + "}}";
+		tag = "{{" + SettingsE.nameForCaption.keyword() + Constants.Settings.Args.argFalse + "}}";
 		if ((pos = in.indexOf(tag)) > 0) {
 			if (remove) {
 				in.delete(pos, pos + tag.length());
