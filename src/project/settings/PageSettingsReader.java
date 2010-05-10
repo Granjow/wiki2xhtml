@@ -13,39 +13,38 @@ public class PageSettingsReader  {
 	 * These settings are read automatically from documents loaded.
 	 */
 	private static final SettingsE[] autoReadableSettings = {
-		SettingsE.author, SettingsE.desc, SettingsE.galleryImagesPerLine, SettingsE.galleryThumbWidth, 
+		SettingsE.author, SettingsE.defaultTitle, SettingsE.desc, SettingsE.galleryImagesPerLine, SettingsE.galleryThumbWidth, 
 		SettingsE.imagesDir, SettingsE.imagepageImgWidth, SettingsE.imagepagesDir,
-		SettingsE.thumbsDir, SettingsE.homelink, SettingsE.icon,
+		SettingsE.thumbsDir, SettingsE.h1, SettingsE.homelink, SettingsE.icon,
 		SettingsE.keywords, SettingsE.lang, SettingsE.meta, SettingsE.namespace, SettingsE.reckAlternative,
 		SettingsE.textHeader, SettingsE.title, SettingsE.titleRule, SettingsE.thumbWidth };
 	
-	public PageSettingsReader(StringBuffer content, PageSettings settings) {
+	public PageSettingsReader(final StringBuffer content, final PageSettings settings) {
 		reader = new SettingsReader<SettingsE, String>(content, settings);
 		
 		for (final SettingsE p : autoReadableSettings) {
-			boolean b =
 			reader.attachReader(new SettingReader<SettingsE, String>() {
 				
 				public boolean read(Settings<SettingsE, String> settings, StringBuffer in, boolean remove) {
-					// TODO Auto-generated method stub
+					String val = getProperty(p, content, remove);
+					if (val != null) {
+						return settings.set_(p, val);
+					}
 					return false;
 				}
 				public String getID() {
 					return p.keyword().toString();
 				}
 			});
-//			System.err.println(p.keyword().toString() + ": " + b);
 		}
-		
-//		for (Constants.SettingsE p : autoReadableSettings) {
-//			xhs.local.set_(p, getProperty(p, content, true));
-//		}
-//
-//		xhs.local.set_(SettingsE.h1, getProperty(Constants.SettingsE.h1, content, true));
+
 //		xhs.local.set_(SettingsLocalE.redirect, getRedirect(content, false));
-//
 //		xhs.local.set_(SettingsE.descForCaption, useImageDescAsCaption(content, true, true));
 //		xhs.local.set_(SettingsE.nameForCaption, useImagenameAsCaption(content, true, true));
+	}
+	
+	public void readSettings(boolean remove) {
+		reader.readSettings(remove);
 	}
 	
 	private static final String getProperty(Constants.SettingsE property, StringBuffer content, final boolean remove) {
@@ -104,10 +103,21 @@ public class PageSettingsReader  {
 		public void setPos(int pos) { this.pos = pos; }
 	}
 	
+	private static final void test(final StringBuffer sb) {
+		sb.append("{{H1:Hallo Titel}}");
+	}
+	
 	public static void main(String[] args) {
 		StringBuffer sb = new StringBuffer();
 		PageSettings sett = new PageSettings();
 		PageSettingsReader r = new PageSettingsReader(sb, sett);
+		
+		test(sb);
+		System.err.println(sb);
+		
+		System.err.println(sett.get_(SettingsE.h1));
+		r.readSettings(true);
+		System.err.println(sett.get_(SettingsE.h1));
 		
 	}
 	

@@ -2,7 +2,7 @@ package src.project.settings;
 
 import java.util.ArrayList;
 /*
- *   Copyright (C) 2007-2009 Simon Eugster <granjow@users.sf.net>
+ *   Copyright (C) 2007-2010 Simon Eugster <granjow@users.sf.net>
 
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -27,7 +27,7 @@ public class SettingsReader<K extends Comparable<?>, V extends Comparable<?>> {
 	private final StringBuffer content;
 	private final Settings<K, V> settings;
 	
-	public SettingsReader(StringBuffer content, Settings<K, V> settings) {
+	public SettingsReader(final StringBuffer content, final Settings<K, V> settings) {
 		pageSettingsReader = new ArrayList<SettingReader<K, V>>();
 		this.content = content;
 		this.settings = settings;
