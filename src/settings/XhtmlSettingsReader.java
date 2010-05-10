@@ -149,8 +149,6 @@ public class XhtmlSettingsReader {
 
 	/**
 	 * 
-	 * @param property
-	 * @param content 
 	 * @param remove Remove occurrences?
 	 * @return <strong>null</strong>, if <code>property</code> could not be found or has length 0, 
 	 * 		and the found content otherwise.
