@@ -11,21 +11,32 @@ public class LocalSettingsReader {
 	
 	public LocalSettingsReader(final StringBuffer content, final LocalSettings settings) {
 		reader = new SettingsReader<SettingsLocalE, String>(content, settings);
+		reader.attachReader(rRedirect);
 	}
 	
-	private static final String getRedirect(StringBuffer content, boolean remove) {
-		// TODO make reader
-		Matcher m = RegExpressions.redirect.matcher(content);
-		String redirect = "";
-
-		if (m.find()) {
-			redirect = "<meta http-equiv=\"refresh\" " +
-					   "content=\"" + m.group(1) + "; " + "url=" + m.group(2) + " \" />";
-			if (remove) {
-				content.delete(m.start(), m.end());
-			}
-		}
-		return redirect;
+	public final void read(boolean remove) {
+		reader.readSettings(remove);
 	}
+	
+	private static final SettingReader<SettingsLocalE, String> rRedirect = new SettingReader<SettingsLocalE, String>() {
+		public boolean read(Settings<SettingsLocalE, String> settings, StringBuffer in, boolean remove) {
+			Matcher m = RegExpressions.redirect.matcher(in);
+			String redirect = null;
+
+			if (m.find()) {
+				redirect = "<meta http-equiv=\"refresh\" " +
+						   "content=\"" + m.group(1) + "; " + "url=" + m.group(2) + " \" />";
+				if (remove) {
+					in.delete(m.start(), m.end());
+				}
+				settings.set_(SettingsLocalE.redirect, redirect);
+			}
+			return redirect != null;
+		}
+		
+		public String getID() {
+			return "Redirect";
+		}
+	};
 	
 }

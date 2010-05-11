@@ -3,8 +3,11 @@ package unittests;
 import org.junit.Test;
 
 import src.project.file.VirtualWikiFile;
+import src.project.settings.LocalSettings;
+import src.project.settings.LocalSettingsReader;
 import src.project.settings.Settings;
 import src.project.settings.Settings.Checker;
+import src.resources.ResProjectSettings.SettingsLocalE;
 import src.tasks.Tasks.Task;
 
 public class SettingsTester extends junit.framework.TestCase {
@@ -18,6 +21,17 @@ public class SettingsTester extends junit.framework.TestCase {
 	
 	public enum Tst {
 		a,b,c;
+	}
+	
+	@Test public void testRedirect() {
+		StringBuffer sb = new StringBuffer("#REDIRECT 1 nowhere.html\nHallo");
+		LocalSettings settings = new LocalSettings();
+		LocalSettingsReader reader = new LocalSettingsReader(sb, settings);
+		reader.read(true);
+		assertEquals("Hallo", sb.toString().trim());
+		assertEquals("<meta http-equiv=\"refresh\" content=\"1; url=nowhere.html \" />", 
+				settings.get_(SettingsLocalE.redirect));
+		System.out.println(settings.get_(SettingsLocalE.redirect));
 	}
 	
 	@Test public void testRecognition() {
