@@ -1,7 +1,6 @@
 package unittests;
 
 import src.project.file.VirtualWikiFile;
-import src.settings.XhtmlSettings;
 import src.tasks.Tasks.Task;
 
 public class LinkTester extends junit.framework.TestCase {
@@ -23,18 +22,17 @@ public class LinkTester extends junit.framework.TestCase {
 	}
 	
 	public void testNamespace() {
-		src.settings.XhtmlSettings.getInstance().global = (XhtmlSettings.GlobalSettings) 
-			src.settings.XhtmlSettingsReader.getSettings(new StringBuffer(
+		StringBuffer settings = new StringBuffer(
 					"{{Namespace:w=http://de.wikipedia.org/wiki/%s}}\n" +
 					"{{Namespace:we=http://en.wikipedia.org/wiki/%s}}\n" +
 					"{{Namespace:wr=http://ru.wikipedia.org/wiki/%s|cut}}\n"
-			), true);
+			);
 		final TestObject[] tests = new TestObject[] {
-				new TestObject("[[w:Test]]", "<a href=\"http://de.wikipedia.org/wiki/Test\" class=\"external\">w:Test</a>"),
-				new TestObject("[[we:Test]]", "<a href=\"http://en.wikipedia.org/wiki/Test\" class=\"external\">we:Test</a>"),
-				new TestObject("[[wr:Test]]", "<a href=\"http://ru.wikipedia.org/wiki/Test\" class=\"external\">Test</a>"),
-				new TestObject("[[wr:Test Test]]", "<a href=\"http://ru.wikipedia.org/wiki/Test\" class=\"external\">Test</a>"),
-				new TestObject("[[wr:Test|Test]]", "<a href=\"http://ru.wikipedia.org/wiki/Test\" class=\"external\">Test</a>")
+				new TestObject("[[w:Test]]", "<a href=\"http://de.wikipedia.org/wiki/Test\" class=\"external\">w:Test</a>", settings),
+				new TestObject("[[we:Test]]", "<a href=\"http://en.wikipedia.org/wiki/Test\" class=\"external\">we:Test</a>", settings),
+				new TestObject("[[wr:Test]]", "<a href=\"http://ru.wikipedia.org/wiki/Test\" class=\"external\">Test</a>", settings),
+				new TestObject("[[wr:Test Test]]", "<a href=\"http://ru.wikipedia.org/wiki/Test\" class=\"external\">Test</a>", settings),
+				new TestObject("[[wr:Test|Test]]", "<a href=\"http://ru.wikipedia.org/wiki/Test\" class=\"external\">Test</a>", settings)
 			};
 
 		for (TestObject t : tests) {
@@ -43,13 +41,10 @@ public class LinkTester extends junit.framework.TestCase {
 	}
 	
 	public void testArguments() {
-		src.settings.XhtmlSettings.getInstance().global = (XhtmlSettings.GlobalSettings) 
-			src.settings.XhtmlSettingsReader.getSettings(new StringBuffer(
-					"{{Namespace:w=http://de.wikipedia.org/wiki/%s}}\n"
-			), true);
+		StringBuffer settings = new StringBuffer("{{Namespace:w=http://de.wikipedia.org/wiki/%s}}\n");
 		final TestObject[] tests = new TestObject[] {
-				new TestObject("[[" + TestObject.thisFile() + "?query=bla]]", "<a href=\"this-File.php?query=bla\" class=\"internal\">this-File.php?query=bla</a>"),
-				new TestObject("[[" + TestObject.thisFile() + "?query=bla|disable]]", "<strong class=\"selflink\">this-File.php?query=bla</strong>")
+				new TestObject("[[" + TestObject.thisFile() + "?query=bla]]", "<a href=\"this-File.php?query=bla\" class=\"internal\">this-File.php?query=bla</a>", settings),
+				new TestObject("[[" + TestObject.thisFile() + "?query=bla|disable]]", "<strong class=\"selflink\">this-File.php?query=bla</strong>", settings)
 			};
 
 		for (TestObject t : tests) {
@@ -60,6 +55,9 @@ public class LinkTester extends junit.framework.TestCase {
 	private static class TestObject extends unittests.TestObject {
 		public TestObject(String test, String result) {
 			super(test, result);
+		}
+		public TestObject(String test, String result, StringBuffer settings) {
+			super(test, result, settings);
 		}
 		
 		void fillTasks(VirtualWikiFile vf) {

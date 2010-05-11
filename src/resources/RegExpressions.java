@@ -130,7 +130,7 @@ public final class RegExpressions {
 				"(?:\\)\\))			# Non-capturing group: Closing ))"
 			);
 	
-	public static final Pattern namespace = Pattern.compile("([^=,]+)=([^, ]+)");
+	public static final Pattern namespace = Pattern.compile("(?m)^(.+?)=(.+)$");
 
 	/** Matches ++inserted++ text */
 	public static final Pattern textIns = Pattern.compile(

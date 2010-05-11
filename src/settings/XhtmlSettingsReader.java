@@ -7,10 +7,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import src.Constants;
-import src.Statistics;
 import src.commentator.CommentAtor;
 import src.commentator.CommentAtor.CALevel;
-import src.resources.RegExpressions;
 import src.resources.ResProjectSettings.SettingsE;
 import src.utilities.IORead_Stats;
 
@@ -45,18 +43,6 @@ import src.utilities.IORead_Stats;
  */
 public class XhtmlSettingsReader {
 
-	private static final XhtmlSettings xhs = XhtmlSettings.getInstance();
-
-	/**
-	 * These settings are read automatically from documents loaded.
-	 */
-	private static final SettingsE[] autoReadableSettings = {
-		SettingsE.author, SettingsE.desc, SettingsE.galleryImagesPerLine, SettingsE.galleryThumbWidth, 
-		SettingsE.imagesDir, SettingsE.imagepageImgWidth, SettingsE.imagepagesDir,
-		SettingsE.thumbsDir, SettingsE.homelink, SettingsE.icon,
-		SettingsE.keywords, SettingsE.lang, SettingsE.meta, SettingsE.namespace, SettingsE.reckAlternative,
-		SettingsE.textHeader, SettingsE.title, SettingsE.titleRule, SettingsE.thumbWidth };
-	
 
 	/** Reads design specific settings */
 	public static void getDesignSettings(File f) {
@@ -83,44 +69,6 @@ public class XhtmlSettingsReader {
 		} catch (NullPointerException e) {
 			CommentAtor.getInstance().ol("It seems like if the file css-settings.txt didn't exist. Never mind.", CALevel.MSG);
 		}
-	}
-
-	/** Reads the common file. */
-	public static XhtmlSettings.Settings getSettings(StringBuffer content, boolean global) {
-
-		XhtmlSettings.Settings s = global? new XhtmlSettings.GlobalSettings() : new XhtmlSettings.LocalSettings();
-		 
-		for (SettingsE p : autoReadableSettings) {
-			s.set_(p, getProperty(p, content, false));
-		}
-		s.set_(SettingsE.defaultTitle, getProperty(SettingsE.defaultTitle, content, false));
-		s.set_(SettingsE.descForCaption, useImageDescAsCaption(content, false, false));
-		s.set_(SettingsE.nameForCaption, useImagenameAsCaption(content, false, false));
-
-		return s;
-	}
-
-	/**
-	 * Reads local settings.
-	 * @param content
-	 * @return
-	 */
-	public static StringBuffer getXhtml(StringBuffer content) {
-		Statistics.getInstance().sw.timeReadingLocalSettings.continueTime();
-
-		for (SettingsE p : autoReadableSettings) {
-			xhs.local.set_(p, getProperty(p, content, true));
-		}
-
-		xhs.local.set_(SettingsE.h1, getProperty(SettingsE.h1, content, true));
-		xhs.local.set_(SettingsLocalE.redirect, getRedirect(content, false));
-
-		xhs.local.set_(SettingsE.descForCaption, useImageDescAsCaption(content, true, true));
-		xhs.local.set_(SettingsE.nameForCaption, useImagenameAsCaption(content, true, true));
-
-		Statistics.getInstance().sw.timeReadingLocalSettings.stop();
-
-		return content;
 	}
 
 	/**
@@ -178,59 +126,6 @@ public class XhtmlSettingsReader {
 		return value;
 	}
 
-	private static final String getRedirect(StringBuffer content, boolean remove) {
-		Matcher m = RegExpressions.redirect.matcher(content);
-		String redirect = "";
-
-		if (m.find()) {
-			redirect = "<meta http-equiv=\"refresh\" " +
-					   "content=\"" + m.group(1) + "; " + "url=" + m.group(2) + " \" />";
-			if (remove) {
-				content.delete(m.start(), m.end());
-			}
-		}
-		return redirect;
-	}
-
-	private static String useImageDescAsCaption(StringBuffer in, boolean remove, boolean useObject) {
-
-		String tag = "{{" + SettingsE.descForCaption.keyword() + "}}";
-		int pos;
-		if ((pos = in.indexOf(tag)) > 0) {
-			if (remove) {
-				in.delete(pos, pos + tag.length());
-			}
-			return "true";
-		}
-		tag = "{{" + SettingsE.descForCaption.keyword() + Constants.Settings.Args.argFalse + "}}";
-		if ((pos = in.indexOf(tag)) > 0) {
-			if (remove) {
-				in.delete(pos, pos + tag.length());
-			}
-			return "false";
-		}
-		return useObject ? null : Constants.Standards.useImageDescAsCaption;
-	}
-
-	private static String useImagenameAsCaption(StringBuffer in, boolean remove, boolean useObject) {
-
-		String tag = "{{" + SettingsE.nameForCaption.keyword() + "}}";
-		int pos;
-		if ((pos = in.indexOf(tag)) > 0) {
-			if (remove) {
-				in.delete(pos, pos + tag.length());
-			}
-			return "true";
-		}
-		tag = "{{" + SettingsE.nameForCaption.keyword() + Constants.Settings.Args.argFalse + "}}";
-		if ((pos = in.indexOf(tag)) > 0) {
-			if (remove) {
-				in.delete(pos, pos + tag.length());
-			}
-			return "false";
-		}
-		return useObject ? null : Constants.Standards.useImagenameAsCaption;
-	}
 
 
 	private static class Pos {

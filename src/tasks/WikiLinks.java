@@ -1,5 +1,6 @@
 package src.tasks;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -7,7 +8,7 @@ import java.util.regex.Pattern;
 import src.Statistics;
 import src.argumentHandler.*;
 import src.project.file.WikiFile;
-import src.settings.XhtmlSettings;
+import src.resources.ResProjectSettings.Settings;
 import src.tasks.Tasks.Task;
 
 import static src.Constants.Links.LinksE;
@@ -61,7 +62,7 @@ public class WikiLinks extends WikiTask {
 			while (m.find()) {
 				out.append(in.subSequence(last, m.start()));
 				last = m.end();
-				out.append(link(m.group(1), m.group(2), file.name));
+				out.append(link(m.group(1), m.group(2), file.name, file.getNamespaces()));
 				counter++;
 			}
 			if (last > 0) {
@@ -99,7 +100,8 @@ public class WikiLinks extends WikiTask {
 		return selflink;
 	}
 	
-	private static final String link(final String uri, final String args, final String pagename) {
+	private static final String link(final String uri, final String args, 
+			final String pagename, final ArrayList<NamespaceObject> linkNamespaces) {
 		StringBuilder sLink = new StringBuilder();
 		StringBuilder arguments = new StringBuilder();
 		LinkObject link = new LinkObject(uri, "");
@@ -108,7 +110,7 @@ public class WikiLinks extends WikiTask {
 		if (uri.startsWith("www.")) link.uri = "http://" + uri;
 		else if (uri.startsWith("ftp.")) link.uri = "ftp://" + uri;
 		else {
-			XhtmlSettings.getInstance().local.applyNamespace(link);
+			applyNamespace(link, linkNamespaces);
 		}
 		
 		final boolean external = RELink.linkExternalIndicator.matcher(link.uri).find();
@@ -172,7 +174,66 @@ public class WikiLinks extends WikiTask {
 		return sLink.toString();
 	}
 	
-	/** @since wiki2xhtml 3.4 */
+
+	
+	/** Applies a namespace to a LinkObject */
+	public static final LinkObject applyNamespace(LinkObject lo, ArrayList<NamespaceObject> linkNamespaces) {
+		if (lo.uri.indexOf(':') < 0) {
+			return lo;
+		}
+		
+		for (NamespaceObject no : linkNamespaces) {
+			if (no.canReplace(lo)) {
+				lo = no.replace(lo);
+				break;
+			}
+		}
+		
+		return lo;
+	}
+	
+
+	
+	/**
+	 * Represents a namespace that can be applied to links.
+	 * @since wiki2xhtml 3.4
+	 */
+	public static final class NamespaceObject {
+		
+		private static final char sep = ':';
+		
+		private String key;
+		private String value;
+		private boolean cut = false;
+		
+		public NamespaceObject(String key, String value) {
+			this.key = key;
+			if (value.endsWith(Settings.argCut)) {
+				cut = true;
+				this.value = value.substring(0, value.length() - Settings.argCut.length());
+			} else {
+				this.value = value;
+			}
+		}
+		
+		public boolean canReplace(LinkObject lo) {
+			return lo.uri.startsWith(key + sep);
+		}
+		
+		public LinkObject replace(LinkObject lo) {
+			lo.uri = value.replace("%s", lo.uri.substring(key.length()+1));
+			if (cut) {
+				// Mark link object that the beginning of the name will have to be cut off
+				lo.key = key + sep;
+			}
+			return lo;
+		}
+		
+	}
+	
+	/**
+	 * Represents a link consisting of a name and an URI
+	 * @since wiki2xhtml 3.4 */
 	public static class LinkObject {
 		
 		public String uri;

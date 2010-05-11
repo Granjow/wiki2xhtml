@@ -1,6 +1,6 @@
 package src.project.settings;
 
-import src.resources.ResProjectSettings.SettingsE;
+import src.resources.ResProjectSettings.SettingsLocalE;
 
 /*
  *   Copyright (C) 2007-2010 Simon Eugster <granjow@users.sf.net>
@@ -16,26 +16,12 @@ import src.resources.ResProjectSettings.SettingsE;
  *   GNU General Public License for more details.
 
  *   You should have received a copy of the GNU General Public License
- *   along with this http://www.gnu.org/licenses/.  If not, see <http://www.gnu.org/licenses/>.
- *
+ *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
 
-public class PageSettings extends Settings<SettingsE, String> {
-	
-	protected String concatenate(String left, String right) {
-		return left + right;
-	}
-	
-	public PageSettings() {
-		// Add checkers to validate input
-		for (SettingsE p : SettingsE.values()) {
-			if (p.checker() != null) { addChecker(p.checker(), p); }
-		}
-	}
-	
-	public String nullValue() {
-		return "null";
-	}
+public class LocalSettings extends Settings<SettingsLocalE, String> {
+	public String nullValue() {return null;};
+	protected String concatenate(String left, String right) { return left+right; }
 
 }

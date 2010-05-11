@@ -64,6 +64,9 @@ public class WikiProject {
 	public String getProperty(SettingsE property) {
 		return projectSettings.get_(property);
 	}
+	public boolean isPropertySet(SettingsE property) {
+		return projectSettings.isSet(property);
+	}
 	
 	
 	

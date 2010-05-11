@@ -192,7 +192,6 @@ public class XhtmlSettings {
 	public static class LocalSettings extends Settings {
 		
 		private HashMap<SettingsLocalE, String> localSettingsMap = new HashMap<SettingsLocalE, String>();
-		private ArrayList<NamespaceObject> linkNamespaces = null;
 		
 		public StringBuffer content;
 		
@@ -222,41 +221,6 @@ public class XhtmlSettings {
 		/*
 		 ******************************************* 
 		 */
-		
-		public final LinkObject applyNamespace(LinkObject lo) {
-			if (lo.uri.indexOf(':') < 0) {
-				return lo;
-			}
-			
-			// Put all namespace into linkNamespaces if it hasn't been initialized yet
-			if (linkNamespaces == null) {
-				StringBuilder allNamespaces = new StringBuilder();
-				if (xhs.global.contains(SettingsE.namespace)) {
-					allNamespaces.append(xhs.global.get_(SettingsE.namespace));
-				}
-				if (contains(SettingsE.namespace)) {
-					allNamespaces.append(get_(SettingsE.namespace));
-				}
-				linkNamespaces = new ArrayList<NamespaceObject>();
-				Matcher m = src.resources.RegExpressions.namespace.matcher(allNamespaces.toString());
-				while (m.find()) {
-					linkNamespaces.add(new NamespaceObject(m.group(1), m.group(2)));
-				}
-				if (linkNamespaces.size() == 0) {
-					linkNamespaces = null;
-					return lo;
-				}
-			}
-			
-			for (NamespaceObject no : linkNamespaces) {
-				if (no.canReplace(lo)) {
-					lo = no.replace(lo);
-					break;
-				}
-			}
-			
-			return lo;
-		}
 		
 		public static enum DisplayRule {
 			pageXofY, pageX, X;
@@ -518,38 +482,6 @@ public class XhtmlSettings {
 		}
 	}
 
-	/** @since wiki2xhtml 3.4 */
-	private static class NamespaceObject {
-		
-		private static final char sep = ':';
-		
-		private String key;
-		private String value;
-		private boolean cut = false;
-		
-		public NamespaceObject(String key, String value) {
-			this.key = key;
-			if (value.endsWith(Settings.argCut)) {
-				cut = true;
-				this.value = value.substring(0, value.length() - Settings.argCut.length());
-			} else {
-				this.value = value;
-			}
-		}
-		
-		public boolean canReplace(LinkObject lo) {
-			return lo.uri.startsWith(key + sep);
-		}
-		
-		public LinkObject replace(LinkObject lo) {
-			lo.uri = value.replace("%s", lo.uri.substring(key.length()+1));
-			if (cut) {
-				// Mark link object that the beginning of the name will have to be cut off
-				lo.key = key + sep;
-			}
-			return lo;
-		}
-		
-	}
+
 
 }

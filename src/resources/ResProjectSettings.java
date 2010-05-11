@@ -46,7 +46,7 @@ public final class ResProjectSettings {
 		/** 
 		 * Namespace for links (Like w=http://de.wikipedia.org/wiki/%s) 
 		 * @since wiki2xhtml 3.4 
-		 */									namespace("Namespace", true, ","),
+		 */									namespace("Namespace", true, "\n"),
 		/**
 		 * Alternative reck file to use 
 		 * @since 3.3.2 

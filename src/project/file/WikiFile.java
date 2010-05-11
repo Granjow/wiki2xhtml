@@ -1,8 +1,11 @@
 package src.project.file;
 
 import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import src.project.WikiProject;
+import src.project.settings.LocalSettings;
 import src.project.settings.PageSettings;
 import src.project.settings.Settings;
 import src.resources.ResProjectSettings.SettingsE;
@@ -10,6 +13,7 @@ import src.resources.ResProjectSettings.SettingsLocalE;
 import src.tasks.WikiPreparser;
 import src.tasks.WikiTask;
 import src.tasks.Tasks.Task;
+import src.tasks.WikiLinks.NamespaceObject;
 
 /*
  *   Copyright (C) 2007-2010 Simon Eugster <granjow@users.sf.net>
@@ -42,12 +46,12 @@ public abstract class WikiFile {
 	private final WikiProject project;
 	
 	protected boolean alreadyRead = false;
+	/** List of all WikiTasks to be executed. Can be adjusted if necessary. */
 	private ArrayList<Task> tasks = new ArrayList<Task>();
-	private Settings<SettingsE, String> pageSettings = new PageSettings();
-	private Settings<SettingsLocalE, String> localSettings = new Settings<SettingsLocalE, String>() {
-		public String nullValue() {return null;};
-		protected String concatenate(String left, String right) { return left+right; }
-	};
+	protected Settings<SettingsE, String> pageSettings = new PageSettings();
+	private Settings<SettingsLocalE, String> localSettings = new LocalSettings();
+
+	private ArrayList<NamespaceObject> linkNamespaces;
 	
 	
 	protected WikiFile(WikiProject project, String name, boolean sitemap, boolean parse) {
@@ -56,6 +60,7 @@ public abstract class WikiFile {
 		this.sitemap = sitemap;
 		this.parse = parse;
 		this.generators = new Generators(this);
+		this.linkNamespaces = new ArrayList<NamespaceObject>();
 		if (parse) {
 			for (Task t : Task.values()) {
 				tasks.add(t);
@@ -74,14 +79,21 @@ public abstract class WikiFile {
 	
 	
 	
+	public boolean isPropertySet(SettingsE property, boolean fallback) {
+		if (fallback) {
+			return pageSettings.isSet(property) || project.isPropertySet(property);
+		} else { return pageSettings.isSet(property); }
+	}
 	public String getProperty(SettingsE property, boolean fallback) {
 		if (pageSettings.isSet(property)) { return pageSettings.get_(property); }
-		else { return project.getProperty(property); }
+		else {
+			if (fallback) { return project.getProperty(property); }
+			else { return null; }
+		}
 	}
 	public String getProperty(SettingsLocalE property) {
 		return localSettings.get_(property);
 	}
-	
 	public boolean setProperty(SettingsE property, String value) {
 		return pageSettings.set_(property, value);
 	}
@@ -99,6 +111,27 @@ public abstract class WikiFile {
 		tasks.clear();
 	}
 	
+	public final ArrayList<NamespaceObject> getNamespaces() {
+		
+		// Put all namespaces into linkNamespaces if it hasn't been initialized yet
+		if (linkNamespaces.size() == 0) {
+			StringBuilder allNamespaces = new StringBuilder();
+			
+			if (project != null && project.isPropertySet(SettingsE.namespace)) {
+				allNamespaces.append(project.getProperty(SettingsE.namespace));
+			}
+			if (isPropertySet(SettingsE.namespace, false)) {
+				allNamespaces.append(SettingsE.namespace.separator());
+				allNamespaces.append(getProperty(SettingsE.namespace, false));
+			}
+			Matcher m = src.resources.RegExpressions.namespace.matcher(allNamespaces.toString());
+			while (m.find()) {
+				linkNamespaces.add(new NamespaceObject(m.group(1), m.group(2)));
+			}
+		}
+		return linkNamespaces;
+	}
+	
 	public void parse() {
 		if (!parse) return;
 		WikiTask task = new WikiPreparser();
@@ -111,5 +144,12 @@ public abstract class WikiFile {
 		} while ((task = task.nextTask()) != null);
 	}
 	
+	public static void main(String[] args) {
+		Pattern p = Pattern.compile("(?m)^(.+?)=(.+)$");
+		Matcher m = p.matcher("a=b\nab=cd|cut\na\nb");
+		while (m.find()) {
+			System.out.println(m.group());
+		}
+	}
 
 }

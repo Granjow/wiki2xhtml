@@ -1,6 +1,7 @@
 package src.project.file;
 
 import src.project.WikiProject;
+import src.project.settings.PageSettings;
 
 public class VirtualWikiFile extends WikiFile {
 
@@ -26,6 +27,10 @@ public class VirtualWikiFile extends WikiFile {
 	
 	public StringBuffer getContent() {
 		return content;
+	}
+	
+	public void setPageSettings(PageSettings p) {
+		pageSettings = p;
 	}
 	
 	public void write() { }
