@@ -40,7 +40,7 @@ public class PageSettingsReader  {
 		reader.readSettings(remove);
 	}
 	
-	private static final String getProperty(SettingsE property, StringBuffer content, final boolean remove) {
+	public static final String getProperty(SettingsE property, StringBuffer content, final boolean remove) {
 		String value = null;
 		String temp;
 		if (property.loop()) {

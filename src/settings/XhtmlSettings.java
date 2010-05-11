@@ -60,9 +60,6 @@ import src.resources.ResProjectSettings.SettingsLocalE;
  */
 public class XhtmlSettings {
 
-	// move to context; page/project scope
-	public GlobalSettings global = new GlobalSettings();
-
 	public LocalSettings local = new LocalSettings();
 
 	private static I18n i18n = I18nFactory.getI18n(XhtmlSettings.class, "bin.l10n.Messages", src.Globals.getLocale());
@@ -123,66 +120,6 @@ public class XhtmlSettings {
 		}
 		
 		return metadata.toString();
-	}
-
-	public static class Settings extends src.settings.Settings<SettingsE, String> {
-		
-		public void append_(final SettingsE property, final String value) {
-			if (contains(property)) {
-				set_(property, get_(property) + value);
-			} else {
-				set_(property, value);
-			}
-		}
-		
-		@Override
-		public String nullValue() {
-			return "null";
-		}
-		
-		@Override
-		boolean setCheck(SettingsE property, String value) {
-			boolean ok = true;
-			// Manage special cases
-			switch (property) {
-			case galleryImagesPerLine: //TODO really here?
-				try {
-					// Don't use negative values
-					byte b = Byte.parseByte(value);
-					if (b < 0) {
-						throw new NegativeValueException(value);
-					}
-				} catch (NumberFormatException e) {
-					ok = false;
-					e.printStackTrace();
-					CommentAtor.getInstance().ol("Number format exception with " + value + ": " + e.getMessage(), CALevel.ERRORS);
-				} catch (NegativeValueException e) {
-					ok = false;
-					CommentAtor.getInstance().ol(e.getMessage(), CALevel.ERRORS);
-				}
-				break;
-			}
-			return ok;
-		}
-		
-	}
-
-	/**
-	 * Global settings for all pages
-	 */
-	public static class GlobalSettings extends Settings {
-		
-		public String footer = null;
-
-		/** Initialize settings */
-		public GlobalSettings() {
-			set_(SettingsE.imagepagesDir, Constants.Directories.imagePages);
-			set_(SettingsE.imagepageImgWidth, Constants.Standards.widthImgImagepages);
-			set_(SettingsE.thumbWidth, Constants.Standards.widthThumbs);
-			set_(SettingsE.galleryImagesPerLine, Constants.Standards.galleryImagesPerLine);
-		}
-
-
 	}
 
 
