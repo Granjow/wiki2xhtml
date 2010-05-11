@@ -2,8 +2,10 @@ package unittests;
 
 import org.junit.Test;
 
+import src.project.file.VirtualWikiFile;
 import src.project.settings.Settings;
 import src.project.settings.Settings.Checker;
+import src.tasks.Tasks.Task;
 
 public class SettingsTester extends junit.framework.TestCase {
 	
@@ -16,6 +18,17 @@ public class SettingsTester extends junit.framework.TestCase {
 	
 	public enum Tst {
 		a,b,c;
+	}
+	
+	@Test public void testRecognition() {
+		StringBuffer sb = new StringBuffer("{{Namespace:a=b}}\nhall{{Author:him}}o");
+		
+		VirtualWikiFile vf = new VirtualWikiFile(null, "a.html", false, true, sb);
+		vf.removeAllTasks();
+		vf.addTask(Task.Settings);
+		vf.parse();
+		
+		assertEquals("hallo", vf.getContent().toString().trim());
 	}
 	
 	@Test public void testChecker() {

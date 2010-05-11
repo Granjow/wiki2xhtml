@@ -7,7 +7,6 @@ import java.util.regex.Pattern;
 import src.project.WikiProject;
 import src.project.settings.LocalSettings;
 import src.project.settings.PageSettings;
-import src.project.settings.Settings;
 import src.resources.ResProjectSettings.SettingsE;
 import src.resources.ResProjectSettings.SettingsLocalE;
 import src.tasks.WikiPreparser;
@@ -48,8 +47,8 @@ public abstract class WikiFile {
 	protected boolean alreadyRead = false;
 	/** List of all WikiTasks to be executed. Can be adjusted if necessary. */
 	private ArrayList<Task> tasks = new ArrayList<Task>();
-	protected Settings<SettingsE, String> pageSettings = new PageSettings();
-	private Settings<SettingsLocalE, String> localSettings = new LocalSettings();
+	private PageSettings pageSettings = new PageSettings();
+	private LocalSettings localSettings = new LocalSettings();
 
 	private ArrayList<NamespaceObject> linkNamespaces;
 	
@@ -100,6 +99,11 @@ public abstract class WikiFile {
 	public boolean setProperty(SettingsLocalE property, String value) {
 		return localSettings.set_(property, value);
 	}
+	
+	public LocalSettings getLocalSettings() { return localSettings; }
+	public PageSettings getPageSettings() { return pageSettings; }
+	public void setPageSettings(PageSettings settings) { pageSettings = settings; }
+	public void setLocalSettings(LocalSettings settings) { localSettings = settings; }
 	
 	public boolean addTask(Task t) {
 		return tasks.add(t);

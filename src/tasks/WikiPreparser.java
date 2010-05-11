@@ -10,7 +10,7 @@ public class WikiPreparser extends WikiTask {
 	}
 	
 	public WikiTask nextTask() {
-		return new WikiLinks();
+		return new WikiSettings();
 	}
 	
 	public void parse(WikiFile file) {
