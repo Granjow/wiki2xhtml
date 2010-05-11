@@ -6,8 +6,10 @@ public class Tasks {
 		
 		Preparse ("Preparsing"),
 		Settings ("Settings"),
+		RemoveNowiki ("Remove Nowiki Content"),
 		Links ("Links"),
-		Lists ("Lists");
+		Lists ("Lists"),
+		InsertNowiki ("Insert Nowiki Content");
 		
 		public final String name;
 		

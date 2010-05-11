@@ -10,10 +10,6 @@ import src.settings.*;
 import src.typo.Formattings;
 import src.utilities.StringTools;
 
-import static src.Constants.SettingsE;
-import static src.Constants.SettingsLocalE;
-
-
 
 /*
  *   Copyright (C) 2007-2010 Simon Eugster <granjow@users.sf.net>
@@ -48,7 +44,6 @@ public class XHTML {
 
 	public static File baseStyleDir = new File(Constants.Directories.workingDir + File.separatorChar + "style");
 
-	public static ArrayList<String> nowiki = new ArrayList<String>();
 
 	public static ArrayList<String> headingIDs = new ArrayList<String>();
 	public static void clearHeadings() {
@@ -184,7 +179,7 @@ public class XHTML {
 
 //		out = makeUnixLines(out);
 		p(2);
-		out = XhtmlSettingsReader.getXhtml(out);
+//		out = XhtmlSettingsReader.getXhtml(out);
 		p(4);
 		out = WikiNoWiki.removeNowikiContent(out);
 		p(6);
@@ -221,7 +216,7 @@ public class XHTML {
 		p(94);
 		out = WikiParagraphs.makeParagraphs(out);
 		p(96);
-		out = WikiNoWiki.insertNowikiContent(out);
+//		out = WikiNoWiki.insertNowikiContent(out);
 		p(98);
 		if (sc.removeLineBreaks)
 			out = StringTools.removeAllChars(out, "\n");

@@ -11,7 +11,7 @@ public class WikiSettings extends WikiTask {
 	}
 	
 	public WikiTask nextTask() {
-		return new WikiLinks();
+		return new WikiRemoveNowikiContent();
 	}
 	
 	public void parse(WikiFile file) {

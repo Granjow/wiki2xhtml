@@ -37,8 +37,8 @@ public abstract class WikiFile {
 	
 	protected StringBuffer content = null;
 	
-	public final boolean sitemap;
-	public final boolean parse;
+	private final boolean sitemap;
+	private final boolean parse;
 	public final String name;
 	public final Generators generators;
 	
@@ -49,6 +49,8 @@ public abstract class WikiFile {
 	private ArrayList<Task> tasks = new ArrayList<Task>();
 	private PageSettings pageSettings = new PageSettings();
 	private LocalSettings localSettings = new LocalSettings();
+	
+	public ArrayList<String> nowiki = new ArrayList<String>();
 
 	private ArrayList<NamespaceObject> linkNamespaces;
 	
