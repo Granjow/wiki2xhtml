@@ -2,7 +2,7 @@ package src.templateHandler;
 
 import java.util.regex.Matcher;
 
-import src.Resources;
+import src.resources.RegExpressions;
 
 /*
  *   Copyright (C) 2007-2010 Simon Eugster <granjow@users.sf.net>
@@ -18,26 +18,25 @@ import src.Resources;
  *   GNU General Public License for more details.
 
  *   You should have received a copy of the GNU General Public License
- *   along with this src.  If not, see <http://www.gnu.org/licenses/>.
+ *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
 
 /**
- * Provides informations about a template
+ * Provides information about a template
  *
  * @author Simon Eugster
  */
 public class TemplateInfo {
 
 	/**
-	 * @param templateArgs
 	 * @return The first argument of pipe-separated arguments,
 	 * which should usually be the template name
 	 */
 	public static String getTemplateName(String templateArgs) {
 		String name = "";
 
-		Matcher m = Resources.Regex.argument.matcher(templateArgs);
+		Matcher m = RegExpressions.argument.matcher(templateArgs);
 
 		if (m.find())
 			name = m.group(1);

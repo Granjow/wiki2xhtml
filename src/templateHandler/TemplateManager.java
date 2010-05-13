@@ -5,8 +5,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.regex.Matcher;
 
-import src.Resources;
 import src.Statistics;
+import src.resources.RegExpressions;
 import src.templateHandler.Template.WarningType;
 import src.utilities.IORead;
 
@@ -24,7 +24,7 @@ import src.utilities.IORead;
  *   GNU General Public License for more details.
 
  *   You should have received a copy of the GNU General Public License
- *   along with this src.  If not, see <http://www.gnu.org/licenses/>.
+ *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
 
@@ -35,23 +35,32 @@ import src.utilities.IORead;
  */
 public class TemplateManager {
 
-	private static HashMap<String, String> cdataSections = new HashMap<String, String>();
-
+	
+	/**
+	 * Applies templates
+	 */
+	public static StringBuffer applyTemplates(StringBuffer input) {
+		return applyTemplates(input, null, null, null);
+	}
 	/**
 	 * Applies templates. Templates can be called the following way: <br />
 	 * {{:templateName|arg1|arg2|&lt;![CDATA[arg|3]]&gt;}}
-	 * @param input
-	 * @return
+	 * @param cdataSections Map containing CDATA entries. May be <code>null</code>
+	 * in the initial call.
+	 * @param callingTemplates Previous templates. <code>null</code> in the initial call.
 	 */
-	public static StringBuffer applyTemplates(StringBuffer input, ArrayList<String> callingTemplates, WarningType warning) {
+	protected static StringBuffer applyTemplates(StringBuffer input, ArrayList<String> callingTemplates,
+			HashMap<String, String> cdataSections, WarningType warning) {
 		StringBuffer out = new StringBuffer();
 		Template tempTemplate = new Template();
+		if (cdataSections == null) { cdataSections = new HashMap<String, String>(); }
+
 
 		Statistics.getInstance().sw.timeApplyingTemplates.continueTime();
 
-		input = removeCdataSections(input);
+		input = removeCdataSections(input, cdataSections);
 
-		Matcher m = Resources.Regex.template.matcher(input);
+		Matcher m = RegExpressions.template.matcher(input);
 		int end = 0;
 		String tplAllArgs;
 
@@ -65,13 +74,13 @@ public class TemplateManager {
 				tplAllArgs = m.group(1);
 
 			tempTemplate = new Template(TemplateInfo.getTemplateName(tplAllArgs));
-			out.append(tempTemplate.applyTemplate(tplAllArgs, callingTemplates, warning));
+			out.append(tempTemplate.applyTemplate(tplAllArgs, callingTemplates, cdataSections, warning));
 
 			end = m.end();
 		}
 		out.append(input.substring(end, input.length()));
 
-		out = insertCdataSections(out);
+		out = insertCdataSections(out, cdataSections);
 
 		Statistics.getInstance().sw.timeApplyingTemplates.stop();
 
@@ -83,9 +92,9 @@ public class TemplateManager {
 	 * @param input
 	 * @return input with removed CDATA content
 	 */
-	private static StringBuffer removeCdataSections(StringBuffer input) {
+	private static StringBuffer removeCdataSections(StringBuffer input, HashMap<String, String> cdataSections) {
 		StringBuffer out = new StringBuffer();
-		Matcher m = Resources.Regex.cdata.matcher(input);
+		Matcher m = RegExpressions.cdata.matcher(input);
 
 		int last = 0;
 		while (m.find()) {
@@ -113,9 +122,9 @@ public class TemplateManager {
 	 * @param input
 	 * @return input with replaced CDATA sections
 	 */
-	private static StringBuffer insertCdataSections(StringBuffer input) {
+	private static StringBuffer insertCdataSections(StringBuffer input, HashMap<String, String> cdataSections) {
 		StringBuffer out = new StringBuffer();
-		Matcher m = Resources.Regex.cdata.matcher(input);
+		Matcher m = RegExpressions.cdata.matcher(input);
 
 		int last = 0;
 		while (m.find()) {
@@ -142,15 +151,10 @@ public class TemplateManager {
 		return hash.toString();
 	}
 
-	private static StringBuffer testCdataRemover(StringBuffer input) {
-		input = removeCdataSections(input);
-		input = insertCdataSections(input);
+	private static StringBuffer testCdataRemover(StringBuffer input, HashMap<String, String> cdataSections) {
+		input = removeCdataSections(input, cdataSections);
+		input = insertCdataSections(input, cdataSections);
 		return input;
-	}
-
-	public static void main(String[] args) throws IOException {
-		StringBuffer sb = IORead.readSBuffer(new java.io.File("test"));
-		System.out.println(testCdataRemover(sb));
 	}
 
 }

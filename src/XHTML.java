@@ -174,14 +174,14 @@ public class XHTML {
 		/*
 		 * Clear the summary and the nowiki content, then parse the source
 		 */
-		nowiki.clear();
+//		nowiki.clear();
 		out = xhs.local.content;
 
 //		out = makeUnixLines(out);
 		p(2);
 //		out = XhtmlSettingsReader.getXhtml(out);
 		p(4);
-		out = WikiNoWiki.removeNowikiContent(out);
+//		out = WikiNoWiki.removeNowikiContent(out);
 		p(6);
 		out = src.templateHandler.TemplateManager.applyTemplates(out, null, null);
 		p(10);

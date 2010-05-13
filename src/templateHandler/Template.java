@@ -10,11 +10,11 @@ import java.util.regex.Matcher;
 import src.Container_Files;
 import src.Container_Resources;
 import src.Globals;
-import src.Resources;
 import src.XHTML;
 import src.argumentHandler.ArgumentReaderObject;
 import src.argumentHandler.ArgumentItem;
 import src.commentator.Logger;
+import src.resources.RegExpressions;
 import src.utilities.IORead_Stats;
 
 /*
@@ -36,6 +36,8 @@ import src.utilities.IORead_Stats;
  */
 
 /**
+ * Template object.
+ * 
  * This class will once be very powerful and handle templates of any kind.
  * (Receives the name of a template and its arguments and returns the template text afterwards)
  *
@@ -44,8 +46,8 @@ import src.utilities.IORead_Stats;
 public class Template {
 
 	private File templateSource = null;
-	static StringBuffer template = new StringBuffer();
-	HashMap<String, ArgumentItem> arguments = new HashMap<String, ArgumentItem>();
+	private StringBuffer template = new StringBuffer();
+	private HashMap<String, ArgumentItem> arguments = new HashMap<String, ArgumentItem>();
 
 	public enum WarningType {
 		NONE,
@@ -56,9 +58,15 @@ public class Template {
 	public Template() {	}
 	public Template(String templateFilename) {
 		templateSource = null;
-		File f = new File(Container_Files.getInstance().cont.sourceDir() + templateFilename);
+		File f;
+		f = new File(templateFilename);
+		if (!f.exists()) {
+			f = new File(Container_Files.getInstance().cont.sourceDir() + templateFilename);
+		}
 		if (f.exists() && !f.isDirectory() && f.canRead()) {
 			templateSource = f;
+		} else {
+			System.err.println("Could not find " + f.getAbsolutePath());
 		}
 	}
 
@@ -95,9 +103,11 @@ public class Template {
 	 * will insert the «empty string», and <code>{{{1|hello wiki}}}</code> would insert
 	 * <code>hello wiki</code>.</p>
 	 * 
-	 * @return The complete applied template with inserted parameters
+	 * @param callingTemplates A list of templates which call this template, for loop detection.
+	 * @return The template with the given arguments applied to
 	 */
-	public StringBuffer applyTemplate(String args, ArrayList<String> callingTemplates, WarningType warning) {
+	public StringBuffer applyTemplate(String args, ArrayList<String> callingTemplates, 
+			HashMap<String, String> cdataSections, WarningType warning) {
 		// Try to read the template
 		if (!readTemplate()) {
 			if (warning == WarningType.RECURSION) {
@@ -113,7 +123,7 @@ public class Template {
 		arguments = src.argumentHandler.ArgumentReader.getArgumentsMap(args);
 		/** Contains the arguments of {{{1|alternative}}} tags */
 		ArgumentReaderObject aro = new ArgumentReaderObject();
-		Matcher m = Resources.Regex.tplParameterInTemplate.matcher(template);
+		Matcher m = RegExpressions.tplParameterInTemplate.matcher(template);
 		StringBuffer out = new StringBuffer();
 		int last = 0;
 
@@ -151,13 +161,14 @@ public class Template {
 									+ "|" + s
 									+ "}}"
 								)
-								, null, WarningType.RECURSION)
+								, null, cdataSections, WarningType.RECURSION)
 						   );
 			System.err.println("Recursion in template " + TemplateInfo.getTemplateName(args) + ", aborting!");
 		} else {
+			// Search for sub-templates in the current template and apply them.
 			if (callingTemplates == null) callingTemplates = new ArrayList<String>();
 			callingTemplates.add((templateSource == null ? "null" : templateSource.getPath()));
-			template = TemplateManager.applyTemplates(template, callingTemplates, warning);
+			template = TemplateManager.applyTemplates(template, callingTemplates, cdataSections, warning);
 		}
 
 		return template;

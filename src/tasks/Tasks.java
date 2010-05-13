@@ -7,6 +7,7 @@ public class Tasks {
 		Preparse ("Preparsing"),
 		Settings ("Settings"),
 		RemoveNowiki ("Remove Nowiki Content"),
+		Templates ("Templates"),
 		Links ("Links"),
 		Lists ("Lists"),
 		InsertNowiki ("Insert Nowiki Content");

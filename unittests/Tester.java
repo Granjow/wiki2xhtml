@@ -16,6 +16,7 @@ public class Tester extends TestCase {
 		result.addTest(new TestSuite(PicTester.class));
 		result.addTest(new TestSuite(RegexTester.class));
 		result.addTest(new TestSuite(SettingsTester.class));
+		result.addTest(new TestSuite(TemplateTester.class));
 		return result;
 	}
 	
