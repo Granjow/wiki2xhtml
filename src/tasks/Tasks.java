@@ -8,6 +8,7 @@ public class Tasks {
 		Settings ("Settings"),
 		RemoveNowiki ("Remove Nowiki Content"),
 		Templates ("Templates"),
+		ParserFunctions ("Parser Functions"),
 		Links ("Links"),
 		Lists ("Lists"),
 		InsertNowiki ("Insert Nowiki Content");

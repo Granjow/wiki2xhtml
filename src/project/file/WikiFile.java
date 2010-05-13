@@ -145,7 +145,7 @@ public abstract class WikiFile {
 			if (tasks.contains(task.desc())) {
 				task.parse(this);
 			} else {
-				System.err.println("Omitted " + task.desc().name);
+				System.err.println("Omitted: " + task.desc().name);
 			}
 		} while ((task = task.nextTask()) != null);
 	}

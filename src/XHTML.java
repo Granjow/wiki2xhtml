@@ -183,9 +183,9 @@ public class XHTML {
 		p(4);
 //		out = WikiNoWiki.removeNowikiContent(out);
 		p(6);
-		out = src.templateHandler.TemplateManager.applyTemplates(out, null, null);
+//		out = src.templateHandler.TemplateManager.applyTemplates(out, null, null);
 		p(10);
-		out = src.parserFunctions.Parser.parse(out);
+//		out = src.parserFunctions.Parser.parse(out);
 		p(17);
 		out = WikiTables.makeTables(out);
 		p(20);

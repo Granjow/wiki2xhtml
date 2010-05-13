@@ -10,7 +10,7 @@ public class WikiTemplates extends WikiTask {
 		return Task.Templates;
 	}
 	public WikiTask nextTask() {
-		return new WikiLinks();
+		return new WikiParserFunctions();
 	}
 	public void parse(WikiFile file) {
 		file.setContent(TemplateManager.applyTemplates(file.getContent()));
