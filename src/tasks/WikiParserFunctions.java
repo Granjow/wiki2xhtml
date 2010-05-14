@@ -10,7 +10,7 @@ public class WikiParserFunctions extends WikiTask {
 		return Task.ParserFunctions;
 	}
 	public WikiTask nextTask() {
-		return new WikiLinks();
+		return new WikiTables();
 	}
 	public void parse(WikiFile file) {
 		file.setContent(Parser.parse(file.getContent()));

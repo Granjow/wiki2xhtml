@@ -187,7 +187,7 @@ public class XHTML {
 		p(10);
 //		out = src.parserFunctions.Parser.parse(out);
 		p(17);
-		out = WikiTables.makeTables(out);
+//		out = WikiTables.makeTables(out);
 		p(20);
 		out = WikiHeadings.makeHeadings(out);
 		p(36);

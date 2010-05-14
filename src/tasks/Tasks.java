@@ -9,6 +9,7 @@ public class Tasks {
 		RemoveNowiki ("Remove Nowiki Content"),
 		Templates ("Templates"),
 		ParserFunctions ("Parser Functions"),
+		Tables ("Tables"),
 		Links ("Links"),
 		Lists ("Lists"),
 		InsertNowiki ("Insert Nowiki Content");

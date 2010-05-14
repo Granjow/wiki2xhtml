@@ -1,46 +1,31 @@
-package src;
+package src.tasks;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.StringReader;
 
+import src.Statistics;
 import src.commentator.CommentAtor;
 import src.commentator.CommentAtor.CALevel;
+import src.project.file.WikiFile;
+import src.tasks.Tasks.Task;
 import src.utilities.StringTools;
+import src.utilities.Tuple;
 
 
-/*
- *   Copyright (C) 2007-2010 Simon Eugster <granjow@users.sf.net>
-
- *   This program is free software: you can redistribute it and/or modify
- *   it under the terms of the GNU General Public License as published by
- *   the Free Software Foundation, either version 3 of the License, or
- *   (at your option) any later version.
-
- *   This program is distributed in the hope that it will be useful,
- *   but WITHOUT ANY WARRANTY; without even the implied warranty of
- *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *   GNU General Public License for more details.
-
- *   You should have received a copy of the GNU General Public License
- *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
- *
- */
-
-/**
- *
- * Generates html code for tables.
- *
- * TODO 2 columns
- *
- * @author Simon Eugster
- */
-public class WikiTables {
-
+public class WikiTables extends WikiTask {
+	
 	private static CommentAtor ca = CommentAtor.getInstance();
-
-	public static StringBuffer makeTables(StringBuffer in) {
+	
+	public Task desc() {
+		return Task.Tables;
+	}
+	public WikiTask nextTask() {
+		return new WikiLinks();
+	}
+	public void parse(WikiFile file) {
 		final String funcName = "Tables.makeTables: ";
+		StringBuffer in = file.getContent();
 
 		final String closeTable = "</table>";
 		final String openTable = "<table";
@@ -73,8 +58,7 @@ public class WikiTables {
 						 * *******************************************************
 						 */
 						if (opened) {
-							ca.ol(funcName + "Table closed at line " + lnr,
-									CALevel.DEBUG);
+							ca.ol(funcName + "Table closed at line " + lnr, CALevel.DEBUG);
 							out.append("\n" + closeTr + '\n' + closeTable);
 							opened = false;
 						} else
@@ -141,12 +125,12 @@ public class WikiTables {
 							s = s.replaceFirst("^\\s+", "");
 							s = s.replaceFirst("\\s+$", "");
 
-							String[] args = getArguments(s);
+							ArgTuple args = getArguments(s);
 
 							out.append("\n" + openCap);
-							if (args[0].length() > 0)
-								out.append(" " + args[0]);
-							out.append(">" + args[1] + closeCap);
+							if (args.k().length() > 0)
+								out.append(" " + args.k());
+							out.append(">" + args.v() + closeCap);
 
 							out.append("\n" + openTr + ">");
 
@@ -204,10 +188,10 @@ public class WikiTables {
 
 								String arg = line.subSequence(oldPos, newPos)
 											 .toString();
-								String[] args = getArguments(arg);
+								ArgTuple args = getArguments(arg);
 
-								out.append(args[0] + '>');
-								out.append(args[1]);
+								out.append(args.k() + '>');
+								out.append(args.v());
 								if (oldHeader)
 									out.append(closeTh + '\n');
 								else
@@ -222,7 +206,7 @@ public class WikiTables {
 								oldHeader = newHeader;
 
 								ca.ol(funcName + "Cell-h with arguments ("
-									  + args[0] + ") and content (" + args[1]
+									  + args.k() + ") and content (" + args.v()
 									  + ") found in a line (" + line + "). Header: " + newHeader,
 									  CALevel.DEBUG);
 
@@ -231,10 +215,10 @@ public class WikiTables {
 							String arg = line
 										 .subSequence(oldPos, line.length())
 										 .toString();
-							String[] args = getArguments(arg);
+							ArgTuple args = getArguments(arg);
 
-							out.append(args[0] + '>');
-							out.append(args[1]);
+							out.append(args.k() + '>');
+							out.append(args.v());
 							if (header)
 								out.append(closeTh);
 							else
@@ -256,44 +240,41 @@ public class WikiTables {
 
 		} catch (IOException e) {
 			ca.ol(funcName + "" + e, CALevel.MSG);
-			return in;
 		}
 
 		/* Statistics */
 		Statistics.getInstance().counter.tablesOpened.increase(counterOpen);
 		Statistics.getInstance().counter.tablesClosed.increase(counterClose);
-
-		return out;
+		
+		file.setContent(out);
 	}
 
 	/**
 	 * @return {arguments, text}
-	 * TODO Unit Test!
 	 */
-	public static String[] getArguments(String s) {
-		String[] out, temp;
+	public static ArgTuple getArguments(String s) {
+		ArgTuple tuple = new ArgTuple();
 
 		if (s.length() > 0) {
-			temp = s.split("\\|", 2);
+			String[] temp = s.split("\\|", 2);
 			if (temp.length == 1) {
-				out = new String[2];
-				out[0] = "";
-				out[1] = temp[0];
+				tuple.setValue(temp[0].trim());
 			} else {
-				out = temp;
+				tuple.setKey(temp[0].trim());
+				tuple.setValue(temp[1].trim());
 			}
-
-			out[0] = StringTools.removeChars(new StringBuffer(out[0]), ' ', true, true).toString();
-
-			if (out[0].length() > 0)
-				out[0] = ' ' + out[0];
-			out[1] = StringTools.removeChars(new StringBuffer(out[1]), ' ', true, true).toString();
-
-		} else {
-			out = new String[] {"", ""};
 		}
-
-		return out;
+		return tuple;
 	}
-
+	
+	public static class ArgTuple extends Tuple<String, String> {
+		public ArgTuple() {
+			super();
+			key = "";
+			val = "";
+		}
+		public String k() {
+			return (key.length() > 0) ? " " + key : key;
+		}
+	}
 }

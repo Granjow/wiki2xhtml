@@ -1,5 +1,8 @@
 package src.commentator;
 
+import java.io.PrintStream;
+import java.util.ArrayList;
+
 /*
  *   Copyright (C) 2007-2010 Simon Eugster <granjow@users.sf.net>
 
@@ -18,20 +21,64 @@ package src.commentator;
  *
  */
 
-/**
- * TODO 5 everything: write support, logging, ...
- *
- * @author Simon Eugster
- */
 public class Logger {
-
-	private Logger() { }
-	private static Logger logger = new Logger();
-
-	public static Logger getInstance() {
-		return logger;
+	
+	public static final class PrintScope {
+		public static final int OUT = 1;
+		public static final int ERR = 2;
+		public static final int VERBOSE = 4;
 	}
 
-	public StringBuffer log = new StringBuffer();
+	private static ArrayList<ScopedPrintStream> outs = new ArrayList<ScopedPrintStream>();
 
+	public static void attachOutput(PrintStream stream, int scope) {
+		outs.add(new ScopedPrintStream(stream, scope));
+	}
+	
+	public static void print(Object obj) {
+		for (ScopedPrintStream sps : outs) {
+			sps.ps.print(obj);
+		}
+	}
+	public static void print(Object obj, int scope) {
+		for (ScopedPrintStream sps : outs) {
+			if ((sps.scope & scope) != 0) {
+				sps.ps.print(obj);
+			}
+		}
+	}
+	public static void println(Object obj) {
+		for (ScopedPrintStream sps : outs) {
+			sps.ps.println(obj);
+		}
+	}
+	public static void println(Object obj, int scope) {
+		for (ScopedPrintStream sps : outs) {
+			if ((sps.scope & scope) != 0) {
+				sps.ps.println(obj);
+			}
+		}
+	}
+	public static void printf(String obj, Object... args) {
+		for (ScopedPrintStream sps : outs) {
+			sps.ps.printf(obj, args);
+		}
+	}
+	public static void println(String obj, int scope, Object... args) {
+		for (ScopedPrintStream sps : outs) {
+			if ((sps.scope & scope) != 0) {
+				sps.ps.printf(obj, args);
+			}
+		}
+	}
+	
+	
+	private static class ScopedPrintStream {
+		public PrintStream ps;
+		public int scope;
+		public ScopedPrintStream(PrintStream ps, int scope) {
+			this.ps = ps; this.scope = scope;
+		}
+	}
+	
 }
