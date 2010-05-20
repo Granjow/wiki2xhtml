@@ -30,7 +30,7 @@ public class HeadingTester extends junit.framework.TestCase {
 	@Test
 	public void testIDs() {
 		TestObject to;
-		to = new TestObject("==Titel==\n==Titel==", "<h2 id=\"h_Titel\">Titel</h2>\n<h2 id=\"h_Titel2\">Titel</h2>");
+		to = new TestObject("==Titel==\n==Titel==", "<h2 id=\"h_Titel\">Titel</h2>\n<h2 id=\"h_Titel_\">Titel</h2>");
 		System.out.println(to.real());
 		assertEquals(to.correct(), to.real());
 	}

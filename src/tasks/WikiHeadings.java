@@ -13,7 +13,7 @@ import src.tasks.Tasks.Task;
 
 public class WikiHeadings extends WikiTask {
 	
-	private ArrayList<String> headingIDs = new ArrayList<String>();
+	private ArrayList<String> headingIDs;
 	
 	public Task desc() {
 		return Task.Headings;
@@ -27,6 +27,7 @@ public class WikiHeadings extends WikiTask {
 	 * &lt;h2&gt;Heading&lt;/h2&gt;.
 	 */
 	public void parse(WikiFile file) {
+		headingIDs = new ArrayList<String>();//TODO 0 position of initialization matters?
 		Statistics.getInstance().sw.timeMakingHeadings.continueTime();
 		
 		StringBuffer in = file.getContent();
@@ -53,7 +54,7 @@ public class WikiHeadings extends WikiTask {
 			out.append(in.substring(last, in.length()));
 
 			if (i > 2) {
-				in = out;
+				file.setContent(out);
 				out = new StringBuffer();
 			}
 		}
@@ -101,7 +102,7 @@ public class WikiHeadings extends WikiTask {
 			id.append(mNameChar.group());
 		}
 
-		while (usedHeadingIDs != null && usedHeadingIDs.contains(id)) {
+		while (usedHeadingIDs != null && usedHeadingIDs.contains(id.toString())) {
 			id.append('_');
 		}
 
