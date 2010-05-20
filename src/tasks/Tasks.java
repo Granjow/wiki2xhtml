@@ -10,6 +10,7 @@ public class Tasks {
 		Templates ("Templates"),
 		ParserFunctions ("Parser Functions"),
 		Tables ("Tables"),
+		Headings ("Headings"),
 		Links ("Links"),
 		Lists ("Lists"),
 		InsertNowiki ("Insert Nowiki Content");

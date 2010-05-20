@@ -193,11 +193,11 @@ public class Template {
 			}
 			return true;
 		} catch (IOException e) {
-			Logger.getInstance().log.append(s + e);
+//			Logger.append(s + e); //TODO
 			System.err.println(s);
 			e.printStackTrace();
 		} catch (NullPointerException e) {
-			Logger.getInstance().log.append(s + e);
+//			Logger.getInstance().log.append(s + e);
 			System.err.println(s);
 			e.printStackTrace();
 		}

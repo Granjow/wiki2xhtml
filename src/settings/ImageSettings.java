@@ -14,18 +14,16 @@ import src.Container_Resources;
 import src.GenerateID;
 import src.Resources;
 import src.Template;
-import src.Constants.SettingsE;
-import src.Constants.SettingsImgE;
-import src.Constants.SettingsImgPageE;
 import src.argumentHandler.ArgumentItem;
 import src.argumentHandler.ArgumentReader;
 import src.commentator.CommentAtor;
 import src.commentator.CommentAtor.CALevel;
+import src.resources.ResProjectSettings.SettingsE;
+import src.resources.ResProjectSettings.SettingsImgE;
+import src.resources.ResProjectSettings.SettingsImgPageE;
 import src.utilities.IOUtils;
 import src.utilities.StringTools;
 
-import static src.Constants.SettingsImgE;
-import static src.Constants.SettingsImgPageE;
 
 /*
  *   Copyright (C) 2007-2010 Simon Eugster <granjow@users.sf.net>
@@ -164,7 +162,7 @@ public class ImageSettings {
 	 * Contains the settings for one image.
 	 * Overrides {@link src.settings.ImageSettings.All}.
 	 */
-	public static class Image extends src.settings.Settings<Constants.SettingsImgE, String> {
+	public static class Image extends src.settings.Settings<SettingsImgE, String> {
 		
 		public Image() {
 			set_(SettingsImgE.galleryCounter, "0");

@@ -23,6 +23,8 @@ import java.util.ArrayList;
 
 public class Logger {
 	
+	//TODO optional prefix, e.g. filename
+	
 	public static final class PrintScope {
 		public static final int OUT = 1;
 		public static final int ERR = 2;

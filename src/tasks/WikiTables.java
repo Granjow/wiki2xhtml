@@ -21,7 +21,7 @@ public class WikiTables extends WikiTask {
 		return Task.Tables;
 	}
 	public WikiTask nextTask() {
-		return new WikiLinks();
+		return new WikiHeadings();
 	}
 	public void parse(WikiFile file) {
 		final String funcName = "Tables.makeTables: ";

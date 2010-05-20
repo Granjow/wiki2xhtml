@@ -16,6 +16,7 @@ import org.xnap.commons.i18n.I18nFactory;
 import src.Constants;
 import src.commentator.CommentAtor;
 import src.commentator.CommentAtor.CALevel;
+import src.resources.ResProjectSettings.SettingsE;
 import src.settings.XhtmlSettings;
 import src.settings.XhtmlSettings.NegativeValueException;
 
@@ -70,40 +71,40 @@ public final class DialogueCommonFileCreater {
 //		f.add(new JLabel(i18n.tr("Path of this common file")));
 //		f.add(new CTextField(cPath));
 		f.add(new JLabel(i18n.tr("Author")));
-		f.add(new CTextField(Constants.SettingsE.author));
+		f.add(new CTextField(SettingsE.author));
 		f.add(new JLabel(i18n.tr("Default title")));//TODO yes/no/inherit
-		f.add(new CTextField(Constants.SettingsE.defaultTitle));
-		f.add(new JLabel(i18n.tr("Use image description for caption on image pages")));
-		f.add(new CCheckBox(Constants.SettingsE.descForCaption));
+		f.add(new CTextField(SettingsE.defaultTitle));
+//		f.add(new JLabel(i18n.tr("Use image description for caption on image pages")));
+//		f.add(new CCheckBox(SettingsE.descForCaption));
 		f.add(new JLabel(i18n.tr("Number of images per line in the gallery")));
-		f.add(new CTextField(Constants.SettingsE.galleryImagesPerLine, InputMaskE.numberNatural));
+		f.add(new CTextField(SettingsE.galleryImagesPerLine, InputMaskE.numberNatural));
 		f.add(new JLabel(i18n.tr("Width of thumbnails in the gallery")));
-		f.add(new CTextField(Constants.SettingsE.galleryThumbWidth, InputMaskE.numberNatural));
+		f.add(new CTextField(SettingsE.galleryThumbWidth, InputMaskE.numberNatural));
 		f.add(new JLabel(i18n.tr("Link to the start page")));
-		f.add(new CTextField(Constants.SettingsE.homelink));
+		f.add(new CTextField(SettingsE.homelink));
 		f.add(new JLabel(i18n.tr("Path to Favicon")));
-		f.add(new CTextField(Constants.SettingsE.icon));
+		f.add(new CTextField(SettingsE.icon));
 		f.add(new JLabel(i18n.tr("Width of images on image pages")));
-		f.add(new CTextField(Constants.SettingsE.imagepageImgWidth, InputMaskE.numberNatural));
+		f.add(new CTextField(SettingsE.imagepageImgWidth, InputMaskE.numberNatural));
 		f.add(new JLabel(i18n.tr("Directory for image pages")));
-		f.add(new CTextField(Constants.SettingsE.imagepagesDir));
+		f.add(new CTextField(SettingsE.imagepagesDir));
 		f.add(new JLabel(i18n.tr("Standard directory for images")));
-		f.add(new CTextField(Constants.SettingsE.imagesDir));
+		f.add(new CTextField(SettingsE.imagesDir));
 		f.add(new JLabel(i18n.tr("Standard keywords")));
-		f.add(new CTextField(Constants.SettingsE.keywords));
+		f.add(new CTextField(SettingsE.keywords));
 		f.add(new JLabel(i18n.tr("Language pages are written in")));
-		f.add(new CTextField(Constants.SettingsE.lang));
-		f.add(new JLabel(i18n.tr("Use image name for caption on image pages")));
-		f.add(new CCheckBox(Constants.SettingsE.nameForCaption));
+		f.add(new CTextField(SettingsE.lang));
+//		f.add(new JLabel(i18n.tr("Use image name for caption on image pages")));
+//		f.add(new CCheckBox(SettingsE.nameForCaption));
 		//f.add(new CTextField(Constants.Settings.reckAlternative));
 		f.add(new JLabel(i18n.tr("Text header")));
-		f.add(new CTextField(Constants.SettingsE.textHeader));
+		f.add(new CTextField(SettingsE.textHeader));
 		f.add(new JLabel(i18n.tr("Directory for thumbnails")));
-		f.add(new CTextField(Constants.SettingsE.thumbsDir));
+		f.add(new CTextField(SettingsE.thumbsDir));
 		f.add(new JLabel(i18n.tr("Width of normal thumbnails")));
-		f.add(new CTextField(Constants.SettingsE.thumbWidth, InputMaskE.numberNatural));
+		f.add(new CTextField(SettingsE.thumbWidth, InputMaskE.numberNatural));
 		f.add(new JLabel(i18n.tr("Standard title")));
-		f.add(new CTextField(Constants.SettingsE.title));
+		f.add(new CTextField(SettingsE.title));
 
 		f.pack();
 
@@ -119,16 +120,16 @@ public final class DialogueCommonFileCreater {
 	private static class CCheckBox extends JCheckBox {
 		private static final long serialVersionUID = 1L;
 
-		public CCheckBox(final Constants.SettingsE property) {
+		public CCheckBox(final SettingsE property) {
 			super(i18n.tr("Yes"));
 
 			addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
-					try {
-						SettingsCollector.set(property, "" + isSelected());
-					} catch (NegativeValueException e) {
-						CommentAtor.getInstance().ol(e.getMessage(), CALevel.ERRORS);
-					}
+//					try {
+//						SettingsCollector.set(property, "" + isSelected());
+//					} catch (NegativeValueException e) {
+//						CommentAtor.getInstance().ol(e.getMessage(), CALevel.ERRORS);
+//					}
 				}
 			});
 		}
@@ -154,11 +155,11 @@ public final class DialogueCommonFileCreater {
 		private static final long serialVersionUID = 1L;
 		private String lastInput = "";
 
-		public CTextField(final Constants.SettingsE property) {
+		public CTextField(final SettingsE property) {
 			this(property, InputMaskE.all);
 		}
 
-		public CTextField(final Constants.SettingsE property, final InputMaskE inputMask) {
+		public CTextField(final SettingsE property, final InputMaskE inputMask) {
 			super();
 
 			addKeyListener(new KeyListener() {
@@ -173,11 +174,11 @@ public final class DialogueCommonFileCreater {
 						lastInput = getText();
 
 						// Set property
-						try {
-							SettingsCollector.set(property, getText());
-						} catch (NegativeValueException e) {
-							CommentAtor.getInstance().ol(e.getMessage(), CALevel.ERRORS);
-						}
+//						try {
+//							SettingsCollector.set(property, getText());
+//						} catch (NegativeValueException e) {
+//							CommentAtor.getInstance().ol(e.getMessage(), CALevel.ERRORS);
+//						}
 					}
 				}
 				public void keyReleased(KeyEvent arg0) { }
@@ -189,11 +190,11 @@ public final class DialogueCommonFileCreater {
 
 	private static class SettingsCollector {
 
-		private static XhtmlSettings.Settings s = new XhtmlSettings.Settings();
-
-		public static void set(src.Constants.SettingsE property, String arg) throws NegativeValueException {
-			s.set_(property, arg);
-		}
+//		private static XhtmlSettings.Settings s = new XhtmlSettings.Settings();
+//
+//		public static void set(src.SettingsE property, String arg) throws NegativeValueException {
+//			s.set_(property, arg);
+//		}
 
 	}
 

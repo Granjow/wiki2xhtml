@@ -107,7 +107,8 @@ public class UpdateMenufile {
 
 			} catch (IOException e) {
 				e.printStackTrace();
-				Logger.getInstance().log.append(e);
+//				Logger.getInstance().log.append(e);
+				//TODO
 			}
 
 			File updatedFile = new File(f.getPath() + "~old");
@@ -119,11 +120,11 @@ public class UpdateMenufile {
 				CommentAtor.getInstance().ol("Successfully written. Backup is " + updatedFile.getPath(), CALevel.MSG);
 
 			} catch (IOException e) {
-				Logger.getInstance().log.append(e);
+//				Logger.getInstance().log.append(e);
 				e.printStackTrace();
 			}
 		} catch (IOException e1) {
-			Logger.getInstance().log.append(e1);
+//			Logger.getInstance().log.append(e1);
 			e1.printStackTrace();
 			return false;
 		}

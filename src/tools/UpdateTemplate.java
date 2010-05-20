@@ -111,11 +111,12 @@ public class UpdateTemplate {
 				CommentAtor.getInstance().ol("Successfully written. Backup is " + updatedFile.getPath(), CALevel.MSG);
 
 			} catch (IOException e) {
-				Logger.getInstance().log.append(e);
+//				Logger.getInstance().log.append(e);
+				//TODO
 				e.printStackTrace();
 			}
 		} catch (IOException e1) {
-			Logger.getInstance().log.append(e1);
+//			Logger.getInstance().log.append(e1);
 			e1.printStackTrace();
 			return false;
 		}

@@ -1,11 +1,13 @@
 package src.project.file;
 
-import java.util.ArrayList;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.StringReader;
 import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
-import src.resources.ResProjectSettings.Settings;
-import src.resources.ResProjectSettings.SettingsE;
-import src.tasks.WikiLinks.LinkObject;
+import src.Statistics;
+import src.tasks.WikiHeadings;
 
 /*
  *   Copyright (C) 2007-2010 Simon Eugster <granjow@users.sf.net>
@@ -25,8 +27,9 @@ import src.tasks.WikiLinks.LinkObject;
  *
  */
 
-// To contain parts of XhtmlSettings.java
-
+/**
+ * Retrieve information from a WikiFile
+ */
 public class Generators {
 	
 	private final WikiFile file;
@@ -34,7 +37,77 @@ public class Generators {
 	public Generators(WikiFile file) {
 		this.file = file;
 	}
-	
-	
+
+	/**
+	 * Creates a TOC from an input file. The <hx> have to be at the beginning of
+	 * the line!
+	 */	
+	public StringBuffer getTOC() {
+		StringBuffer toc = new StringBuffer();
+
+		BufferedReader b = new BufferedReader(new StringReader(file.getContent().toString()));
+		byte counter = 0;
+		byte level = 0;
+
+		try {
+			Pattern pat = Pattern.compile("^<h[2-6]");
+
+			for (String line = b.readLine(); line != null; line = b.readLine()) {
+				if (line.length() > 0 && pat.matcher(line).find()) {
+					try {
+						level = Byte.parseByte(line.charAt(2) + "");
+						level--;	// Headings start with level 2
+					} catch (NumberFormatException e) {
+						e.getStackTrace();
+					}
+					toc.append(getTOCItem(counter, level, 
+							line.subSequence(line.indexOf(">") + 1, line.lastIndexOf("<")).toString(), 
+							line));
+					counter++;
+				}
+			}
+
+		} catch (IOException e)  {
+			e.printStackTrace();
+		}
+
+		/* Statistics */
+		Statistics.getInstance().counter.TOC.increase(counter);
+		return toc;
+	}
+
+
+	/**
+	 * Creates an item (ordered list entry, can finally be converted with 
+	 * WikiLists) for the TOC with the generated ID
+	 *
+	 * @param n The current number of the heading
+	 * @param level The heading's level
+	 * @param name The content of the heading. Tags will be removed.
+	 * @param line Line containing the heading entry, to search for an ID if existing 
+	 * @return Item with the generated ID
+	 */
+	public static final StringBuffer getTOCItem(int n, int level, String name, String line) {
+		StringBuffer item = new StringBuffer();
+		Pattern pat = Pattern.compile("(?<=id=\").*?(?=\")");
+		Matcher m = pat.matcher(line);
+
+		name = name.replaceAll("<.*>", "");
+
+		item.append("\n");
+		for (byte i = 0; i < level; i++)
+			item.append("#");
+
+		item.append("<a href=\"#");
+
+		if (m.find())
+			item.append(m.group());
+		else
+			item.append(WikiHeadings.getIDtoHeading(name, null));
+
+		item.append("\">" + name + "</a>");
+
+		return item;
+	}
 
 }

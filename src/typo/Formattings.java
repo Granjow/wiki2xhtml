@@ -7,6 +7,7 @@ import org.xnap.commons.i18n.I18n;
 import org.xnap.commons.i18n.I18nFactory;
 
 import src.*;
+import src.resources.RegExpressions;
 
 /*
  *   Copyright (C) 2007-2010 Simon Eugster <granjow@users.sf.net>
@@ -129,7 +130,7 @@ public class Formattings {
 		int first, last;
 
 		/* DEL tags */
-		p = Resources.Regex.textDel;
+		p = RegExpressions.textDel;
 		m = p.matcher(in);
 
 //		Statistics.getInstance().sw.temp.continueTime();
@@ -157,7 +158,7 @@ public class Formattings {
 		in = out;
 		out = new StringBuffer();
 
-		p = Resources.Regex.textIns;
+		p = RegExpressions.textIns;
 		m = p.matcher(in);
 
 		first = 0;
@@ -177,7 +178,7 @@ public class Formattings {
 		in = out;
 		out = new StringBuffer();
 
-		p = Resources.Regex.textCode;
+		p = RegExpressions.textCode;
 		m = p.matcher(in);
 
 		first = 0;
@@ -194,7 +195,7 @@ public class Formattings {
 		in = out;
 		out = new StringBuffer();
 
-		p = Resources.Regex.textCodeBlock;
+		p = RegExpressions.textCodeBlock;
 		m = p.matcher(in);
 
 		first = 0;
@@ -223,7 +224,7 @@ public class Formattings {
 		in = out;
 		out = new StringBuffer();
 
-		p = Resources.Regex.textSample;
+		p = RegExpressions.textSample;
 		m = p.matcher(in);
 
 		last = 0;
@@ -239,7 +240,7 @@ public class Formattings {
 		in = out;
 		out = new StringBuffer();
 
-		p = Resources.Regex.textSampleBlock;
+		p = RegExpressions.textSampleBlock;
 		m = p.matcher(in);
 
 		first = 0;
@@ -268,7 +269,7 @@ public class Formattings {
 		in = out;
 		out = new StringBuffer();
 
-		p = Resources.Regex.textCite;
+		p = RegExpressions.textCite;
 		m = p.matcher(in);
 
 		first = 0;
@@ -285,7 +286,7 @@ public class Formattings {
 		in = out;
 		out = new StringBuffer();
 
-		p = Resources.Regex.textCiteBlock;
+		p = RegExpressions.textCiteBlock;
 		m = p.matcher(in);
 
 		first = 0;
@@ -314,7 +315,7 @@ public class Formattings {
 		in = out;
 		out = new StringBuffer();
 
-		p = Resources.Regex.textKbd;
+		p = RegExpressions.textKbd;
 		m = p.matcher(in);
 
 		first = 0;
@@ -331,7 +332,7 @@ public class Formattings {
 		in = out;
 		out = new StringBuffer();
 
-		p = Resources.Regex.textKbdBlock;
+		p = RegExpressions.textKbdBlock;
 		m = p.matcher(in);
 
 		first = 0;
@@ -411,8 +412,9 @@ public class Formattings {
 		if ((flags & MANY) > 0)
 			in = makeManyThings(in, comment);
 
-		if ((flags & LINKS) > 0)
-			in = WikiLinks.makeLinks(in, currentFilename);
+//		if ((flags & LINKS) > 0)
+		//TODO
+//			in = WikiLinks.makeLinks(in, currentFilename);
 		return in;
 	}
 

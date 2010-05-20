@@ -71,7 +71,8 @@ public class ScriptExport {
 				try {
 					IOWrite_Stats.writeString(f, arguments.toString(), false);
 				} catch (IOException e) {
-					Logger.getInstance().log.append(e);
+//					Logger.getInstance().log.append(e);
+					//TODO
 					e.printStackTrace();
 				}
 			}
@@ -82,7 +83,7 @@ public class ScriptExport {
 				try {
 					IOWrite_Stats.writeString(f, filetype.prefix + "java -jar wiki2xhtml.jar " + arguments, false);
 				} catch (IOException e) {
-					Logger.getInstance().log.append(e);
+//					Logger.getInstance().log.append(e);
 					e.printStackTrace();
 				}
 			}
@@ -99,7 +100,7 @@ public class ScriptExport {
 			try {
 				args = IORead_Stats.readSBuffer(f);
 			} catch (IOException e) {
-				Logger.getInstance().log.append(e);
+//				Logger.getInstance().log.append(e);
 				e.printStackTrace();
 			}
 

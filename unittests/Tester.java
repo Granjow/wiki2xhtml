@@ -12,6 +12,7 @@ public class Tester extends TestCase {
 		result.addTest(new TestSuite(TablesTester.class));
 		result.addTest(new TestSuite(LinkTester.class));
 		result.addTest(new TestSuite(ListTester.class));
+		result.addTest(new TestSuite(HeadingTester.class));
 		result.addTest(new TestSuite(FormattingsTester.class));
 		result.addTest(new TestSuite(PicTester.class));
 		result.addTest(new TestSuite(RegexTester.class));
