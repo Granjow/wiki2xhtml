@@ -11,9 +11,11 @@ public class Tasks {
 		ParserFunctions ("Parser Functions"),
 		Tables ("Tables"),
 		Headings ("Headings"),
+		Images ("Images"),
 		Links ("Links"),
 		Lists ("Lists"),
-		InsertNowiki ("Insert Nowiki Content");
+		InsertNowiki ("Insert Nowiki Content"),
+		XMLNames ("Convert XML names");
 		
 		public final String name;
 		

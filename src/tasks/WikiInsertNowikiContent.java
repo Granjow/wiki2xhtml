@@ -15,7 +15,7 @@ public class WikiInsertNowikiContent extends WikiTask {
 		return Task.InsertNowiki;
 	}
 	public WikiTask nextTask() {
-		return null;
+		return new XMLNames();
 	}
 
 	/**
