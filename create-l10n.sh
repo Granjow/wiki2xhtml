@@ -36,5 +36,5 @@ echo -n "hr  "
 msgfmt --java2 -d . -r bin.l10n.Messages -l hr l10n/po/hr.po &
 echo
 
-mkdir bin/bin
+mkdir bin/bin >/dev/null 2>&1
 cp -r bin/l10n bin/bin/
