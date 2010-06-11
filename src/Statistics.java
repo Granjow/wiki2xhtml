@@ -25,6 +25,7 @@ import src.utilities.StopwatchNano;
 
 /**
  * Collects statistics about everything.
+ * TODO 0 Multi-threading ...
  *
  * @author Simon Eugster
  */

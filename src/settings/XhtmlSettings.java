@@ -19,8 +19,6 @@ import src.Container_Files;
 import src.Container_Resources;
 import src.Resources;
 import src.Statistics;
-import src.Template;
-import src.WikiHeadings;
 import src.tasks.WikiLinks.LinkObject;
 import src.commentator.CommentAtor;
 import src.commentator.CommentAtor.CALevel;
@@ -30,48 +28,14 @@ import src.resources.RegExpressions;
 import src.resources.ResProjectSettings.SettingsE;
 import src.resources.ResProjectSettings.SettingsLocalE;
 
-/*
- *   Copyright (C) 2007-2010 Simon Eugster <granjow@users.sf.net>
-
- *   This program is free software: you can redistribute it and/or modify
- *   it under the terms of the GNU General Public License as published by
- *   the Free Software Foundation, either version 3 of the License, or
- *   (at your option) any later version.
-
- *   This program is distributed in the hope that it will be useful,
- *   but WITHOUT ANY WARRANTY; without even the implied warranty of
- *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *   GNU General Public License for more details.
-
- *   You should have received a copy of the GNU General Public License
- *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
- *
- *
- */
-
 /**
- *
- * A container for various settings applying header, homelink etc.
  *
  * @since wiki2xhtml 3.3: Rewritten
  * @since wiki2xhtml 3.4: Rewritten, using HashMap instead of 1000 variables
- *
- * @author Simon Eugster
  */
 public class XhtmlSettings {
 
 	public LocalSettings local = new LocalSettings();
-
-	private static I18n i18n = I18nFactory.getI18n(XhtmlSettings.class, "bin.l10n.Messages", src.Globals.getLocale());
-
-	private XhtmlSettings() { }
-
-	private static XhtmlSettings xhs = new XhtmlSettings();
-
-	/** Singleton access */
-	public static XhtmlSettings getInstance() {
-		return xhs;
-	}
 
 	/**
 	 * Creates the link to the start page
@@ -159,29 +123,6 @@ public class XhtmlSettings {
 		 ******************************************* 
 		 */
 		
-		public static enum DisplayRule {
-			pageXofY, pageX, X;
-		}
-		public String page(final DisplayRule displayRule) {
-			String page;
-			String number = get_(SettingsLocalE.pageNumber);
-			String totalPages = get_(SettingsLocalE.pagesTotal);
-			switch (displayRule) {
-			case pageXofY:
-				page = i18n.tr("Page {0} of {1}", number, totalPages);
-				break;
-			case pageX:
-				page = i18n.tr("Page {0}", number);
-				break;
-			case X:
-			default:
-				page = number;
-				break;
-			}
-			
-			return page;
-			
-		}
 
 		/** @return The image directory, with a / at the end */
 		public String dirImages() {
@@ -357,43 +298,6 @@ public class XhtmlSettings {
 		}
 
 
-		/**
-		 * @return The page title, replacing %s and %p by standard title and page number
-		 */
-		public String title() {
-			String title = xhs.local.get_(SettingsE.title);
-			if (title == null) {
-				title = xhs.local.get_(SettingsE.h1);
-			} else {
-				title = title(title);
-			}
-			if (title == null) title = "";
-			return title;
-		}
-		/**
-		 * 
-		 * @param pattern Input title
-		 * @return The pattern with %s and %p replaced; see {@link #title()}
-		 */
-		public String title(String pattern) {
-			String title = pattern;
-			int pos = title.indexOf(Constants.Tags.Title.titleTag);
-			if (pos >= 0) {
-				String defaultTitle = xhs.global.get_(SettingsE.defaultTitle);
-				if (defaultTitle == null) defaultTitle = "";
-				title = title.substring(0, pos)
-						+ defaultTitle
-						+ title.substring(pos + 2, title.length());
-			}
-
-			pos = title.indexOf(Constants.Tags.Title.pageTag);
-			if (pos >= 0) {
-				title = title.substring(0, pos)
-						+ page(DisplayRule.pageXofY)
-						+ title.substring(pos + 2, title.length());
-			}
-			return title;
-		}
 
 		public String toc() {
 			Template tp = new Template(

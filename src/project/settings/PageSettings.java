@@ -21,6 +21,9 @@ import src.resources.ResProjectSettings.SettingsE;
  *
  */
 
+/**
+ * Contains global settings that are valid for all pages.
+ */
 public class PageSettings extends Settings<SettingsE, String> {
 	
 	protected String concatenate(String left, String right) {
@@ -30,7 +33,7 @@ public class PageSettings extends Settings<SettingsE, String> {
 	public PageSettings() {
 		// Add checkers to validate input
 		for (SettingsE p : SettingsE.values()) {
-			if (p.checker() != null) { addChecker(p.checker(), p); }
+			if (p.checker != null) { addChecker(p.checker, p); }
 		}
 	}
 	

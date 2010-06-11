@@ -51,7 +51,6 @@ public class XHTML {
 	}
 
 	private static Container_Files fc = Container_Files.getInstance();
-	private static XhtmlSettings xhs = XhtmlSettings.getInstance();
 
 	public static void updateBaseStyleDir(File f) {
 		baseStyleDir = f;
@@ -175,7 +174,7 @@ public class XHTML {
 		 * Clear the summary and the nowiki content, then parse the source
 		 */
 //		nowiki.clear();
-		out = xhs.local.content;
+//		out = xhs.local.content;
 
 //		out = makeUnixLines(out);
 		p(2);
@@ -189,7 +188,7 @@ public class XHTML {
 		p(17);
 //		out = WikiTables.makeTables(out);
 		p(20);
-		out = WikiHeadings.makeHeadings(out);
+//		out = WikiHeadings.makeHeadings(out);
 		p(36);
 		if (fc.has.target)
 			out = WikiImages.makeImages(out);
@@ -204,9 +203,6 @@ public class XHTML {
 		p(76);
 		out = makeHLines(out);
 		p(79);
-		// TODO 9 activate typograph as soon as working
-//		Typograph t = new Typograph(); out = t.replace(out, "");
-		p(80);
 		out = Formattings.format0r(out, fc.currentFilename, Formattings.BOLD | Formattings.ITALIC | Formattings.MANY, true);
 		p(86);
 		out = Formattings.makeItalicType(out, true);

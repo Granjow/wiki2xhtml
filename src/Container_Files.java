@@ -50,7 +50,6 @@ public class Container_Files {
 	
 	public class WikiFile {
 		public final File f;
-		public final boolean sitemap;
 		public final boolean parse;
 		
 		/** Needs to be overridden for comparing. */
@@ -67,7 +66,6 @@ public class Container_Files {
 		
 		WikiFile(File f, boolean sitemap, boolean parse) {
 			this.f = f;
-			this.sitemap = sitemap;
 			this.parse = parse;
 		}
 	}
@@ -87,8 +85,6 @@ public class Container_Files {
 		public File menuFile; // Menu file containing the menu
 		public File hashFile = new File(".wiki2xhtml-hashes");
 		
-		public Sitemap sitemap; // Sitemap
-
 		/** Folder containing the style sheets and the reck */
 		private File styleDir;
 		public File styleDir() {
@@ -187,13 +183,6 @@ public class Container_Files {
 	public WikiFile currentInFile;
 	public Container cont = new Container();
 	public Has has = new Has();
-
-	private Container_Files() {	}
-	private static Container_Files fc = new Container_Files();
-
-	public static Container_Files getInstance() {
-		return fc;
-	}
 
 	public void clear() {
 		cont = new Container();
@@ -369,32 +358,6 @@ public class Container_Files {
 		has.noTypo = b;
 	}
 	
-	/**
-	 * @param map file;baseUri. Example: sitemap.txt;http://wiki2xhtml.sf.net
-	 */
-	public boolean setSitemap(String map) {
-		String[] parts = map.split(";", 2);
-		boolean worked = false;
-		
-		if (parts.length < 2) {
-			ca.ol("Wrong sitemap definition! Use --sitemap=filename;base URI.", CALevel.ERRORS);
-		} else {
-			cont.sitemap = new Sitemap(cont.targetDir(), new File(cont.targetDir().getAbsolutePath() + File.separatorChar + parts[0]), parts[1]);
-			worked = true;
-		}
-		return worked;
-	}
-	public void addSitemapEntry(File f) {
-		if (cont.sitemap != null) {
-			cont.sitemap.add(f);
-		}
-	}
-	public void writeSitemap() {
-		if (cont.sitemap != null) {
-			cont.sitemap.write();
-		}
-	}
-
 	/**
 	 * Will try to use name directly.
 	 * If fails: Prepend standard directory name.
@@ -593,64 +556,6 @@ public class Container_Files {
 	public void removeCommon() {
 		has.common = false;
 		cont.commonFile = null;
-	}
-
-	/**
-	 * Sitemap builder. Creates text files (not XML). 
-	 * See <a href="http://sitemaps.org/">sitemaps.org</a> for details.
-	 * @since wiki2xhtml 3.4
-	 * TODO 0 doc Sitemaps
-	 */
-	private class Sitemap {
-
-		/** List of all files to include in the sitemap */
-		private ArrayList<String> sitemapList = new ArrayList<String>();		
-		private final File relativeTo;
-		private final File mapFile;
-		private final String baseURI;
-		
-		Sitemap(File relativeTo, File mapFile, String baseURI) {
-			this.relativeTo = relativeTo;
-			this.mapFile = mapFile;
-			this.baseURI = baseURI.replaceFirst("/+$", ""); // Remove trailing slashes
-		}
-		
-		/** Add a file to the sitemap. */
-		public void add(File f) {
-			String entry = f.getAbsolutePath();
-			String rel = relativeTo.getAbsolutePath();
-			
-			if (entry.startsWith(rel)) {
-				entry = entry.substring(rel.length());
-				entry = entry.replace(File.separatorChar, '/');
-				if (entry.startsWith("/")) {
-					entry = entry.substring(1);
-				}
-				sitemapList.add(baseURI + "/" + entry);
-			} else {
-				ca.ol("Don't know what to do with %s in the sitemap (not in %s). Not adding.", CALevel.MSG, entry, rel);
-			}
-		}
-		
-		/**
-		 * Writes the sitemap.
-		 * @return true, if writing was successful 
-		 */
-		public boolean write() {
-			StringBuffer sb = new StringBuffer();
-			for (String s : sitemapList) {
-				sb.append(s + "\n");
-			}
-			try {
-				IOWrite_Stats.writeString(mapFile, sb.toString(), false);
-				return true;
-				
-			} catch (IOException e) {
-				ca.ol("Could not write sitemap to file %s.", CALevel.ERRORS, mapFile.getAbsolutePath());
-				e.printStackTrace();
-				return false;
-			}
-		}
 	}
 	
 }

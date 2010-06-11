@@ -13,14 +13,12 @@ import src.Container_Files;
 import src.Container_Resources;
 import src.GenerateID;
 import src.Resources;
-import src.Template;
 import src.argumentHandler.ArgumentItem;
 import src.argumentHandler.ArgumentReader;
 import src.commentator.CommentAtor;
 import src.commentator.CommentAtor.CALevel;
 import src.resources.ResProjectSettings.SettingsE;
 import src.resources.ResProjectSettings.SettingsImgE;
-import src.resources.ResProjectSettings.SettingsImgPageE;
 import src.utilities.IOUtils;
 import src.utilities.StringTools;
 
@@ -48,159 +46,14 @@ import src.utilities.StringTools;
  *
  * @since wiki2xhtml 3.3, 2&#x2a2f faster than the old one
  *
- * @author Simon Eugster
- *
  */
 public class ImageSettings {
-
-	private static final CommentAtor ca = CommentAtor.getInstance();
-
-	/** Settings for current page */
-	public Page page = new Page();
-
-	/** Settings for one image */
-	public Image image = new Image();
-
-	private ImageSettings() { }
-	private static ImageSettings is = new ImageSettings();
-	/** Singleton */
-	public static ImageSettings getInstance() {
-		return is;
-	}
-
-	public Template tDesc, tBlank, pDesc, pBlank;
-
-
-	/**
-	 * Replaces characters like "&amp;" and " " by "&amp;amp;" and "%20"
-	 * @param s
-	 * @return W3C conform URI String
-	 */
-	public static String htmlURI(String s) {
-		for (String[] es : Resources.entities)
-			s = s.replaceAll(es[1], es[0]);
-		return s;
-	}
-
-	/**
-	 * Clears page specific settings
-	 */
-	public void nextPage(String pagename) {
-		image = new Image();
-		page.set_(SettingsImgPageE.pageName, pagename);
-	}
-
-	/**
-	 * Clears the settings for the specific item
-	 */
-	public void nextItem() {
-		image = new Image();
-	}
-
-	/**
-	 * Contains the settings for images on one page.
-	 * Overrides {@link src.settings.ImageSettings.All}
-	 */
-	public static class Page extends src.settings.Settings<SettingsImgPageE, String> {
-		
-		public int counterGalleries = 0;
-
-		public Page() {
-		}
-		
-		@Override
-		public String nullValue() {
-			return "null";
-		}
-		@Override
-		boolean setCheck(SettingsImgPageE property, String value) {
-			return true;
-		}
-
-		/** Returns the gallery ID in the form of gallery001 */
-		public String getIdGallery() {
-			StringBuilder sb = new StringBuilder();
-			
-			String counter = "" + counterGalleries;
-			for (byte i = 0; i < 2 - Math.round(Math.log10(Integer.parseInt(counter))); i++)
-				sb.append("0");
-			sb.append(counter);
-			
-			return "gallery" + sb;
-		}
-
-
-		/** @return The page specific image page directory */
-		public String getImagepagesDir() {
-			XhtmlSettings xhs = XhtmlSettings.getInstance();
-			String dir = xhs.local.getLocalOrGlobal_(SettingsE.imagepagesDir);
-
-			dir.replaceAll("\\/\\/+", "/");
-
-			return dir.endsWith("/") ? dir : dir + "/";
-		}
-
-		public String getBacklinkDir() {
-			String dirImagepages = getImagepagesDir();
-
-			int n = StringTools.countString(dirImagepages, "/");
-
-			if (dirImagepages.startsWith("./")) n--;
-			if (!dirImagepages.endsWith("/")) n++;
-
-			StringBuffer backlink = new StringBuffer();
-
-			for (int i = 0; i < n; i++) {
-				backlink.append("../");
-			}
-
-			return backlink.toString();
-		}
-	}
 
 	/**
 	 * Contains the settings for one image.
 	 * Overrides {@link src.settings.ImageSettings.All}.
 	 */
 	public static class Image extends src.settings.Settings<SettingsImgE, String> {
-		
-		public Image() {
-			set_(SettingsImgE.galleryCounter, "0");
-		}
-		
-		public void append_(final SettingsImgE property, final String value) {
-			if (contains(property)) {
-				set_(property, get_(property) + value);
-			} else {
-				set_(property, value);
-			}
-		}
-		
-		@Override
-		public String nullValue() {
-			return "null";
-		}
-		
-		@Override
-		boolean setCheck(SettingsImgE property, String value) {
-			boolean ok = true;
-			
-			switch(property) {
-			case galleryCounter:
-				try {
-					int i = Integer.parseInt(value);
-					if (i < 0) throw new Error("Negative value! " + value);
-				} catch (NumberFormatException e) {
-					e.printStackTrace();
-					ok = false;
-				}
-				break;
-			}
-
-			return ok;
-		}
-
-		
 
 		/** Image ID */
 		public String getID() {
@@ -367,52 +220,11 @@ public class ImageSettings {
 		}
 
 
-		/**
-		 * Gets the filename of the image.
-		 * @return Image filename without the path
-		 */
-		public String getImageFilenameHtml() {
-			String path = get_(SettingsImgE.imagePath);
-			return htmlURI(path.substring(path.lastIndexOf('/') + 1));
-		}
 
-		/** @return Image path with escaped spaces and &amp;&#x2019;s */
-		public String getImagePathHtml() {
-			return htmlURI(getImagePath());
-		}
 
-		/**
-		 * Builds the filename and path for the image page.
-		 * @return Image page path
-		 */
-		public String getImagepagePath(boolean filesystemPath, boolean filenameOnly) {
-			if (!contains(SettingsImgE.imagePath)) {
-				ca.ol("No image path available! Unable to getImagepagePath().", CALevel.ERRORS);
-				return null;
-			}
-			StringBuffer name = new StringBuffer();
 
-			if (!filenameOnly) {
-				if (filesystemPath) {
-					name.append(Container_Files.getInstance().cont.targetDir().getAbsolutePath() + File.separatorChar);
-				}
-				name.append(is.page.getImagepagesDir());
 
-				if (filesystemPath) {
-					// Path for the file is required, likely to create it, so create the sub-directory if necessary
-					File f = new File(name.toString());
-					if (!f.exists())
-						f.mkdirs();
-				}
-			}
 
-			name.append(is.page.get_(SettingsImgPageE.pageName).replace(".", "-"));
-			name.append("_to_");
-			name.append(get_(SettingsImgE.imagePath).replace(".", "-").replace("/", "+").replace(" ", "_"));
-			name.append(".html");
-
-			return name.toString();
-		}
 
 
 		/** @return The link back to the calling image or thumbnail */
@@ -422,69 +234,6 @@ public class ImageSettings {
 		}
 
 
-		/** @return The appropriate template */
-		public Template getTemplate() {
-			String text = get_(SettingsImgE.galleryText);
-			String desc = get_(SettingsImgE.imageDesc);
-			if (contains(SettingsImgE.galleryEnabled)) {
-				if (text != null) {		// Text only
-					return new Template(
-							   new File(Container_Files.getInstance().cont.styleDirAbsolutePath() + File.separatorChar + "galleryText.html"),
-							   Container_Resources.readResource(Container_Resources.sgalleryText)
-						   );
-				} else {
-					if (desc != null) {	// Thumbnail with description
-						return new Template(
-								   new File(Container_Files.getInstance().cont.styleDirAbsolutePath() + File.separatorChar + "galleryImage.html"),
-								   Container_Resources.readResource(Container_Resources.sgalleryImage)
-							   );
-					} else {					// Thumbnail without description
-						return new Template(
-								   new File(Container_Files.getInstance().cont.styleDirAbsolutePath() + File.separatorChar + "galleryImageNodesc.html"),
-								   Container_Resources.readResource(Container_Resources.sgalleryImageNodesc)
-							   );
-					}
-
-				}
-			}
-			if (contains(SettingsImgE.thumbEnabled)) {
-				if (desc != null)		// Thumbnail with description
-					return new Template(
-							   new File(Container_Files.getInstance().styleDirAbsolutePath() + File.separatorChar + "thumbPictureT.html"),
-							   Container_Resources.readResource(Container_Resources.sthumbPictureT)
-						   );
-				else						// Thumbnail without description
-					return new Template(
-							   new File(Container_Files.getInstance().styleDirAbsolutePath() + File.separatorChar + "thumbPicture.html"),
-							   Container_Resources.readResource(Container_Resources.sthumbPicture)
-						   );
-			} else {
-				if (desc != null)		// Image with description
-					return new Template(
-							   new File(Container_Files.getInstance().styleDirAbsolutePath() + File.separatorChar + "pictureT.html"),
-							   Container_Resources.readResource(Container_Resources.spictureT)
-						   );
-				else						// Image without description
-					return new Template(
-							   new File(Container_Files.getInstance().styleDirAbsolutePath() + File.separatorChar + "picture.html"),
-							   Container_Resources.readResource(Container_Resources.spicture)
-						   );
-			}
-		}
-
-		/**
-		 *
-		 * @return The path to the image, including a standard image path
-		 */
-		public String getImagePath() {
-			String path = get_(SettingsImgE.imagePath);
-			if (path == null) path = "";
-			if (path.startsWith("./") || path.startsWith("../")) {
-				return path;
-			} else {
-				return XhtmlSettings.getInstance().local.dirImages() + path;
-			}
-		}
 
 		/**
 		 * Creates the path to the thumbnail.

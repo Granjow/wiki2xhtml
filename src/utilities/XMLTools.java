@@ -26,16 +26,14 @@ import src.Resources;
  */
 
 /**
- *
  * XML Tools
- *
- * @author Simon Eugster
  */
 public final class XMLTools {
 
 
 	/**
-	 * Extracts all NameChars defined for XML 1.0
+	 * Extracts all NameChars defined for XML 1.0.
+	 * @see {@link Resources.XmlNames}
 	 * @param s
 	 * @return Valid NameChar sequence
 	 */

@@ -27,6 +27,8 @@ public abstract class Settings<K extends Comparable<?>, V extends Comparable<?>>
 	
 	/** Checks to run before inserting */
 	private List<CheckerObject<K, V>> checkerList = new ArrayList<CheckerObject<K, V>>();
+	/** Adjustments to make before inserting a value, to preserve some properties */
+	private List<ValueAdjusterObject<K, V>> adjusterList = new ArrayList<ValueAdjusterObject<K,V>>();
 	/** Settings storage */
 	private HashMap<K, V> settingsMap = new HashMap<K, V>();
 	
@@ -45,7 +47,7 @@ public abstract class Settings<K extends Comparable<?>, V extends Comparable<?>>
 	
 	
 	
-	//////// BOOL ///////
+	//////// BOOL+SIMILAR ///////
 	
 	/** @returns true if <code>property</code> is set. */
 	public boolean isSet(final K property) {
@@ -68,6 +70,18 @@ public abstract class Settings<K extends Comparable<?>, V extends Comparable<?>>
 		}
 		return valid;
 	}
+	
+	/**
+	 * <p>Adjusts a value according to the ValueAdjusters set with {@link #addAdjuster(ValueAdjuster, Comparable)}.</p>
+	 * @return The adjusted value, using the adjuster for the given <code>property</code>.
+	 */
+	public V adjust(final K property, V value) {
+		for (ValueAdjusterObject<K, V> adjuster : adjusterList) {
+			value = adjuster.adjust(property, value);
+		}
+		return value;
+	}
+	
 	
 	
 	
@@ -125,8 +139,16 @@ public abstract class Settings<K extends Comparable<?>, V extends Comparable<?>>
 	 * Adds a checker. The task of the checker is to check values to be assigned to <code>key</code>
 	 * for validity. Invalid values will be rejected.
 	 */
-	public void addChecker(Checker<V> c, K key) {
+	public void addChecker(final Checker<V> c, final K key) {
 		checkerList.add(new CheckerObject<K, V>(c, key));
+	}
+	
+	/**
+	 * Adds a value adjuster. The task of a value adjuster is to change an incoming value to meet
+	 * certain properties, like paths ending with / always.
+	 */
+	public void addAdjuster(final ValueAdjuster<V> a, final K key) {
+		adjusterList.add(new ValueAdjusterObject<K, V>(a, key));
 	}
 	
 	
@@ -147,15 +169,37 @@ public abstract class Settings<K extends Comparable<?>, V extends Comparable<?>>
 	private static class CheckerObject<K, V>  {
 		private final Checker<V> checker;
 		private final K key;
-		public CheckerObject(Checker<V> checker, K key) {
+		public CheckerObject(final Checker<V> checker, final K key) {
 			this.checker = checker;
 			this.key = key;
 		}
-		public boolean valid(K key, V value) {
+		public boolean valid(final K key, final V value) {
 			if (key.equals(this.key)) {
 				return checker.check(value);
 			}
 			return true;
+		}
+	}
+	
+	/**
+	 * Value adjuster
+	 */
+	public static interface ValueAdjuster<V> {
+		/** @return Adjusted value; e.g. for a path make sure that it ends with a / */
+		public V adjust(V value);
+	}
+	private static class ValueAdjusterObject<K, V> {
+		private final ValueAdjuster<V> adjuster;
+		private final K key;
+		public ValueAdjusterObject(final ValueAdjuster<V> adjuster, final K key) {
+			this.adjuster = adjuster;
+			this.key = key;
+		}
+		public V adjust(final K key, final V value) {
+			if (key.equals(this.key)) {
+				return adjuster.adjust(value);
+			}
+			return value;
 		}
 	}
 	

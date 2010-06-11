@@ -84,6 +84,9 @@ public class Resources {
 	public static String metaMiddle = "\" content=\"";
 	public static String metaClose = "\" />";
 	public static String metaOpenAlt = "\n  <meta http-equiv=\"";
+	
+	public static final String xmlNameOpen = "<xmlname>";
+	public static final String xmlNameClose = "</xmlname>";
 
 
 	static final String operatingSystem = java.lang.System.getProperty("os.name");

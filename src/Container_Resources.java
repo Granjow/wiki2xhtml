@@ -44,57 +44,26 @@ public class Container_Resources {
 	public static Container_Resources getInstance() {
 		return cr;
 	}
+	
+	public static final String resdir = "/resources/";
 
-	public final Icon rAdd = new ImageIcon(getClass().getResource(
-											   "/resources/add.png"));
-
-	public final Icon rOpen = new ImageIcon(getClass().getResource(
-												"/resources/open.png"));
-
-	public final Icon rMOpen = new ImageIcon(getClass().getResource(
-				"/resources/mopen.png"));
-
-	public final Icon rClose = new ImageIcon(getClass().getResource(
-				"/resources/close.png"));
-
-	public final Icon rAbout = new ImageIcon(getClass().getResource(
-				"/resources/about.png"));
-
-	public final Icon rHelp = new ImageIcon(getClass().getResource(
-												"/resources/help.png"));
-
-	public final Icon rNext = new ImageIcon(getClass().getResource(
-												"/resources/next.png"));
-
-	public final Icon rSwiss = new ImageIcon(getClass().getResource(
-				"/resources/swiss.png"));
-
-	public final Icon rGermany = new ImageIcon(getClass().getResource(
-				"/resources/germany.png"));
-
-	public final Icon rItaly = new ImageIcon(getClass().getResource(
-				"/resources/italy.png"));
-
-	public final Icon rFrance = new ImageIcon(getClass().getResource(
-				"/resources/france.png"));
-
-	public final Icon rDir = new ImageIcon(getClass().getResource(
-											   "/resources/dir.png"));
-
-	public final Icon rDirOpen = new ImageIcon(getClass().getResource(
-				"/resources/dirOpen.png"));
-
-	public final Icon rSave = new ImageIcon(getClass().getResource(
-												"/resources/save.png"));
-
-	public final Icon rSaveDisk = new ImageIcon(getClass().getResource(
-				"/resources/saveDisk.png"));
-
-	public final Icon rExportSh = new ImageIcon(getClass().getResource(
-				"/resources/export-sh.png"));
-
-	public final Icon rExportBat = new ImageIcon(getClass().getResource(
-				"/resources/export-bat.png"));
+	public final Icon rAdd = new ImageIcon(getClass().getResource(resdir + "add.png"));
+	public final Icon rOpen = new ImageIcon(getClass().getResource(resdir + "open.png"));
+	public final Icon rMOpen = new ImageIcon(getClass().getResource(resdir + "mopen.png"));
+	public final Icon rClose = new ImageIcon(getClass().getResource(resdir + "close.png"));
+	public final Icon rAbout = new ImageIcon(getClass().getResource(resdir + "about.png"));
+	public final Icon rHelp = new ImageIcon(getClass().getResource(resdir + "help.png"));
+	public final Icon rNext = new ImageIcon(getClass().getResource(resdir + "next.png"));
+	public final Icon rSwiss = new ImageIcon(getClass().getResource(resdir + "swiss.png"));
+	public final Icon rGermany = new ImageIcon(getClass().getResource(resdir + "germany.png"));
+	public final Icon rItaly = new ImageIcon(getClass().getResource(resdir + "italy.png"));
+	public final Icon rFrance = new ImageIcon(getClass().getResource(resdir + "france.png"));
+	public final Icon rDir = new ImageIcon(getClass().getResource(resdir + "dir.png"));
+	public final Icon rDirOpen = new ImageIcon(getClass().getResource(resdir + "dirOpen.png"));
+	public final Icon rSave = new ImageIcon(getClass().getResource(resdir + "save.png"));
+	public final Icon rSaveDisk = new ImageIcon(getClass().getResource(resdir + "saveDisk.png"));
+	public final Icon rExportSh = new ImageIcon(getClass().getResource(resdir + "export-sh.png"));
+	public final Icon rExportBat = new ImageIcon(getClass().getResource(resdir + "export-bat.png"));
 
 	public final File rPDFCrystal = new File(getClass().getResource(sPDF).getFile());
 	public final File rOOo = new File(getClass().getResource(sOOo).getFile());
@@ -114,35 +83,41 @@ public class Container_Resources {
 	public final InputStream iRPM = getClass().getResourceAsStream(sRPM);
 	public final InputStream iDEB = getClass().getResourceAsStream(sDEB);
 
-	public static final String spicture = "/resources/picture.html";
-	public static final String spictureT = "/resources/pictureT.html";
-	public static final String sthumbPicture = "/resources/thumbPicture.html";
-	public static final String sthumbPictureT = "/resources/thumbPictureT.html";
-	public static final String sgalleryText = "/resources/galleryText.html";
-	public static final String sgalleryImageNodesc = "/resources/galleryImageNodesc.html";
-	public static final String sgalleryImage = "/resources/galleryImage.html";
-	public static final String sgalleryContainer = "/resources/galleryContainer.html";
-	public static final String sTOC = "/resources/tplTOC.txt";
-	public static final String sabout = "/resources/about.html";
-	public static final String smissingTemplate = "/resources/tplMissingTemplate.txt";
+	// TODO 0 Removed, Doc!
+//	public static final String spicture = "/resources/picture.html";
+//	public static final String spictureT = "/resources/pictureT.html";
+//	public static final String sthumbPicture = "/resources/thumbPicture.html";
+//	public static final String sthumbPictureT = "/resources/thumbPictureT.html";
+//	public static final String sgalleryText = "/resources/galleryText.html";
+//	public static final String sgalleryImageNodesc = "/resources/galleryImageNodesc.html";
+//	public static final String sgalleryImage = "/resources/galleryImage.html";
+//	public static final String sgalleryContainer = "/resources/galleryContainer.html";
+	
+	public static final String sTplImage = "tplImage.txt";
+	public static final String sTplGallery = "tplGallery.txt";
+	public static final String sTplImagepage = "tplImagepage.txt";
+	
+	public static final String sTOC = resdir + "tplTOC.txt";
+	public static final String sabout = resdir + "about.html";
+	public static final String smissingTemplate = resdir + "tplMissingTemplate.txt";
 	public static final String srecursionTemplateName = "tplRecursion.txt";
-	public static final String srecursionTemplate = "/resources/" + srecursionTemplateName;
-	public static final String sreck = "/resources/reck.html";
-	public static final String sPDF = "/resources/Crystal_Clear_mimetype_pdf.png";
-	public static final String sOOo = "/resources/Crystal_Clear_app_openoffice.png";
-	public static final String sXCF = "/resources/xcf.png";
-	public static final String sTEX = "/resources/tex.png";
-	public static final String sTT = "/resources/font_truetype.png";
-	public static final String sZIP = "/resources/tgz.png";
-	public static final String sRPM = "/resources/rpm.png";
-	public static final String sDEB = "/resources/deb.png";
+	public static final String srecursionTemplate = resdir + "" + srecursionTemplateName;
+	public static final String sreck = resdir + "reck.html";
+	public static final String sPDF = resdir + "Crystal_Clear_mimetype_pdf.png";
+	public static final String sOOo = resdir + "Crystal_Clear_app_openoffice.png";
+	public static final String sXCF = resdir + "xcf.png";
+	public static final String sTEX = resdir + "tex.png";
+	public static final String sTT = resdir + "font_truetype.png";
+	public static final String sZIP = resdir + "tgz.png";
+	public static final String sRPM = resdir + "rpm.png";
+	public static final String sDEB = resdir + "deb.png";
 
-	public static final java.net.URL uabout = Container_Resources.class.getResource("/resources/gui-about.html");
-	public static final java.net.URL uhelp = Container_Resources.class.getResource("/resources/gui-help.html");
+	public static final java.net.URL uabout = Container_Resources.class.getResource(resdir + "gui-about.html");
+	public static final java.net.URL uhelp = Container_Resources.class.getResource(resdir + "gui-help.html");
 
 	public final Image getIcon() {
 		try {
-			return ImageIO.read(getClass().getResource("/resources/wx-icon.png"));
+			return ImageIO.read(getClass().getResource(resdir + "wx-icon.png"));
 		} catch (IOException e) {
 
 			e.printStackTrace();

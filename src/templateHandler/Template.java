@@ -1,21 +1,20 @@
 package src.templateHandler;
 
-import java.io.File;
+import java.io.FileNotFoundException;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.regex.Matcher;
 
-import src.Container_Files;
 import src.Container_Resources;
 import src.Globals;
 import src.XHTML;
 import src.argumentHandler.ArgumentReaderObject;
 import src.argumentHandler.ArgumentItem;
-import src.commentator.Logger;
+import src.project.WikiProject;
+import src.project.WikiProject.FallbackFile;
 import src.resources.RegExpressions;
-import src.utilities.IORead_Stats;
 
 /*
  *   Copyright (C) 2007-2010 Simon Eugster <granjow@users.sf.net>
@@ -40,12 +39,13 @@ import src.utilities.IORead_Stats;
  * 
  * This class will once be very powerful and handle templates of any kind.
  * (Receives the name of a template and its arguments and returns the template text afterwards)
- *
- * @author Simon Eugster
  */
 public class Template {
-
-	private File templateSource = null;
+	
+	public final String templateFilename;
+	
+	private final WikiProject wikiProject;
+	private FallbackFile templateSource;
 	private StringBuffer template = new StringBuffer();
 	private HashMap<String, ArgumentItem> arguments = new HashMap<String, ArgumentItem>();
 
@@ -55,19 +55,16 @@ public class Template {
 		MISSING
 	}
 
-	public Template() {	}
-	public Template(String templateFilename) {
-		templateSource = null;
-		File f;
-		f = new File(templateFilename);
-		if (!f.exists()) {
-			f = new File(Container_Files.getInstance().cont.sourceDir() + templateFilename);
+	public Template(String templateFilename) throws FileNotFoundException {
+		this(templateFilename, null);
+	}
+	public Template(String templateFilename, WikiProject wikiProject) throws FileNotFoundException {
+		if (wikiProject == null) {
+			wikiProject = new WikiProject(".");
 		}
-		if (f.exists() && !f.isDirectory() && f.canRead()) {
-			templateSource = f;
-		} else {
-			System.err.println("Could not find " + f.getAbsolutePath());
-		}
+		templateSource = wikiProject.locate(templateFilename);
+		this.wikiProject = wikiProject;
+		this.templateFilename = templateFilename;
 	}
 
 	@SuppressWarnings("unused")
@@ -105,16 +102,19 @@ public class Template {
 	 * 
 	 * @param callingTemplates A list of templates which call this template, for loop detection.
 	 * @return The template with the given arguments applied to
+	 * @throws FileNotFoundException 
 	 */
 	public StringBuffer applyTemplate(String args, ArrayList<String> callingTemplates, 
-			HashMap<String, String> cdataSections, WarningType warning) {
+			HashMap<String, String> cdataSections, WarningType warning) throws FileNotFoundException {
 		// Try to read the template
 		if (!readTemplate()) {
 			if (warning == WarningType.RECURSION) {
-				template = Container_Resources.readResource(Container_Resources.srecursionTemplate);
+				templateSource = wikiProject.locate(Container_Resources.srecursionTemplate);
+				readTemplate();
 			} else {
-				template = Container_Resources.readResource(Container_Resources.smissingTemplate);
+				templateSource = wikiProject.locate(Container_Resources.smissingTemplate);
 				warning = WarningType.MISSING;
+				readTemplate();
 			}
 		}
 
@@ -152,12 +152,12 @@ public class Template {
 		template = out;
 
 		// Test for recursion; insert warning template if recursion exists
-		if (callingTemplates != null && callingTemplates.size() > 0 && callingTemplates.contains(templateSource.getPath())) {
+		if (callingTemplates != null && callingTemplates.size() > 0 && callingTemplates.contains(templateSource.pathInfo())) {
 			String s = java.util.Arrays.toString(callingTemplates.toArray());
 			template.append(TemplateManager.applyTemplates(
 								new StringBuffer(
 									"{{:" +
-									Container_Resources.srecursionTemplateName + "|" + templateSource.getPath()
+									Container_Resources.srecursionTemplateName + "|" + templateSource.pathInfo()
 									+ "|" + s
 									+ "}}"
 								)
@@ -167,7 +167,7 @@ public class Template {
 		} else {
 			// Search for sub-templates in the current template and apply them.
 			if (callingTemplates == null) callingTemplates = new ArrayList<String>();
-			callingTemplates.add((templateSource == null ? "null" : templateSource.getPath()));
+			callingTemplates.add((templateSource == null ? "null" : templateSource.pathInfo()));
 			template = TemplateManager.applyTemplates(template, callingTemplates, cdataSections, warning);
 		}
 
@@ -179,29 +179,26 @@ public class Template {
 	 * @return Success
 	 */
 	private boolean readTemplate() {
-		String s = "Template source: " + templateSource + "; ";
-		if (templateSource == null) return false;
 		try {
 			// Load template; Convert to Unix lines if necessary
-			template = IORead_Stats.readSBuffer(templateSource);
+			template = templateSource.getContent();
 			template = XHTML.makeUnixLines(template);
-			if (template.charAt(template.length()-1) == '\n' && !Globals.templateWarnings.contains(templateSource.getAbsolutePath())) {
+			if (template.charAt(template.length()-1) == '\n' && !Globals.templateWarnings.contains(templateSource.pathInfo())) {
 				while (template.charAt(template.length()-1) == '\n') {
 					template.replace(template.length()-1, template.length(), "");
 				}
-				Globals.templateWarnings.add(templateSource.getAbsolutePath());
+				Globals.templateWarnings.add(templateSource.pathInfo());
 			}
 			return true;
 		} catch (IOException e) {
 //			Logger.append(s + e); //TODO
-			System.err.println(s);
 			e.printStackTrace();
 		} catch (NullPointerException e) {
 //			Logger.getInstance().log.append(s + e);
-			System.err.println(s);
 			e.printStackTrace();
 		}
 		return false;
 	}
+	
 
 }

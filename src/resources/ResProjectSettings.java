@@ -2,8 +2,10 @@ package src.resources;
 
 import java.util.regex.Pattern;
 
+import src.Constants.Adjusters;
 import src.Constants.Checkers;
 import src.project.settings.Settings.Checker;
+import src.project.settings.Settings.ValueAdjuster;
 
 public final class ResProjectSettings {
 
@@ -22,12 +24,12 @@ public final class ResProjectSettings {
 	 */
 	public static enum SettingsE {
 		/** Meta data: Author */			author ("Author"),
-		/** Default title for all pages */	defaultTitle ("DefaultTitle"),
+//		/** Default title for all pages */	defaultTitle ("DefaultTitle"), // use title for project instead
 		/** Meta data: Page description */	desc ("Desc(?:ription)?"),
 		/** Footer */						footer ("Footer"),
 		/**
 		 * Number of images per line in the gallery
-		 */									galleryImagesPerLine ("GalleryImagesPerLine", Checkers.positiveByteChecker),
+		 */									galleryImagesPerLine ("GalleryImagesPerLine", Checkers.positiveNonzeroByteChecker),
 		/** Width of thumbnails in galleries 
 		 */									galleryThumbWidth ("GalleryThumbWidth", Checkers.sizeChecker),
 		/** Page heading */					h1 ("H1"),
@@ -35,11 +37,11 @@ public final class ResProjectSettings {
 		/** Meta data: Page favicon */		icon ("Icon"),
 		/** Width for images on image pages 
 		 */									imagepageImgWidth ("ImageWidthImagepage", Checkers.sizeChecker),
-			/** What to use as imagepage title alternative
-			 * @since wiki2xhtml 3.5 (multiple arguments before)
-			 */ 								imagepageTitle ("ImagepageTitle"),
-		/** Directory for image pages */	imagepagesDir ("DirImagepages"),
-		/** Directory for images */			imagesDir ("DirImages"),
+		/** What to use as imagepage title alternative
+		 * @since wiki2xhtml 3.5 (multiple arguments before)
+		 */ 								imagepageTitle ("ImagepageTitle"),
+		/** Directory for image pages */	imagepagesDir ("DirImagepages", Adjusters.directoryTrailingSlashAdjuster),
+		/** Directory for images */			imagesDir ("DirImages", Adjusters.directoryTrailingSlashAdjuster),
 		/** Meta data: page keywords */		keywords ("Keywords", true, ","),
 		/** Meta data: Page language */		lang ("Lang"),
 		/** Custom meta data */				meta ("Meta", true, "\n"),
@@ -63,17 +65,21 @@ public final class ResProjectSettings {
 		private final String separator;
 		private final boolean loop;
 		private final Pattern regex;
-		private final Checker<String> checker;
+		public final Checker<String> checker;
+		public final ValueAdjuster<String> adjuster;
 	
-		SettingsE(String property) { this(property, false, null, null); }
-		SettingsE(String property, Checker<String> checker) { this(property, false, null, checker); }
-		SettingsE(String property, boolean loop, String separator) { this(property, loop, separator, null); }
+		private SettingsE(String property) { this(property, false, null, null); }
+		private SettingsE(String property, Checker<String> checker) { this(property, false, null, checker); }
+		private SettingsE(String property, ValueAdjuster<String> adjuster) { this(property, false, null, null, adjuster); }
+		private SettingsE(String property, boolean loop, String separator) { this(property, loop, separator, null); }
+		private SettingsE(String property, boolean loop, String separator, Checker<String> checker) { this(property, loop, separator, checker, null); }
 		
-		SettingsE(String property, boolean loop, String separator, Checker<String> checker) {
+		private SettingsE(String property, boolean loop, String separator, Checker<String> checker, ValueAdjuster<String> adjuster) {
 			this.property = property;
 			this.loop = loop;
 			this.separator = separator;
 			this.checker = checker;
+			this.adjuster = adjuster;
 			regex = Pattern.compile("(?m)\\{\\{" + keyword() + ":((?:(?!\\}\\}).)+)\\}\\}"); // basically {{Key:*}}
 		}
 	
@@ -93,13 +99,6 @@ public final class ResProjectSettings {
 		 */
 		public String separator() {
 			return separator;
-		}
-		/**
-		 * @return Checker validating values for this property 
-		 * @since wiki2xhtml 3.5
-		 */
-		public Checker<String> checker() {
-			return checker;
 		}
 		
 	}
@@ -121,34 +120,70 @@ public final class ResProjectSettings {
 		 */										scriptMode,
 		/** Text title (aka text header) */		textTitle;
 	}
+	
+	public static enum EImageProperties {
+		caption ("caption", "Image caption"),
+		context ("context", "Image context: gallery or normal"),
+		file ("file", "Filename alone"),
+		link ("link", "Path to the image page or the image, depending on " +
+				"whether the image page has been created or not"),
+		meta ("meta", "Meta data"), // TODO fill in
+		next ("next", "Link to next image on the page"), // TODO fill in
+		longdesc ("ld", "Long image description"),
+		pageCreated ("pageCreated", "Image page created?"),
+		path ("path", "Image path"),
+		prev ("prev", "Link to previous image on the page"),  // TODO fill in
+		small ("small", "Small image, to inform imagepage about not enlarging it"), // TODO fill in
+		text ("text", "Text provided"),
+		title ("title", "What to use as title: caption, file, text"),
+		thumb ("thumb", "Thumbnail path"),
+		up ("up", "Link back to the page");	 // TODO fill in
+		
+		public final String property;
+		public final String desc;
+		private EImageProperties(String property, String desc) {
+			this.property = property;
+			this.desc = desc;
+		}
+	}
 
+	/**
+	 * Properties belonging to a specific image, like description, custom thumbnail, etc.
+	 * @deprecated
+	 */
 	public static enum SettingsImgE {
 		/** Additional arguments */				args,
 		/** Additional link arguments */		argsLink,
 		/** Insert clear=both before */			clearAfter,
 		/** Insert clear=both after */			clearBefore,
-		/** Gallery counter */					galleryCounter,
-		/** Gallery */							galleryEnabled,
-		/** Text (gallery entries) */			galleryText,
+		/** Gallery counter */					galleryCounter, //init: 0
 		/** Image caption */					imageCaption,
-		/** Image description */				imageDesc,
+		/** Image context: gallery, thumb etc. See {@link ImageContextE}*/
+												imageContext,
 		/** Long image description */			imageLongdesc,
 		/** Image path */						imagePath,
 		/** Has the image page been created? */	imagePageWasCreated,
-		/** Small image? (No with has to be set for the image page) 
-		 */										imageSmall,
+		/** Small image? (No width has to be set for the image page) 
+		 */										imageSmall, //make width=small?
 		/** Direct link without image page? */	linkDirect,
 		/** Link to previous image */			linkPrev,
 		/** Link to next image */				linkNext,
 		/** Image width on the image page */	pageWidth,
-		/** Thumbnail? */						thumbEnabled,
+		/** Text, like image description */		text,
+												textLong,
 		/** Thumbnail position */				thumbPosition,
 		/** Thumbnail width */					thumbWidth,
 		/** Thumbnail source */					thumbSrc;
 	}
-
-	public static enum SettingsImgPageE {
-		/** Page name */						pageName;
+	
+	/**
+	 * The context in which an image appears (gallery or standard thumbnail)
+	 */
+	public static enum EImageContext {
+		/** In a gallery */						gallery ("gallery"),
+		/** Ordinary thumbnail */				thumb ("thumb");
+		public final String property;
+		private EImageContext(String property) { this.property = property; }
 	}
 
 	public static final class Settings {

@@ -19,7 +19,7 @@ public class WikiHeadings extends WikiTask {
 		return Task.Headings;
 	}
 	public WikiTask nextTask() {
-		return new WikiLinks();
+		return new WikiImages();
 	}
 	/**
 	 * Replaces the headings marked with p.e. == Heading == with the according

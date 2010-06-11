@@ -1,10 +1,13 @@
 package src.project.file;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import src.project.WikiProject;
+import src.project.settings.ImageProperties;
+import src.project.settings.ImageSettings;
 import src.project.settings.LocalSettings;
 import src.project.settings.PageSettings;
 import src.resources.ResProjectSettings.SettingsE;
@@ -28,29 +31,34 @@ import src.tasks.WikiLinks.NamespaceObject;
  *   GNU General Public License for more details.
 
  *   You should have received a copy of the GNU General Public License
- *   along with this http://www.gnu.org/licenses/.  If not, see <http://www.gnu.org/licenses/>.
- *
- *
+ *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+/**
+ * A single wiki file belonging to a WikiProject
+ */
 public abstract class WikiFile {
 	
 	protected StringBuffer content = null;
 	
-	private final boolean sitemap;
+	public final boolean sitemap;
+	
 	private final boolean parse;
+	/** Filename of this file */
 	public final String name;
 	public final Generators generators;
 	
-	private final WikiProject project;
+	public final WikiProject project;
 	
 	protected boolean alreadyRead = false;
 	/** List of all WikiTasks to be executed. Can be adjusted if necessary. */
 	private ArrayList<Task> tasks = new ArrayList<Task>();
 	private PageSettings pageSettings = new PageSettings();
 	private LocalSettings localSettings = new LocalSettings();
+	private ImageSettings imageSettings = new ImageSettings(this);
 	
 	public ArrayList<String> nowiki = new ArrayList<String>();
+	public HashMap<String, ImageProperties> imagePropertiesList = new HashMap<String, ImageProperties>(); 
 
 	private ArrayList<NamespaceObject> linkNamespaces;
 	
@@ -149,6 +157,15 @@ public abstract class WikiFile {
 			}
 		} while ((task = task.nextTask()) != null);
 	}
+	
+	
+	
+	
+	
+
+
+	
+	
 	
 	public static void main(String[] args) {
 		Pattern p = Pattern.compile("(?m)^(.+?)=(.+)$");

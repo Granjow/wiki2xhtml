@@ -6,7 +6,17 @@ import java.io.StringReader;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.xnap.commons.i18n.I18n;
+import org.xnap.commons.i18n.I18nFactory;
+
+import src.Constants;
 import src.Statistics;
+import src.images.ImageTools;
+import src.project.WikiProject;
+import src.project.settings.ImageProperties;
+import src.resources.ResProjectSettings.EImageProperties;
+import src.resources.ResProjectSettings.SettingsE;
+import src.resources.ResProjectSettings.SettingsLocalE;
 import src.tasks.WikiHeadings;
 
 /*
@@ -31,6 +41,8 @@ import src.tasks.WikiHeadings;
  * Retrieve information from a WikiFile
  */
 public class Generators {
+	
+	private static I18n i18n = I18nFactory.getI18n(Generators.class, "bin.l10n.Messages", src.Globals.getLocale());
 	
 	private final WikiFile file;
 	
@@ -108,6 +120,76 @@ public class Generators {
 		item.append("\">" + name + "</a>");
 
 		return item;
+	}
+	
+	/**
+	 * @return The page title, replacing %s and %p by standard title and page number
+	 */
+	public String title() {
+		String title = file.getProperty(SettingsE.title, false);
+		if (title == null) {
+			title = file.getProperty(SettingsE.h1, true);
+		} else {
+			title = title(title);
+		}
+		if (title == null) title = "";
+		return title;
+	}
+	
+	/**
+	 * @param pattern Input title
+	 * @return The pattern with %s and %p replaced; see {@link #title()}
+	 */
+	public String title(String pattern) {
+		String title = pattern;
+		int pos = title.indexOf(Constants.Tags.Title.titleTag);
+		if (pos >= 0) {
+			String defaultTitle = file.project.getProperty(SettingsE.title);
+			if (defaultTitle == null) defaultTitle = "";
+			title = title.substring(0, pos)
+					+ defaultTitle
+					+ title.substring(pos + 2, title.length());
+		}
+
+		pos = title.indexOf(Constants.Tags.Title.pageTag);
+		if (pos >= 0) {
+			title = title.substring(0, pos)
+					+ page(DisplayRule.pageXofY)
+					+ title.substring(pos + 2, title.length());
+		}
+		return title;
+	}
+	
+	public static enum DisplayRule {
+		pageXofY, pageX, X;
+	}
+	public String page(final DisplayRule displayRule) {
+		String page;
+		String number = file.getProperty(SettingsLocalE.pageNumber);
+		String totalPages = file.getProperty(SettingsLocalE.pagesTotal);
+		switch (displayRule) {
+		case pageXofY:
+			page = i18n.tr("Page {0} of {1}", number, totalPages);
+			break;
+		case pageX:
+			page = i18n.tr("Page {0}", number);
+			break;
+		case X:
+		default:
+			page = number;
+			break;
+		}
+		
+		return page;
+	}
+	
+	public static void main(String[] args) throws IOException {
+		WikiProject proj = new WikiProject(".");
+		ImageProperties prop = new ImageProperties(new VirtualWikiFile(proj, "name", false, false));
+		prop.set_(EImageProperties.text, "Text.");
+		prop.set_(EImageProperties.path, "test.jpg");
+		StringBuffer out = ImageTools.generateThumbnailEntry(prop);
+		System.out.println("Output: >>>\n" + out + "\n<<<");
 	}
 
 }

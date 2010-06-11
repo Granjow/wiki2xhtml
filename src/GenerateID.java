@@ -168,7 +168,7 @@ public class GenerateID {
 					;
 				else if (integer.length() < 10) {
 					e.printStackTrace();
-					System.out.println("Length < 10: >" + integer + "<");
+					System.err.println("Length < 10: >" + integer + "<");
 				} else {
 					BigInteger l = new BigInteger(integer);
 					hmd5.append(toHexBi(l, lowercase) + part);

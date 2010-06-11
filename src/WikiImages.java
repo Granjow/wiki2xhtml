@@ -9,10 +9,11 @@ import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import src.Constants.SettingsE;
-import src.Constants.SettingsImgE;
 import src.commentator.CommentAtor;
 import src.commentator.CommentAtor.CALevel;
+import src.resources.RegExpressions;
+import src.resources.ResProjectSettings.SettingsE;
+import src.resources.ResProjectSettings.SettingsImgE;
 import src.settings.ImageSettings.Image;
 import src.settings.XhtmlSettings;
 import src.typo.Formattings;
@@ -41,11 +42,6 @@ import src.utilities.XMLTools;
  */
 
 /**
- *
- * Generates html code for images
- *
- * @author Simon Eugster
- *
  * TODO 2 style: breite von thumbnails in css dynamisch
  */
 public class WikiImages {
@@ -54,105 +50,8 @@ public class WikiImages {
 
 	private static final src.settings.ImageSettings is = src.settings.ImageSettings.getInstance();
 
-	/**
-	 * Generates a thumbnail entry.
-	 * @return Thumbnail code
-	 * @throws IOException
-	 */
-	public static StringBuffer generateThumbnailEntry() throws IOException {
-		String link;
-
-		if (is.image.contains(SettingsImgE.imagePageWasCreated)) {
-			link = is.image.getImagepagePath(false, false);
-		} else {
-			link = is.image.getImagePathHtml();
-		}
-
-		String desc = is.image.contains(SettingsImgE.galleryText) ? is.image.get_(SettingsImgE.galleryText) : is.image.get_(SettingsImgE.imageDesc);
-		if (desc == null) desc = "";
-		Template tp = is.image.getTemplate();
-		tp.clear();
-		tp.replaceAll(Constants.TemplateTags.alt,
-					  src.utilities.WikiStringTools.disableWikilinks(
-						  desc.replaceAll(Resources.Regex.tagContent.pattern(), "$1"))
-					  .replaceAll("\"", "&quot;")
-					 );
-		tp.replaceAll(Constants.TemplateTags.pos, is.image.contains(SettingsImgE.thumbPosition) ? is.image.get_(SettingsImgE.thumbPosition) : "");
-		tp.replaceAll(Constants.TemplateTags.link, link);
-		tp.replaceAll(Constants.TemplateTags.thumb, is.image.getThumbSrc());
-		tp.replaceAll(Constants.TemplateTags.imagePath, is.image.getImagePathHtml());
-		tp.replaceAll(Constants.TemplateTags.width, is.image.getWidthThumbAttrib());
-		tp.replaceAll(Constants.TemplateTags.desc, desc);
-		tp.replaceAll(Constants.TemplateTags.descXmlName, XMLTools.getXmlNameChar(desc, "\\s"));
-		tp.replaceAll(Constants.TemplateTags.id, is.image.getID());
-		tp.replaceAll(Constants.TemplateTags.args, is.image.contains(SettingsImgE.args) ? is.image.get_(SettingsImgE.args) : "");
-		tp.replaceAll(Constants.TemplateTags.argsLink, is.image.contains(SettingsImgE.argsLink) ? is.image.get_(SettingsImgE.argsLink) : "");
-		StringBuffer output = new StringBuffer();
-		if (is.image.contains(SettingsImgE.clearBefore)) {
-			output.append("<p style=\"clear: both; margin: 0pt; padding: 0pt; height: 0pt;;\"></p>\n");
-		}
-		output.append(tp.getOutput());
-		if (is.image.contains(SettingsImgE.clearAfter)) {
-			output.append("<p style=\"clear: both; margin: 0pt; padding: 0pt; height: 0pt;;\"></p>\n");
-		}
-		return output;
-	}
-
-	/**
-	 * Make the [[Image:xx]] to &lt;img src="xx" /&gt; tags.
-	 * <p>Rewritten: August 2008</p>
-	 *
-	 * @param in The input file
-	 * @return input file with replaced image tags
-	 */
-	public static StringBuffer makeImages(StringBuffer in) {
-		Statistics.getInstance().sw.timeInsertingImages.continueTime();
-
-		Container_Files fc = Container_Files.getInstance();
-
-		StringBuffer out = new StringBuffer();
-		short counter = 0;
-
-		Matcher m;
-
-		is.nextPage(fc.currentFilename);
-
-		m = Resources.Regex.images.matcher(in);
-		int last = 0;
-
-		while (m.find()) {
-			out.append(in.substring(last, m.start()));
-			Statistics.getInstance().counter.imagesTotal.increase();
-
-			// Read the image's arguments
-			is.nextItem();
-			is.image.readArguments(m.group(1), false);
-			is.image.set_(SettingsImgE.galleryEnabled, is.image.nullValue());
-
-			// Generate an image page if they are to be generated, a isThumbDesired has to be inserted and it's no direct link.
-			if (is.image.contains(SettingsImgE.thumbEnabled) && !is.image.contains(SettingsImgE.linkDirect)) {
-				generateImagepage();
-			}
-
-			try {
-				out.append(generateThumbnailEntry());
-			} catch (FileNotFoundException e) {
-				CommentAtor.getInstance().ol("A file could not be found. Don't know why. Error message: \n" + e.getMessage(), CALevel.MSG);
-			} catch (IOException e) {
-				CommentAtor.getInstance().ol("An IO Error occurred. Don't know why. Error message: \n" + e.getMessage(), CALevel.MSG);
-			}
 
 
-			last = m.end();
-		}
-		out.append(in.substring(last, in.length()));
-
-		/* Statistics */
-		Statistics.getInstance().counter.imagesTotal.increase(counter);
-		Statistics.getInstance().sw.timeInsertingImages.stop();
-
-		return out;
-	}
 
 	/**
 	 * <p>Builds all galleries.</p>
@@ -241,7 +140,7 @@ public class WikiImages {
 						}
 
 						tp.replace(Constants.TemplateTags.caption, "<h3>" + caption + "</h3>");
-						tp.replace(Constants.TemplateTags.id, is.page.getIdGallery());
+						tp.replace(Constants.TemplateTags.id, is.page.nextGalleryID());
 						tp.replaceContent();
 
 						out.append(tp.getOutput());
@@ -304,119 +203,7 @@ public class WikiImages {
 		return out;
 	}
 
-	/**
-	 * Generates an image page
-	 * @since wiki2xhtml 3.4: Titles for image pages
-	 */
-	public static void generateImagepage() {
-
-		try {
-			StringBuffer sb = IORead_Stats.readSBuffer(Container_Files.getInstance().cont.imageTemplate());
-			XhtmlSettings xhs = XhtmlSettings.getInstance();
-
-			String caption;
-			String desc = is.image.get_(SettingsImgE.imageDesc);
-			if (desc == null) desc = "";
-			if (is.image.contains(SettingsImgE.imageCaption)) {
-				caption = is.image.get_(SettingsImgE.imageCaption);
-			} else {
-				if ("true".equals(xhs.local.getLocalOrGlobal_(SettingsE.descForCaption))) {
-					caption = desc;
-					desc = "";
-				} else if ("true".equals(xhs.local.getLocalOrGlobal_(SettingsE.nameForCaption))) {
-					String path = is.image.get_(SettingsImgE.imagePath);
-					caption = path.substring(path.lastIndexOf('/'));
-				} else
-					caption = "";
-			}
-			if (caption == null) caption = "";
-			
-			String title = xhs.local.getLocalOrGlobal_(SettingsE.titleRule);
-			if (title == null) {
-				title = "%caption %s";
-			}
-			title = title.replaceAll("%caption", caption);
-			title = title.replaceAll("%path", is.image.getImagePathHtml());
-			title = title.replaceAll("%name", is.image.getImageFilenameHtml());
-			title = xhs.local.title(title);
-
-			StringTools.replaceAll(sb, Constants.TemplateTags.imagePath, is.image.getImagePathHtml());
-			StringTools.replaceAll(sb, Constants.TemplateTags.imageName, is.image.getImageFilenameHtml());
-			StringTools.replaceAll(sb, Constants.TemplateTags.imageCaption, caption);
-			StringTools.replaceAll(sb, Constants.TemplateTags.alt, caption.replaceAll(Resources.Regex.tagContent.pattern(), "$1"));
-			StringTools.replaceAll(sb, Constants.TemplateTags.pre, is.page.getBacklinkDir());
-			StringTools.replaceAll(sb, Constants.TemplateTags.back, is.image.getBacklinkPage());
-			StringTools.replaceAll(sb, Constants.TemplateTags.title, title);
-			StringTools.replaceAll(sb, Constants.TemplateTags.meta, xhs.local.metadata());
-			StringTools.replaceAll(sb, Constants.TemplateTags.width, is.image.contains(SettingsImgE.imageSmall) ? "" : is.image.getWidthPageAttrib());
-			ReplaceTags.replaceWiki2xhtml(sb);
-			ReplaceTags.replaceVersion(sb);
-			StringTools.replaceAll(sb, Constants.TemplateTags.nextImage, is.image.contains(SettingsImgE.linkNext) ?
-								   is.image.get_(SettingsImgE.linkNext)
-								   : is.image.getBacklinkPage());
-			StringTools.replaceAll(sb, Constants.TemplateTags.prevImage, is.image.contains(SettingsImgE.linkPrev) ?
-								   is.image.get_(SettingsImgE.linkPrev)
-								   : is.image.getBacklinkPage());
-			StringTools.replaceAll(sb, Constants.TemplateTags.desc,
-								   Formattings.format0r(new StringBuffer(is.image.contains(SettingsImgE.imageLongdesc) ? is.image.get_(SettingsImgE.imageLongdesc) : desc), "",
-														Formattings.BOLD | Formattings.ITALIC | Formattings.LINKS, false).toString());
-
-			/*
-			 * Insert the description
-			 * 080726 Fixed: &lt;desc&lt; and &gt;desc&gt; not correctly removed
-			 */
-			int descStart, descEnd;
-
-
-
-			if ((descStart = sb.indexOf(">desc>")) >= 0 && (descEnd = sb.indexOf("<desc<")) >= 0) {
-
-				/* Remove the block if not needed, otherwise remove position marks */
-				if (is.image.contains(SettingsImgE.imageLongdesc) || is.image.contains(SettingsImgE.imageDesc)) {
-					sb.delete(descEnd, descEnd + "<desc<".length());
-					sb.delete(descStart, descStart + ">desc>".length());
-
-				} else { /* No description given, remove everything between &lt;desc&lt; and &gt;desc&gt; */
-					sb.delete(descStart, descEnd + "<desc<".length());
-				}
-
-			}
-
-			/*
-			 * Remove the navigation part if not necessary
-			 */
-			int navStart, navEnd;
-			while ((navStart = sb.indexOf(">nav>")) >= 0 && (navEnd = sb.indexOf("<nav<")) >= 0) {
-				if (is.image.contains(SettingsImgE.galleryEnabled)) {
-					sb.delete(navEnd, navEnd + "<nav<".length());
-					sb.delete(navStart, navStart + ">nav>".length());
-				} else {
-					sb.delete(navStart, navEnd + "<nav<".length());
-				}
-			}
-
-			File f = new File(is.image.getImagepagePath(true, false));
-			IOWrite_Stats.writeString(f, sb.toString(), false);
-			if (Container_Files.getInstance().currentInFile.sitemap) {
-				Container_Files.getInstance().addSitemapEntry(f);
-			}
-
-			is.image.set_(SettingsImgE.imagePageWasCreated, "true");
-
-		} catch (IOException e) {
-			ca.ol("Error: Image page " + is.image.getImagepagePath(true, false) + " couldn't be created!\n", CALevel.ERRORS);
-			e.printStackTrace();
-
-			is.image.set_(SettingsImgE.imagePageWasCreated, is.image.nullValue());
-		} catch (NullPointerException e) {
-			if (Globals.getGuiManager().f != null && Globals.getGuiManager().f.isVisible()) {
-				/* GUI mode */
-			} else {
-				e.printStackTrace();
-			}
-		}
-
-	}
+	
 
 	/**
 	 * Links gallery images amongst each other

@@ -13,6 +13,7 @@ import javax.swing.filechooser.FileFilter;
 
 import src.Args.GetPolicyE;
 import src.project.settings.Settings.Checker;
+import src.project.settings.Settings.ValueAdjuster;
 import src.resources.ResProjectSettings;
 import src.resources.RegExpressions;
 import src.resources.ResProjectSettings.ImagepageCaptionAlternatives;
@@ -68,6 +69,7 @@ public final class Constants {
 	/** wiki2xhtml settings, like the version number */
 	public static final class Wiki2xhtml {
 
+		// TODO 0 check for git
 		public static final String revision = "$Revision: 1894 $".replace("$", "");
 		public static final String revisionDate = "$Date$".replace("$", "");
 		public static final String progName = "wiki2xhtml";
@@ -305,7 +307,7 @@ public final class Constants {
 	}
 
 	/** Tags used in templates */
-	public static final class TemplateTags {
+	@Deprecated public static final class TemplateTags {
 
 		/** @since wiki2xhtml 3.4 */
 		public static final String args = "[args]";
@@ -353,10 +355,16 @@ public final class Constants {
 	public static final class Checkers {
 		private static final Pattern pSize = Pattern.compile("^\\d+(?:%|px)$");
 		
-		public static final Checker<String> positiveByteChecker = new Checker<String>() {
+		public static final Checker<String> positiveNonzeroByteChecker = new Checker<String>() {
 			public boolean check(String value) {
 				byte b = Byte.parseByte(value);
 				return b > 0;
+			}
+		};
+		public static final Checker<String> positiveByteChecker = new Checker<String>() {
+			public boolean check(String value) {
+				byte b = Byte.parseByte(value);
+				return b >= 0;
 			}
 		}; 
 		public static final Checker<String> sizeChecker = new Checker<String>() {
@@ -387,6 +395,18 @@ public final class Constants {
 				System.err.println("Alternative must be one of the following: " + sb);
 				return false;
 			};
+		};
+	}
+	
+	public static final class Adjusters {
+		/** Ensures that a string ends with a <code>/</code> */
+		public static final ValueAdjuster<String> directoryTrailingSlashAdjuster = new ValueAdjuster<String>() {
+			public String adjust(String value) {
+				if (!value.endsWith("/")) {
+					value += "/";
+				}
+				return value;
+			}
 		};
 	}
 

@@ -1,6 +1,6 @@
 package src.templateHandler;
 
-import java.io.IOException;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.regex.Matcher;
@@ -8,7 +8,6 @@ import java.util.regex.Matcher;
 import src.Statistics;
 import src.resources.RegExpressions;
 import src.templateHandler.Template.WarningType;
-import src.utilities.IORead;
 
 /*
  *   Copyright (C) 2007-2010 Simon Eugster <granjow@users.sf.net>
@@ -38,8 +37,9 @@ public class TemplateManager {
 	
 	/**
 	 * Applies templates
+	 * @throws FileNotFoundException 
 	 */
-	public static StringBuffer applyTemplates(StringBuffer input) {
+	public static StringBuffer applyTemplates(StringBuffer input) throws FileNotFoundException {
 		return applyTemplates(input, null, null, null);
 	}
 	/**
@@ -48,11 +48,12 @@ public class TemplateManager {
 	 * @param cdataSections Map containing CDATA entries. May be <code>null</code>
 	 * in the initial call.
 	 * @param callingTemplates Previous templates. <code>null</code> in the initial call.
+	 * @throws FileNotFoundException 
 	 */
 	protected static StringBuffer applyTemplates(StringBuffer input, ArrayList<String> callingTemplates,
-			HashMap<String, String> cdataSections, WarningType warning) {
+			HashMap<String, String> cdataSections, WarningType warning) throws FileNotFoundException {
 		StringBuffer out = new StringBuffer();
-		Template tempTemplate = new Template();
+		Template tempTemplate;
 		if (cdataSections == null) { cdataSections = new HashMap<String, String>(); }
 
 
@@ -149,12 +150,6 @@ public class TemplateManager {
 		hash.append(input.hashCode());
 		hash.append((int) (java.lang.Math.random() * 100000));
 		return hash.toString();
-	}
-
-	private static StringBuffer testCdataRemover(StringBuffer input, HashMap<String, String> cdataSections) {
-		input = removeCdataSections(input, cdataSections);
-		input = insertCdataSections(input, cdataSections);
-		return input;
 	}
 
 }

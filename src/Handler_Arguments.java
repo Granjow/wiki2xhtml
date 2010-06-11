@@ -10,6 +10,7 @@ import src.Args.SearchPolicyE;
 import src.argsFilesReader.ArgsFilesReader;
 import src.commentator.CommentAtor;
 import src.commentator.CommentAtor.CALevel;
+import src.resources.RegExpressions;
 import src.update.UpdateChecker;
 import src.utilities.StringTools;
 
@@ -115,7 +116,7 @@ public class Handler_Arguments {
 
 			arguments = sb.toString();
 		}
-		Matcher m = Resources.Regex.argsFile.matcher(arguments);
+		Matcher m = RegExpressions.argsFile.matcher(arguments);
 		if (m.find()) {
 			arguments = arguments.substring(0, m.start()) + arguments.substring(m.end());
 			ArgsFilesReader afr = new ArgsFilesReader();
