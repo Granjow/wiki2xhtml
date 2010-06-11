@@ -16,6 +16,7 @@ public class ParserFunctionsTester extends junit.framework.TestCase {
 		assertEquals("empty", parse(new StringBuffer("{{#if:    \t \t||empty}}")).toString());
 		assertEquals("empty", parse(new StringBuffer("{{#if:||empty}}")).toString());
 		assertEquals("new\nline", parse(new StringBuffer("{{#if:||new\nline}}")).toString());
+		assertEquals("", parse(new StringBuffer("{{#if: | width=\"{{{width|}}}\" }}")).toString());
 	}
 	
 	@Test
