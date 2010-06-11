@@ -1,0 +1,4 @@
+<dl id="{{{id|missingID}}}">
+<dt><a href="[link]" [argsLink]><img src="{{{thumb}}}" alt="[alt]" [width] [args] /></a></dt>
+<dd>{{{text}}}</dd>
+</dl>

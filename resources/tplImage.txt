@@ -1,0 +1,9 @@
+<div class="imgthumb {{{pos|}}}" id="{{{id|missingID}}}">
+<dl>
+<dt><a href="{{{link}}}" {{{argsLink|}}}>
+	<img src="{{{path}}}" {{#if: {{{width|}}} | width="{{{width|}}}" }} {{{args|}}} />
+	</a>
+</dt>
+</dl>
+</div>
+
