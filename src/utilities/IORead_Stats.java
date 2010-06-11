@@ -2,6 +2,7 @@ package src.utilities;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 
 import src.Statistics;
 
@@ -35,6 +36,15 @@ public class IORead_Stats extends IORead {
 		try {
 			Statistics.getInstance().sw.timeReadingFiles.continueTime();
 			return IORead.readSBuffer(f);
+		} finally {
+			Statistics.getInstance().sw.timeReadingFiles.stop();
+		}
+	}
+
+	public static StringBuffer readSBuffer(URL url) throws IOException {
+		try {
+			Statistics.getInstance().sw.timeReadingFiles.continueTime();
+			return IORead.readSBuffer(url);
 		} finally {
 			Statistics.getInstance().sw.timeReadingFiles.stop();
 		}
