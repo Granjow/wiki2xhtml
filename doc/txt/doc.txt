@@ -32,8 +32,6 @@ To run wiki2xhtml, you will need the Java Runtime<ref>You can get Java for free 
 
 wiki2xhtml is licensed under the [http://en.wikipedia.org/wiki/GNU_General_Public_License GNU General Public License (GPL)].
 
-''Please let me know in the [http://forum.granjow.net/ wiki2xhtml forum] if there is something wrong, not understandable or missing.''
-
 == Last changes ==
 New since wiki2xhtml 3.4:
 * [[#namespace Namespaces for links]]

@@ -30,8 +30,6 @@ Dies ist die Hauptdokumentation zu wiki2xhtml. Die Dokumentation ist wie oben zu
 
 Um wiki2xhtml ausführen zu können, benötigst du die Java Runtime<ref>Java kann kostenlos unter [http://java.com/ java.com] heruntergeladen werden.</ref> Version 1.6 oder höher.
 
-''Sollte hier etwas fehlen oder unverständlich sein, melde es bitte im [http://forum.granjow.net/ wiki2xhtml-Forum]!''
-
 == Letzte Änderungen ==
 Neu seit wiki2xhtml 3.4
 * [[#namespace Namespaces für Links]]
