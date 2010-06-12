@@ -3,6 +3,7 @@ package src.project.settings;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map.Entry;
 
 /*
  *   Copyright (C) 2007-2010 Simon Eugster <granjow@users.sf.net>
@@ -81,6 +82,29 @@ public abstract class Settings<K extends Comparable<?>, V extends Comparable<?>>
 		}
 		return value;
 	}
+	
+	
+	
+
+	////////// JUST4FUN ////////////
+	/** Prints all properties to get an overview */
+	public void print(String sep) {
+		for (Entry<K, V> e : settingsMap.entrySet()) {
+			System.out.println(e.getKey() + sep + e.getValue());
+		}
+	}
+	/** Clamps all properties together */
+	public String getList(String propertySeparator, String kvSeparator) {
+		StringBuffer sb = new StringBuffer();
+		for (Entry<K, V> e : settingsMap.entrySet()) {
+			sb.append(e.getKey() + kvSeparator + e.getValue() + propertySeparator);
+		}
+		if (sb.length() > 0) {
+			sb.setLength(sb.length() - propertySeparator.length());
+		}
+		return sb.toString();
+	}
+	
 	
 	
 	

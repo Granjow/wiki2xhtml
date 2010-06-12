@@ -1,5 +1,7 @@
 package src.tasks;
 
+import java.io.FileNotFoundException;
+
 import src.project.file.WikiFile;
 import src.tasks.Tasks.Task;
 import src.templateHandler.TemplateManager;
@@ -13,7 +15,11 @@ public class WikiTemplates extends WikiTask {
 		return new WikiParserFunctions();
 	}
 	public void parse(WikiFile file) {
-		file.setContent(TemplateManager.applyTemplates(file.getContent()));
+		try {
+			file.setContent(TemplateManager.applyTemplates(file.getContent()));
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
 	}
 
 }

@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import src.Container_Files;
 import src.commentator.CommentAtor;
 import src.commentator.CommentAtor.CALevel;
 
@@ -130,12 +129,12 @@ public class Placeholder {
 				}
 
 			} else {
-				CommentAtor.getInstance().ol(
-					String.format("\noooops. Closing element \"%s\" (Regex-Pattern) is missing! " +
-								  "Please check whether it was wiki2xhtml's fault and report a bug if it is so. File: %s.",
-								  patternEnd,
-								  Container_Files.getInstance().currentFilename
-								 ), CALevel.ERRORS);
+//				CommentAtor.getInstance().ol(
+//					String.format("\noooops. Closing element \"%s\" (Regex-Pattern) is missing! " +
+//								  "Please check whether it was wiki2xhtml's fault and report a bug if it is so. File: %s.",
+//								  patternEnd,
+//								  Container_Files.getInstance().currentFilename
+//								 ), CALevel.ERRORS);
 				start = contentStart;
 			}
 

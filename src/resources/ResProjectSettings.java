@@ -122,8 +122,11 @@ public final class ResProjectSettings {
 	}
 	
 	public static enum EImageProperties {
+		argsLink ("argsLink", "Additional link arguments, e.g. when working with LightBox"),
 		caption ("caption", "Image caption"),
+		clear ("clear", "css:clear, may be before, after and both"),
 		context ("context", "Image context: gallery or normal"),
+		direct ("direct", "Link directly to the file"),
 		file ("file", "Filename alone"),
 		link ("link", "Path to the image page or the image, depending on " +
 				"whether the image page has been created or not"),
@@ -131,12 +134,16 @@ public final class ResProjectSettings {
 		next ("next", "Link to next image on the page"), // TODO fill in
 		longdesc ("ld", "Long image description"),
 		pageCreated ("pageCreated", "Image page created?"),
+		pageWidth ("pageWidth", "Width of the image on the image page"),
 		path ("path", "Image path"),
+		pos ("pos", "Desired thumbnail position: left, center, right"),
 		prev ("prev", "Link to previous image on the page"),  // TODO fill in
-		small ("small", "Small image, to inform imagepage about not enlarging it"), // TODO fill in
+		small ("small", "Small image, to inform imagepage about not enlarging it"),
 		text ("text", "Text provided"),
 		title ("title", "What to use as title: caption, file, text"),
 		thumb ("thumb", "Thumbnail path"),
+		thumbEnabled ("thumbEnabled", "A thumbnail should be used"),
+		thumbWidth ("thumbWidth", "Thumbnail width"),
 		up ("up", "Link back to the page");	 // TODO fill in
 		
 		public final String property;

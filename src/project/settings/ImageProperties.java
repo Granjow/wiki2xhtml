@@ -2,9 +2,16 @@ package src.project.settings;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
+import src.Constants;
 import src.Container_Resources;
 import src.Resources;
+import src.argumentHandler.ArgumentItem;
+import src.argumentHandler.ArgumentReader;
+import src.project.file.VirtualWikiFile;
 import src.project.file.WikiFile;
 import src.resources.ResProjectSettings.EImageProperties;
 import src.resources.ResProjectSettings.EImageContext;
@@ -34,6 +41,12 @@ import src.templateHandler.Template;
 public class ImageProperties extends Settings<EImageProperties, String> {
 	
 	public boolean imagepageCreated;
+	public int id;
+	
+	/** The previous image on the page */
+	public ImageProperties previousIP = null;
+	/** The next image on the page */
+	public ImageProperties nextIP = null;
 	
 	public final WikiFile parentFile;
 
@@ -130,6 +143,138 @@ public class ImageProperties extends Settings<EImageProperties, String> {
 		} else {
 			return new Template(Container_Resources.sTplGallery);
 		}
+	}
+	
+
+
+
+
+
+
+	/**
+	 * Reads arguments from an image tag ([[image:args]]).
+	 * @param args All image arguments, like &ldquo;<code>Image:venus.jpg|244px|The Venus</code>&rdquo;
+	 */
+	public void readArguments(final String args) {
+
+		ArrayList<ArgumentItem> a = ArgumentReader.getArguments(args);
+
+		Pattern pWidth = Pattern.compile("^\\d+(?:px|%)$");
+		Matcher mWidth;
+		Pattern pPWidth = Pattern.compile("^pw(?:idth)?=(\\d+(?:px|%))");
+		Matcher mPWidth;
+		Pattern pImage = Pattern.compile("(?i)(?:image|bild|file):(.+)");
+		Matcher mPImage;
+
+		for (ArgumentItem ai : a) {
+			
+			mPImage = pImage.matcher(ai.fullArg);
+			if (mPImage.matches()) {
+				set_(EImageProperties.path, mPImage.group(1));
+				continue;
+			}
+
+			/* Display thumbnail? */
+			if (Constants.Images.thumb.equals(ai.fullArg)) {
+				set_(EImageProperties.thumbEnabled, "true");
+				continue;
+			}
+
+			/* Position */
+			if (Constants.Position.left.equals(ai.fullArg)
+					|| Constants.Position.right.equals(ai.fullArg)
+					|| Constants.Position.center.equals(ai.fullArg)) {
+				set_(EImageProperties.pos, ai.fullArg);
+				continue;
+			}
+
+			/* Direct? */
+			if (Constants.Images.direct.equals(ai.fullArg)) {
+				set_(EImageProperties.direct, "true");
+				continue;
+			}
+
+			/* Small image? */
+			if (Constants.Images.small.equals(ai.fullArg)) {
+				set_(EImageProperties.small, "true");
+				continue;
+			}
+			
+			/* Clear? */
+			if (Constants.Images.clear.equals(ai.fullArg)) {
+				set_(EImageProperties.clear, "both");
+				continue;
+			}
+			if (ai.fullArg.startsWith(Constants.Images.clear + "=")) {
+				set_(EImageProperties.clear, ai.fullArg.substring(Constants.Images.clear.length() + 1));
+				continue;
+			}
+			
+			/* Additional arguments */
+			if (ai.fullArg.startsWith(Constants.Images.argsLink)) {
+				set_(EImageProperties.argsLink, ai.fullArg.substring(Constants.Images.argsLink.length()));
+				continue;
+			}
+
+
+			/* Width */
+			mWidth = pWidth.matcher(ai.fullArg);
+			if (mWidth.find()) {
+				set_(EImageProperties.thumbWidth, mWidth.group());
+				continue;
+			}
+
+			/* Thumbnail source */
+			if (ai.fullArg.startsWith(Constants.Images.pathThumb)) {
+				set_(EImageProperties.thumb, ai.fullArg.substring(Constants.Images.pathThumb.length()));
+				continue;
+			}
+
+			/* Caption */
+			if (ai.fullArg.startsWith(Constants.Images.captionShort)) {
+				set_(EImageProperties.caption, ai.fullArg.substring(2));
+				continue;
+			}
+			if (ai.fullArg.startsWith(Constants.Images.caption)) {
+				set_(EImageProperties.caption, ai.fullArg.substring(8));
+				continue;
+			}
+
+			/* Long description */
+			if (ai.fullArg.startsWith(Constants.Images.longDesc)) {
+				set_(EImageProperties.longdesc, ai.fullArg.substring(3));
+				continue;
+			}
+
+			/* Image page width */
+			mPWidth = pPWidth.matcher(ai.fullArg);
+			if (mPWidth.find()) {
+				set_(EImageProperties.pageWidth, mPWidth.group(1));
+				continue;
+			}
+
+			/* Description */
+			if (ai.fullArg.length() > 0) {
+				if (isSet(EImageProperties.text)) {
+					append_(EImageProperties.text, "|");
+				}
+				append_(EImageProperties.text, ai.fullArg);
+			}
+		}
+
+		// Check for non-ASCII characters
+		Matcher m = Pattern.compile(Resources.pNotAscii).matcher(get_(EImageProperties.path));
+		if (m.find()) {
+//			ca.o("Image contains non-ASCII characters! They should be removed.", CALevel.ERRORS);
+		}
+	}
+	
+	
+	public static void main(String[] args) {
+		WikiFile wf = new VirtualWikiFile(null, "name", false, false, new StringBuffer());
+		ImageProperties prop = new ImageProperties(wf);
+		prop.readArguments("Image:nowhere.jpg|thumb|right|this is a description");
+		prop.print(": ");
 	}
 	
 }

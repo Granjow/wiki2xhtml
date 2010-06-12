@@ -1,7 +1,6 @@
 package src.project.file;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -58,7 +57,7 @@ public abstract class WikiFile {
 	private ImageSettings imageSettings = new ImageSettings(this);
 	
 	public ArrayList<String> nowiki = new ArrayList<String>();
-	public HashMap<String, ImageProperties> imagePropertiesList = new HashMap<String, ImageProperties>(); 
+	public ArrayList<ImageProperties> imagePropertiesList = new ArrayList<ImageProperties>(); 
 
 	private ArrayList<NamespaceObject> linkNamespaces;
 	
@@ -123,6 +122,13 @@ public abstract class WikiFile {
 	}
 	public void removeAllTasks() {
 		tasks.clear();
+	}
+	
+
+	/** Adds an image property and directly returns its number in the list */
+	public int addImageProperties(ImageProperties prop) {
+		imagePropertiesList.add(prop);
+		return imagePropertiesList.indexOf(prop);
 	}
 	
 	public final ArrayList<NamespaceObject> getNamespaces() {

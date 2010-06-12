@@ -13,7 +13,6 @@ import src.commentator.CommentAtor;
 import src.commentator.CommentAtor.CALevel;
 import src.resources.RegExpressions;
 import src.resources.ResProjectSettings.SettingsE;
-import src.resources.ResProjectSettings.SettingsImgE;
 import src.settings.ImageSettings.Image;
 import src.settings.XhtmlSettings;
 import src.typo.Formattings;
@@ -45,12 +44,6 @@ import src.utilities.XMLTools;
  * TODO 2 style: breite von thumbnails in css dynamisch
  */
 public class WikiImages {
-
-	private static final CommentAtor ca = CommentAtor.getInstance();
-
-	private static final src.settings.ImageSettings is = src.settings.ImageSettings.getInstance();
-
-
 
 
 	/**

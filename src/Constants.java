@@ -207,12 +207,13 @@ public final class Constants {
 		/** Clear before and after (insert clear=both) to put it on a new line
 		 * @since wiki2xhtml 3.4 */
 		public static final String clear = "clear";
-		/** Clear before an image
-		 * @since wiki2xhtml 3.4 */
-		public static final String clearBefore = "clear:before";
-		/** Clear after an image
-		 * @since wiki2xhtml 3.4 */
-		public static final String clearAfter = "clear:after";
+		// TODO doc: clear=arg
+//		/** Clear before an image
+//		 * @since wiki2xhtml 3.4 */
+//		public static final String clearBefore = "clear:before";
+//		/** Clear after an image
+//		 * @since wiki2xhtml 3.4 */
+//		public static final String clearAfter = "clear:after";
 		/** Direct link, no image page */
 		public static final String direct = "direct";
 		/** Image is small, do not enlarge it on the image page */

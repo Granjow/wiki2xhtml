@@ -14,7 +14,13 @@ import src.utilities.IOWrite_Stats;
 
 public class ImageTools {
 	
-
+	/**
+	 * @return A placeholder for an image. Used for replacing image tags and insert the code
+	 * afterwards after the images have been linked.
+	 */
+	public static String getPlaceholder(ImageProperties prop) {
+		return String.format(">>>image-%d-placeholder<<<", prop.id);
+	}
 	
 	/**
 	 * Generates a thumbnail entry.

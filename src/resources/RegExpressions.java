@@ -108,14 +108,16 @@ public final class RegExpressions {
 	public static final Pattern images = Pattern.compile(
 											 "(?i)(?x)			# Ignore case, Allow comments \n" +
 											 "\\[\\[				# Two square brackets \n" +
-											 "(?:image|bild):	# Followed by imge: or bild: \n" +
-											 "((?:				# Followed by ... \n" +
+											 "(" +
+											 "(?:image|bild|file|datei):	# Followed by imge: or bild: \n" +
+											 "(?:					# Followed by ... \n" +
 											 "[^\\n\\[\\]]				# Anything except a new line or square brackets \n" +
 											 "|							# or ... \n" +
 											 "\\[\\[[^\\n\\[\\]]*\\]\\]	# a link inside of two square brackets \n" +
 											 "|							# or ... \n" +
 											 "\\[[^\\n\\[\\]]*\\]		# an external link inside of ever one square bracket \n" +
-											 ")++)					# All that several sw, at least once. Possessive for faster failing(?). \n" +
+											 ")++					# All that several sw, at least once. Possessive for faster failing(?). \n" +
+											 ")" +
 											 "\\]\\]				# Followed finally by two closing brackets"
 										 );
 	
