@@ -26,9 +26,6 @@ import java.util.Random;
 
 /**
  * Various ID generators.
- *
- * @author Simon Eugster
- * ,		hb9eia
  */
 public class GenerateID {
 	static final Random rand = new Random();
@@ -39,6 +36,7 @@ public class GenerateID {
 	
 	/**
 	 * Correct md5 implementation
+	 * @return Plain md5 sum (hexadecimal) of the input string.
 	 */
 	public static String md5sum(String s) {
 		StringBuffer hash = new StringBuffer();
@@ -63,7 +61,8 @@ public class GenerateID {
 
 	/**
 	 * @param s is the string to calculate the hash from
-	 * @return The MD5-Hash of the input string.
+	 * @return Sort of an MD5 hash of the input string.
+	 * @see #md5sum(String)
 	 */
 	public static String getMD5(String s) {
 		StringBuffer out = new StringBuffer();
