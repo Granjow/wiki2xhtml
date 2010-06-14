@@ -26,14 +26,12 @@ import src.utilities.XMLTools;
 /**
  * Contains properties about a single gallery
  */
-public class GalleryProperties extends Settings<EGalleryProperties, String> {
+public class GalleryProperties extends StringSettings<EGalleryProperties> {
 
 	public final WikiFile parentFile;
 	/** An ordered list of all items in this Gallery container. */
 	public final ArrayList<ImageProperties> imagePropertiesList;
-	
-	protected String concatenate(String left, String right) { return left + right; }
-	public String nullValue() { return null; }
+
 
 	public GalleryProperties(WikiFile parentFile) {
 		this.parentFile = parentFile;

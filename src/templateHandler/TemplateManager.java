@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.regex.Matcher;
 
 import src.Statistics;
+import src.project.WikiProject;
 import src.resources.RegExpressions;
 import src.templateHandler.Template.WarningType;
 
@@ -40,7 +41,7 @@ public class TemplateManager {
 	 * @throws FileNotFoundException 
 	 */
 	public static StringBuffer applyTemplates(StringBuffer input) throws FileNotFoundException {
-		return applyTemplates(input, null, null, null);
+		return applyTemplates(input, null, null, null, null);
 	}
 	/**
 	 * Applies templates. Templates can be called the following way: <br />
@@ -50,7 +51,7 @@ public class TemplateManager {
 	 * @param callingTemplates Previous templates. <code>null</code> in the initial call.
 	 * @throws FileNotFoundException 
 	 */
-	protected static StringBuffer applyTemplates(StringBuffer input, ArrayList<String> callingTemplates,
+	protected static StringBuffer applyTemplates(StringBuffer input, WikiProject project, ArrayList<String> callingTemplates,
 			HashMap<String, String> cdataSections, WarningType warning) throws FileNotFoundException {
 		StringBuffer out = new StringBuffer();
 		Template tempTemplate;
@@ -74,8 +75,8 @@ public class TemplateManager {
 			else
 				tplAllArgs = m.group(1);
 
-			tempTemplate = new Template(TemplateInfo.getTemplateName(tplAllArgs));
-			out.append(tempTemplate.applyTemplate(tplAllArgs, callingTemplates, cdataSections, warning));
+			tempTemplate = new Template(TemplateInfo.getTemplateName(tplAllArgs), project);
+			out.append(tempTemplate.applyTemplate(tplAllArgs, project, false, callingTemplates, cdataSections, warning));
 
 			end = m.end();
 		}

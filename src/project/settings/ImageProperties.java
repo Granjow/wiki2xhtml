@@ -39,7 +39,7 @@ import src.utilities.XMLTools;
 /**
  * Contains properties about a single image
  */
-public class ImageProperties extends Settings<EImageProperties, String> {
+public class ImageProperties extends StringSettings<EImageProperties> {
 	
 	public boolean imagepageCreated;
 	
@@ -50,12 +50,6 @@ public class ImageProperties extends Settings<EImageProperties, String> {
 	
 	public final WikiFile parentFile;
 
-	protected String concatenate(String left, String right) {
-		return left + right;
-	}
-	public String nullValue() {
-		return null;
-	}
 	public ImageProperties(WikiFile parent) {
 		parentFile = parent;
 		imagepageCreated = false;
@@ -73,7 +67,6 @@ public class ImageProperties extends Settings<EImageProperties, String> {
 		// Set a fake ID so that the property is not null
 		set_(EImageProperties.id, "fakeID");
 	}
-	
 	
 	/**
 	 * @return A placeholder for an image. Used for replacing image tags and insert the code
@@ -165,9 +158,9 @@ public class ImageProperties extends Settings<EImageProperties, String> {
 	 */
 	public Template getTemplate() throws FileNotFoundException {
 		if (get_(EImageProperties.context) == null || get_(EImageProperties.context).equals(EImageContext.thumb.property)) {
-			return new Template(Container_Resources.sTplImage);
+			return new Template(Container_Resources.sTplImage, parentFile.project);
 		} else {
-			return new Template(Container_Resources.sTplGallery);
+			return new Template(Container_Resources.sTplGallery, parentFile.project);
 		}
 	}
 	

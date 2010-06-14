@@ -26,12 +26,10 @@ import src.utilities.StringTools;
  */
 public class ImageSettings {
 
-	private int galleryCounter;
 	private final WikiFile parentFile;
 	
 	public ImageSettings(final WikiFile parent) {
 		this.parentFile = parent;
-		galleryCounter = 0;
 	}
 	
 	public String getBacklinkDir() {

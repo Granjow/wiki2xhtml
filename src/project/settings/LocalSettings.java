@@ -23,7 +23,4 @@ import src.resources.ResProjectSettings.SettingsLocalE;
 /**
  * Contains local page settings that override the global page settings.
  */
-public class LocalSettings extends Settings<SettingsLocalE, String> {
-	public String nullValue() {return null;};
-	protected String concatenate(String left, String right) { return left+right; }
-}
+public class LocalSettings extends StringSettings<SettingsLocalE> {}

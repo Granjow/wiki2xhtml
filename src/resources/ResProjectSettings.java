@@ -66,7 +66,7 @@ public final class ResProjectSettings {
 		private final boolean loop;
 		private final Pattern regex;
 		public final Checker<String> checker;
-		public final ValuePreparser<String> adjuster;
+		public final ValuePreparser<String> preparser;
 	
 		private SettingsE(String property) { this(property, false, null, null); }
 		private SettingsE(String property, Checker<String> checker) { this(property, false, null, checker); }
@@ -79,7 +79,7 @@ public final class ResProjectSettings {
 			this.loop = loop;
 			this.separator = separator;
 			this.checker = checker;
-			this.adjuster = adjuster;
+			this.preparser = adjuster;
 			regex = Pattern.compile("(?m)\\{\\{" + keyword() + ":((?:(?!\\}\\}).)+)\\}\\}"); // basically {{Key:*}}
 		}
 	

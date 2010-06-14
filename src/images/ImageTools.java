@@ -33,7 +33,7 @@ public class ImageTools {
 		Template tp = prop.getTemplate();
 		System.out.printf("Arguments: %s.", prop.getList("|", "=", false));
 		
-		output = tp.applyTemplate(prop.getList("|", "=", false), null, null, WarningType.NONE);
+		output = tp.applyTemplate(prop.getBase64List("|", "="), prop.parentFile.project, true, null, null, WarningType.NONE);
 		output = Parser.parse(output);
 		
 //		tp.replaceAll(Constants.TemplateTags.alt, //No special things for alt description: escaping
@@ -63,7 +63,7 @@ public class ImageTools {
 	
 	public static StringBuffer generateGalleryContainer(GalleryProperties gp) throws FileNotFoundException {
 		Template tp = new Template(Container_Resources.sTplGalleryContainer, gp.parentFile.project);
-		return tp.applyTemplate(gp.getList("|", "=", true), null, null, null);
+		return tp.applyTemplate(gp.getBase64List("|", "="), gp.parentFile.project, true, null, null, null);
 	}
 
 	/**
@@ -96,7 +96,7 @@ public class ImageTools {
 //					args += "|" + prop.get_(p);
 //				}
 //			}
-			sb = tpl.applyTemplate(prop.getList("|", "=", true), null, null, null);
+			sb = tpl.applyTemplate(prop.getBase64List("|", "="), prop.parentFile.project, true, null, null, null);
 			
 			// ReplaceTags
 			// Wiki tasks

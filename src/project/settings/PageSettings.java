@@ -24,16 +24,13 @@ import src.resources.ResProjectSettings.SettingsE;
 /**
  * Contains global settings that are valid for all pages.
  */
-public class PageSettings extends Settings<SettingsE, String> {
-	
-	protected String concatenate(String left, String right) {
-		return left + right;
-	}
+public class PageSettings extends StringSettings<SettingsE> {
 	
 	public PageSettings() {
 		// Add checkers to validate input
 		for (SettingsE p : SettingsE.values()) {
 			if (p.checker != null) { addChecker(p.checker, p); }
+			if (p.preparser != null) { addPreparser(p.preparser, p); }
 		}
 	}
 	

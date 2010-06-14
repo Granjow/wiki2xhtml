@@ -15,6 +15,7 @@ import src.argumentHandler.ArgumentItem;
 import src.project.WikiProject;
 import src.project.WikiProject.FallbackFile;
 import src.resources.RegExpressions;
+import src.utilities.Base64;
 
 /*
  *   Copyright (C) 2007-2010 Simon Eugster <granjow@users.sf.net>
@@ -55,10 +56,6 @@ public class Template {
 		MISSING
 	}
 
-	@Deprecated
-	public Template(String templateFilename) throws FileNotFoundException {
-		this(templateFilename, null);
-	}
 	/**
 	 * @param wikiProject Used for locating the template
 	 */
@@ -108,7 +105,7 @@ public class Template {
 	 * @return The template with the given arguments applied to
 	 * @throws FileNotFoundException 
 	 */
-	public StringBuffer applyTemplate(String args, ArrayList<String> callingTemplates, 
+	public StringBuffer applyTemplate(String args, WikiProject project, boolean base64, ArrayList<String> callingTemplates, 
 			HashMap<String, String> cdataSections, WarningType warning) throws FileNotFoundException {
 		// Try to read the template
 		if (!readTemplate()) {
@@ -139,9 +136,20 @@ public class Template {
 			aro.setArguments(m.group(1));
 			if (aro.size() > 0) {
 				if (arguments.containsKey(aro.argsList.get(0).fullArg)) {
-					out.append(arguments.get(aro.argsList.get(0).fullArg).argument);
+					// {{{key}}} found, insert its value
+					if (!base64) {
+						out.append(arguments.get(aro.argsList.get(0).fullArg).argument);
+					} else {
+						try {
+							out.append(new String(Base64.decode(arguments.get(aro.argsList.get(0).fullArg).argument)));
+						} catch (IOException e) {
+							e.printStackTrace();
+							out.append(arguments.get(aro.argsList.get(0).fullArg).argument);
+						}
+					}
 				} else {
 					if (aro.size() > 1) {
+						// Use the {{{?|alternative}}}
 						out.append(aro.argsList.get(1).fullArg);
 					}
 					else {
@@ -165,14 +173,14 @@ public class Template {
 									+ "|" + s
 									+ "}}"
 								)
-								, null, cdataSections, WarningType.RECURSION)
+								, project, null, cdataSections, WarningType.RECURSION)
 						   );
 			System.err.println("Recursion in template " + TemplateInfo.getTemplateName(args) + ", aborting!");
 		} else {
 			// Search for sub-templates in the current template and apply them.
 			if (callingTemplates == null) callingTemplates = new ArrayList<String>();
 			callingTemplates.add((templateSource == null ? "null" : templateSource.pathInfo()));
-			template = TemplateManager.applyTemplates(template, callingTemplates, cdataSections, warning);
+			template = TemplateManager.applyTemplates(template, project, callingTemplates, cdataSections, warning);
 		}
 
 		return template;
