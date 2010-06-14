@@ -75,6 +75,13 @@ public class ImageProperties extends Settings<EImageProperties, String> {
 	}
 	
 	
+	/**
+	 * @return A placeholder for an image. Used for replacing image tags and insert the code
+	 * afterwards after the images have been linked.
+	 */
+	public String getPlaceholder() {
+		return String.format(">>>image-%s-placeholder<<<", get_(EImageProperties.number));
+	}
 	
 	/**
 	 * Builds the filename and path for the image page.

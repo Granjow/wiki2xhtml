@@ -128,6 +128,7 @@ public final class ResProjectSettings {
 		context ("context", "Image context: gallery or normal"),
 		direct ("direct", "Link directly to the file"),
 		file ("file", "Filename alone"),
+		galleryNumber ("galleryNumber", "The gallery number in which the image is located"),
 		id ("id", "Automatically generated image ID"),
 		link ("link", "Path to the image page or the image, depending on " +
 				"whether the image page has been created or not"),
@@ -155,34 +156,19 @@ public final class ResProjectSettings {
 			this.desc = desc;
 		}
 	}
-
-	/**
-	 * Properties belonging to a specific image, like description, custom thumbnail, etc.
-	 * @deprecated
-	 */
-	public static enum SettingsImgE {
-		/** Additional arguments */				args,
-		/** Additional link arguments */		argsLink,
-		/** Insert clear=both before */			clearAfter,
-		/** Insert clear=both after */			clearBefore,
-		/** Gallery counter */					galleryCounter, //init: 0
-		/** Image caption */					imageCaption,
-		/** Image context: gallery, thumb etc. See {@link ImageContextE}*/
-												imageContext,
-		/** Long image description */			imageLongdesc,
-		/** Image path */						imagePath,
-		/** Has the image page been created? */	imagePageWasCreated,
-		/** Small image? (No width has to be set for the image page) 
-		 */										imageSmall, //make width=small?
-		/** Direct link without image page? */	linkDirect,
-		/** Link to previous image */			linkPrev,
-		/** Link to next image */				linkNext,
-		/** Image width on the image page */	pageWidth,
-		/** Text, like image description */		text,
-												textLong,
-		/** Thumbnail position */				thumbPosition,
-		/** Thumbnail width */					thumbWidth,
-		/** Thumbnail source */					thumbSrc;
+	public static enum EGalleryProperties {
+		caption ("caption", "Gallery caption"),
+		container ("container", "true, for telling the template " +
+				"that this is a container and not an item"),
+		content ("content", "Content (all images)"),
+		id ("id", "Automatically generated gallery ID"),
+		number ("number", "Gallery number");
+		public final String property;
+		public final String desc;
+		private EGalleryProperties(String property, String desc) {
+			this.property = property;
+			this.desc = desc;
+		}
 	}
 	
 	/**

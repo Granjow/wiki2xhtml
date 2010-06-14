@@ -21,7 +21,7 @@ public class WikiLists extends WikiTask {
 	}
 	
 	public WikiTask nextTask() {
-		return new WikiInsertNowikiContent();
+		return new WikiGalleries();
 	}
 	
 

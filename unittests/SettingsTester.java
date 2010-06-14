@@ -109,6 +109,8 @@ public class SettingsTester extends junit.framework.TestCase {
 		assertEquals("hello", stgs.get_(Tst.b));
 		assertTrue(stgs.set_(Tst.b, null));
 		assertEquals(null, stgs.get_(Tst.b));
+		stgs.append_(Tst.b, "notnull");
+		assertEquals("notnull", stgs.get_(Tst.b));
 	}
 	
 	@Test public void testGetter() {

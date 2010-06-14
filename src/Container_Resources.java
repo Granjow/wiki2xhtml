@@ -95,6 +95,7 @@ public class Container_Resources {
 	
 	public static final String sTplImage = "tplImage.txt";
 	public static final String sTplGallery = "tplGallery.txt";
+	public static final String sTplGalleryContainer = "tplGalleryContainer.txt";
 	public static final String sTplImagepage = "tplImagepage.txt";
 	
 	public static final String sTOC = resdir + "tplTOC.txt";

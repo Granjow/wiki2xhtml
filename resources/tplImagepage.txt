@@ -1,1 +1,1 @@
-<xmlname>TODO!</xmlname>
+<xmlname>TODO! Sample imagepage.</xmlname>

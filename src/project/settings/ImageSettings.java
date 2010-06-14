@@ -51,18 +51,4 @@ public class ImageSettings {
 		return backlink.toString();
 	}
 	
-	/** Returns the next gallery ID in the form of gallery001 */
-	public String nextGalleryID() {
-		StringBuilder sb = new StringBuilder();
-		
-		String counter = "" + galleryCounter;
-		for (byte i = 0; i < 2 - Math.round(Math.log10(Integer.parseInt(counter))); i++)
-			sb.append("0");
-		sb.append(counter);
-		
-		galleryCounter++;
-		
-		return "gallery" + sb;
-	}
-	
 }

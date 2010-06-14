@@ -188,10 +188,10 @@ public class XHTML {
 		p(20);
 //		out = WikiHeadings.makeHeadings(out);
 		p(36);
-		if (fc.has.target)
-			out = WikiImages.makeImages(out);
-		else
-			out = WikiImages.makeImages(out);
+//		if (fc.has.target)
+//			out = WikiImages.makeImages(out);
+//		else
+//			out = WikiImages.makeImages(out);
 		p(44);
 //		out = WikiLinks.makeLinks(out, fc.currentFilename);
 		p(55);

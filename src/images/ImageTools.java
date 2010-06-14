@@ -1,10 +1,12 @@
 package src.images;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import src.Container_Resources;
 import src.parserFunctions.Parser;
+import src.project.settings.GalleryProperties;
 import src.project.settings.ImageProperties;
 import src.resources.ResProjectSettings.EImageProperties;
 import src.resources.ResProjectSettings.SettingsE;
@@ -15,20 +17,11 @@ import src.utilities.IOWrite_Stats;
 public class ImageTools {
 	
 	/**
-	 * @return A placeholder for an image. Used for replacing image tags and insert the code
-	 * afterwards after the images have been linked.
-	 */
-	public static String getPlaceholder(ImageProperties prop) {
-		return String.format(">>>image-%s-placeholder<<<", prop.get_(EImageProperties.number));
-	}
-	
-	/**
 	 * Generates a thumbnail entry.
 	 * @return Thumbnail code
 	 * @throws IOException
 	 */
 	public static StringBuffer generateThumbnailEntry(ImageProperties prop) throws IOException {
-		String args = new String();
 		StringBuffer output = new StringBuffer();
 
 		if (prop.imagepageCreated) {
@@ -38,11 +31,9 @@ public class ImageTools {
 		}
 
 		Template tp = prop.getTemplate();
-		args = "Image:" + tp.templateFilename;
-		args += "|" + prop.getList("|", "=", false);
-		System.out.printf("Arguments: %s.", args);
+		System.out.printf("Arguments: %s.", prop.getList("|", "=", false));
 		
-		output = tp.applyTemplate(args, null, null, WarningType.NONE);
+		output = tp.applyTemplate(prop.getList("|", "=", false), null, null, WarningType.NONE);
 		output = Parser.parse(output);
 		
 //		tp.replaceAll(Constants.TemplateTags.alt, //No special things for alt description: escaping
@@ -69,6 +60,11 @@ public class ImageTools {
 //		}
 		return output;
 	}
+	
+	public static StringBuffer generateGalleryContainer(GalleryProperties gp) throws FileNotFoundException {
+		Template tp = new Template(Container_Resources.sTplGalleryContainer, gp.parentFile.project);
+		return tp.applyTemplate(gp.getList("|", "=", true), null, null, null);
+	}
 
 	/**
 	 * Generates an image page
@@ -84,18 +80,23 @@ public class ImageTools {
 			if (title == null) {
 				title = "%caption %s";
 			}
-			title = title.replaceAll("%caption", prop.get_(EImageProperties.caption));
+			if (prop.isSet(EImageProperties.caption)) {
+				title = title.replaceAll("%caption", prop.get_(EImageProperties.caption));
+			} else {
+				title = title.replaceAll("%caption", "");
+			}
+			
 			title = title.replaceAll("%path", prop.getImagePathHtml());
 			title = title.replaceAll("%name", prop.getImageFilenameHtml());
 			title = prop.parentFile.generators.title(title);
 			
-			String args = Container_Resources.sTplImagepage;
-			for (EImageProperties p : EImageProperties.values()) {
-				if (prop.get_(p) != null) {
-					args += "|" + prop.get_(p);
-				}
-			}
-			sb = tpl.applyTemplate(args, null, null, null);
+//			String args = Container_Resources.sTplImagepage;
+//			for (EImageProperties p : EImageProperties.values()) {
+//				if (prop.get_(p) != null) {
+//					args += "|" + prop.get_(p);
+//				}
+//			}
+			sb = tpl.applyTemplate(prop.getList("|", "=", true), null, null, null);
 			
 			// ReplaceTags
 			// Wiki tasks

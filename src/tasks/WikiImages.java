@@ -58,11 +58,12 @@ public class WikiImages extends WikiTask {
 			}
 
 			// Insert a placeholder
-			out.append(ImageTools.getPlaceholder(prop));
+			out.append(prop.getPlaceholder());
 
 			last = m.end();
 		}
 		out.append(in.substring(last, in.length()));
+		prop = null;
 		
 		// Link Images
 		int i;
@@ -88,7 +89,7 @@ public class WikiImages extends WikiTask {
 		String code;
 		for (ImageProperties p : file.imagePropertiesList) {
 			if (EImageContext.thumb.property.equals(p.get_(EImageProperties.context))) {
-				placeholder = ImageTools.getPlaceholder(p);
+				placeholder = p.getPlaceholder();
 				last = out.indexOf(placeholder);
 				try {
 					code = ImageTools.generateThumbnailEntry(p).toString();

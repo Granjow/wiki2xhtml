@@ -5,8 +5,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import src.project.WikiProject;
+import src.project.settings.GalleryProperties;
 import src.project.settings.ImageProperties;
-import src.project.settings.ImageSettings;
 import src.project.settings.LocalSettings;
 import src.project.settings.PageSettings;
 import src.resources.ResProjectSettings.SettingsE;
@@ -54,10 +54,12 @@ public abstract class WikiFile {
 	private ArrayList<Task> tasks = new ArrayList<Task>();
 	private PageSettings pageSettings = new PageSettings();
 	private LocalSettings localSettings = new LocalSettings();
-	private ImageSettings imageSettings = new ImageSettings(this);
 	
 	public ArrayList<String> nowiki = new ArrayList<String>();
-	public ArrayList<ImageProperties> imagePropertiesList = new ArrayList<ImageProperties>(); 
+	/** @see #addImageProperties(ImageProperties) for inserting new properties! */
+	public ArrayList<ImageProperties> imagePropertiesList = new ArrayList<ImageProperties>();
+	/** @see #addGalleryProperties(GalleryProperties) for inserting new properties! */
+	public ArrayList<GalleryProperties> galleryPropertiesList = new ArrayList<GalleryProperties>();
 
 	private ArrayList<NamespaceObject> linkNamespaces;
 	
@@ -129,6 +131,11 @@ public abstract class WikiFile {
 	public int addImageProperties(ImageProperties prop) {
 		imagePropertiesList.add(prop);
 		return imagePropertiesList.indexOf(prop);
+	}
+	/** Adds an gallery property and directly returns its number in the list */
+	public int addGalleryProperties(GalleryProperties prop) {
+		galleryPropertiesList.add(prop);
+		return galleryPropertiesList.indexOf(prop);
 	}
 	
 	public final ArrayList<NamespaceObject> getNamespaces() {

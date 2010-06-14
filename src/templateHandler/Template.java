@@ -55,9 +55,13 @@ public class Template {
 		MISSING
 	}
 
+	@Deprecated
 	public Template(String templateFilename) throws FileNotFoundException {
 		this(templateFilename, null);
 	}
+	/**
+	 * @param wikiProject Used for locating the template
+	 */
 	public Template(String templateFilename, WikiProject wikiProject) throws FileNotFoundException {
 		if (wikiProject == null) {
 			wikiProject = new WikiProject(".");

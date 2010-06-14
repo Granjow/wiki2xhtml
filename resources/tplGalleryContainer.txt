@@ -1,0 +1,4 @@
+<div class="gallery" id={{{id|missingID}}}">
+{{{content|}}}
+</div>
+<br style="clear: both;" />

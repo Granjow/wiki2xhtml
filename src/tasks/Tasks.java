@@ -14,6 +14,7 @@ public class Tasks {
 		Images ("Images"),
 		Links ("Links"),
 		Lists ("Lists"),
+		Galleries ("Galleries"),
 		InsertNowiki ("Insert Nowiki Content"),
 		XMLNames ("Convert XML names");
 		
