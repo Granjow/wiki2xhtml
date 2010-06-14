@@ -13,7 +13,7 @@ import javax.swing.filechooser.FileFilter;
 
 import src.Args.GetPolicyE;
 import src.project.settings.Settings.Checker;
-import src.project.settings.Settings.ValueAdjuster;
+import src.project.settings.Settings.ValuePreparser;
 import src.resources.ResProjectSettings;
 import src.resources.RegExpressions;
 import src.resources.ResProjectSettings.ImagepageCaptionAlternatives;
@@ -399,11 +399,11 @@ public final class Constants {
 		};
 	}
 	
-	public static final class Adjusters {
+	public static final class Preparsers {
 		/** Ensures that a string ends with a <code>/</code> */
-		public static final ValueAdjuster<String> directoryTrailingSlashAdjuster = new ValueAdjuster<String>() {
+		public static final ValuePreparser<String> directoryTrailingSlashPreparser = new ValuePreparser<String>() {
 			public String adjust(String value) {
-				if (!value.endsWith("/")) {
+				if (value != null && !value.endsWith("/")) {
 					value += "/";
 				}
 				return value;

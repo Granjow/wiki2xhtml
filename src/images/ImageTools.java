@@ -19,7 +19,7 @@ public class ImageTools {
 	 * afterwards after the images have been linked.
 	 */
 	public static String getPlaceholder(ImageProperties prop) {
-		return String.format(">>>image-%d-placeholder<<<", prop.id);
+		return String.format(">>>image-%s-placeholder<<<", prop.get_(EImageProperties.number));
 	}
 	
 	/**
@@ -38,10 +38,8 @@ public class ImageTools {
 		}
 
 		Template tp = prop.getTemplate();
-		args = tp.templateFilename;
-		for (EImageProperties p : EImageProperties.values()) {
-			args += "|" + p.property + "=" + prop.get_(p);
-		}
+		args = "Image:" + tp.templateFilename;
+		args += "|" + prop.getList("|", "=", false);
 		System.out.printf("Arguments: %s.", args);
 		
 		output = tp.applyTemplate(args, null, null, WarningType.NONE);

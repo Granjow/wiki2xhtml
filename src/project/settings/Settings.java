@@ -27,11 +27,11 @@ import java.util.Map.Entry;
 public abstract class Settings<K extends Comparable<?>, V extends Comparable<?>> {
 	
 	/** Checks to run before inserting */
-	private List<CheckerObject<K, V>> checkerList = new ArrayList<CheckerObject<K, V>>();
-	/** Adjustments to make before inserting a value, to preserve some properties */
-	private List<ValueAdjusterObject<K, V>> adjusterList = new ArrayList<ValueAdjusterObject<K,V>>();
+	protected List<CheckerObject<K, V>> checkerList = new ArrayList<CheckerObject<K, V>>();
+	/** Adjustments to make before retrieving a value, e.g. append a / for directory paths */
+	protected List<ValuePreparserObject<K, V>> preparserList = new ArrayList<ValuePreparserObject<K,V>>();
 	/** Settings storage */
-	private HashMap<K, V> settingsMap = new HashMap<K, V>();
+	protected HashMap<K, V> settingsMap = new HashMap<K, V>();
 	
 
 	
@@ -73,14 +73,21 @@ public abstract class Settings<K extends Comparable<?>, V extends Comparable<?>>
 	}
 	
 	/**
-	 * <p>Adjusts a value according to the ValueAdjusters set with {@link #addAdjuster(ValueAdjuster, Comparable)}.</p>
-	 * @return The adjusted value, using the adjuster for the given <code>property</code>.
+	 * @return <code>true</code>, if the given <code>value</code> is equal to the null value.
+	 * @see #nullValue()
+	 * @see #isSet(Comparable) for checking whether a value is set.
 	 */
-	public V adjust(final K property, V value) {
-		for (ValueAdjusterObject<K, V> adjuster : adjusterList) {
-			value = adjuster.adjust(property, value);
+	public boolean isNull(final V value) {
+		boolean isnull = nullValue() == value;
+		if (!isnull) {
+			try {
+				isnull = nullValue().equals(value);
+			} catch (NullPointerException e) {}
 		}
-		return value;
+		if (isnull) {
+			return true;
+		}
+		return false;
 	}
 	
 	
@@ -94,10 +101,12 @@ public abstract class Settings<K extends Comparable<?>, V extends Comparable<?>>
 		}
 	}
 	/** Clamps all properties together */
-	public String getList(String propertySeparator, String kvSeparator) {
+	public String getList(String propertySeparator, String kvSeparator, boolean ignoreEmpty) {
 		StringBuffer sb = new StringBuffer();
 		for (Entry<K, V> e : settingsMap.entrySet()) {
-			sb.append(e.getKey() + kvSeparator + e.getValue() + propertySeparator);
+			if (isSet(e.getKey()) || !ignoreEmpty) {
+				sb.append(e.getKey() + kvSeparator + get_(e.getKey()) + propertySeparator);
+			}
 		}
 		if (sb.length() > 0) {
 			sb.setLength(sb.length() - propertySeparator.length());
@@ -115,7 +124,11 @@ public abstract class Settings<K extends Comparable<?>, V extends Comparable<?>>
 	 * @return The value belonging to <code>property</code>
 	 */
 	public V get_(final K property) {
-		return settingsMap.get(property);
+		V value = settingsMap.get(property);
+		for (ValuePreparserObject<K, V> vpo : preparserList) {
+			value = vpo.adjust(property, value);
+		}
+		return value;
 	}
 	/**
 	 * If <code>value</code> is equal to {@link #nullValue()} then <code>property</code> will be removed.
@@ -127,13 +140,7 @@ public abstract class Settings<K extends Comparable<?>, V extends Comparable<?>>
 		boolean success = true;
 
 		// Remove if value is the null value
-		boolean isnull = nullValue() == value;
-		if (!isnull) {
-			try {
-				isnull = nullValue().equals(value);
-			} catch (NullPointerException e) {}
-		}
-		if (isnull) {
+		if (isNull(value)) {
 			settingsMap.remove(property);
 			return true;
 		}
@@ -168,11 +175,13 @@ public abstract class Settings<K extends Comparable<?>, V extends Comparable<?>>
 	}
 	
 	/**
-	 * Adds a value adjuster. The task of a value adjuster is to change an incoming value to meet
-	 * certain properties, like paths ending with / always.
+	 * <p>Adds a value preparser. The task of a value preparser is to change an outgoing value to meet
+	 * certain properties, like paths ending always with /.</p>
+	 * <p>Adjusting of the values is done when retrieving a value and not when setting it because 
+	 * it is possible to append to values (resulting in uncontrollable behaviour).
 	 */
-	public void addAdjuster(final ValueAdjuster<V> a, final K key) {
-		adjusterList.add(new ValueAdjusterObject<K, V>(a, key));
+	public void addPreparser(final ValuePreparser<V> a, final K key) {
+		preparserList.add(new ValuePreparserObject<K, V>(a, key));
 	}
 	
 	
@@ -208,14 +217,13 @@ public abstract class Settings<K extends Comparable<?>, V extends Comparable<?>>
 	/**
 	 * Value adjuster
 	 */
-	public static interface ValueAdjuster<V> {
-		/** @return Adjusted value; e.g. for a path make sure that it ends with a / */
+	abstract public static interface Adjuster<V> {
 		public V adjust(V value);
 	}
-	private static class ValueAdjusterObject<K, V> {
-		private final ValueAdjuster<V> adjuster;
+	abstract private static class AdjusterObject<K, V> {
+		private final Adjuster<V> adjuster;
 		private final K key;
-		public ValueAdjusterObject(final ValueAdjuster<V> adjuster, final K key) {
+		public AdjusterObject(final Adjuster<V> adjuster, final K key) {
 			this.adjuster = adjuster;
 			this.key = key;
 		}
@@ -224,6 +232,16 @@ public abstract class Settings<K extends Comparable<?>, V extends Comparable<?>>
 				return adjuster.adjust(value);
 			}
 			return value;
+		}
+	}
+	
+	public static interface ValuePreparser<V> extends Adjuster<V> {
+		/** @return Preparsed value. A value will be preparsed before leaving the getter method. */
+		public V adjust(V value);
+	}
+	private static class ValuePreparserObject<K, V> extends AdjusterObject<K, V> {
+		public ValuePreparserObject(ValuePreparser<V> preparser, K key) {
+			super(preparser, key);
 		}
 	}
 	

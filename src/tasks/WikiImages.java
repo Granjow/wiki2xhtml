@@ -5,6 +5,8 @@ import java.util.regex.Matcher;
 
 import src.Statistics;
 import src.images.ImageTools;
+import src.project.WikiProject;
+import src.project.file.VirtualWikiFile;
 import src.project.file.WikiFile;
 import src.project.settings.ImageProperties;
 import src.resources.RegExpressions;
@@ -25,6 +27,7 @@ public class WikiImages extends WikiTask {
 	/**
 	 * Make the [[Image:xx]] to &lt;img src="xx" /&gt; tags.
 	 * @since August 2008: rewritten
+	 * @since wiki2xhtml 4.0: Rewritten using placeholder tags
 	 */
 	public void parse(WikiFile file) {
 		Statistics.getInstance().sw.timeInsertingImages.continueTime();
@@ -44,7 +47,8 @@ public class WikiImages extends WikiTask {
 			Statistics.getInstance().counter.imagesTotal.increase();
 
 			// Read the image's arguments
-			prop.id = file.addImageProperties(prop);
+			int id = file.addImageProperties(prop);
+			prop.set_(EImageProperties.number, Integer.toString(id));
 			prop.readArguments(m.group(1));
 			prop.set_(EImageProperties.context, EImageContext.thumb.property);
 			
@@ -55,16 +59,6 @@ public class WikiImages extends WikiTask {
 
 			// Insert a placeholder
 			out.append(ImageTools.getPlaceholder(prop));
-			
-//			try {
-//				
-//				out.append(generateThumbnailEntry());
-//			} catch (FileNotFoundException e) {
-//				CommentAtor.getInstance().ol("A file could not be found. Don't know why. Error message: \n" + e.getMessage(), CALevel.MSG);
-//			} catch (IOException e) {
-//				CommentAtor.getInstance().ol("An IO Error occurred. Don't know why. Error message: \n" + e.getMessage(), CALevel.MSG);
-//			}
-
 
 			last = m.end();
 		}
@@ -75,12 +69,12 @@ public class WikiImages extends WikiTask {
 		ImageProperties currentIP;
 		ImageProperties nextIP = null;
 		for (i = 0; i < file.imagePropertiesList.size(); i++) {
-			if (EImageContext.thumb.equals(file.imagePropertiesList.get(i).get_(EImageProperties.context))) {
+			if (EImageContext.thumb.property.equals(file.imagePropertiesList.get(i).get_(EImageProperties.context))) {
 				nextIP = file.imagePropertiesList.get(i); 
 			}
 		}
 		for ( ; i < file.imagePropertiesList.size(); i++) {
-			if (EImageContext.thumb.equals(file.imagePropertiesList.get(i).get_(EImageProperties.context))) {
+			if (EImageContext.thumb.property.equals(file.imagePropertiesList.get(i).get_(EImageProperties.context))) {
 				currentIP = nextIP;
 				nextIP = file.imagePropertiesList.get(i);
 				
@@ -93,7 +87,7 @@ public class WikiImages extends WikiTask {
 		String placeholder;
 		String code;
 		for (ImageProperties p : file.imagePropertiesList) {
-			if (EImageContext.thumb.equals(p.get_(EImageProperties.context))) {
+			if (EImageContext.thumb.property.equals(p.get_(EImageProperties.context))) {
 				placeholder = ImageTools.getPlaceholder(p);
 				last = out.indexOf(placeholder);
 				try {
@@ -112,6 +106,16 @@ public class WikiImages extends WikiTask {
 		Statistics.getInstance().sw.timeInsertingImages.stop();
 
 		file.setContent(out);
+	}
+	
+	public static void main(String[] args) {
+		WikiProject wp = new WikiProject(".");
+		StringBuffer sb = new StringBuffer("[[Image:a.jpg|400px|hallo.]]");
+		VirtualWikiFile vf = new VirtualWikiFile(wp, "name", false, true, sb);
+		vf.removeAllTasks();
+		vf.addTask(Task.Images);
+		vf.parse();
+		System.out.println(vf.getContent());
 	}
 	
 }

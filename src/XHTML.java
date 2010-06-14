@@ -50,8 +50,6 @@ public class XHTML {
 		headingIDs.clear();
 	}
 
-	private static Container_Files fc = Container_Files.getInstance();
-
 	public static void updateBaseStyleDir(File f) {
 		baseStyleDir = f;
 	}

@@ -2,10 +2,10 @@ package src.resources;
 
 import java.util.regex.Pattern;
 
-import src.Constants.Adjusters;
 import src.Constants.Checkers;
+import src.Constants.Preparsers;
 import src.project.settings.Settings.Checker;
-import src.project.settings.Settings.ValueAdjuster;
+import src.project.settings.Settings.ValuePreparser;
 
 public final class ResProjectSettings {
 
@@ -40,8 +40,8 @@ public final class ResProjectSettings {
 		/** What to use as imagepage title alternative
 		 * @since wiki2xhtml 3.5 (multiple arguments before)
 		 */ 								imagepageTitle ("ImagepageTitle"),
-		/** Directory for image pages */	imagepagesDir ("DirImagepages", Adjusters.directoryTrailingSlashAdjuster),
-		/** Directory for images */			imagesDir ("DirImages", Adjusters.directoryTrailingSlashAdjuster),
+		/** Directory for image pages */	imagepagesDir ("DirImagepages", Preparsers.directoryTrailingSlashPreparser),
+		/** Directory for images */			imagesDir ("DirImages", Preparsers.directoryTrailingSlashPreparser),
 		/** Meta data: page keywords */		keywords ("Keywords", true, ","),
 		/** Meta data: Page language */		lang ("Lang"),
 		/** Custom meta data */				meta ("Meta", true, "\n"),
@@ -66,15 +66,15 @@ public final class ResProjectSettings {
 		private final boolean loop;
 		private final Pattern regex;
 		public final Checker<String> checker;
-		public final ValueAdjuster<String> adjuster;
+		public final ValuePreparser<String> adjuster;
 	
 		private SettingsE(String property) { this(property, false, null, null); }
 		private SettingsE(String property, Checker<String> checker) { this(property, false, null, checker); }
-		private SettingsE(String property, ValueAdjuster<String> adjuster) { this(property, false, null, null, adjuster); }
+		private SettingsE(String property, ValuePreparser<String> adjuster) { this(property, false, null, null, adjuster); }
 		private SettingsE(String property, boolean loop, String separator) { this(property, loop, separator, null); }
 		private SettingsE(String property, boolean loop, String separator, Checker<String> checker) { this(property, loop, separator, checker, null); }
 		
-		private SettingsE(String property, boolean loop, String separator, Checker<String> checker, ValueAdjuster<String> adjuster) {
+		private SettingsE(String property, boolean loop, String separator, Checker<String> checker, ValuePreparser<String> adjuster) {
 			this.property = property;
 			this.loop = loop;
 			this.separator = separator;
@@ -128,10 +128,12 @@ public final class ResProjectSettings {
 		context ("context", "Image context: gallery or normal"),
 		direct ("direct", "Link directly to the file"),
 		file ("file", "Filename alone"),
+		id ("id", "Automatically generated image ID"),
 		link ("link", "Path to the image page or the image, depending on " +
 				"whether the image page has been created or not"),
 		meta ("meta", "Meta data"), // TODO fill in
 		next ("next", "Link to next image on the page"), // TODO fill in
+		number ("number", "The number of the image on the current page"),
 		longdesc ("ld", "Long image description"),
 		pageCreated ("pageCreated", "Image page created?"),
 		pageWidth ("pageWidth", "Width of the image on the image page"),

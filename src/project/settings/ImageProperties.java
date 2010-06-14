@@ -17,6 +17,7 @@ import src.resources.ResProjectSettings.EImageProperties;
 import src.resources.ResProjectSettings.EImageContext;
 import src.resources.ResProjectSettings.SettingsE;
 import src.templateHandler.Template;
+import src.utilities.XMLTools;
 
 /*
  *   Copyright (C) 2007-2010 Simon Eugster <granjow@users.sf.net>
@@ -41,7 +42,6 @@ import src.templateHandler.Template;
 public class ImageProperties extends Settings<EImageProperties, String> {
 	
 	public boolean imagepageCreated;
-	public int id;
 	
 	/** The previous image on the page */
 	public ImageProperties previousIP = null;
@@ -59,7 +59,22 @@ public class ImageProperties extends Settings<EImageProperties, String> {
 	public ImageProperties(WikiFile parent) {
 		parentFile = parent;
 		imagepageCreated = false;
+		
+		// Add the ID generator
+		addPreparser(new ValuePreparser<String>() {
+			public String adjust(String value) {
+				String number = "unknown";
+				String path = "";
+				if (isSet(EImageProperties.number)) { number = get_(EImageProperties.number); }
+				if (isSet(EImageProperties.path)) { path = get_(EImageProperties.path); }
+				return XMLTools.getXmlNameChar(String.format("img_%s_%s", number, path));
+			};
+		}, EImageProperties.id);
+		// Set a fake ID so that the property is not null
+		set_(EImageProperties.id, "fakeID");
 	}
+	
+	
 	
 	/**
 	 * Builds the filename and path for the image page.
@@ -124,9 +139,13 @@ public class ImageProperties extends Settings<EImageProperties, String> {
 	 * Prefix is the Images directory if the given image path does not start with a <code>.{0,2}/</code> 
 	 */
 	public String getImagePath() {
-		String path = get_(EImageProperties.path);
-		if (path == null) path = "";
-		if (path.startsWith("/") || path.startsWith("./") || path.startsWith("../")) {
+		String path;
+		if (isSet(EImageProperties.path)) {
+			path = get_(EImageProperties.path);
+		} else {
+			path = "";
+		}
+		if (path.startsWith("/") || path.startsWith("./") || path.startsWith("../") || !parentFile.isPropertySet(SettingsE.imagesDir, true)) {
 			return path;
 		} else {
 			return parentFile.getProperty(SettingsE.imagesDir, true) + path;
@@ -138,7 +157,7 @@ public class ImageProperties extends Settings<EImageProperties, String> {
 	 * @throws FileNotFoundException 
 	 */
 	public Template getTemplate() throws FileNotFoundException {
-		if (get_(EImageProperties.context) == null || get_(EImageProperties.context).equals(EImageContext.gallery.property)) {
+		if (get_(EImageProperties.context) == null || get_(EImageProperties.context).equals(EImageContext.thumb.property)) {
 			return new Template(Container_Resources.sTplImage);
 		} else {
 			return new Template(Container_Resources.sTplGallery);

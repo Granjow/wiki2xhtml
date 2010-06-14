@@ -1,9 +1,8 @@
 <div class="imgthumb {{{pos|}}}" id="{{{id|missingID}}}">
-<dl>
-<dt><a href="{{{link}}}" {{{argsLink|}}}>
-	<img src="{{{path}}}" {{#if: {{{width|}}} | width="{{{width|}}}" }} {{{args|}}} />
+<dl><dt>
+	<a href="{{{link}}}" {{{argsLink|}}}>
+		<img src="{{{path}}}" {{#if: {{{thumbWidth|}}} | width="{{{thumbWidth|}}}" }} {{{args|}}} />
 	</a>
-</dt>
-</dl>
+</dt>{{#if: {{{text|}}}|<dd>{{{text}}}</dd>}}</dl>
 </div>
 

@@ -55,14 +55,6 @@ public class ImageSettings {
 	 */
 	public static class Image extends src.settings.Settings<SettingsImgE, String> {
 
-		/** Image ID */
-		public String getID() {
-			String path = get_(SettingsImgE.imagePath);
-			if (path == null) path = "";
-			return GenerateID.getHexMD5id(path, "", true);
-		}
-
-
 		/** Returns the specific width for the image on the image page */
 		public String getWidthPage() {
 			XhtmlSettings xhs = XhtmlSettings.getInstance();
