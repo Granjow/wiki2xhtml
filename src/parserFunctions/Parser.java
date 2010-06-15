@@ -53,6 +53,9 @@ public class Parser {
 
 		return p.sb;
 	}
+	public static String parse(String in) {
+		return parse(new StringBuffer(in)).toString();
+	}
 
 	/**
 	 * Evaluates all appearances of {{foo}} recursively and, if foo is a (supported) function, tries to parse it.

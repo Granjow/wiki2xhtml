@@ -16,7 +16,7 @@ public class WikiTemplates extends WikiTask {
 	}
 	public void parse(WikiFile file) {
 		try {
-			file.setContent(TemplateManager.applyTemplates(file.getContent()));
+			file.setContent(TemplateManager.applyTemplates(file.getContent(), file.project));
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}

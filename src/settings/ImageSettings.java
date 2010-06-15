@@ -18,7 +18,6 @@ import src.argumentHandler.ArgumentReader;
 import src.commentator.CommentAtor;
 import src.commentator.CommentAtor.CALevel;
 import src.resources.ResProjectSettings.SettingsE;
-import src.resources.ResProjectSettings.SettingsImgE;
 import src.utilities.IOUtils;
 import src.utilities.StringTools;
 

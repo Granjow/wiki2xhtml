@@ -175,29 +175,16 @@ public class XHTML {
 //		out = xhs.local.content;
 
 //		out = makeUnixLines(out);
-		p(2);
 //		out = XhtmlSettingsReader.getXhtml(out);
-		p(4);
 //		out = WikiNoWiki.removeNowikiContent(out);
-		p(6);
 //		out = src.templateHandler.TemplateManager.applyTemplates(out, null, null);
-		p(10);
 //		out = src.parserFunctions.Parser.parse(out);
-		p(17);
 //		out = WikiTables.makeTables(out);
-		p(20);
 //		out = WikiHeadings.makeHeadings(out);
-		p(36);
-//		if (fc.has.target)
-//			out = WikiImages.makeImages(out);
-//		else
-//			out = WikiImages.makeImages(out);
-		p(44);
+//		out = WikiImages.makeImages(out);
 //		out = WikiLinks.makeLinks(out, fc.currentFilename);
-		p(55);
 //		out = WikiLists.makeList(out);
-		p(69);
-		out = WikiImages.makeGallery(out);
+//		out = WikiImages.makeGallery(out);
 		p(76);
 		out = makeHLines(out);
 		p(79);

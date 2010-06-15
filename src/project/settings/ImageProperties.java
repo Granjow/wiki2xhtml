@@ -282,10 +282,10 @@ public class ImageProperties extends StringSettings<EImageProperties> {
 		}
 
 		// Check for non-ASCII characters
-		Matcher m = Pattern.compile(Resources.pNotAscii).matcher(get_(EImageProperties.path));
-		if (m.find()) {
-//			ca.o("Image contains non-ASCII characters! They should be removed.", CALevel.ERRORS);
-		}
+//		Matcher m = Pattern.compile(Resources.pNotAscii).matcher(get_(EImageProperties.path));
+//		if (m.find()) {
+////			ca.o("Image contains non-ASCII characters! They should be removed.", CALevel.ERRORS);
+//		}
 	}
 	
 	

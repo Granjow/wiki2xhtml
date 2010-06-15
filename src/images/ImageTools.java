@@ -31,7 +31,7 @@ public class ImageTools {
 		}
 
 		Template tp = prop.getTemplate();
-		System.out.printf("Arguments: %s.", prop.getList("|", "=", false));
+		System.out.printf("Arguments: %s.\n", prop.getList("|", "=", false));
 		
 		output = tp.applyTemplate(prop.getBase64List("|", "="), prop.parentFile.project, true, null, null, WarningType.NONE);
 		output = Parser.parse(output);

@@ -95,6 +95,7 @@ public class WikiProject {
 		// Make the project
 		for (WikiFile f : fileMap.values()) {
 			f.parse();
+			f.write();
 		}
 	}
 	

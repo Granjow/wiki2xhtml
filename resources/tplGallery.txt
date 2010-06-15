@@ -1,4 +1,9 @@
-<dl id="{{{id|missingID}}}">
-<dt><a href="[link]" [argsLink]><img src="{{{thumb}}}" alt="[alt]" [width] [args] /></a></dt>
-<dd>{{{text}}}</dd>
+
+{{#if: {{{path|}}} |<dl id="{{{id|missingID}}}">
+<dt><a href="{{{link}}}"><img src="{{{thumb}}}" width="200px" /></a></dt>
+{{#if: {{{text|}}} | <dd>{{{text}}}</dd>}}
 </dl>
+|<dl>
+<dd class="onlyDesc">{{{text|}}}</dd>
+</dl>
+}}

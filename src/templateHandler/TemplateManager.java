@@ -40,8 +40,8 @@ public class TemplateManager {
 	 * Applies templates
 	 * @throws FileNotFoundException 
 	 */
-	public static StringBuffer applyTemplates(StringBuffer input) throws FileNotFoundException {
-		return applyTemplates(input, null, null, null, null);
+	public static StringBuffer applyTemplates(StringBuffer input, WikiProject project) throws FileNotFoundException {
+		return applyTemplates(input, project, null, null, null);
 	}
 	/**
 	 * Applies templates. Templates can be called the following way: <br />

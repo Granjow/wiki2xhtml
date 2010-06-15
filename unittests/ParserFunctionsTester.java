@@ -2,10 +2,13 @@ package unittests;
 
 import static src.parserFunctions.Parser.parse;
 
+import java.io.FileNotFoundException;
+
 import org.junit.Test;
 
 import src.project.file.VirtualWikiFile;
 import src.tasks.Tasks.Task;
+import src.templateHandler.TemplateManager;
 
 public class ParserFunctionsTester extends junit.framework.TestCase {
 	
@@ -16,7 +19,17 @@ public class ParserFunctionsTester extends junit.framework.TestCase {
 		assertEquals("empty", parse(new StringBuffer("{{#if:    \t \t||empty}}")).toString());
 		assertEquals("empty", parse(new StringBuffer("{{#if:||empty}}")).toString());
 		assertEquals("new\nline", parse(new StringBuffer("{{#if:||new\nline}}")).toString());
-		assertEquals("", parse(new StringBuffer("{{#if: | width=\"{{{width|}}}\" }}")).toString());
+	}
+	
+	@Test
+	public void testIfTemplated() throws FileNotFoundException {
+		System.out.println(TemplateManager.applyTemplates(new StringBuffer("{{#if: | width=\"{{{width|}}}\" }}"), null));
+		assertEquals("", parse(TemplateManager.applyTemplates(new StringBuffer("{{#if: | width=\"{{{width|}}}\" }}"), null)).toString());
+	}
+	
+	@Test
+	public void testIfNested() {
+		assertEquals("", parse("{{#if: |{{#if:a|a|b}}|{{#if:|c|}}}}"));
 	}
 	
 	@Test

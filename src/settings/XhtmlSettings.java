@@ -47,13 +47,6 @@ public class XhtmlSettings {
 		}
 		return "";
 	}
-
-	/**
-	 * Prepares for a new page by resetting all local settings.
-	 */
-	public void init() {
-		local = new LocalSettings();
-	}
 	
 	private static final String parseMetadata(String content) {
 		BufferedReader br = new BufferedReader(new StringReader(content));
@@ -91,38 +84,6 @@ public class XhtmlSettings {
 	 * Local settings for a specific page
 	 */
 	public static class LocalSettings extends Settings {
-		
-		private HashMap<SettingsLocalE, String> localSettingsMap = new HashMap<SettingsLocalE, String>();
-		
-		public StringBuffer content;
-		
-		public boolean contains(SettingsLocalE property) {
-			return localSettingsMap.containsKey(property);
-		}
-		
-		public String get_(SettingsLocalE property) {
-			return localSettingsMap.get(property);
-		}
-		
-		/**
-		 * @return The local property, if available, and the global otherwise.
-		 */
-		public String getLocalOrGlobal_(SettingsE property) {
-			if (contains(property)) return get_(property);
-			else return xhs.global.get_(property);
-		}
-		
-		public boolean set_(SettingsLocalE property, String value) {
-			boolean success = true;
-			localSettingsMap.put(property, value);
-			return success;
-		}
-		
-		
-		/*
-		 ******************************************* 
-		 */
-		
 
 		/** @return The image directory, with a / at the end */
 		public String dirImages() {
@@ -282,21 +243,6 @@ public class XhtmlSettings {
 			}
 		}
 
-		/**
-		 * @return The standard reck file or, if an alternative reck file has been provided, the alternative one.
-		 */
-		public String reck() {
-			String s;
-			if (contains(SettingsE.reckAlternative)) {
-				s = get_(SettingsE.reckAlternative);
-			} else if (xhs.global.contains(SettingsE.reckAlternative)) {
-				s = xhs.global.get_(SettingsE.reckAlternative);
-			} else {
-				s = Constants.Files.reck;
-			}
-			return s;
-		}
-
 
 
 		public String toc() {
@@ -313,14 +259,6 @@ public class XhtmlSettings {
 		}
 		
 		
-	}
-
-	public static class NegativeValueException extends Exception {
-		private static final long serialVersionUID = 1L;
-
-		public NegativeValueException(String s) {
-			super("Negative value obtained: " + s);
-		}
 	}
 
 

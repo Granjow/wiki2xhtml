@@ -40,6 +40,11 @@ public class TemplateTester extends junit.framework.TestCase {
 	}
 	
 	@Test
+	public void testNestedArgs() throws IOException {
+		assertEquals("Argument <two>.", parseTemplate("Argument <{{{3|{{{2|}}}}}}>.", "{{:%s|one|two}}"));
+	}
+	
+	@Test
 	public void testCdata() throws Exception {
 		assertEquals("Arguments <o|ne> <two>.", parseTemplate("Arguments <{{{1}}}> <{{{2}}}>.", "{{:%s|o<![CDATA[|]]>ne|two}}"));
 	}
