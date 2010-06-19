@@ -2,8 +2,8 @@ package src.ptm;
 
 public class PTMTextLeaf extends PTMLeaf {
 
-	public PTMTextLeaf(StringBuffer content, int beginIndex) throws ObjectNotApplicableException {
-		super(content, beginIndex);
+	public PTMTextLeaf(StringBuffer content, int beginIndex, PTMObject parent) throws ObjectNotApplicableException {
+		super(content, beginIndex, parent);
 		endIndex = beginIndex+1;
 		if (endIndex > content.length()) {
 			throw new ObjectNotApplicableException("End reached!");
@@ -26,6 +26,7 @@ public class PTMTextLeaf extends PTMLeaf {
 	 */
 	public boolean append(PTMTextLeaf other) {
 		if (endIndex == other.beginIndex) {
+			System.out.printf("Updating text end from %d to %d\n", endIndex, other.endIndex);
 			endIndex = other.endIndex;
 			return true;
 		}
