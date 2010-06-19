@@ -21,6 +21,28 @@ public class Main {
 		for (Integer i : ListComprehension.filter(al, fi)) {
 			System.out.println(i);
 		}
+		
+		Integer[] ia = { 2, 3, 4, 5};
+		ia = ListComprehension.map(ia, f, Integer.class);
+		for (int i : ia) {
+			System.out.printf("%d ", i);
+		}
+		System.out.println();
+		
+		ia = new Integer[]{ 2, 3, 4, 5};
+		ListComprehension.mapInPlace(ia, f);
+		for (int i : ia) {
+			System.out.printf("%d ", i);
+		}
+		System.out.println();
+
+		ia = new Integer[]{ 2, 3, 4, 6};
+		Integer[] oa;
+		oa = ListComprehension.filter(ia, fi, Integer.class);
+		for (int i : oa) {
+			System.out.printf("%d ", i);
+		}
+		System.out.println();
 	}
 	
 	private static class Twice implements Func<Integer, Integer> {
