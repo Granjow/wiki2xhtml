@@ -5,11 +5,30 @@ import java.util.regex.Pattern;
 public class PTMFunctionIf extends PTMFunctionNode {
 	
 	public static final Pattern startPattern = Pattern.compile("^\\{\\{\\s*#if\\s*:");
+	public static final String end = "}}";
 	
 	public final Pattern startPattern() { return startPattern; }
 
 	public PTMFunctionIf(StringBuffer content, int beginIndex) throws ObjectNotApplicableException {
 		super(content, beginIndex);
+		endIndex = beginIndex+end.length();
+		
+		boolean endFound = false;
+		while (true) {
+			try {
+				if (end.equals(content.substring(endIndex-end.length(), endIndex))) {
+					endFound = true;
+					break;
+				}
+			} catch (StringIndexOutOfBoundsException e) {
+				break;
+			}
+			endIndex++;
+		}
+		
+		if (!endFound) {
+			throw new ObjectNotApplicableException("End pattern not found");
+		}
 	}
 	
 	

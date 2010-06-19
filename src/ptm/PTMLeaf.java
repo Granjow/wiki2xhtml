@@ -1,14 +1,11 @@
 package src.ptm;
 
 abstract public class PTMLeaf extends PTMObject {
-
-	public final StringBuffer content;
-	protected final int beginIndex;
-	protected int endIndex;
+	
+	abstract public String getContent();
 	
 	public PTMLeaf(StringBuffer content, int beginIndex) {
-		this.content = content;
-		this.beginIndex = beginIndex;
+		super(content, beginIndex);
 	}
 	
 }

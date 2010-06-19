@@ -2,11 +2,21 @@ package src.ptm;
 
 import java.util.regex.Matcher;
 
+import src.ptm.PTMObject.EndOfExpressionReachedException;
 import src.ptm.PTMObject.ObjectNotApplicableException;
 
 public class PTMObjectFactory {
 
+
 	public static final PTMObject buildObject(StringBuffer content, int index) {
+		try {
+			return buildObject(content, index, null);
+		} catch (EndOfExpressionReachedException e) {
+			return null;
+		}
+	}
+	
+	public static final PTMObject buildObject(StringBuffer content, int index, String endPattern) throws EndOfExpressionReachedException {
 		if (index >= content.length()) { 
 			return null;
 		}
@@ -25,6 +35,30 @@ public class PTMObjectFactory {
 			}
 		}
 		
+		if (obj == null) {
+			if (endPattern != null) {
+				try {
+					if (endPattern.equals(content.substring(index, index+endPattern.length()))) {
+						throw new EndOfExpressionReachedException();
+					}
+				} catch (StringIndexOutOfBoundsException e) {}
+			}
+			
+			try {
+				obj = new PTMTextLeaf(content, index);
+				PTMObject o2;
+				do {
+					o2 = buildObject(content, ++index, endPattern);
+					if (o2 instanceof PTMTextLeaf) {
+						((PTMTextLeaf) obj).append((PTMTextLeaf) o2);
+					} else {
+						break;
+					}
+				} while (o2 != null && o2 instanceof PTMTextLeaf);
+				
+			} catch (ObjectNotApplicableException e) { }
+		}
+		
 		return obj;
 	}
 	
@@ -33,10 +67,13 @@ public class PTMObjectFactory {
 	}
 	
 	public static void main(String[] args) {
-		StringBuffer sb = new StringBuffer("a {{#if:");
-		System.out.println(buildObject(sb, 0));
-		System.out.println(buildObject(sb, 1));
-		System.out.println(buildObject(sb, 2));
+		StringBuffer sb = new StringBuffer("a {{#if: {{{1}}} }} punkṭ̣·");
+		
+		PTMObject obj;
+		for (int i = 0; i < 3; i++) {
+			obj = buildObject(sb, i);
+			System.out.printf("«%s» in %s\n", obj.getRawContent(), obj);
+		}
 	}
 	
 }
