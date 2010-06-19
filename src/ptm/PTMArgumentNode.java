@@ -59,13 +59,5 @@ public class PTMArgumentNode extends PTMNode {
 	public List<PTMObjects> getAllowedChildnodes() {
 		return allowedChildnodes;
 	}
-	
-	public boolean applies(StringBuffer content, int index) {
-		try {
-			return identifier == content.charAt(index);
-		} catch (IndexOutOfBoundsException e) {
-			return false;
-		}
-	}
 
 }

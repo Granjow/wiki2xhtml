@@ -22,7 +22,20 @@ public class PTMObjectFactory {
 	}
 	
 	
-	
+	/**
+	 * <p>Tries to build a new {@link PTMObject} at the given index.</p>
+	 * <p>This method is called recursively. The steps are as follows:</p>
+	 * <ol>
+	 * <li>Check whether we are at the end of the file or whether the parent expression ends here. In the latter case, throw an exception to notify the parent.</li>
+	 * <li>Try to create a new object of some (given) types. If it can be created, the object itself calls this method again to find further objects.</li>
+	 * </ol> 
+	 * @param parent The parent object of the child that will/might be created.
+	 * @param abort Function handle that checks when to abort because the end of the parent expression has been reached (see point 1).
+	 * @param allowedChildnodes Allowed child types. Only these will be tried to create (see point 2).
+	 * @return A new object or null, if no suitable found (either due to object restrictions by <code>allowedChildnodes</code> or because the End of File has been reached).
+	 * @throws EndOfExpressionReachedException If the end of the parent expression has been reached (see point 1). This is checked here and not in the parent
+	 * to abbreviate recognition of plaintext.
+	 */
 	public static final PTMObject buildObject(StringBuffer content, int index, PTMObject parent, AbortFunction abort, List<PTMObjects> allowedChildnodes) throws EndOfExpressionReachedException {
 		if (index >= content.length()) { 
 			return null;
@@ -98,12 +111,12 @@ public class PTMObjectFactory {
 	}
 	
 	public static void main(String[] args) {
-		StringBuffer sb = new StringBuffer("a {{#if: {{{1}}} }} punkṭ̣·");
+		StringBuffer sb = new StringBuffer("{{#if: a|b}}");
 		
 		PTMObject obj;
 		for (int i = 0; i < sb.length(); ) {
 			obj = buildObject(sb, i, null);
-			System.out.printf("«%s» in %s\n", obj.getRawContent(), obj);
+			System.out.printf("Found: «%s» in %s\n", obj.getRawContent(), obj);
 			if (obj != null) {
 				System.out.println("End index: " + obj.endIndex);
 				i = obj.endIndex;
@@ -111,6 +124,11 @@ public class PTMObjectFactory {
 		}
 	}
 	
+	/**
+	 * Returns a short substring to work with regular expressions on.
+	 * They are needed because e.g. <code>{{#if:</code> could also be written with whitespaces as <code>{{ #if :</code>.
+	 * This short indicator takes just a reasonable number of characters to keep things efficient.
+	 */
 	public static final String getIndicator(StringBuffer content, int index) {
 		return content.substring(index, min(index+15, content.length()));
 	}

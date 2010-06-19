@@ -48,6 +48,9 @@ public class PTM {
 		 }
 	}
 	
+	/** 
+	 * Creates an abort function. It aborts on all given terminators or when the end of the file is reached.
+	 */
 	public static final AbortFunction createAbortFunction(final List<String> terminators) {
 		AbortFunction f = new AbortFunction() {
 			public boolean abort(StringBuffer content, int index) {

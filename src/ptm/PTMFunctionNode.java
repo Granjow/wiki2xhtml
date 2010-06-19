@@ -1,7 +1,6 @@
 package src.ptm;
 
 import java.util.ArrayList;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public abstract class PTMFunctionNode extends PTMNode {
@@ -19,15 +18,6 @@ public abstract class PTMFunctionNode extends PTMNode {
 	
 	public PTMFunctionNode(StringBuffer content, int beginIndex, PTMObject parent) {
 		super(content, beginIndex, parent);
-	}
-	
-	public boolean applies(StringBuffer content, int index) {
-		try {
-			Matcher m = startPattern().matcher(content.substring(index));
-			return m.find();
-		} catch (StringIndexOutOfBoundsException e) {
-			return false;
-		}
 	}
 
 }

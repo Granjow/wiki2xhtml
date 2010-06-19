@@ -24,6 +24,9 @@ public class PTMFunctionIf extends PTMFunctionNode {
 	public PTMFunctionIf(StringBuffer content, int beginIndex, PTMObject parent) throws ObjectNotApplicableException {
 		super(content, beginIndex, parent);
 		
+		// Find the end of the starting {{#if: expression (may contain spaces) to set the endIndex appropriately.
+		// Then try to add more objects until the end of the function is reached. 
+		
 		Matcher m = startPattern.matcher(PTMObjectFactory.getIndicator(content, beginIndex));
 		if (m.find()) {
 			endIndex = beginIndex + m.end();
@@ -31,8 +34,7 @@ public class PTMFunctionIf extends PTMFunctionNode {
 			throw new ObjectNotApplicableException("Lost position of the start pattern!");
 		}
 		
-		boolean endReached = false;
-		
+		boolean functionEndReached = false;
 		PTMObject obj; 
 		do {
 			try {
@@ -43,22 +45,30 @@ public class PTMFunctionIf extends PTMFunctionNode {
 					System.out.printf("If: Object %s added. Goes from %d to %d with content >>%s<<.\n", obj, obj.beginIndex, obj.endIndex, obj.getRawContent());
 				}
 			} catch (EndOfExpressionReachedException e) {
-				endReached = true;
+				// While parsing we reached the end of the if function.
+				// This is a «good» exception as it tells us that the function can indeed end correctly.
+				// As this still includes the case that we just reached the end of the file, we need to
+				// consider this case below.
+				functionEndReached = true;
 				break;
 			}
 		} while (obj != null);
 		
-		if (!endReached) {
+		if (!functionEndReached) {
 			throw new ObjectNotApplicableException("End of the expression could not be found.");
 		}
 		
-		endReached = false;
+		// Check that we're not at the EOF but really at the end of a function
+		// by looking for the terminating }}.
 		try {
 			if (PTMFunctionNode.endExpression.equals(content.substring(endIndex, endIndex+PTMFunctionNode.endExpression.length()))) {
-				endReached = true;
+				functionEndReached = true;
+				endIndex += PTMFunctionNode.endExpression.length();
 			}
 		} catch (StringIndexOutOfBoundsException e) {}
-		throw new ObjectNotApplicableException("End of the If expression could not be located.");
+		if (!functionEndReached) {
+			throw new ObjectNotApplicableException("End of the If expression could not be located.");
+		}
 	}
 	
 	

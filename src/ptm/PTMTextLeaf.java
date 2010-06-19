@@ -9,10 +9,6 @@ public class PTMTextLeaf extends PTMLeaf {
 			throw new ObjectNotApplicableException("End reached!");
 		}
 	}
-
-	public boolean applies(StringBuffer content, int index) {
-		return index < content.length();
-	}
 	
 	public String getContent() {
 		return content.substring(beginIndex, endIndex);
