@@ -23,15 +23,15 @@ import src.utilities.StringTools;
  * <p>This root node builds an entire tree from a given input.</p>
  */
 public class PTMRootNode extends PTMNode {
-
+	
 	public PTMRootNode(StringBuffer content) {
-		super(content, 0, null);
+		super(content, 0, null, null);
 		long start = System.currentTimeMillis();
 		endIndex = 0;
 		
 		PTMObject obj;
 		do {
-			obj = PTMObjectFactory.buildObject(content, endIndex, this);
+			obj = PTMObjectFactory.buildObject(content, endIndex, this, this);
 			if (obj != null) {
 				childTree.add(obj);
 				endIndex = obj.endIndex;
@@ -42,5 +42,18 @@ public class PTMRootNode extends PTMNode {
 		
 		assert endIndex == content.length();
 	}
+	
+	public String evaluate() {
+		StringBuilder sb = new StringBuilder();
+		for (PTMObject o : childTree) {
+			sb.append(o.evaluate());
+		}
+		return sb.toString();
+	}
+	
+	public void addBinding(PTMArgumentNode argumentNode) {
+		//TODO
+	}
+	
 
 }

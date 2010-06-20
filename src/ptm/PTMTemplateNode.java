@@ -40,8 +40,8 @@ public class PTMTemplateNode extends PTMNode {
 		allowedChildnodes.add(PTMObjects.Argument);
 	}
 	
-	public PTMTemplateNode(StringBuffer content, int beginIndex, PTMObject parent) throws ObjectNotApplicableException {
-		super(content, beginIndex, parent);
+	public PTMTemplateNode(StringBuffer content, int beginIndex, PTMNode parent, PTMRootNode root) throws ObjectNotApplicableException {
+		super(content, beginIndex, parent, root);
 		
 		// Check for correct start sequence
 		try {
@@ -58,7 +58,7 @@ public class PTMTemplateNode extends PTMNode {
 		PTMObject obj;
 		do {
 			try {
-				obj = PTMObjectFactory.buildObject(content, endIndex, this, abort, allowedChildnodes);
+				obj = PTMObjectFactory.buildObject(content, endIndex, this, root, abort, allowedChildnodes);
 				if (obj != null) {
 					childTree.add(obj);
 					endIndex = obj.endIndex;
@@ -85,6 +85,12 @@ public class PTMTemplateNode extends PTMNode {
 		}
 		
 		assert endIndex > this.beginIndex;
+	}
+
+	@Override
+	public String evaluate() {
+		// TODO Auto-generated method stub
+		return getRawContent();
 	}
 
 }

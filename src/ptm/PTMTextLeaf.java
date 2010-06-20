@@ -23,8 +23,8 @@ package src.ptm;
  */
 public class PTMTextLeaf extends PTMLeaf {
 
-	public PTMTextLeaf(StringBuffer content, int beginIndex, PTMObject parent) throws ObjectNotApplicableException {
-		super(content, beginIndex, parent);
+	public PTMTextLeaf(StringBuffer content, int beginIndex, PTMNode parent, PTMRootNode root) throws ObjectNotApplicableException {
+		super(content, beginIndex, parent, root);
 		endIndex = beginIndex+1;
 		if (endIndex > content.length()) {
 			throw new ObjectNotApplicableException("End reached!");
@@ -32,6 +32,10 @@ public class PTMTextLeaf extends PTMLeaf {
 	}
 	
 	public String getContent() {
+		return content.substring(beginIndex, endIndex);
+	}
+	
+	public String evaluate() {
 		return content.substring(beginIndex, endIndex);
 	}
 	

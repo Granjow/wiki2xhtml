@@ -25,18 +25,22 @@ import java.io.PrintStream;
 abstract public class PTMObject {
 
 	
-	protected final PTMObject parent;
+	protected final PTMNode parent;
+	protected final PTMRootNode root;
 	protected final PTMArrayList childTree;
 	protected final StringBuffer content;
 	protected final int beginIndex;
 	protected int endIndex;
 	
+	abstract public String evaluate();
+	
 	/** Variables initialization */
-	public PTMObject(StringBuffer content, int beginIndex, PTMObject parent) {
+	public PTMObject(StringBuffer content, int beginIndex, PTMNode parent, PTMRootNode root) {
 		this.childTree = new PTMArrayList();
 		this.beginIndex = beginIndex;
 		this.content = content;
 		this.parent = parent;
+		this.root = root;
 		
 		if (content == null) {
 			throw new NullPointerException("Content must not be null");
@@ -83,7 +87,7 @@ abstract public class PTMObject {
 	 * @param prefix May initially be null.
 	 */
 	public final void printTree(PrintStream ps, String prefix) {
-		final int max = 15;
+		final int max = 50;
 		final String suffix = " [...]";
 		
 		if (prefix == null || "".equals(prefix)) {
@@ -93,8 +97,9 @@ abstract public class PTMObject {
 		}
 		String content = getRawContent();
 		if (content.length() > max + suffix.length()) {
-			content = content.substring(0, 15) + " [...]";
+			content = content.substring(0, max) + " [...]";
 		}
+		content = content.replace("\n", "");
 		ps.printf("%s%s: %s\n", prefix, this.getClass(), content);
 		for (PTMObject o : childTree) {
 			o.printTree(ps, prefix);

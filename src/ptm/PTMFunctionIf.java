@@ -56,8 +56,8 @@ public class PTMFunctionIf extends PTMFunctionNode {
 	 * @throws ObjectNotApplicableException If start/end sequences are not correct, 
 	 * e.g. for <code>{{#if: a|{{#if:b|c}}</code> (closing <code>}}</code> forgotten)
 	 */
-	public PTMFunctionIf(StringBuffer content, int beginIndex, PTMObject parent) throws ObjectNotApplicableException {
-		super(content, beginIndex, parent);
+	public PTMFunctionIf(StringBuffer content, int beginIndex, PTMNode parent, PTMRootNode root) throws ObjectNotApplicableException {
+		super(content, beginIndex, parent, root);
 		
 		// Find the end of the starting {{#if: expression (may contain spaces) to set the endIndex appropriately.
 		// Then try to add more objects until the end of the function is reached. 
@@ -73,11 +73,10 @@ public class PTMFunctionIf extends PTMFunctionNode {
 		PTMObject obj; 
 		do {
 			try {
-				obj = PTMObjectFactory.buildObject(content, endIndex, this, PTMFunctionNode.abort, allowedChildnodes);
+				obj = PTMObjectFactory.buildObject(content, endIndex, this, root, PTMFunctionNode.abort, allowedChildnodes);
 				if (obj != null) {
 					childTree.add(obj);
 					endIndex = obj.endIndex;
-//					System.out.printf("If: Object %s added. Goes from %d to %d with content >>%s<<.\n", obj, obj.beginIndex, obj.endIndex, obj.getRawContent());
 				}
 			} catch (EndOfExpressionReachedException e) {
 				// While parsing we reached the end of the if function.
@@ -107,15 +106,19 @@ public class PTMFunctionIf extends PTMFunctionNode {
 		assert endIndex > this.beginIndex;
 	}
 	
-	
-	public static void main(String[] args) throws ObjectNotApplicableException {
-		StringBuffer sb = new StringBuffer("Hallo {{#if: .");
-		PTMFunctionIf f;
-		for (int i = 0; i <= sb.length()+1; i++) {
-			try {
-				f = new PTMFunctionIf(sb, i, null);
-				System.out.printf("Applies at %d! --->%s<---\n", i, f.getRawContent());
-			} catch (ObjectNotApplicableException e) {}
+	public String evaluate() {
+		String result = "";
+		
+		if (childTree.size() >= 2) {
+			if (childTree.get(0).evaluate().trim().length() > 0) {
+				result = childTree.get(1).evaluate();
+			} else {
+				if (childTree.size() >= 3) {
+					result = childTree.get(2).evaluate();
+				}
+			}
 		}
+		
+		return result;
 	}
 }

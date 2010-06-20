@@ -51,8 +51,8 @@ public class PTMParameterNode extends PTMNode {
 	/**
 	 * @see {@link PTMFunctionIf#PTMFunctionIf(StringBuffer, int, PTMObject)}
 	 */
-	public PTMParameterNode(StringBuffer content, int beginIndex, PTMObject parent) throws ObjectNotApplicableException {
-		super(content, beginIndex, parent);
+	public PTMParameterNode(StringBuffer content, int beginIndex, PTMNode parent, PTMRootNode root) throws ObjectNotApplicableException {
+		super(content, beginIndex, parent, root);
 		
 		// Make sure the first characters are correct
 		try {
@@ -69,11 +69,10 @@ public class PTMParameterNode extends PTMNode {
 		PTMObject obj;
 		do {
 			try {
-				obj = PTMObjectFactory.buildObject(content, endIndex, this, abort, allowedChildnodes);
+				obj = PTMObjectFactory.buildObject(content, endIndex, this, root, abort, allowedChildnodes);
 				if (obj != null) {
 					childTree.add(obj);
 					endIndex = obj.endIndex;
-//					System.out.printf("Param: Object %s added. Goes from %d to %d with content >>%s<<.\n", obj, obj.beginIndex, obj.endIndex, obj.getRawContent());
 				}
 			} catch (EndOfExpressionReachedException e) {
 				parameterEndReached = true;
@@ -97,6 +96,15 @@ public class PTMParameterNode extends PTMNode {
 		}
 		
 		assert endIndex > this.beginIndex;
+	}
+
+	@Override
+	public String evaluate() {
+		if (childTree.size() > 0) {
+			
+		}
+		// TODO Auto-generated method stub
+		return getRawContent();
 	}
 
 }

@@ -42,8 +42,18 @@ public class PTMArgumentNode extends PTMNode {
 		}
 	}
 	
-	public PTMArgumentNode(StringBuffer content, int beginIndex, PTMObject parent) throws ObjectNotApplicableException {
-		super(content, beginIndex, parent);
+	/**
+	 * <p>An argument consists of an optional  node may contain upto two direct children:</p>
+	 * <ul> TODO
+	 * <li>A {@link PTMArgumentNameNode}
+	 * @param content
+	 * @param beginIndex
+	 * @param parent
+	 * @param root
+	 * @throws ObjectNotApplicableException
+	 */
+	public PTMArgumentNode(StringBuffer content, int beginIndex, PTMNode parent, PTMRootNode root) throws ObjectNotApplicableException {
+		super(content, beginIndex, parent, root);
 		
 		// Build the abort function. Abort at | always (new argument),
 		// and at either }}} (parameter) or }} (template/function).
@@ -61,28 +71,38 @@ public class PTMArgumentNode extends PTMNode {
 		endIndex = beginIndex;
 		if (content.charAt(endIndex) == identifier) { endIndex++; }
 		
-		boolean endReached = false;
-		PTMObject obj;
-		while (true) {
-			try {
-				obj = PTMObjectFactory.buildObject(content, endIndex, this, abort, allowedChildnodes);
-				if (obj != null) {
-					childTree.add(obj);
-					endIndex = obj.endIndex;
-//					System.out.printf("Argument: Object %s added. Goes from %d to %d with content >>%s<<.\n", obj, obj.beginIndex, obj.endIndex, obj.getRawContent());
-				} else {
-					break;
-				}
-			} catch (EndOfExpressionReachedException e) {
-				endReached = true;
-				break;
-			}
-		}
-		if (!endReached) {
-			throw new ObjectNotApplicableException("End of argument list could not be found");
+		// Don't catch the exception here; if no name node can be created, 
+		// then the argument node cannot be created either.
+		PTMArgumentNameNode ann = new PTMArgumentNameNode(content, endIndex, this, root, abort);
+		endIndex = ann.endIndex;
+		if (abort.abort(content, endIndex)) {
+			// End of the argument reached, so the object must be a value and not a name.
+			// Set an implicit name instead.
+			childTree.add(new PTMArgumentNameNode(content, ann.beginIndex, this, root, parent.getNextArgNumber()));
+			childTree.add(ann.toPTMArgumentValueNode());
+		} else {
+			// we are at a name/value separator
+			endIndex++;
+			childTree.add(ann);
+			
+			// Again, don't catch the exception
+			PTMArgumentValueNode avn = new PTMArgumentValueNode(content, endIndex, parent, root, abort);
+			childTree.add(avn);
+			endIndex = avn.endIndex;
 		}
 
 		assert endIndex > this.beginIndex;
+		assert childTree.size() == 2;
+	}
+
+	public String evaluate() {
+		//return childTree.get(1).evaluate();
+		String s = getRawContent();
+		if (s.startsWith(Character.toString(identifier))) {
+			return s.substring(1);
+		} else {
+			return s;
+		}
 	}
 
 }

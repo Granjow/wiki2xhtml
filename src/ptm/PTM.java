@@ -33,21 +33,23 @@ public class PTM {
 		FunctionIf,
 		Parameter,
 		Template,
-		Argument
+		Argument,
+		ArgumentName,
+		ArgumentValue
 	}
 	
 	/** Aborts only at the end of the file */
 	public static final AbortFunction eofAbortFunction;
+	/** Without argument nodes */
 	public static final List<PTMObjects> defaultChildren;
 	
 	static {
-		 eofAbortFunction = createAbortFunction(new ArrayList<String>());
-		 defaultChildren = new ArrayList<PTMObjects>();
-		 for (PTMObjects o : PTMObjects.values()) {
-			 if (o != PTMObjects.Argument) {
-				 defaultChildren.add(o);
-			 }
-		 }
+		eofAbortFunction = createAbortFunction(new ArrayList<String>());
+		defaultChildren = new ArrayList<PTMObjects>();
+		for (PTMObjects o : new PTMObjects[] { PTMObjects.Text,
+				PTMObjects.Function, PTMObjects.Parameter, PTMObjects.Template }) {
+			defaultChildren.add(o);
+		}
 	}
 	
 	/** 

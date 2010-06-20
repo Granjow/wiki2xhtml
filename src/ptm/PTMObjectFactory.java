@@ -31,15 +31,15 @@ import src.ptm.PTMObject.ObjectNotApplicableException;
 public class PTMObjectFactory {
 
 
-	public static final PTMObject buildObject(StringBuffer content, int index, PTMObject parent) {
+	public static final PTMObject buildObject(StringBuffer content, int index, PTMNode parent, PTMRootNode root) {
 		try {
-			return buildObject(content, index, parent, PTM.eofAbortFunction);
+			return buildObject(content, index, parent, root, PTM.eofAbortFunction);
 		} catch (EndOfExpressionReachedException e) {
 			return null;
 		}
 	}
-	public static final PTMObject buildObject(StringBuffer content, int index, PTMObject parent, AbortFunction abort) throws EndOfExpressionReachedException {
-		return buildObject(content, index, parent, abort, PTM.defaultChildren);
+	public static final PTMObject buildObject(StringBuffer content, int index, PTMNode parent, PTMRootNode root, AbortFunction abort) throws EndOfExpressionReachedException {
+		return buildObject(content, index, parent, root, abort, PTM.defaultChildren);
 	}
 	
 	
@@ -57,7 +57,7 @@ public class PTMObjectFactory {
 	 * @throws EndOfExpressionReachedException If the end of the parent expression has been reached (see point 1). This is checked here and not in the parent
 	 * to abbreviate recognition of plaintext.
 	 */
-	public static final PTMObject buildObject(StringBuffer content, int index, PTMObject parent, AbortFunction abort, List<PTMObjects> allowedChildnodes) throws EndOfExpressionReachedException {
+	public static final PTMObject buildObject(StringBuffer content, int index, PTMNode parent, PTMRootNode root, AbortFunction abort, List<PTMObjects> allowedChildnodes) throws EndOfExpressionReachedException {
 		if (index >= content.length()) { 
 			return null;
 		}
@@ -76,7 +76,7 @@ public class PTMObjectFactory {
 			m = PTMFunctionIf.startPattern.matcher(indicator);
 			if (m.find()) {
 				try {
-					obj = new PTMFunctionIf(content, index, parent);
+					obj = new PTMFunctionIf(content, index, parent, root);
 				} catch (ObjectNotApplicableException e) { obj = null; }
 			}
 		}
@@ -86,7 +86,7 @@ public class PTMObjectFactory {
 			if (allowedChildnodes.contains(PTMObjects.Template)) {
 				if (indicator.startsWith(PTMTemplateNode.identifier)) {
 					try {
-						obj = new PTMTemplateNode(content, index, parent);
+						obj = new PTMTemplateNode(content, index, parent, root);
 					} catch (ObjectNotApplicableException e) { obj = null; }
 				}
 			}
@@ -100,7 +100,7 @@ public class PTMObjectFactory {
 				// text leaves should always be children of an Argument.
 				if (!allowedChildnodes.contains(PTMObjects.Text)) {
 					try {
-						obj = new PTMArgumentNode(content, index, parent);
+						obj = new PTMArgumentNode(content, index, parent, root);
 					} catch (ObjectNotApplicableException e) { obj = null; }
 				}
 			}
@@ -111,7 +111,7 @@ public class PTMObjectFactory {
 			if (allowedChildnodes.contains(PTMObjects.Parameter)) {
 				if (indicator.startsWith(PTMParameterNode.identifier)) {
 					try {
-						obj = new PTMParameterNode(content, index, parent);
+						obj = new PTMParameterNode(content, index, parent, root);
 					} catch (ObjectNotApplicableException e) { obj = null; }
 				}
 			}
@@ -122,7 +122,7 @@ public class PTMObjectFactory {
 			
 			if (allowedChildnodes.contains(PTMObjects.Text)) {
 				try {
-					obj = new PTMTextLeaf(content, index, parent);
+					obj = new PTMTextLeaf(content, index, parent, root);
 				} catch (ObjectNotApplicableException e) { obj = null; }
 			}
 		}
@@ -135,10 +135,11 @@ public class PTMObjectFactory {
 	}
 	
 	public static void main(String[] args) {
-		StringBuffer sb = new StringBuffer("{{:template}}Function: {{#if: a|{{{{{:b|3=bla|d}}}}}}} and {{{more|}}}");
+		StringBuffer sb = new StringBuffer("a {{#if:a|a=b|c}} {{{param|}}}");
 		
 		PTMRootNode root = new PTMRootNode(sb);
 		root.printTree(System.out, null);
+		System.out.println("\nEvaluation:\n" + root.evaluate());
 	}
 	
 	/**
