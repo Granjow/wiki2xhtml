@@ -77,13 +77,22 @@ public class PTMObjectFactory {
 			if (m.find()) {
 				try {
 					obj = new PTMFunctionIf(content, index, parent);
-				} catch (ObjectNotApplicableException e) {
-					obj = null;
+				} catch (ObjectNotApplicableException e) { obj = null; }
+			}
+		}
+		
+		// Template {{:template|args}}
+		if (obj == null) {
+			if (allowedChildnodes.contains(PTMObjects.Template)) {
+				if (indicator.startsWith(PTMTemplateNode.identifier)) {
+					try {
+						obj = new PTMTemplateNode(content, index, parent);
+					} catch (ObjectNotApplicableException e) { obj = null; }
 				}
 			}
 		}
 		
-		// Argument {{arg1|arg2|arg3}}
+		// Argument arg1|arg2|arg3
 		if (obj == null) {
 			if (allowedChildnodes.contains(PTMObjects.Argument)) {
 				// Inside the {{}} text nodes are not allowed (only as subchild!). 
@@ -142,7 +151,7 @@ public class PTMObjectFactory {
 	}
 	
 	public static void main(String[] args) {
-		StringBuffer sb = new StringBuffer("{{#if: a|{{{b}}}}}");
+		StringBuffer sb = new StringBuffer("Function: {{#if: a|{{{{{:b|3=bla|d}}}}}}} and {{{more|}}}");
 		
 		PTMObject obj;
 		for (int i = 0; i < sb.length(); ) {

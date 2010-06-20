@@ -60,7 +60,7 @@ public class PTMParameterNode extends PTMNode {
 				throw new ObjectNotApplicableException("Wrong start sequence for a parameter.");
 			}
 		} catch (StringIndexOutOfBoundsException e) {
-			throw new ObjectNotApplicableException("Wrong start sequence for a parameter, and file ending too early");
+			throw new ObjectNotApplicableException("Wrong start sequence for a parameter, and end of file too early");
 		}
 
 		// Add all available parameter arguments
