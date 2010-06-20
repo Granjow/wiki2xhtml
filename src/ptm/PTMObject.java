@@ -1,5 +1,6 @@
 package src.ptm;
 
+import java.io.PrintStream;
 import java.util.ArrayList;
 
 /*
@@ -20,7 +21,7 @@ import java.util.ArrayList;
  */
 
 /**
- * PTM «Tree Object».
+ * PTM «Tree Object» for creating a parse tree.
  */
 abstract public class PTMObject {
 
@@ -76,6 +77,22 @@ abstract public class PTMObject {
 			}
 		} catch (NullPointerException e) {}
 		return parent;
+	}
+	
+	/**
+	 * Prints a tree of the object and all its child nodes.
+	 * @param prefix May initially be null.
+	 */
+	public final void printTree(PrintStream ps, String prefix) {
+		if (prefix == null || "".equals(prefix)) {
+			prefix = "|-";
+		} else {
+			prefix = "| " + prefix;
+		}
+		ps.printf("%s%s: %s\n", prefix, this.getClass(), getRawContent());
+		for (PTMObject o : childTree) {
+			o.printTree(ps, prefix);
+		}
 	}
 	
 }

@@ -7,6 +7,27 @@ import src.ptm.PTM.PTMObjects;
 import src.ptm.PTMObject.EndOfExpressionReachedException;
 import src.ptm.PTMObject.ObjectNotApplicableException;
 
+/*
+ *   Copyright (C) 2010 Simon Eugster <granjow@users.sf.net>
+
+ *   This program is free software: you can redistribute it and/or modify
+ *   it under the terms of the GNU General Public License as published by
+ *   the Free Software Foundation, either version 3 of the License, or
+ *   (at your option) any later version.
+
+ *   This program is distributed in the hope that it will be useful,
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *   GNU General Public License for more details.
+
+ *   You should have received a copy of the GNU General Public License
+ *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
+/**
+ * This class determines which kind of object node to create. It is the
+ * managing class that knows everything.
+ */
 public class PTMObjectFactory {
 
 
@@ -50,7 +71,7 @@ public class PTMObjectFactory {
 		
 		System.out.println(indicator);
 		
-		// Parser function: If
+		// Parser function {{#if: a|b|c}}
 		if (allowedChildnodes.contains(PTMObjects.Function) || allowedChildnodes.contains(PTMObjects.FunctionIf)) {
 			m = PTMFunctionIf.startPattern.matcher(indicator);
 			if (m.find()) {
@@ -62,11 +83,10 @@ public class PTMObjectFactory {
 			}
 		}
 		
-		// Argument
+		// Argument {{arg1|arg2|arg3}}
 		if (obj == null) {
 			if (allowedChildnodes.contains(PTMObjects.Argument)) {
-				// {{arg1|arg2}}
-				// Inside the {{}} text nodes are not allowed. 
+				// Inside the {{}} text nodes are not allowed (only as subchild!). 
 				// If text is allowed, then arguments usually don't make sense because 
 				// text leaves should always be children of an Argument.
 				if (!allowedChildnodes.contains(PTMObjects.Text)) {
@@ -77,7 +97,18 @@ public class PTMObjectFactory {
 			}
 		}
 		
-		// Test for end pattern or create a text node
+		// Parameter {{{param}}}
+		if (obj == null) {
+			if (allowedChildnodes.contains(PTMObjects.Parameter)) {
+				if (indicator.startsWith(PTMParameterNode.identifier)) {
+					try {
+						obj = new PTMParameterNode(content, index, parent);
+					} catch (ObjectNotApplicableException e) { obj = null; }
+				}
+			}
+		}
+		
+		// Text leaf
 		if (obj == null) {
 			
 			if (allowedChildnodes.contains(PTMObjects.Text)) {
@@ -111,7 +142,7 @@ public class PTMObjectFactory {
 	}
 	
 	public static void main(String[] args) {
-		StringBuffer sb = new StringBuffer("{{#if: a|b}}");
+		StringBuffer sb = new StringBuffer("{{#if: a|{{{b}}}}}");
 		
 		PTMObject obj;
 		for (int i = 0; i < sb.length(); ) {
@@ -120,6 +151,7 @@ public class PTMObjectFactory {
 			if (obj != null) {
 				System.out.println("End index: " + obj.endIndex);
 				i = obj.endIndex;
+				obj.printTree(System.out, "");
 			} else { i++; }
 		}
 	}

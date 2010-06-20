@@ -1,11 +1,9 @@
 package src.ptm;
 
 import java.util.ArrayList;
-import java.util.regex.Pattern;
 
 public abstract class PTMFunctionNode extends PTMNode {
 
-	abstract public Pattern startPattern();
 	public static final String endExpression = "}}";
 	
 	public static final AbortFunction abort;
