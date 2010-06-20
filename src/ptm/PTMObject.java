@@ -1,7 +1,6 @@
 package src.ptm;
 
 import java.io.PrintStream;
-import java.util.ArrayList;
 
 /*
  *   Copyright (C) 2010 Simon Eugster <granjow@users.sf.net>
@@ -27,14 +26,14 @@ abstract public class PTMObject {
 
 	
 	protected final PTMObject parent;
-	protected final ArrayList<PTMObject> childTree;
+	protected final PTMArrayList childTree;
 	protected final StringBuffer content;
 	protected final int beginIndex;
 	protected int endIndex;
 	
 	/** Variables initialization */
 	public PTMObject(StringBuffer content, int beginIndex, PTMObject parent) {
-		this.childTree = new ArrayList<PTMObject>();
+		this.childTree = new PTMArrayList();
 		this.beginIndex = beginIndex;
 		this.content = content;
 		this.parent = parent;
@@ -84,12 +83,19 @@ abstract public class PTMObject {
 	 * @param prefix May initially be null.
 	 */
 	public final void printTree(PrintStream ps, String prefix) {
+		final int max = 15;
+		final String suffix = " [...]";
+		
 		if (prefix == null || "".equals(prefix)) {
 			prefix = "|-";
 		} else {
 			prefix = "| " + prefix;
 		}
-		ps.printf("%s%s: %s\n", prefix, this.getClass(), getRawContent());
+		String content = getRawContent();
+		if (content.length() > max + suffix.length()) {
+			content = content.substring(0, 15) + " [...]";
+		}
+		ps.printf("%s%s: %s\n", prefix, this.getClass(), content);
 		for (PTMObject o : childTree) {
 			o.printTree(ps, prefix);
 		}

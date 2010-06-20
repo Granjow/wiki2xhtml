@@ -73,7 +73,7 @@ public class PTMParameterNode extends PTMNode {
 				if (obj != null) {
 					childTree.add(obj);
 					endIndex = obj.endIndex;
-					System.out.printf("Param: Object %s added. Goes from %d to %d with content >>%s<<.\n", obj, obj.beginIndex, obj.endIndex, obj.getRawContent());
+//					System.out.printf("Param: Object %s added. Goes from %d to %d with content >>%s<<.\n", obj, obj.beginIndex, obj.endIndex, obj.getRawContent());
 				}
 			} catch (EndOfExpressionReachedException e) {
 				parameterEndReached = true;

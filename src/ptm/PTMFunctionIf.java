@@ -77,7 +77,7 @@ public class PTMFunctionIf extends PTMFunctionNode {
 				if (obj != null) {
 					childTree.add(obj);
 					endIndex = obj.endIndex;
-					System.out.printf("If: Object %s added. Goes from %d to %d with content >>%s<<.\n", obj, obj.beginIndex, obj.endIndex, obj.getRawContent());
+//					System.out.printf("If: Object %s added. Goes from %d to %d with content >>%s<<.\n", obj, obj.beginIndex, obj.endIndex, obj.getRawContent());
 				}
 			} catch (EndOfExpressionReachedException e) {
 				// While parsing we reached the end of the if function.

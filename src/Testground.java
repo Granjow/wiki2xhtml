@@ -8,6 +8,8 @@ import src.project.WikiProject;
 import src.project.WikiProject.FallbackFile;
 import src.project.file.LocalWikiFile;
 import src.project.file.WikiFile;
+import src.ptm.PTMRootNode;
+import src.utilities.IORead;
 import src.utilities.IOWrite;
 
 public class Testground {
@@ -30,6 +32,11 @@ public class Testground {
 		WikiFile wf = new LocalWikiFile(wp, f.getName(), false, true, f, fo);
 		wp.addFile(wf);
 		wp.make();
+		
+		StringBuffer sb = IORead.readSBuffer(new File("/tmp/long.txt"));
+		PTMRootNode root = new PTMRootNode(sb);
+		root.printTree(System.out, null);
+		
 	}
 	
 }

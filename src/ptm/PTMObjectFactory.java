@@ -69,7 +69,7 @@ public class PTMObjectFactory {
 		PTMObject obj = null;
 		Matcher m;
 		
-		System.out.println(indicator);
+//		System.out.println(indicator);
 		
 		// Parser function {{#if: a|b|c}}
 		if (allowedChildnodes.contains(PTMObjects.Function) || allowedChildnodes.contains(PTMObjects.FunctionIf)) {
@@ -123,23 +123,7 @@ public class PTMObjectFactory {
 			if (allowedChildnodes.contains(PTMObjects.Text)) {
 				try {
 					obj = new PTMTextLeaf(content, index, parent);
-					
-					
-					// Here follows, attention, recursion!
-					// 
-					PTMObject o2;
-					// Re-use the abort function because we just need a text node,
-					// and text nodes is where we can abort
-					try {
-						o2 = buildObject(content, ++index, parent, abort);
-						if (o2 instanceof PTMTextLeaf) {
-							((PTMTextLeaf) obj).append((PTMTextLeaf) o2);
-						}
-					} catch (EndOfExpressionReachedException e) {
-						// End of expression reached, don't append anymore
-					}
-					
-				} catch (ObjectNotApplicableException e) { }
+				} catch (ObjectNotApplicableException e) { obj = null; }
 			}
 		}
 		
@@ -151,18 +135,10 @@ public class PTMObjectFactory {
 	}
 	
 	public static void main(String[] args) {
-		StringBuffer sb = new StringBuffer("Function: {{#if: a|{{{{{:b|3=bla|d}}}}}}} and {{{more|}}}");
+		StringBuffer sb = new StringBuffer("{{:template}}Function: {{#if: a|{{{{{:b|3=bla|d}}}}}}} and {{{more|}}}");
 		
-		PTMObject obj;
-		for (int i = 0; i < sb.length(); ) {
-			obj = buildObject(sb, i, null);
-			System.out.printf("Found: «%s» in %s\n", obj.getRawContent(), obj);
-			if (obj != null) {
-				System.out.println("End index: " + obj.endIndex);
-				i = obj.endIndex;
-				obj.printTree(System.out, "");
-			} else { i++; }
-		}
+		PTMRootNode root = new PTMRootNode(sb);
+		root.printTree(System.out, null);
 	}
 	
 	/**

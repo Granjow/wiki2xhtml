@@ -1,6 +1,6 @@
 package src.ptm;
 
-import src.utilities.StringTools;
+import java.util.ArrayList;
 
 /*
  *   Copyright (C) 2010 Simon Eugster <granjow@users.sf.net>
@@ -20,27 +20,26 @@ import src.utilities.StringTools;
  */
 
 /**
- * <p>This root node builds an entire tree from a given input.</p>
+ * This ArrayList extension is special because it tries to append
+ * text leaves to the last element in the list to assemble text.
  */
-public class PTMRootNode extends PTMNode {
-
-	public PTMRootNode(StringBuffer content) {
-		super(content, 0, null);
-		long start = System.currentTimeMillis();
-		endIndex = 0;
-		
-		PTMObject obj;
-		do {
-			obj = PTMObjectFactory.buildObject(content, endIndex, this);
-			if (obj != null) {
-				childTree.add(obj);
-				endIndex = obj.endIndex;
+public class PTMArrayList extends ArrayList<PTMObject> {
+	private static final long serialVersionUID = 1L;
+	
+	public boolean add(PTMObject e) {
+		if (e instanceof PTMTextLeaf) {
+			if (size() > 0) {
+				PTMObject obj = get(size()-1);
+				if (obj instanceof PTMTextLeaf) {
+					((PTMTextLeaf) obj).append((PTMTextLeaf) e);
+					return true;
+				}
 			}
-		} while (obj != null);
-		
-		System.out.printf("Time taken: %s\n", StringTools.formatTimeMilliseconds(System.currentTimeMillis()-start));
-		
-		assert endIndex == content.length();
+			return super.add(e);
+		}
+		else {
+			return super.add(e);
+		}
 	}
 
 }

@@ -43,7 +43,7 @@ public class PTMTextLeaf extends PTMLeaf {
 	 */
 	public boolean append(PTMTextLeaf other) {
 		if (endIndex == other.beginIndex) {
-			System.out.printf("Updating text end from %d to %d\n", endIndex, other.endIndex);
+//			System.out.printf("Updating text end from %d to %d\n", endIndex, other.endIndex);
 			endIndex = other.endIndex;
 			return true;
 		}

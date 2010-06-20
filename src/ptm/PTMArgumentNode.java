@@ -69,7 +69,7 @@ public class PTMArgumentNode extends PTMNode {
 				if (obj != null) {
 					childTree.add(obj);
 					endIndex = obj.endIndex;
-					System.out.printf("Argument: Object %s added. Goes from %d to %d with content >>%s<<.\n", obj, obj.beginIndex, obj.endIndex, obj.getRawContent());
+//					System.out.printf("Argument: Object %s added. Goes from %d to %d with content >>%s<<.\n", obj, obj.beginIndex, obj.endIndex, obj.getRawContent());
 				} else {
 					break;
 				}
