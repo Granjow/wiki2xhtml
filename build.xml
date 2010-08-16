@@ -4,13 +4,21 @@
   <property name="wiki2xhtml.version" value="3.4b8"/>
   <property name="build.classes" value="build"/>
   <property name="build.libs" value="build/lib"/>
-  <property name="path.gettext" value="gettext-commons-0.9.6.jar"/>
-  <property name="path.junit" value="junit-4.6.jar"/>
+  <property name="build.test" value="build-test"/>
+  <property name="path.test" value="unittests"/>
+  <property name="path.gettext" value="./lib/gettext-commons-0.9.6.jar"/>
+  <property name="path.junit" value="./lib/junit-4.8.2.jar"/>
 
   <path id="classpath">
     <pathelement location="./"/>
-    <pathelement location="./lib/${path.gettext}"/>
-    <pathelement location="./lib/${path.junit}"/>
+    <pathelement location="${path.gettext}"/>
+    <pathelement location="${path.junit}"/>
+  </path>
+  
+  <path id="classpath.junit">
+    <pathelement location="."/>
+    <pathelement location="${path.test}"/>
+    <pathelement location="${path.junit}"/>
   </path>
 
   <!-- create a property containing all .jar files, prefix lib/, and seperated with a space -->
@@ -33,15 +41,35 @@
       </fileset>
     </path>
   </pathconvert>
+  
+  
+  
+  <target name="compile-test" description="Compiles the unit tests">
+    <mkdir dir="${build.test}"/>
+    <javac srcdir="."
+           destdir="${build.test}">
+        <classpath refid="classpath.junit"/>
+    </javac>
+  </target>
+  <target name="clean-test">
+    <delete dir="${build.test}"/>
+  </target>
+  
+  <target name="test" depends="compile-test" description="Unit tests">
+    <junit>
+        <classpath refid="classpath.junit"/>
+        <test name="Tester"/>
+    </junit>
+  </target>
 
 
   <target name="build" depends="clean" description="Build .jar file">  
     <mkdir dir="${build.classes}"/>
     <javac srcdir="."
-	   destdir="${build.classes}"
-	   debug="true"
-	   deprecation="true"
-	   optimize="true">
+           destdir="${build.classes}"
+           debug="true"
+           deprecation="true"
+           optimize="true">
       <classpath refid="classpath"/>
     </javac>
 
@@ -53,25 +81,25 @@
     <jar jarfile="wiki2xhtml.jar">
       <fileset dir="${build.classes}"/>
       <fileset dir=".">
-	<include name="resources/*"/>
-	<include name="bin/**"/>
-	<include name="*.txt"/>
-	<include name="*.PHP"/>
-	<include name="*.wx"/>
-	<include name="wiki2xhtml"/>
-	<include name="start.bat"/>
-	<exclude name="howto-RELEASE.txt"/>
+        <include name="resources/*"/>
+        <include name="bin/**"/>
+        <include name="*.txt"/>
+        <include name="*.PHP"/>
+        <include name="*.wx"/>
+        <include name="wiki2xhtml"/>
+        <include name="start.bat"/>
+        <exclude name="howto-RELEASE.txt"/>
       </fileset>
       <manifest>
-	<attribute name="Built-By" value="Simon A. Eugster" />
-	<attribute name="Main-Class" value="src.LauncherForJar" />
-	<attribute name="wiki2xhtml-Version" value="${wiki2xhtml.version}"/>
-	<attribute name="Class-Path" value="${mf.libs}"/>
+        <attribute name="Built-By" value="Simon A. Eugster" />
+        <attribute name="Main-Class" value="src.LauncherForJar" />
+        <attribute name="wiki2xhtml-Version" value="${wiki2xhtml.version}"/>
+        <attribute name="Class-Path" value="${mf.libs}"/>
       </manifest>
     </jar>
   </target>
 
-  <target name="clean" description="clean up">
+  <target name="clean" depends="clean-test" description="clean up">
     <delete dir="${build.classes}"/>
   </target>
 
