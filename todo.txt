@@ -1,3 +1,6 @@
+Image: → crash
+Image placeholder (space only) in galleries
+
 cdata in doc.txt#h_Links!
 
 Typo
