@@ -24,8 +24,12 @@ import src.utilities.StringTools;
  */
 public class PTMRootNode extends PTMNode {
 	
-	public PTMRootNode(StringBuffer content) {
+	public PTMRootNode(StringBuffer content, PTMState sigma) {
 		super(content, 0, null, null);
+
+		// Use the delivered state if it is not null.
+		if (sigma != null) { this.sigma = sigma; }
+		
 		long start = System.currentTimeMillis();
 		endIndex = 0;
 		
@@ -41,6 +45,7 @@ public class PTMRootNode extends PTMNode {
 		System.out.printf("Time taken: %s\n", StringTools.formatTimeMilliseconds(System.currentTimeMillis()-start));
 		
 		assert endIndex == content.length();
+		assert this.sigma != null;
 	}
 	
 	public String evaluate() {
@@ -50,10 +55,5 @@ public class PTMRootNode extends PTMNode {
 		}
 		return sb.toString();
 	}
-	
-	public void addBinding(PTMArgumentNode argumentNode) {
-		//TODO
-	}
-	
 
 }

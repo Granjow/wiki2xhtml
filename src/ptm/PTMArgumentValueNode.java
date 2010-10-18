@@ -31,12 +31,15 @@ public class PTMArgumentValueNode extends PTMNode {
 	public PTMArgumentValueNode(StringBuffer content, int beginIndex, int endIndex, PTMNode parent, PTMRootNode root, PTMArrayList children) {
 		super(content, beginIndex, parent, root);
 		this.endIndex = endIndex;
-		childTree.addAll(children);
+		if (children != null) childTree.addAll(children);
 		assert this.beginIndex <= this.endIndex;
 	}
 
 	public String evaluate() {
 		//TODO
+		if (childTree.size() == 1) {
+			return childTree.get(0).evaluate();
+		}
 		return getRawContent();
 	}
 

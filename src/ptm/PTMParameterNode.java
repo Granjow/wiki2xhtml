@@ -47,7 +47,7 @@ public class PTMParameterNode extends PTMNode {
 		al.add(endExpression);
 		abort = PTM.createAbortFunction(al);
 	}
-
+	
 	/**
 	 * @see {@link PTMFunctionIf#PTMFunctionIf(StringBuffer, int, PTMObject)}
 	 */
@@ -94,17 +94,20 @@ public class PTMParameterNode extends PTMNode {
 		if (!parameterEndReached) {
 			throw new ObjectNotApplicableException("Parameter does not close.");
 		}
-		
+
 		assert endIndex > this.beginIndex;
+		assert childTree.size() <= 2;
 	}
 
-	@Override
 	public String evaluate() {
 		if (childTree.size() > 0) {
-			
+			if (childTree.size() == 1) {
+				return sigma.resolve(childTree.get(1).evaluate());
+			} else {
+				return sigma.resolve(childTree.get(0).evaluate(), childTree.get(1).evaluate());
+			}
 		}
-		// TODO Auto-generated method stub
-		return getRawContent();
+		return "Empty parameter argument!";
 	}
 
 }

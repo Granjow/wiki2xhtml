@@ -96,13 +96,14 @@ public class PTMArgumentNode extends PTMNode {
 	}
 
 	public String evaluate() {
-		//return childTree.get(1).evaluate();
-		String s = getRawContent();
-		if (s.startsWith(Character.toString(identifier))) {
-			return s.substring(1);
-		} else {
-			return s;
-		}
+		// TODO check
+		return childTree.get(1).evaluate();
+//		String s = getRawContent();
+//		if (s.startsWith(Character.toString(identifier))) {
+//			return s.substring(1);
+//		} else {
+//			return s;
+//		}
 	}
 
 }

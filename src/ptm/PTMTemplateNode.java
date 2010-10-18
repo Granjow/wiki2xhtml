@@ -84,6 +84,16 @@ public class PTMTemplateNode extends PTMNode {
 			throw new ObjectNotApplicableException("Template does not close.");
 		}
 		
+		
+		// Update the state of the children to the new state defined by this node
+		// TODO test
+		PTMState childSigma = new PTMState();
+		for (PTMObject o : childTree) {
+			if (o instanceof PTMNode) {
+				((PTMNode) o).sigma = childSigma;
+			}
+		}
+		
 		assert endIndex > this.beginIndex;
 	}
 

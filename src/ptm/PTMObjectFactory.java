@@ -134,10 +134,13 @@ public class PTMObjectFactory {
 		return (left < right) ? left : right;
 	}
 	
-	public static void main(String[] args) {
-		StringBuffer sb = new StringBuffer("a {{#if:a|a=b|c}} {{{param|}}}");
+	public static void main(String[] args) throws ObjectNotApplicableException {
+		StringBuffer sb = new StringBuffer("a {{#if:a|a=b|c}} {{#if:a|{{{param|df}}}}}");
 		
-		PTMRootNode root = new PTMRootNode(sb);
+		PTMState sigma = new PTMState();
+		sigma.put("param", new PTMSimpleArgumentValueLeaf(new StringBuffer("param-value")));
+		
+		PTMRootNode root = new PTMRootNode(sb, sigma);
 		root.printTree(System.out, null);
 		System.out.println("\nEvaluation:\n" + root.evaluate());
 	}
@@ -150,5 +153,17 @@ public class PTMObjectFactory {
 	public static final String getIndicator(StringBuffer content, int index) {
 		return content.substring(index, min(index+15, content.length()));
 	}
+	
+
+	/**
+	 * For internal use to create a PTMState.
+	 */
+	private static class PTMSimpleArgumentValueLeaf extends PTMArgumentValueNode {
+		public PTMSimpleArgumentValueLeaf(StringBuffer content) throws ObjectNotApplicableException {
+			super(content, 0, content.length(), null, null, null);
+		}
+		public String evaluate() { return content.toString(); }
+	}
+
 	
 }
