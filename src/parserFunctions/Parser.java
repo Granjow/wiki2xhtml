@@ -29,10 +29,12 @@ import src.argumentHandler.ArgumentReader;
  * <p><ins>Handles already if, ifeq, and switch functions.</ins></p>
  *
  * TODO 0 replace functions in the head too
+ * TODO remove src.parserFunctions; deprecated.
  *
  * @author Simon Eugster
  *
  * @since wiki2xhtml 3.4
+ * @deprecated
  */
 public class Parser {
 

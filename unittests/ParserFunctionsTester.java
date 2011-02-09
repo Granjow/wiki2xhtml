@@ -1,7 +1,5 @@
 package unittests;
 
-import static src.parserFunctions.Parser.parse;
-
 import java.io.FileNotFoundException;
 import org.junit.Test;
 import src.ptm.PTMRootNode;
@@ -29,7 +27,7 @@ public class ParserFunctionsTester extends junit.framework.TestCase {
 	
 	@Test
 	public void testIfNested() {
-		assertEquals("", parse("{{#if: |{{#if:a|a|b}}|{{#if:|c|}}}}"));
+		assertEquals("", p("{{#if: |{{#if:a|a|b}}|{{#if:|c|}}}}"));
 	}
 	
 	@Test

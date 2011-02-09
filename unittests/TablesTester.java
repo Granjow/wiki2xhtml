@@ -29,8 +29,20 @@ public class TablesTester extends junit.framework.TestCase {
 	
 	@Test
 	public void testSimpleTable() {
-		TestObject to = new TestObject("{|\n|a||b\n|}", "<table><tr><td>a</td><td>b</td></table>");
-		assertEquals(to.correct(), to.real());
+		assertEquals("<table><tr><td>a</td><td>b</td></tr></table>", p("{|\n|a||b\n|}"));
+		assertEquals("<table><tr><th>a</th><td>b</td></tr></table>", p("{|\n!a||b\n|}"));
+		assertEquals("<table><tr><th>a</th><th>b</th></tr></table>", p("{|\n!a !! b\n|}"));
+
+		assertEquals("<table><tr><td #args#>a</td></tr></table>", p("{|\n| #args# | a \n|}"));
+		assertEquals("<table><tr><td #args#>a</td><td #args2#>b</td></tr></table>", p("{|\n| #args# | a || #args2# | b\n|}"));
+	}
+	
+	
+	
+	
+	private static final String p(String testString) {
+		TestObject to = new TestObject(testString, "");
+		return to.real();
 	}
 	
 	private static class TestObject extends unittests.TestObject {
@@ -43,7 +55,7 @@ public class TablesTester extends junit.framework.TestCase {
 		}
 
 		public String real() {
-			return super.real().replace(" ", "").replace("\n", "");
+			return super.real().replace("\n", "").replace(" <", "<");
 		}
 	}
 

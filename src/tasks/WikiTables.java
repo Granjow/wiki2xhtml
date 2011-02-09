@@ -1,3 +1,20 @@
+/*
+ *   Copyright (C) 2007-2010 Simon Eugster <granjow@users.sf.net>
+
+ *   This program is free software: you can redistribute it and/or modify
+ *   it under the terms of the GNU General Public License as published by
+ *   the Free Software Foundation, either version 3 of the License, or
+ *   (at your option) any later version.
+
+ *   This program is distributed in the hope that it will be useful,
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *   GNU General Public License for more details.
+
+ *   You should have received a copy of the GNU General Public License
+ *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package src.tasks;
 
 import java.io.BufferedReader;
@@ -144,15 +161,16 @@ public class WikiTables extends WikiTask {
 							 */
 							boolean header = line.startsWith("!");
 
-							if (header)
+							if (header) {
 								out.append("\n" + openTh);
-							else
+							} else {
 								out.append("\n" + openTd);
+							}
 
 							int newPos;
 							int oldPos = 1;
-							int a, c;
-							boolean newHeader, oldHeader = true;
+							int iH, iD;
+							boolean newHeader, oldHeader = header;
 
 							while (true) {
 
@@ -162,45 +180,44 @@ public class WikiTables extends WikiTask {
 								 * a </th> or a </td>. Then a new <th or <td for the next cell is opened.
 								 */
 
-								a = line.indexOf("!!", oldPos);
-								c = line.indexOf("||", oldPos);
+								iH = line.indexOf("!!", oldPos);
+								iD = line.indexOf("||", oldPos);
 
-								if (a < 1 && c < 1)
+								if (iH < 1 && iD < 1) {
+									assert iH < 0;
+									assert iD < 0;
 									break;
-								else
-									if (a < c && a >= 1) {
-										newPos = a;
+								} else {
+									if (iD < 0 || ( iH < iD && iH > 0)) {
+										newPos = iH;
 										newHeader = true;
 									} else {
-										if (c >= 1) {
-											newPos = c;
-											newHeader = false;
-										} else {
-											newPos = a;
-											newHeader = true;
-										}
+										newPos = iD;
+										newHeader = false;
 									}
+								}
 
 								/*
 								 * As there follows at least one cell after the
 								 * for-loop, the <th can stay opened
 								 */
 
-								String arg = line.subSequence(oldPos, newPos)
-											 .toString();
+								String arg = line.subSequence(oldPos, newPos).toString();
 								ArgTuple args = getArguments(arg);
 
 								out.append(args.k() + '>');
 								out.append(args.v());
-								if (oldHeader)
+								if (oldHeader) {
 									out.append(closeTh + '\n');
-								else
+								} else {
 									out.append(closeTd + '\n');
+								}
 
-								if (newHeader)
+								if (newHeader) {
 									out.append(openTh);
-								else
+								} else {
 									out.append(openTd);
+								}
 
 								oldPos = newPos + 2;
 								oldHeader = newHeader;
@@ -219,10 +236,11 @@ public class WikiTables extends WikiTask {
 
 							out.append(args.k() + '>');
 							out.append(args.v());
-							if (header)
+							if (oldHeader) {
 								out.append(closeTh);
-							else
+							} else {
 								out.append(closeTd);
+							}
 
 						} else {
 							out.append("\n" + line);
