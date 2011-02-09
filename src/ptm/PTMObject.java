@@ -52,7 +52,11 @@ abstract public class PTMObject {
 	
 	public static final class ObjectNotApplicableException extends Exception {
 		private static final long serialVersionUID = 1L;
-		public ObjectNotApplicableException(String msg) { super(msg); }
+		public ObjectNotApplicableException(String msg) {
+			super(msg);
+			// TODO fetch error output?
+//			System.out.println(msg);
+		}
 	}
 	
 	public static final class EndOfExpressionReachedException extends Exception {

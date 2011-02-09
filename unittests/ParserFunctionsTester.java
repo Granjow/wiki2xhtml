@@ -19,6 +19,7 @@ public class ParserFunctionsTester extends junit.framework.TestCase {
 		assertEquals("empty", p("{{#if:    \t \t||empty}}"));
 		assertEquals("empty", p("{{#if:||empty}}"));
 		assertEquals("new\nline", p("{{#if:||new\nline}}"));
+		assertEquals("{{#if:tooShort}}", p("{{#if:tooShort}}"));
 	}
 	
 	@Test
@@ -36,6 +37,7 @@ public class ParserFunctionsTester extends junit.framework.TestCase {
 		assertEquals("equal", p("{{#ifeq:a|a|equal|}}"));
 		assertEquals("equal", p("{{#ifeq:\ta \t| a |equal|}}"));
 		assertEquals("different", p("{{#ifeq:|a||different}}"));
+		assertEquals("equal", p("{{#ifeq:||equal}}"));
 	}
 	
 	@Test

@@ -31,6 +31,7 @@ public class PTM {
 		Text,
 		Function,
 		FunctionIf,
+		FunctionIfeq,
 		Parameter,
 		Template,
 		Argument,

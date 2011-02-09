@@ -70,14 +70,28 @@ public class PTMObjectFactory {
 		Matcher m;
 		
 //		System.out.println(indicator);
-		
+
 		// Parser function {{#if: a|b|c}}
-		if (allowedChildnodes.contains(PTMObjects.Function) || allowedChildnodes.contains(PTMObjects.FunctionIf)) {
-			m = PTMFunctionIf.startPattern.matcher(indicator);
-			if (m.find()) {
-				try {
-					obj = new PTMFunctionIf(content, index, parent, root);
-				} catch (ObjectNotApplicableException e) { obj = null; }
+		if (obj == null) {
+			if (allowedChildnodes.contains(PTMObjects.Function) || allowedChildnodes.contains(PTMObjects.FunctionIf)) {
+				m = PTMFunctionIf.startPattern.matcher(indicator);
+				if (m.find()) {
+					try {
+						obj = new PTMFunctionIf(content, index, parent, root);
+					} catch (ObjectNotApplicableException e) { obj = null; }
+				}
+			}
+		}
+		
+		// Parser function {{#ifeq: a|b|c|d}}
+		if (obj == null) {
+			if (allowedChildnodes.contains(PTMObjects.Function) || allowedChildnodes.contains(PTMObjects.FunctionIfeq)) {
+				m = PTMFunctionIfeq.startPattern.matcher(indicator);
+				if (m.find()) {
+					try {
+						obj = new PTMFunctionIfeq(content, index, parent, root);
+					} catch (ObjectNotApplicableException e) { obj = null; }
+				}
 			}
 		}
 		
@@ -136,7 +150,7 @@ public class PTMObjectFactory {
 	
 	public static void main(String[] args) throws ObjectNotApplicableException {
 //		StringBuffer sb = new StringBuffer("a {{#if:||c}} {{#if:a|{{{param|df}}}}}");
-		StringBuffer sb = new StringBuffer("{{#if:||c}}");
+		StringBuffer sb = new StringBuffer("{{#ifeq:a|a|c}}");
 		
 		PTMState sigma = new PTMState();
 		sigma.put("param", new PTMSimpleArgumentValueLeaf(new StringBuffer("param-value")));

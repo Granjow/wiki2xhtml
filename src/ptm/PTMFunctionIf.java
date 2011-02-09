@@ -110,6 +110,10 @@ public class PTMFunctionIf extends PTMFunctionNode {
 		if (!functionEndReached) {
 			throw new ObjectNotApplicableException("End of the If expression could not be located.");
 		}
+		
+		if (childTree.size() < 2) {
+			throw new ObjectNotApplicableException("Not enough arguments for the #if function. Usage: {{#if: teststring | notEmpty | empty }}");
+		}
 
 		assert endIndex > this.beginIndex;
 	}
