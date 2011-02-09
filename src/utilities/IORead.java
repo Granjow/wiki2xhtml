@@ -76,7 +76,7 @@ public class IORead {
 			byte[] buffer = new byte [8 * 21000];
 			int bytes = 0;
 
-			while ((bytes = fis.read(buffer)) != -1) {	//Read until eof
+			while ((bytes = fis.read(buffer)) != -1) {	//Read until EOF
 				sb.append(new String(buffer, 0, bytes));
 			}
 		}

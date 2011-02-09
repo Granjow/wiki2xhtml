@@ -42,19 +42,18 @@ public class PTMArgumentNode extends PTMNode {
 		}
 	}
 	
+	public PTMArgumentNode(StringBuffer content, int beginIndex, PTMNode parent, PTMRootNode root) throws ObjectNotApplicableException {
+		this(content, beginIndex, parent, root, false);
+	}
+	
 	/**
 	 * <p>An argument consists of an optional  node may contain upto two direct children:</p>
 	 * <ul> TODO
 	 * <li>A {@link PTMArgumentNameNode}
-	 * @param content
-	 * @param beginIndex
-	 * @param parent
-	 * @param root
-	 * @throws ObjectNotApplicableException
 	 */
-	public PTMArgumentNode(StringBuffer content, int beginIndex, PTMNode parent, PTMRootNode root) throws ObjectNotApplicableException {
+	public PTMArgumentNode(StringBuffer content, int beginIndex, PTMNode parent, PTMRootNode root, boolean empty) throws ObjectNotApplicableException {
 		super(content, beginIndex, parent, root);
-		
+
 		// Build the abort function. Abort at | always (new argument),
 		// and at either }}} (parameter) or }} (template/function).
 		// All possible objects that can contain arguments have to be considered here;
@@ -68,27 +67,35 @@ public class PTMArgumentNode extends PTMNode {
 		}
 		AbortFunction abort = PTM.createAbortFunction(terminators);
 		
-		endIndex = beginIndex;
-		if (content.charAt(endIndex) == identifier) { endIndex++; }
 		
-		// Don't catch the exception here; if no name node can be created, 
-		// then the argument node cannot be created either.
-		PTMArgumentNameNode ann = new PTMArgumentNameNode(content, endIndex, this, root, abort);
-		endIndex = ann.endIndex;
-		if (abort.abort(content, endIndex)) {
-			// End of the argument reached, so the object must be a value and not a name.
-			// Set an implicit name instead.
-			childTree.add(new PTMArgumentNameNode(content, ann.beginIndex, this, root, parent.getNextArgNumber()));
+		if (empty) {
+			PTMArgumentNameNode ann = new PTMArgumentNameNode(content, endIndex, this, root, "");
+			childTree.add(ann);
 			childTree.add(ann.toPTMArgumentValueNode());
 		} else {
-			// we are at a name/value separator
-			endIndex++;
-			childTree.add(ann);
 			
-			// Again, don't catch the exception
-			PTMArgumentValueNode avn = new PTMArgumentValueNode(content, endIndex, parent, root, abort);
-			childTree.add(avn);
-			endIndex = avn.endIndex;
+			endIndex = beginIndex;
+			if (content.charAt(endIndex) == identifier) { endIndex++; } // <- partially bad? TODO
+			
+			// Don't catch the exception here; if no name node can be created, 
+			// then the argument node cannot be created either.
+			PTMArgumentNameNode ann = new PTMArgumentNameNode(content, endIndex, this, root, abort);
+			endIndex = ann.endIndex;
+			if (abort.abort(content, endIndex)) {
+				// End of the argument reached, so the object must be a value and not a name.
+				// Set an implicit name instead.
+				childTree.add(new PTMArgumentNameNode(content, ann.beginIndex, this, root, parent.getNextArgNumber()));
+				childTree.add(ann.toPTMArgumentValueNode());
+			} else {
+				// we are at a name/value separator
+				endIndex++;
+				childTree.add(ann);
+				
+				// Again, don't catch the exception
+				PTMArgumentValueNode avn = new PTMArgumentValueNode(content, endIndex, parent, root, abort);
+				childTree.add(avn);
+				endIndex = avn.endIndex;
+			}
 		}
 
 		assert endIndex > this.beginIndex;

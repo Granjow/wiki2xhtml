@@ -69,6 +69,14 @@ public class PTMFunctionIf extends PTMFunctionNode {
 			throw new ObjectNotApplicableException("Lost position of the start pattern!");
 		}
 		
+		if (content.charAt(endIndex) == '|') {
+			// In the case that there is no space after the #if: and a pipe symbol directly follows,
+			// the string to test is skipped since the ArgumentNode reader always needs to 
+			// advance one character to avaoid an infinite loop. To get the first argument back, add it here.
+			PTMArgumentNode obj = new PTMArgumentNode(content, beginIndex, parent, root, true);
+			childTree.add(obj);
+		}
+		
 		boolean functionEndReached = false;
 		PTMObject obj; 
 		do {

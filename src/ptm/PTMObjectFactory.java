@@ -135,7 +135,8 @@ public class PTMObjectFactory {
 	}
 	
 	public static void main(String[] args) throws ObjectNotApplicableException {
-		StringBuffer sb = new StringBuffer("a {{#if:a|a=b|c}} {{#if:a|{{{param|df}}}}}");
+//		StringBuffer sb = new StringBuffer("a {{#if:||c}} {{#if:a|{{{param|df}}}}}");
+		StringBuffer sb = new StringBuffer("{{#if:||c}}");
 		
 		PTMState sigma = new PTMState();
 		sigma.put("param", new PTMSimpleArgumentValueLeaf(new StringBuffer("param-value")));
