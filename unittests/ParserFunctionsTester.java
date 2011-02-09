@@ -38,15 +38,16 @@ public class ParserFunctionsTester extends junit.framework.TestCase {
 		assertEquals("equal", p("{{#ifeq:\ta \t| a |equal|}}"));
 		assertEquals("different", p("{{#ifeq:|a||different}}"));
 		assertEquals("equal", p("{{#ifeq:||equal}}"));
+		assertEquals(" equal ", p("{{#ifeq: 	|  | equal }}"));
 	}
 	
 	@Test
 	public void testSwitch() {
-		assertEquals("correct", p("{{#switch: a| a=correct |b=incorrect}}"));
+		assertEquals("correct ", p("{{#switch: a| a=correct |b=incorrect}}"));
 		assertEquals("correct", p("{{#switch: b| a=incorrect |b=correct}}"));
 		assertEquals("correct", p("{{#switch: \t| a=incorrect |=correct}}"));
 		assertEquals("correct", p("{{#switch: newline\t\n| a=incorrect \n|b=incorrect\n|newline=correct}}"));
-		assertEquals("correct", p("{{#switch: nonexistant| a=incorrect |b=incorrect| #default = correct}}"));
+		assertEquals(" correct", p("{{#switch: nonexistant| a=incorrect |b=incorrect| #default = correct}}"));
 	}
 	
 
