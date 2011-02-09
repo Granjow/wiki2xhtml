@@ -39,6 +39,9 @@ public class PTM {
 		ArgumentName,
 		ArgumentValue
 	}
+
+	public static final int recursionMaxDepth = 50;
+	public static final String recursionKey = "recursionLevel";
 	
 	/** Aborts only at the end of the file */
 	public static final AbortFunction eofAbortFunction;
@@ -77,6 +80,18 @@ public class PTM {
 			}
 		};
 		return f;
+	}
+	
+	/** Applies all parser functions to the input string */
+	public static final String parse(StringBuffer content) {
+		PTMRootNode root = new PTMRootNode(content, new PTMState());
+		return root.evaluate();
+	}
+	
+	/** Applies all parser functions to the input string, using the given start state. */
+	public static final String parse(StringBuffer content, PTMState sigma) {
+		PTMRootNode root = new PTMRootNode(content, sigma);
+		return root.evaluate();
 	}
 	
 }

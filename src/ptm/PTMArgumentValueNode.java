@@ -34,6 +34,12 @@ public class PTMArgumentValueNode extends PTMNode {
 		if (children != null) childTree.addAll(children);
 		assert this.beginIndex <= this.endIndex;
 	}
+	
+	/** This constructor is for an empty Value node and should only be used when required. */
+	public PTMArgumentValueNode(StringBuffer content) {
+		super(content, 0, null, null);
+		this.endIndex = content.length();
+	}
 
 	public String evaluate() {
 		//TODO

@@ -22,7 +22,7 @@ package src.ptm;
  */
 public abstract class PTMNode extends PTMObject {
 	
-	private int nextArgNumber = 1;
+	private int nextArgNumber = 0;
 	
 	/** Maintains a state (name/value binding) */
 	protected PTMState sigma;

@@ -7,7 +7,7 @@ public class Tasks {
 		Preparse ("Preparsing"),
 		Settings ("Settings"),
 		RemoveNowiki ("Remove Nowiki Content"),
-		Templates ("Templates"),
+//		Templates ("Templates"), // Already contained in the parser functions.
 		ParserFunctions ("Parser Functions"),
 		Tables ("Tables"),
 		Headings ("Headings"),

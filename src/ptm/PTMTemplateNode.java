@@ -1,11 +1,5 @@
-package src.ptm;
-
-import java.util.ArrayList;
-
-import src.ptm.PTM.PTMObjects;
-
 /*
- *   Copyright (C) 2010 Simon Eugster <granjow@users.sf.net>
+ *   Copyright (C) 2011 Simon Eugster <granjow@users.sf.net>
 
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -20,6 +14,16 @@ import src.ptm.PTM.PTMObjects;
  *   You should have received a copy of the GNU General Public License
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
+package src.ptm;
+
+import java.io.File;
+import java.util.ArrayList;
+
+import src.ptm.PTM.PTMObjects;
+import src.utilities.IORead_Stats;
+
+
 
 /**
  * <p>This class handles templates.</p>
@@ -84,23 +88,47 @@ public class PTMTemplateNode extends PTMNode {
 			throw new ObjectNotApplicableException("Template does not close.");
 		}
 		
-		
-		// Update the state of the children to the new state defined by this node
-		// TODO test
-		PTMState childSigma = new PTMState();
-		for (PTMObject o : childTree) {
-			if (o instanceof PTMNode) {
-				((PTMNode) o).sigma = childSigma;
-			}
+		if (childTree.size() < 1) {
+			throw new ObjectNotApplicableException("Not enough template arguments. Usage: {{:templateFilename|arguments...}}");
 		}
 		
 		assert endIndex > this.beginIndex;
+		assert childTree.size() > 0;
 	}
 
 	@Override
 	public String evaluate() {
-		// TODO Auto-generated method stub
-		return getRawContent();
+		
+		try {
+			// Read the template from the template file and parse it.
+			// Detect recursion via maximum depth (a calls b, b calls a).
+			
+			StringBuffer sb = IORead_Stats.readSBuffer(new File(childTree.get(0).evaluate().trim()));
+			
+			// Read the new state into variables.
+			PTMState state = new PTMState();
+			state.readState(this);
+			
+			int depth;
+			try {
+				depth = Integer.parseInt(root.sigma.resolve(PTM.recursionKey));
+			} catch (NumberFormatException e) {
+				depth = 0;
+				root.sigma.bind(PTM.recursionKey, Integer.toString(depth));
+			}
+			state.bind(PTM.recursionKey, Integer.toString(depth+1));
+			
+			if (depth >= PTM.recursionMaxDepth) {
+				return "Attention: Recursion in your templates.";
+			} else {
+				return PTM.parse(sb, state);
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return "Error reading the template file " + childTree.get(0).evaluate().trim() + ". ";
 	}
 
 }

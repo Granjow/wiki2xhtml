@@ -102,7 +102,7 @@ public class PTMParameterNode extends PTMNode {
 	public String evaluate() {
 		if (childTree.size() > 0) {
 			if (childTree.size() == 1) {
-				return sigma.resolve(childTree.get(1).evaluate());
+				return sigma.resolve(childTree.get(0).evaluate());
 			} else {
 				return sigma.resolve(childTree.get(0).evaluate(), childTree.get(1).evaluate());
 			}

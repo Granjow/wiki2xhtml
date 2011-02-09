@@ -1,7 +1,7 @@
 package src.tasks;
 
-import src.parserFunctions.Parser;
 import src.project.file.WikiFile;
+import src.ptm.PTM;
 import src.tasks.Tasks.Task;
 
 public class WikiParserFunctions extends WikiTask {
@@ -13,7 +13,7 @@ public class WikiParserFunctions extends WikiTask {
 		return new WikiTables();
 	}
 	public void parse(WikiFile file) {
-		file.setContent(Parser.parse(file.getContent()));
+		file.setContent(new StringBuffer(PTM.parse(file.getContent())));
 	}
 
 }

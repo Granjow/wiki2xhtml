@@ -24,6 +24,13 @@ public class PTMState extends HashMap<String, PTMArgumentValueNode> {
 		}
 	}
 	
+	/** Manually binds a value to a name */
+	public String bind(String name, String value) {
+		String oldVal = resolve(name);
+		put(name, new PTMArgumentValueNode(new StringBuffer(value)));
+		return oldVal;
+	}
+	
 	public String resolve(String name) {
 		return resolve(name, "");
 	}

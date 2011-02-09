@@ -75,7 +75,7 @@ public class PTMArgumentNode extends PTMNode {
 		} else {
 			
 			endIndex = beginIndex;
-			if (content.charAt(endIndex) == identifier) { endIndex++; } // <- partially bad? TODO
+			if (content.charAt(endIndex) == identifier) { endIndex++; }
 			
 			// Don't catch the exception here; if no name node can be created, 
 			// then the argument node cannot be created either.
