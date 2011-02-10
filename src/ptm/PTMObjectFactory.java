@@ -95,6 +95,18 @@ public class PTMObjectFactory {
 			}
 		}
 		
+		// Parser function {{#ifvalexists: val|then|else}}
+		if (obj == null) {
+			if (allowedChildnodes.contains(PTMObjects.Function) || allowedChildnodes.contains(PTMObjects.FunctionIfvalexists)) {
+				m = PTMFunctionIfvalexists.startPattern.matcher(indicator);
+				if (m.find()) {
+					try {
+						obj = new PTMFunctionIfvalexists(content, index, parent, root);
+					} catch (ObjectNotApplicableException e) { obj = null; }
+				}
+			}
+		}
+		
 		// Parser function {{#switch: a|o1=v1|o2=v2|...}}
 		if (obj == null) {
 			if (allowedChildnodes.contains(PTMObjects.Function) || allowedChildnodes.contains(PTMObjects.FunctionSwitch)) {

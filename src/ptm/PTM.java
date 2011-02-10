@@ -32,6 +32,7 @@ public class PTM {
 		Function,
 		FunctionIf,
 		FunctionIfeq,
+		FunctionIfvalexists,
 		FunctionSwitch,
 		Parameter,
 		Template,

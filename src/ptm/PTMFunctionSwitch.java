@@ -1,12 +1,3 @@
-package src.ptm;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import src.ptm.PTM.PTMObjects;
-
 /*
  *   Copyright (C) 2011 Simon Eugster <granjow@users.sf.net>
 
@@ -23,6 +14,16 @@ import src.ptm.PTM.PTMObjects;
  *   You should have received a copy of the GNU General Public License
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
+package src.ptm;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import src.ptm.PTM.PTMObjects;
+
 
 /**
  * <p>Handles a switch function.</p>

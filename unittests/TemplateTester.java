@@ -63,7 +63,7 @@ public class TemplateTester extends junit.framework.TestCase {
 	}
 	
 	
-	public String p(String tpl, String txt) throws IOException {
+	public static final String p(String tpl, String txt) throws IOException {
 		File f = File.createTempFile("tpl", ".txt");
 		f.deleteOnExit();
 		BufferedWriter bw = new BufferedWriter(new FileWriter(f));

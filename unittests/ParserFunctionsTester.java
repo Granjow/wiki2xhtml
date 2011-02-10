@@ -1,6 +1,8 @@
 package unittests;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
+
 import org.junit.Test;
 import src.ptm.PTMRootNode;
 
@@ -37,6 +39,12 @@ public class ParserFunctionsTester extends junit.framework.TestCase {
 		assertEquals("different", p("{{#ifeq:|a||different}}"));
 		assertEquals("equal", p("{{#ifeq:||equal}}"));
 		assertEquals(" equal ", p("{{#ifeq: 	|  | equal }}"));
+	}
+	
+	@Test
+	public void testIfvalexists() throws IOException {
+		assertEquals(" no ", p("{{#ifvalexists:a | yes | no }}"));
+		assertEquals("yes", TemplateTester.p("{{#ifvalexists:thumb|yes|no}}", "{{:%s|some|args|thumb}}"));
 	}
 	
 	@Test
