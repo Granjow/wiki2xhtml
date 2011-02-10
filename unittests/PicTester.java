@@ -14,14 +14,19 @@ public class PicTester extends junit.framework.TestCase {
 	}
 	
 	@Test
-	public void testImages() throws IOException {
+	public void testSimpleImages() throws IOException {
 		assertEquals("<img src=\"img.jpg\"/>", p("[[Image:img.jpg]]"));
+	}
+	
+	@Test
+	public void testImageParameters() throws IOException {
+		assertEquals("<img src=\"img.jpg\" width=\"100px\"/>", p("[[Image:img.jpg|100px]]"));
 	}
 	
 	
 	private static final String p(String testString) throws IOException {
 		TestObject to = new TestObject(testString, "");
-		to.writeFile("tplImage.txt", "<img src=\"{{{path}}}\"/>");
+		to.writeFile("tplImage.txt", "<img src=\"{{{path}}}\"{{#if:{{{width|}}}| width=\"{{{width}}}\"}}/>");
 		return to.real();
 	}
 	

@@ -136,7 +136,6 @@ public class PTMArgumentNode extends PTMNode {
 
 	public String evaluate() throws RecursionException {
 		if (parent instanceof PTMFunctionNode && childTree.get(0).getRawContent().length() > 0) {
-//			System.err.println("Content length: " + childTree.get(0).getRawContent().length());
 			return childTree.get(0).evaluate() + PTMArgumentNameNode.separator + childTree.get(1).evaluate();
 		} else {
 			return childTree.get(1).evaluate();

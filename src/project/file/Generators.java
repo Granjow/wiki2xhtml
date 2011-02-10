@@ -11,13 +11,13 @@ import org.xnap.commons.i18n.I18nFactory;
 
 import src.Constants;
 import src.Statistics;
-import src.images.ImageTools;
 import src.project.WikiProject;
 import src.project.settings.ImageProperties;
 import src.resources.ResProjectSettings.EImageProperties;
 import src.resources.ResProjectSettings.SettingsE;
 import src.resources.ResProjectSettings.SettingsLocalE;
 import src.tasks.WikiHeadings;
+import src.tasks.WikiImages;
 
 /*
  *   Copyright (C) 2007-2010 Simon Eugster <granjow@users.sf.net>
@@ -188,7 +188,7 @@ public class Generators {
 		ImageProperties prop = new ImageProperties(new VirtualWikiFile(proj, "name", false, false));
 		prop.set_(EImageProperties.text, "Text.");
 		prop.set_(EImageProperties.path, "test.jpg");
-		StringBuffer out = ImageTools.generateThumbnailEntry(prop);
+		StringBuffer out = WikiImages.generateThumbnailEntry(prop);
 		System.out.println("Output: >>>\n" + out + "\n<<<");
 	}
 
