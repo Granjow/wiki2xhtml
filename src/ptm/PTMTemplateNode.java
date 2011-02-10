@@ -18,6 +18,7 @@
 package src.ptm;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import src.ptm.PTM.PTMObjects;
@@ -96,8 +97,7 @@ public class PTMTemplateNode extends PTMNode {
 		assert childTree.size() > 0;
 	}
 
-	@Override
-	public String evaluate() {
+	public String evaluate() throws RecursionException {
 		
 		try {
 			// Read the template from the template file and parse it.
@@ -119,12 +119,17 @@ public class PTMTemplateNode extends PTMNode {
 			state.bind(PTM.recursionKey, Integer.toString(depth+1));
 			
 			if (depth >= PTM.recursionMaxDepth) {
-				return "Attention: Recursion in your templates.";
+				throw new RecursionException("Attention: Recursion detected in your template. Position: " + getRawContent());
+//				return "Attention: Recursion in your templates.";
 			} else {
-				return PTM.parse(sb, state);
+				try {
+					return PTM.parse(sb, state);
+				} catch (RecursionException e) {
+					return "Recursion detected! >>>" + getRawContent() + "<<<";
+				}
 			}
 			
-		} catch (Exception e) {
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		

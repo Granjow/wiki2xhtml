@@ -21,13 +21,13 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
-import src.Container_Resources;
+import src.project.WikiProject.FallbackFile;
 import src.project.settings.GalleryProperties;
 import src.project.settings.ImageProperties;
+import src.ptm.PTMObject.RecursionException;
+import src.ptm.PTMRootNode;
 import src.resources.ResProjectSettings.EImageProperties;
 import src.resources.ResProjectSettings.SettingsE;
-import src.templateHandler.Template;
-import src.templateHandler.Template.WarningType;
 import src.utilities.IOWrite_Stats;
 
 public class ImageTools {
@@ -46,10 +46,23 @@ public class ImageTools {
 			prop.set_(EImageProperties.link, prop.getImagePathHtml());
 		}
 
-		Template tp = prop.getTemplate();
+		FallbackFile tp = prop.getTemplate();
 		System.out.printf("Arguments: %s.\n", prop.getList("|", "=", false));
 		
-		output = tp.applyTemplate(prop.getBase64List("|", "="), prop.parentFile.project, true, null, null, WarningType.NONE);
+		PTMRootNode root = new PTMRootNode(tp.getContent(), prop.argumentBindings);
+		
+		System.out.println("Thumbnail entry: ");
+		root.printTree(System.out, " ");
+		System.out.println("States: ");
+		prop.argumentBindings.printValues();
+		
+		try {
+			return new StringBuffer(root.evaluate());
+		} catch (RecursionException e) {
+			return new StringBuffer();
+		}
+		
+//		output = tp.applyTemplate(prop.getBase64List("|", "="), prop.parentFile.project, true, null, null, WarningType.NONE);
 //		output = Parser.parse(output); // parser functions?
 		
 //		tp.replaceAll(Constants.TemplateTags.alt, //No special things for alt description: escaping
@@ -74,12 +87,13 @@ public class ImageTools {
 //		if (prop.isSet(SettingsImgE.clearAfter)) {
 //			output.append("<p style=\"clear: both; margin: 0pt; padding: 0pt; height: 0pt;;\"></p>\n");
 //		}
-		return output;
+//		return output;
 	}
 	
 	public static StringBuffer generateGalleryContainer(GalleryProperties gp) throws FileNotFoundException {
-		Template tp = new Template(Container_Resources.sTplGalleryContainer, gp.parentFile.project);
-		return tp.applyTemplate(gp.getBase64List("|", "="), gp.parentFile.project, true, null, null, null);
+//		Template tp = new Template(Container_Resources.sTplGalleryContainer, gp.parentFile.project);
+//		return tp.applyTemplate(gp.getBase64List("|", "="), gp.parentFile.project, true, null, null, null);
+		return new StringBuffer();
 	}
 
 	/**
@@ -90,7 +104,7 @@ public class ImageTools {
 
 		try {
 			StringBuffer sb = new StringBuffer();
-			Template tpl = new Template(Container_Resources.sTplImagepage, prop.parentFile.project);
+//			Template tpl = new Template(Container_Resources.sTplImagepage, prop.parentFile.project);
 			
 			String title = prop.parentFile.getProperty(SettingsE.titleRule, true);
 			if (title == null) {
@@ -112,7 +126,7 @@ public class ImageTools {
 //					args += "|" + prop.get_(p);
 //				}
 //			}
-			sb = tpl.applyTemplate(prop.getBase64List("|", "="), prop.parentFile.project, true, null, null, null);
+//			sb = tpl.applyTemplate(prop.getBase64List("|", "="), prop.parentFile.project, true, null, null, null);
 			
 			// ReplaceTags
 			// Wiki tasks

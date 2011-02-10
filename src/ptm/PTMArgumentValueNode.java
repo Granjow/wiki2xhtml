@@ -1,3 +1,20 @@
+/*
+ *   Copyright (C) 2010-2011 Simon A. Eugster <simon.eu@gmail.com>
+
+ *   This program is free software: you can redistribute it and/or modify
+ *   it under the terms of the GNU General Public License as published by
+ *   the Free Software Foundation, either version 3 of the License, or
+ *   (at your option) any later version.
+
+ *   This program is distributed in the hope that it will be useful,
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *   GNU General Public License for more details.
+
+ *   You should have received a copy of the GNU General Public License
+ *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package src.ptm;
 
 public class PTMArgumentValueNode extends PTMNode {
@@ -41,12 +58,18 @@ public class PTMArgumentValueNode extends PTMNode {
 		this.endIndex = content.length();
 	}
 
-	public String evaluate() {
-		//TODO
-		if (childTree.size() == 1) {
-			return childTree.get(0).evaluate();
+	public String evaluate() throws RecursionException {
+		
+		if (childTree.size() == 0 && beginIndex == 0 && endIndex == content.length()) {
+			// This node has been constructed as an empty Value node via PTMArgumentValueNode(StringBuffer content)
+			return content.toString();
 		}
-		return getRawContent();
+		
+		StringBuilder sb = new StringBuilder();
+		for (PTMObject o : childTree) {
+			sb.append(o.evaluate());
+		}
+		return sb.toString();
 	}
 
 }

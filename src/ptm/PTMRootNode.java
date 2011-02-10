@@ -1,5 +1,8 @@
 package src.ptm;
 
+import java.util.List;
+
+import src.ptm.PTM.PTMObjects;
 import src.utilities.StringTools;
 
 /*
@@ -23,32 +26,44 @@ import src.utilities.StringTools;
  * <p>This root node builds an entire tree from a given input.</p>
  */
 public class PTMRootNode extends PTMNode {
-	
+
 	public PTMRootNode(StringBuffer content, PTMState sigma) {
+		this(content, sigma, null);
+	}
+	/**
+	 * @param content Content to build the root node from
+	 * @param sigma Given state (name/value bindings). Can be <code>null</code>.
+	 * @param allowedChildNodes Allowed direct children of this node, by default {@link PTM#defaultChildren}.
+	 */
+	public PTMRootNode(StringBuffer content, PTMState sigma, List<PTMObjects> allowedChildNodes) {
 		super(content, 0, null, null);
 
 		// Use the delivered state if it is not null.
 		if (sigma != null) { this.sigma = sigma; }
+		
+		if (allowedChildNodes == null) { allowedChildNodes = PTM.defaultChildren; }
 		
 		long start = System.currentTimeMillis();
 		endIndex = 0;
 		
 		PTMObject obj;
 		do {
-			obj = PTMObjectFactory.buildObject(content, endIndex, this, this);
+			try {
+				obj = PTMObjectFactory.buildObject(content, endIndex, this, this, PTM.eofAbortFunction, allowedChildNodes);
+			} catch (EndOfExpressionReachedException e) { obj = null; }
 			if (obj != null) {
 				childTree.add(obj);
 				endIndex = obj.endIndex;
 			}
 		} while (obj != null);
 		
-		System.out.printf("Time taken: %s\n", StringTools.formatTimeMilliseconds(System.currentTimeMillis()-start));
+		System.out.printf("Time taken to parse root node: %s\n", StringTools.formatTimeMilliseconds(System.currentTimeMillis()-start));
 		
 		assert endIndex == content.length();
 		assert this.sigma != null;
 	}
 	
-	public String evaluate() {
+	public String evaluate() throws RecursionException {
 		StringBuilder sb = new StringBuilder();
 		for (PTMObject o : childTree) {
 			sb.append(o.evaluate());

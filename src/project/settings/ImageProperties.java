@@ -1,26 +1,5 @@
-package src.project.settings;
-
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.util.ArrayList;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import src.Constants;
-import src.Container_Resources;
-import src.Resources;
-import src.argumentHandler.ArgumentItem;
-import src.argumentHandler.ArgumentReader;
-import src.project.file.VirtualWikiFile;
-import src.project.file.WikiFile;
-import src.resources.ResProjectSettings.EImageProperties;
-import src.resources.ResProjectSettings.EImageContext;
-import src.resources.ResProjectSettings.SettingsE;
-import src.templateHandler.Template;
-import src.utilities.XMLTools;
-
 /*
- *   Copyright (C) 2007-2010 Simon Eugster <granjow@users.sf.net>
+ *   Copyright (C) 2007-2011 Simon Eugster <granjow@users.sf.net>
 
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -36,10 +15,40 @@ import src.utilities.XMLTools;
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+package src.project.settings;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map.Entry;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import src.Constants;
+import src.Container_Resources;
+import src.Resources;
+import src.argumentHandler.ArgumentItem;
+import src.argumentHandler.ArgumentReader;
+import src.project.WikiProject.FallbackFile;
+import src.project.WikiProject.FallbackFile.NoFileFoundException;
+import src.project.file.VirtualWikiFile;
+import src.project.file.WikiFile;
+import src.ptm.PTM.PTMObjects;
+import src.ptm.PTMArgumentNameNode;
+import src.ptm.PTMArgumentNode;
+import src.ptm.PTMRootNode;
+import src.ptm.PTMState;
+import src.resources.ResProjectSettings.EImageProperties;
+import src.resources.ResProjectSettings.SettingsE;
+import src.utilities.XMLTools;
+
+
 /**
  * Contains properties about a single image
  */
 public class ImageProperties extends StringSettings<EImageProperties> {
+	
+	private static final char SEP = '=';
 	
 	public boolean imagepageCreated;
 	
@@ -49,6 +58,8 @@ public class ImageProperties extends StringSettings<EImageProperties> {
 	public ImageProperties nextIP = null;
 	
 	public final WikiFile parentFile;
+	
+	public PTMState argumentBindings = null;
 
 	public ImageProperties(WikiFile parent) {
 		parentFile = parent;
@@ -66,6 +77,10 @@ public class ImageProperties extends StringSettings<EImageProperties> {
 		}, EImageProperties.id);
 		// Set a fake ID so that the property is not null
 		set_(EImageProperties.id, "fakeID");
+	}
+	
+	public String getValue(String name) {
+		return argumentBindings.resolve(name);
 	}
 	
 	/**
@@ -115,8 +130,9 @@ public class ImageProperties extends StringSettings<EImageProperties> {
 	 * @return W3C conform URI String
 	 */
 	private static String htmlURI(String s) {
-		for (String[] es : Resources.entities)
+		for (String[] es : Resources.entities) {
 			s = s.replaceAll(es[1], es[0]);
+		}
 		return s;
 	}
 	
@@ -152,16 +168,8 @@ public class ImageProperties extends StringSettings<EImageProperties> {
 		}
 	}
 	
-	/**
-	 * @return A template for the image, according to its context (gallery or non-gallery).
-	 * @throws FileNotFoundException 
-	 */
-	public Template getTemplate() throws FileNotFoundException {
-		if (get_(EImageProperties.context) == null || get_(EImageProperties.context).equals(EImageContext.thumb.property)) {
-			return new Template(Container_Resources.sTplImage, parentFile.project);
-		} else {
-			return new Template(Container_Resources.sTplGallery, parentFile.project);
-		}
+	public FallbackFile getTemplate() throws NoFileFoundException {
+		return parentFile.project.locate(Container_Resources.sTplImage);
 	}
 	
 
@@ -175,6 +183,18 @@ public class ImageProperties extends StringSettings<EImageProperties> {
 	 * @param args All image arguments, like &ldquo;<code>Image:venus.jpg|244px|The Venus</code>&rdquo;
 	 */
 	public void readArguments(final String args) {
+		
+		ArrayList<PTMObjects> allowedChildNodes = new ArrayList<PTMObjects>();
+		allowedChildNodes.add(PTMObjects.Argument);
+		PTMRootNode root = new PTMRootNode(new StringBuffer(args + '|'), null, allowedChildNodes);
+		root.printTree(System.out, " ");
+		PTMState sigma = new PTMState(root);
+		sigma.printValues();
+		System.out.println("End of properties tree. Was: " + root.getRawContent());
+		System.out.println("End of state.");
+		
+//		StringBuffer props = new StringBuffer();
+		HashMap<String, String> props = new HashMap<String, String>();
 
 		ArrayList<ArgumentItem> a = ArgumentReader.getArguments(args);
 
@@ -190,12 +210,14 @@ public class ImageProperties extends StringSettings<EImageProperties> {
 			mPImage = pImage.matcher(ai.fullArg);
 			if (mPImage.matches()) {
 				set_(EImageProperties.path, mPImage.group(1));
+				props.put(Constants.Images.path, mPImage.group(1));
 				continue;
 			}
 
 			/* Display thumbnail? */
 			if (Constants.Images.thumb.equals(ai.fullArg)) {
 				set_(EImageProperties.thumbEnabled, "true");
+				props.put(Constants.Images.thumb, "true");
 				continue;
 			}
 
@@ -204,34 +226,41 @@ public class ImageProperties extends StringSettings<EImageProperties> {
 					|| Constants.Position.right.equals(ai.fullArg)
 					|| Constants.Position.center.equals(ai.fullArg)) {
 				set_(EImageProperties.pos, ai.fullArg);
+//				props.put(Constants.Images.pos, value)
+				//TODO
 				continue;
 			}
 
 			/* Direct? */
 			if (Constants.Images.direct.equals(ai.fullArg)) {
 				set_(EImageProperties.direct, "true");
+				//TODO
 				continue;
 			}
 
 			/* Small image? */
 			if (Constants.Images.small.equals(ai.fullArg)) {
 				set_(EImageProperties.small, "true");
+				//TODO
 				continue;
 			}
 			
 			/* Clear? */
 			if (Constants.Images.clear.equals(ai.fullArg)) {
 				set_(EImageProperties.clear, "both");
+				//TODO
 				continue;
 			}
 			if (ai.fullArg.startsWith(Constants.Images.clear + "=")) {
 				set_(EImageProperties.clear, ai.fullArg.substring(Constants.Images.clear.length() + 1));
+				//TODO
 				continue;
 			}
 			
 			/* Additional arguments */
 			if (ai.fullArg.startsWith(Constants.Images.argsLink)) {
 				set_(EImageProperties.argsLink, ai.fullArg.substring(Constants.Images.argsLink.length()));
+				//TODO
 				continue;
 			}
 
@@ -240,28 +269,34 @@ public class ImageProperties extends StringSettings<EImageProperties> {
 			mWidth = pWidth.matcher(ai.fullArg);
 			if (mWidth.find()) {
 				set_(EImageProperties.thumbWidth, mWidth.group());
+				props.put(Constants.Images.width, mWidth.group());
+				//TODO height
 				continue;
 			}
 
 			/* Thumbnail source */
-			if (ai.fullArg.startsWith(Constants.Images.pathThumb)) {
-				set_(EImageProperties.thumb, ai.fullArg.substring(Constants.Images.pathThumb.length()));
+			if (ai.fullArg.startsWith(Constants.Images.thumb + SEP)) {
+				set_(EImageProperties.thumb, ai.fullArg.substring(Constants.Images.path.length()+1));
+				props.put(Constants.Images.pathThumb, ai.fullArg.substring(Constants.Images.path.length()+1));
 				continue;
 			}
 
 			/* Caption */
 			if (ai.fullArg.startsWith(Constants.Images.captionShort)) {
 				set_(EImageProperties.caption, ai.fullArg.substring(2));
+				//TODO
 				continue;
 			}
 			if (ai.fullArg.startsWith(Constants.Images.caption)) {
 				set_(EImageProperties.caption, ai.fullArg.substring(8));
+				//TODO
 				continue;
 			}
 
 			/* Long description */
 			if (ai.fullArg.startsWith(Constants.Images.longDesc)) {
 				set_(EImageProperties.longdesc, ai.fullArg.substring(3));
+				//TODO
 				continue;
 			}
 
@@ -269,6 +304,7 @@ public class ImageProperties extends StringSettings<EImageProperties> {
 			mPWidth = pPWidth.matcher(ai.fullArg);
 			if (mPWidth.find()) {
 				set_(EImageProperties.pageWidth, mPWidth.group(1));
+				//TODO
 				continue;
 			}
 
@@ -278,8 +314,25 @@ public class ImageProperties extends StringSettings<EImageProperties> {
 					append_(EImageProperties.text, "|");
 				}
 				append_(EImageProperties.text, ai.fullArg);
+				
+				String s = props.get(Constants.Images.text);
+				if (s == null) { s = ""; }
+				else { s += '|'; }
+				props.put(Constants.Images.text, s + ai.fullArg);
 			}
 		}
+		
+		StringBuffer arguments = new StringBuffer();
+		for (Entry<String, String> e : props.entrySet()) {
+			arguments.append(e.getKey() + PTMArgumentNameNode.separator + e.getValue() + PTMArgumentNode.identifier);
+		}
+		
+		root = new PTMRootNode(arguments, null, allowedChildNodes);
+		argumentBindings = new PTMState(root);
+		
+		System.out.println("Arguments, reconstructed: \n");
+		root.printTree(System.out, " ");
+		
 
 		// Check for non-ASCII characters
 //		Matcher m = Pattern.compile(Resources.pNotAscii).matcher(get_(EImageProperties.path));

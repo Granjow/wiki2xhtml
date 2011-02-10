@@ -222,7 +222,15 @@ public final class Constants {
 		public static final String thumb = "thumb";
 		/** Self-defined path to the thumbnail
 		 *  @since wiki2xhtml 3.4: Creates thumbnail (Argument thumb no longer necessary) */
-		public static final String pathThumb = "thumb=";
+		public static final String pathThumb = "pathThumb";
+		/** Image path. @since wiki2xhtml 4.0 */
+		public static final String path = "path";
+		/** Image width. @since wiki2xhtml 4.0 */
+		public static final String width = "width";
+		/** Image height. @since wiki2xhtml 4.0 */
+		public static final String height = "height";
+		/** Image description. @since wiki2xhtml 4.0 */
+		public static final String text = "text";
 
 		/** Image caption */
 		public static final String captionShort = "c=";

@@ -2,6 +2,8 @@ package src.ptm;
 
 import java.util.HashMap;
 
+import src.ptm.PTMObject.RecursionException;
+
 /**
  * <p>A PTMState binds values to names.</p>
  * <p><code>val1 | name = val2</code></p>
@@ -19,7 +21,12 @@ public class PTMState extends HashMap<String, PTMArgumentValueNode> {
 	public void readState(PTMNode parent) {
 		for (PTMObject o : parent.childTree) {
 			if (o instanceof PTMArgumentNode) {
-				put(o.childTree.get(0).evaluate(), (PTMArgumentValueNode)o.childTree.get(1));
+				try {
+					put(o.childTree.get(0).evaluate(), (PTMArgumentValueNode)o.childTree.get(1));
+				} catch (RecursionException e) {
+					put(o.childTree.get(0).getRawContent(), (PTMArgumentValueNode)o.childTree.get(1));
+					e.printStackTrace();
+				}
 			}
 		}
 	}
@@ -43,7 +50,12 @@ public class PTMState extends HashMap<String, PTMArgumentValueNode> {
 		if (val == null) {
 			return alternative;
 		} else {
-			return val.evaluate();
+			try {
+				return val.evaluate();
+			} catch (RecursionException e) {
+				e.printStackTrace();
+				return val.getRawContent();
+			}
 		}
 	}
 	

@@ -4,6 +4,11 @@ import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 public class Tester extends TestCase {
+	
+    static {
+    	// Enables assertions
+//        ClassLoader.getSystemClassLoader().setDefaultAssertionStatus(true);
+    }
 
 	public static TestSuite suite() {
 		TestSuite result = new TestSuite();

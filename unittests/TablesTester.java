@@ -1,5 +1,7 @@
 package unittests;
 
+import java.io.IOException;
+
 import org.junit.Test;
 
 import src.project.file.VirtualWikiFile;
@@ -28,7 +30,7 @@ public class TablesTester extends junit.framework.TestCase {
 	}
 	
 	@Test
-	public void testSimpleTable() {
+	public void testSimpleTable() throws IOException {
 		assertEquals("<table><tr><td>a</td><td>b</td></tr></table>", p("{|\n|a||b\n|}"));
 		assertEquals("<table><tr><th>a</th><td>b</td></tr></table>", p("{|\n!a||b\n|}"));
 		assertEquals("<table><tr><th>a</th><th>b</th></tr></table>", p("{|\n!a !! b\n|}"));
@@ -40,13 +42,13 @@ public class TablesTester extends junit.framework.TestCase {
 	
 	
 	
-	private static final String p(String testString) {
+	private static final String p(String testString) throws IOException {
 		TestObject to = new TestObject(testString, "");
 		return to.real();
 	}
 	
 	private static class TestObject extends unittests.TestObject {
-		public TestObject(String test, String result) {
+		public TestObject(String test, String result) throws IOException {
 			super(test, result);
 		}
 
@@ -54,7 +56,7 @@ public class TablesTester extends junit.framework.TestCase {
 			vf.addTask(Task.Tables);
 		}
 
-		public String real() {
+		public String real() throws IOException {
 			return super.real().replace("\n", "").replace(" <", "<");
 		}
 	}

@@ -125,6 +125,7 @@ public final class ResProjectSettings {
 		argsLink ("argsLink", "Additional link arguments, e.g. when working with LightBox"),
 		caption ("caption", "Image caption"),
 		clear ("clear", "css:clear, may be before, after and both"),
+		/** One of {@link EImageContext} */
 		context ("context", "Image context: gallery or normal"),
 		direct ("direct", "Link directly to the file"),
 		file ("file", "Filename alone"),

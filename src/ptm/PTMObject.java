@@ -32,7 +32,7 @@ abstract public class PTMObject {
 	protected final int beginIndex;
 	protected int endIndex;
 	
-	abstract public String evaluate();
+	abstract public String evaluate() throws RecursionException;
 	
 	/** Variables initialization */
 	public PTMObject(StringBuffer content, int beginIndex, PTMNode parent, PTMRootNode root) {
@@ -46,7 +46,7 @@ abstract public class PTMObject {
 			throw new NullPointerException("Content must not be null");
 		}
 		if (beginIndex < 0 || beginIndex >= content.length()) {
-			throw new IndexOutOfBoundsException("Index must be > 0 and < content length");
+			throw new IndexOutOfBoundsException("Index must be > 0 and < content length; is " + beginIndex);
 		}
 	}
 	
@@ -55,12 +55,20 @@ abstract public class PTMObject {
 		public ObjectNotApplicableException(String msg) {
 			super(msg);
 			// TODO fetch error output?
-//			System.out.println(msg);
+			System.out.println(msg);
 		}
 	}
 	
 	public static final class EndOfExpressionReachedException extends Exception {
 		private static final long serialVersionUID = 1L;
+	}
+	
+	public static final class RecursionException extends Exception {
+		private static final long serialVersionUID = 1L;
+		public RecursionException(String msg) {
+			super(msg);
+			System.err.println(msg);
+		}
 	}
 	
 	/**

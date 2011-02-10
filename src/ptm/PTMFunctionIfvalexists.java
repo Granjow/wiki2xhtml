@@ -109,7 +109,7 @@ public class PTMFunctionIfvalexists extends PTMFunctionNode {
 		assert childTree.size() > 1;
 	}
 	
-	public String evaluate() {
+	public String evaluate() throws RecursionException {
 		String result = "";
 		
 		String testFor = childTree.get(0).evaluate().trim();

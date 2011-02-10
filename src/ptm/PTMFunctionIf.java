@@ -118,7 +118,7 @@ public class PTMFunctionIf extends PTMFunctionNode {
 		assert endIndex > this.beginIndex;
 	}
 	
-	public String evaluate() {
+	public String evaluate() throws RecursionException {
 		String result = "";
 		
 		if (childTree.size() >= 2) {

@@ -94,7 +94,7 @@ public class PTMFunctionIfeq extends PTMFunctionNode {
 		assert childTree.size() >= 3;
 	}
 	
-	public String evaluate() {
+	public String evaluate() throws RecursionException {
 		String result = "";
 		
 		if (childTree.get(0).evaluate().trim().equals(childTree.get(1).evaluate().trim())) {

@@ -1,12 +1,14 @@
 package unittests;
 
+import java.io.IOException;
+
 import src.project.file.VirtualWikiFile;
 import src.tasks.Tasks.Task;
 
 public class LinkTester extends junit.framework.TestCase {
 	
 
-	public void testExternal() {
+	public void testExternal() throws IOException {
 		final TestObject[] tests = new TestObject[] {
 			new TestObject("[http://www.example.com]", "<a href=\"http://www.example.com\" class=\"external\">http://www.example.com</a>"),
 			new TestObject("Nothing", "Nothing"),
@@ -21,7 +23,7 @@ public class LinkTester extends junit.framework.TestCase {
 		}
 	}
 	
-	public void testNamespace() {
+	public void testNamespace() throws IOException {
 		StringBuffer settings = new StringBuffer(
 					"{{Namespace:w=http://de.wikipedia.org/wiki/%s}}\n" +
 					"{{Namespace:we=http://en.wikipedia.org/wiki/%s}}\n" +
@@ -40,7 +42,7 @@ public class LinkTester extends junit.framework.TestCase {
 		}
 	}
 	
-	public void testArguments() {
+	public void testArguments() throws IOException {
 		StringBuffer settings = new StringBuffer("{{Namespace:w=http://de.wikipedia.org/wiki/%s}}\n");
 		final TestObject[] tests = new TestObject[] {
 				new TestObject("[[" + TestObject.thisFile() + "?query=bla]]", "<a href=\"this-File.php?query=bla\" class=\"internal\">this-File.php?query=bla</a>", settings),
@@ -53,10 +55,10 @@ public class LinkTester extends junit.framework.TestCase {
 	}
 	
 	private static class TestObject extends unittests.TestObject {
-		public TestObject(String test, String result) {
+		public TestObject(String test, String result) throws IOException {
 			super(test, result);
 		}
-		public TestObject(String test, String result, StringBuffer settings) {
+		public TestObject(String test, String result, StringBuffer settings) throws IOException {
 			super(test, result, settings);
 		}
 		

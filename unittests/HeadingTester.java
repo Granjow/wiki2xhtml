@@ -1,5 +1,7 @@
 package unittests;
 
+import java.io.IOException;
+
 import org.junit.Test;
 
 import src.project.file.Generators;
@@ -15,7 +17,7 @@ public class HeadingTester extends junit.framework.TestCase {
 	}
 	
 	@Test
-	public void testSimpleHeadings() {
+	public void testSimpleHeadings() throws IOException {
 		TestObject to;
 		to = new TestObject("==Titel==", "<h2 id=\"h_Titel\">Titel</h2>");
 		assertEquals(to.correct(), to.real());
@@ -28,7 +30,7 @@ public class HeadingTester extends junit.framework.TestCase {
 	}
 	
 	@Test
-	public void testIDs() {
+	public void testIDs() throws IOException {
 		TestObject to;
 		to = new TestObject("==Titel==\n==Titel==", "<h2 id=\"h_Titel\">Titel</h2>\n<h2 id=\"h_Titel_\">Titel</h2>");
 		System.out.println(to.real());
@@ -39,10 +41,10 @@ public class HeadingTester extends junit.framework.TestCase {
 
 	
 	private static class TestObject extends unittests.TestObject {
-		public TestObject(String test, String result) {
+		public TestObject(String test, String result) throws IOException {
 			super(test, result);
 		}
-		public TestObject(String test, String result, StringBuffer settings) {
+		public TestObject(String test, String result, StringBuffer settings) throws IOException {
 			super(test, result, settings);
 		}
 		

@@ -7,17 +7,18 @@ import java.io.IOException;
 
 import org.junit.Test;
 
+import src.ptm.PTMObject.RecursionException;
 import src.ptm.PTMRootNode;
 
 public class TemplateTester extends junit.framework.TestCase {
 	
 	@Test
-	public void testPTMSimpleReplace() throws IOException {
+	public void testPTMSimpleReplace() throws IOException, RecursionException {
 		assertEquals("I am a template.", p("I am a template.", "{{:%s}}"));
 	}
 
 	@Test
-	public void testPTMArguments() throws IOException {
+	public void testPTMArguments() throws IOException, RecursionException {
 		assertEquals("Arguments <one> <two>.", p("Arguments <{{{1}}}> <{{{2}}}>.", "{{:%s|one|two}}"));
 		assertEquals("Argument <two>.", p("Argument <{{{3|{{{2|}}}}}}>.", "{{:%s|one|two}}"));
 	}
@@ -45,6 +46,23 @@ public class TemplateTester extends junit.framework.TestCase {
 	}
 	
 	@Test
+	public void testPTMDeepValues() throws Exception {
+		File f = File.createTempFile("tpl", ".txt");
+		File f2 = File.createTempFile("tpl", ".txt");
+		f.deleteOnExit();
+		f2.deleteOnExit();
+		BufferedWriter bw = new BufferedWriter(new FileWriter(f));
+		bw.write(String.format("{{:%s|val{{{1}}}val}}", f2.getAbsolutePath()));
+		bw.close();
+		bw = new BufferedWriter(new FileWriter(f2));
+		bw.write("{{{1}}}");
+		bw.close();
+
+		StringBuffer sb = new StringBuffer(String.format("{{:%s|VAL}}", f.getAbsolutePath()));
+		assertEquals("valVALval", new PTMRootNode(sb, null).evaluate());
+	}
+	
+	@Test
 	public void testPTMRecursion2() throws Exception {
 		File f = File.createTempFile("tpl", ".txt");
 		File f2 = File.createTempFile("tpl", ".txt");
@@ -63,7 +81,7 @@ public class TemplateTester extends junit.framework.TestCase {
 	}
 	
 	
-	public static final String p(String tpl, String txt) throws IOException {
+	public static final String p(String tpl, String txt) throws IOException, RecursionException {
 		File f = File.createTempFile("tpl", ".txt");
 		f.deleteOnExit();
 		BufferedWriter bw = new BufferedWriter(new FileWriter(f));

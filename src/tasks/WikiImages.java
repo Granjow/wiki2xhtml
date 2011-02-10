@@ -3,6 +3,7 @@ package src.tasks;
 import java.io.IOException;
 import java.util.regex.Matcher;
 
+import src.Constants;
 import src.Statistics;
 import src.images.ImageTools;
 import src.project.WikiProject;
@@ -47,13 +48,13 @@ public class WikiImages extends WikiTask {
 			Statistics.getInstance().counter.imagesTotal.increase();
 
 			// Read the image's arguments
-			int id = file.addImageProperties(prop);
+			int id = file.addImageProperties(prop);	// no new()? TODO
 			prop.set_(EImageProperties.number, Integer.toString(id));
 			prop.readArguments(m.group(1));
 			prop.set_(EImageProperties.context, EImageContext.thumb.property);
 			
 			// Generate an image page if they are to be generated, a isThumbDesired has to be inserted and it's no direct link.
-			if (prop.isSet(EImageProperties.thumbEnabled) && !prop.isSet(EImageProperties.direct)) {
+			if ("true".equals(prop.getValue(Constants.Images.thumb)) && !"direct".equals(prop.getValue(Constants.Images.direct))) {
 				ImageTools.generateImagepage(prop);
 			}
 
@@ -97,7 +98,7 @@ public class WikiImages extends WikiTask {
 					code = e.getMessage();
 					e.printStackTrace();
 				}
-				out = out.replace(last, code.length(), code);
+				out = out.replace(last, last+placeholder.length(), code);
 			}
 		}
 		

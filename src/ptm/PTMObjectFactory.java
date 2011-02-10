@@ -6,6 +6,7 @@ import java.util.regex.Matcher;
 import src.ptm.PTM.PTMObjects;
 import src.ptm.PTMObject.EndOfExpressionReachedException;
 import src.ptm.PTMObject.ObjectNotApplicableException;
+import src.ptm.PTMObject.RecursionException;
 
 /*
  *   Copyright (C) 2010 Simon Eugster <granjow@users.sf.net>
@@ -172,7 +173,7 @@ public class PTMObjectFactory {
 		return (left < right) ? left : right;
 	}
 	
-	public static void main(String[] args) throws ObjectNotApplicableException {
+	public static void main(String[] args) throws ObjectNotApplicableException, RecursionException {
 //		StringBuffer sb = new StringBuffer("a {{#if:||c}} {{#if:a|{{{param|df}}}}}");
 		StringBuffer sb = new StringBuffer("{{#ifeq:a|a|c}}");
 		

@@ -1,5 +1,7 @@
 package unittests;
 
+import java.io.IOException;
+
 import org.junit.Test;
 
 import src.project.file.VirtualWikiFile;
@@ -12,18 +14,19 @@ public class PicTester extends junit.framework.TestCase {
 	}
 	
 	@Test
-	public void testImages() {
+	public void testImages() throws IOException {
 		assertEquals("<img src=\"img.jpg\"/>", p("[[Image:img.jpg]]"));
 	}
 	
 	
-	private static final String p(String testString) {
+	private static final String p(String testString) throws IOException {
 		TestObject to = new TestObject(testString, "");
+		to.writeFile("tplImage.txt", "<img src=\"{{{path}}}\"/>");
 		return to.real();
 	}
 	
 	private static class TestObject extends unittests.TestObject {
-		public TestObject(String test, String result) {
+		public TestObject(String test, String result) throws IOException {
 			super(test, result);
 		}
 
@@ -31,7 +34,7 @@ public class PicTester extends junit.framework.TestCase {
 			vf.addTask(Task.Images);
 		}
 
-		public String real() {
+		public String real() throws IOException {
 			return super.real().replace("\n", "").replace(" <", "<");
 		}
 	}

@@ -94,7 +94,9 @@ public class Container_Resources {
 //	public static final String sgalleryContainer = "/resources/galleryContainer.html";
 	
 	public static final String sTplImage = "tplImage.txt";
-	public static final String sTplGallery = "tplGallery.txt";
+	
+	// TODO 0 removed, doc
+//	public static final String sTplGallery = "tplGallery.txt";
 	public static final String sTplGalleryContainer = "tplGalleryContainer.txt";
 	public static final String sTplImagepage = "tplImagepage.txt";
 	

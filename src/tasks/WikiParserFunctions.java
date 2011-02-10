@@ -2,6 +2,7 @@ package src.tasks;
 
 import src.project.file.WikiFile;
 import src.ptm.PTM;
+import src.ptm.PTMObject.RecursionException;
 import src.tasks.Tasks.Task;
 
 public class WikiParserFunctions extends WikiTask {
@@ -13,7 +14,12 @@ public class WikiParserFunctions extends WikiTask {
 		return new WikiTables();
 	}
 	public void parse(WikiFile file) {
-		file.setContent(new StringBuffer(PTM.parse(file.getContent())));
+		try {
+			file.setContent(new StringBuffer(PTM.parse(file.getContent())));
+		} catch (RecursionException e) {
+			e.printStackTrace();
+			System.err.println("ERROR: Recursion could not be removed. In: " + file.name);
+		}
 	}
 
 }

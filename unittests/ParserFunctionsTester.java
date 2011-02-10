@@ -4,12 +4,19 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import org.junit.Test;
+
+import src.ptm.PTMObject.RecursionException;
 import src.ptm.PTMRootNode;
 
 public class ParserFunctionsTester extends junit.framework.TestCase {
 	
 	public String p(String s) {
-		return new PTMRootNode(new StringBuffer(s), null).evaluate();
+		try {
+			return new PTMRootNode(new StringBuffer(s), null).evaluate();
+		} catch (RecursionException e) {
+			e.printStackTrace();
+			return "FAILED";
+		}
 	}
 	
 	@Test
@@ -20,6 +27,7 @@ public class ParserFunctionsTester extends junit.framework.TestCase {
 		assertEquals("empty", p("{{#if:||empty}}"));
 		assertEquals("new\nline", p("{{#if:||new\nline}}"));
 		assertEquals("{{#if:tooShort}}", p("{{#if:tooShort}}"));
+		assertEquals("", p("{{#if:|endingWithBar|}}"));
 	}
 	
 	@Test
@@ -42,7 +50,7 @@ public class ParserFunctionsTester extends junit.framework.TestCase {
 	}
 	
 	@Test
-	public void testIfvalexists() throws IOException {
+	public void testIfvalexists() throws IOException, RecursionException {
 		assertEquals(" no ", p("{{#ifvalexists:a | yes | no }}"));
 		assertEquals("yes", TemplateTester.p("{{#ifvalexists:thumb|yes|no}}", "{{:%s|some|args|thumb}}"));
 	}

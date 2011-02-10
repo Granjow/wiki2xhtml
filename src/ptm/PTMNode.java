@@ -48,21 +48,37 @@ public abstract class PTMNode extends PTMObject {
 	 * <p>This method is a counter for arguments. Arguments without an explicit name binding (name=value)
 	 * are numbered. MediaWiki behaviour is:</p>
 	 * <code>arg1 | 3=arg3 | arg2</code>
+	 * @throws RecursionException 
 	 */
 	public String getNextArgNumber() {
 		String next;
 		boolean changed;
 		
+		// root.parent is null; catch this error.
+		// TODO good idea?
+		PTMObject tree;
+		if (this instanceof PTMRootNode) {
+			tree = this;
+		} else {
+			tree = parent;
+		}
+		assert tree != null;
+		assert tree.childTree != null;
+		
 		do {
 			changed = false;
 			next = Integer.toString(nextArgNumber);
-			for (PTMObject o : parent.childTree) {
+			for (PTMObject o : tree.childTree) {
 				if (o instanceof PTMArgumentNode) {
 					if (o.childTree.size() > 0) {
 						if (o.childTree.get(0) instanceof PTMArgumentNameNode) {
-							if (next.equals(o.childTree.get(0).evaluate())) {
-								nextArgNumber++;
-								changed = true;
+							try {
+								if (next.equals(o.childTree.get(0).evaluate())) {
+									nextArgNumber++;
+									changed = true;
+								}
+							} catch (RecursionException e) {
+								e.printStackTrace();
 							}
 						}
 					}

@@ -94,7 +94,7 @@ public class PTMFunctionSwitch extends PTMFunctionNode {
 		assert childTree.size() >= 2;
 	}
 	
-	public String evaluate() {
+	public String evaluate() throws RecursionException {
 		String result = "";
 		String defaultValue = "";
 		String currentName;

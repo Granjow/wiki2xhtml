@@ -99,7 +99,7 @@ public class PTMParameterNode extends PTMNode {
 		assert childTree.size() <= 2;
 	}
 
-	public String evaluate() {
+	public String evaluate() throws RecursionException {
 		if (childTree.size() > 0) {
 			if (childTree.size() == 1) {
 				return sigma.resolve(childTree.get(0).evaluate());

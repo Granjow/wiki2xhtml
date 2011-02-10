@@ -1,5 +1,7 @@
 package unittests;
 
+import java.io.IOException;
+
 import org.junit.Test;
 
 import src.project.file.VirtualWikiFile;
@@ -43,10 +45,10 @@ public class SettingsTester extends junit.framework.TestCase {
 		System.out.println(settings.get_(SettingsLocalE.redirect));
 	}
 	
-	@Test public void testRecognition() {
+	@Test public void testRecognition() throws IOException {
 		StringBuffer sb = new StringBuffer("{{Namespace:a=b}}\nhall{{Author:him}}o");
 		
-		VirtualWikiFile vf = new VirtualWikiFile(null, "a.html", false, true, sb);
+		VirtualWikiFile vf = new VirtualWikiFile(VirtualWikiFile.createTempProject(), "a.html", false, true, sb);
 		vf.removeAllTasks();
 		vf.addTask(Task.Settings);
 		vf.parse();
