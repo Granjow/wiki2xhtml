@@ -186,138 +186,140 @@ public class ImageProperties extends StringSettings<EImageProperties> {
 		
 		ArrayList<PTMObjects> allowedChildNodes = new ArrayList<PTMObjects>();
 		allowedChildNodes.add(PTMObjects.Argument);
-		PTMRootNode root = new PTMRootNode(new StringBuffer(args + '|'), null, allowedChildNodes);
-		root.printTree(System.out, " ");
-		PTMState sigma = new PTMState(root);
-		sigma.printValues();
-		System.out.println("End of properties tree. Was: " + root.getRawContent());
-		System.out.println("End of state.");
+//		PTMRootNode root = new PTMRootNode(new StringBuffer(args + '|'), null, allowedChildNodes);
+//		root.printTree(System.out, " ");
+//		PTMState sigma = new PTMState(root);
+//		sigma.printValues();
+//		System.out.println("End of properties tree. Was: " + root.getRawContent());
+//		System.out.println("End of state.");
 		
 //		StringBuffer props = new StringBuffer();
 		HashMap<String, String> props = new HashMap<String, String>();
 
 		ArrayList<ArgumentItem> a = ArgumentReader.getArguments(args);
 
-		Pattern pWidth = Pattern.compile("^\\d+(?:px|%)$");
-		Matcher mWidth;
-		Pattern pPWidth = Pattern.compile("^pw(?:idth)?=(\\d+(?:px|%))");
-		Matcher mPWidth;
+		Pattern pSize = Pattern.compile("^(\\d+)?(?:x(\\d+))?(?<=\\d)(px|%)$");
+		Matcher mSize;
 		Pattern pImage = Pattern.compile("(?i)(?:image|bild|file):(.+)");
 		Matcher mPImage;
+		Pattern pUserVar = Pattern.compile("(?i)(var[a-z0-9_-]+)=(.+)");
+		Matcher mUserVar;
+		Pattern pCaption = Pattern.compile("(?i)(?:c(?:aption)?=)(.+)");
+		Matcher mCaption;
 
 		for (ArgumentItem ai : a) {
 			
 			mPImage = pImage.matcher(ai.fullArg);
-			if (mPImage.matches()) {
-				set_(EImageProperties.path, mPImage.group(1));
+			if (mPImage.matches() && props.get(Constants.Images.path) == null) {
+				// Image:<path>
 				props.put(Constants.Images.path, mPImage.group(1));
 				continue;
 			}
 
-			/* Display thumbnail? */
-			if (Constants.Images.thumb.equals(ai.fullArg)) {
-				set_(EImageProperties.thumbEnabled, "true");
-				props.put(Constants.Images.thumb, "true");
+			mSize = pSize.matcher(ai.fullArg);
+			if (mSize.find()) {
+				// 200x300px
+				if (mSize.group(1) != null) {
+					props.put(Constants.Images.width, mSize.group(1) + mSize.group(3));
+				}
+				if (mSize.group(2) != null) {
+					props.put(Constants.Images.height, mSize.group(2) + mSize.group(3));
+				}
 				continue;
 			}
 
-			/* Position */
+			if (Constants.Images.thumb.equals(ai.fullArg)) {
+				// thumb
+				props.put(Constants.Images.type, "thumb");
+				continue;
+			}
+			
+			if (Constants.Images.direct.equals(ai.fullArg)) {
+				// direct
+				props.put(Constants.Images.type, "direct");
+				continue;
+			}
+
+			if (ai.fullArg.startsWith(Constants.Images.thumb + SEP)) {
+				// thumb=<path>
+				props.put(Constants.Images.thumb, ai.fullArg.substring(Constants.Images.thumb.length()+1));
+				props.put(Constants.Images.type, "thumb");
+				continue;
+			}
+
 			if (Constants.Position.left.equals(ai.fullArg)
 					|| Constants.Position.right.equals(ai.fullArg)
 					|| Constants.Position.center.equals(ai.fullArg)) {
-				set_(EImageProperties.pos, ai.fullArg);
-//				props.put(Constants.Images.pos, value)
-				//TODO
-				continue;
-			}
-
-			/* Direct? */
-			if (Constants.Images.direct.equals(ai.fullArg)) {
-				set_(EImageProperties.direct, "true");
-				//TODO
-				continue;
-			}
-
-			/* Small image? */
-			if (Constants.Images.small.equals(ai.fullArg)) {
-				set_(EImageProperties.small, "true");
-				//TODO
+				// left/center/right
+				props.put(Constants.Images.location, ai.fullArg);
 				continue;
 			}
 			
-			/* Clear? */
+			mUserVar = pUserVar.matcher(ai.fullArg);
+			if (mUserVar.find()) {
+				// varSomething=myVar
+				// User defined parameter. The parameter name has to start with «var» and may only contain
+				// valid characters; See pUserVar.
+				props.put(mUserVar.group(1), mUserVar.group(2));
+				continue;
+			}
+			
+			if (ai.fullArg.startsWith(Constants.Images.link + SEP)) {
+				// link=<custom link>
+				props.put(Constants.Images.link, ai.fullArg.substring(Constants.Images.link.length()+1));
+				continue;
+			}
+			
+			if (ai.fullArg.startsWith(Constants.Images.alt + SEP)) {
+				// alt=<alternative text>
+				props.put(Constants.Images.alt, ai.fullArg.substring(Constants.Images.alt.length()+1));
+				continue;
+			}
+			
+			mCaption = pCaption.matcher(ai.fullArg);
+			if (mCaption.matches()) {
+				// caption=<image caption>
+				props.put(Constants.Images.caption, mCaption.group(1));
+				continue;
+			}
+
+
+			if (Constants.Images.noscale.equals(ai.fullArg)) {
+				// noscale
+				// Indicates that the image should not be scaled on the image page
+				props.put(Constants.Images.noscale, "true");
+				continue;
+			}
+			
 			if (Constants.Images.clear.equals(ai.fullArg)) {
-				set_(EImageProperties.clear, "both");
-				//TODO
+				// clear
+				props.put(Constants.Images.clear, "both");
 				continue;
 			}
-			if (ai.fullArg.startsWith(Constants.Images.clear + "=")) {
-				set_(EImageProperties.clear, ai.fullArg.substring(Constants.Images.clear.length() + 1));
-				//TODO
+			if (ai.fullArg.startsWith(Constants.Images.clear + SEP)) {
+				// clear=<left/right>
+				props.put(Constants.Images.clear, ai.fullArg.substring(Constants.Images.clear.length() + 1));
 				continue;
 			}
 			
-			/* Additional arguments */
-			if (ai.fullArg.startsWith(Constants.Images.argsLink)) {
-				set_(EImageProperties.argsLink, ai.fullArg.substring(Constants.Images.argsLink.length()));
-				//TODO
-				continue;
-			}
 
-
-			/* Width */
-			mWidth = pWidth.matcher(ai.fullArg);
-			if (mWidth.find()) {
-				set_(EImageProperties.thumbWidth, mWidth.group());
-				props.put(Constants.Images.width, mWidth.group());
-				//TODO height
-				continue;
-			}
-
-			/* Thumbnail source */
-			if (ai.fullArg.startsWith(Constants.Images.thumb + SEP)) {
-				set_(EImageProperties.thumb, ai.fullArg.substring(Constants.Images.path.length()+1));
-				props.put(Constants.Images.pathThumb, ai.fullArg.substring(Constants.Images.path.length()+1));
-				continue;
-			}
-
-			/* Caption */
-			if (ai.fullArg.startsWith(Constants.Images.captionShort)) {
-				set_(EImageProperties.caption, ai.fullArg.substring(2));
-				//TODO
-				continue;
-			}
-			if (ai.fullArg.startsWith(Constants.Images.caption)) {
-				set_(EImageProperties.caption, ai.fullArg.substring(8));
-				//TODO
-				continue;
-			}
-
-			/* Long description */
-			if (ai.fullArg.startsWith(Constants.Images.longDesc)) {
-				set_(EImageProperties.longdesc, ai.fullArg.substring(3));
-				//TODO
-				continue;
-			}
-
-			/* Image page width */
-			mPWidth = pPWidth.matcher(ai.fullArg);
-			if (mPWidth.find()) {
-				set_(EImageProperties.pageWidth, mPWidth.group(1));
-				//TODO
+			if (ai.fullArg.startsWith("ld" + SEP)) {
+				// ld=<long description>
+				props.put(Constants.Images.longDesc, ai.fullArg.substring(3));
 				continue;
 			}
 
 			/* Description */
 			if (ai.fullArg.length() > 0) {
 				if (isSet(EImageProperties.text)) {
-					append_(EImageProperties.text, "|");
+					// &#124; is the vertical bar |
+					append_(EImageProperties.text, "&#124;");
 				}
 				append_(EImageProperties.text, ai.fullArg);
 				
 				String s = props.get(Constants.Images.text);
 				if (s == null) { s = ""; }
-				else { s += '|'; }
+				else { s += "&#124;"; }
 				props.put(Constants.Images.text, s + ai.fullArg);
 			}
 		}
@@ -327,11 +329,11 @@ public class ImageProperties extends StringSettings<EImageProperties> {
 			arguments.append(e.getKey() + PTMArgumentNameNode.separator + e.getValue() + PTMArgumentNode.identifier);
 		}
 		
-		root = new PTMRootNode(arguments, null, allowedChildNodes);
+		PTMRootNode root = new PTMRootNode(arguments, null, allowedChildNodes);
 		argumentBindings = new PTMState(root);
 		
-		System.out.println("Arguments, reconstructed: \n");
-		root.printTree(System.out, " ");
+//		System.out.println("Arguments, reconstructed: \n");
+//		root.printTree(System.out, " ");
 		
 
 		// Check for non-ASCII characters

@@ -138,7 +138,8 @@ public final class ResProjectSettings {
 		number ("number", "The number of the image on the current page"),
 		longdesc ("ld", "Long image description"),
 		pageCreated ("pageCreated", "Image page created?"),
-		pageWidth ("pageWidth", "Width of the image on the image page"),
+		/* TODO Doc removed.
+		pageWidth ("pageWidth", "Width of the image on the image page"),*/
 		path ("path", "Image path"),
 		pos ("pos", "Desired thumbnail position: left, center, right"),
 		prev ("prev", "Link to previous image on the page"),  // TODO fill in

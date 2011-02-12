@@ -9,7 +9,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import src.argumentHandler.ArgumentReader;
-import src.templateHandler.TemplateManager;
+import src.resources.RegExpressions;
 import src.utilities.IORead;
 import src.utilities.Sort;
 import src.utilities.StringTools;
@@ -54,12 +54,16 @@ public class RegexpBug {
 		String[] arg2 = {"--helpfiles", "-s", "hd"};
 		String[] argTest = {"--helpfiles", "-s", "glassborder"};
 		String[] argsFiles = {"bla test.args ble", "test.args", "--test.args", "test.args2" };
+		String[] argsSizes = {"200px", "x300px", "200x300px", "px"};
 
 		String rIf = "{{#if:a|b|c}}";
 
 		//testRegexSingleMatch("a(?!b)", new String[] {"abc", "ac"});
 		
-		testRegexSingleMatch(Resources.Regex.argsFile.pattern(), argsFiles);
+		String size = "^(\\d+)?(?:x(\\d+))?(?<=\\d)(px|%)$";
+		testRegexSingleMatch(size, argsSizes);
+		
+//		testRegexSingleMatch(RegExpressions.argsFile.pattern(), argsFiles);
 
 //		benchMatcherReplace(1000);
 //		benchNewVsSize(100000);

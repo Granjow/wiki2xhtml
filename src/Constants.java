@@ -202,7 +202,8 @@ public final class Constants {
 		/** Additional HTML arguments for the image
 		public static final String args = "args=";
 		/** Additional HTML arguments for the image link, e.g. for use with plug-ins
-		 * @since wiki2xhtml 3.4 */
+		 * @since wiki2xhtml 3.4 *
+		 * TODO doc: removed
 		public static final String argsLink = "argsLink=";
 		/** Clear before and after (insert clear=both) to put it on a new line
 		 * @since wiki2xhtml 3.4 */
@@ -216,13 +217,12 @@ public final class Constants {
 //		public static final String clearAfter = "clear:after";
 		/** Direct link, no image page */
 		public static final String direct = "direct";
-		/** Image is small, do not enlarge it on the image page */
-		public static final String small = "small";
-		/** Insert a thumbnail with border and image page*/
+		/** Do not scale the image on the image page. @since wiki2xhtml 4.0 TODO Doc renamed from «small» */
+		public static final String noscale = "noscale";
+		/** Path to the thumbnail */
 		public static final String thumb = "thumb";
-		/** Self-defined path to the thumbnail
-		 *  @since wiki2xhtml 3.4: Creates thumbnail (Argument thumb no longer necessary) */
-		public static final String pathThumb = "pathThumb";
+		/** Type: thumb (with image page) or direct (links directly). @since wiki2xhtml 4.0 */
+		public static final String type = "type";
 		/** Image path. @since wiki2xhtml 4.0 */
 		public static final String path = "path";
 		/** Image width. @since wiki2xhtml 4.0 */
@@ -231,13 +231,17 @@ public final class Constants {
 		public static final String height = "height";
 		/** Image description. @since wiki2xhtml 4.0 */
 		public static final String text = "text";
+		/** Horizontal position. @since wiki2xhtml 4.0 */
+		public static final String location = "location";
+		/** Alternative link. @since wiki2xhtml 4.0 */
+		public static final String link = "link";
+		/** Image caption */
+		public static final String caption = "caption";
+		/** Alternative description (if the image cannot be displayed). @since wiki2xhtml 4.0 */
+		public static final String alt = "alt";
 
-		/** Image caption */
-		public static final String captionShort = "c=";
-		/** Image caption */
-		public static final String caption = "caption=";
 		/** Long description of the image */
-		public static final String longDesc = "ld=";
+		public static final String longDesc = "longdesc";
 		
 		/** To comment out a gallery entry */
 		public static final String galleryComment = "//";
