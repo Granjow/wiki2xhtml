@@ -23,6 +23,7 @@ import java.io.IOException;
 import java.util.regex.Matcher;
 
 import src.Constants;
+import src.Container_Resources;
 import src.Statistics;
 import src.project.WikiProject;
 import src.project.WikiProject.FallbackFile;
@@ -188,6 +189,8 @@ public class WikiImages extends WikiTask {
 	
 
 	public static StringBuffer generateGalleryContainer(GalleryProperties gp) throws FileNotFoundException {
+		FallbackFile template = gp.parentFile.project.locate(Container_Resources.sTplGalleryContainer);
+		// TODO 0 Gallery
 //		Template tp = new Template(Container_Resources.sTplGalleryContainer, gp.parentFile.project);
 //		return tp.applyTemplate(gp.getBase64List("|", "="), gp.parentFile.project, true, null, null, null);
 		return new StringBuffer();

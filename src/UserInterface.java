@@ -10,16 +10,13 @@ import java.util.Calendar;
 import org.xnap.commons.i18n.I18n;
 import org.xnap.commons.i18n.I18nFactory;
 
-import src.Constants.SettingsLocalE;
 import src.commentator.CommentAtor;
 import src.commentator.Logger;
 import src.commentator.CommentAtor.CALevel;
 import src.pagesplitter.SplitPageContainer;
 import src.pagesplitter.SplitPageLinks;
 import src.settings.XhtmlSettings;
-import src.settings.XhtmlSettingsReader;
 import src.tools.UpdateMenufile;
-import src.tools.UpdateTemplate;
 import src.utilities.IORead_Stats;
 import src.utilities.IOUtils;
 import src.utilities.IOWrite_Stats;
@@ -99,19 +96,6 @@ public class UserInterface {
 				UpdateMenufile.run(cmdLineArgs[1], true);
 			} else
 				UpdateMenufile.run(null, true);
-
-			System.exit(0);
-		}
-
-		/*
-		 * Run the reck updater if desired
-		 */
-		if (cmdLineArgs.length > 0 && Constants.Arguments.Special.templateUpdater.equals(cmdLineArgs[0])) {
-			if (cmdLineArgs.length > 1) {
-				UpdateTemplate.run(cmdLineArgs[1], true);
-			} else {
-				UpdateTemplate.run(null, true);
-			}
 
 			System.exit(0);
 		}

@@ -1,3 +1,20 @@
+/*
+ *   Copyright (C) 2007-2011 Simon A. Eugster <simon.eu@gmail.com>
+
+ *   This program is free software: you can redistribute it and/or modify
+ *   it under the terms of the GNU General Public License as published by
+ *   the Free Software Foundation, either version 3 of the License, or
+ *   (at your option) any later version.
+
+ *   This program is distributed in the hope that it will be useful,
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *   GNU General Public License for more details.
+
+ *   You should have received a copy of the GNU General Public License
+ *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package src.project.file;
 
 import java.util.ArrayList;
@@ -16,22 +33,6 @@ import src.tasks.WikiTask;
 import src.tasks.Tasks.Task;
 import src.tasks.WikiLinks.NamespaceObject;
 
-/*
- *   Copyright (C) 2007-2010 Simon Eugster <granjow@users.sf.net>
-
- *   This program is free software: you can redistribute it and/or modify
- *   it under the terms of the GNU General Public License as published by
- *   the Free Software Foundation, either version 3 of the License, or
- *   (at your option) any later version.
-
- *   This program is distributed in the hope that it will be useful,
- *   but WITHOUT ANY WARRANTY; without even the implied warranty of
- *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *   GNU General Public License for more details.
-
- *   You should have received a copy of the GNU General Public License
- *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
- */
 
 /**
  * A single wiki file belonging to a WikiProject
@@ -94,6 +95,7 @@ public abstract class WikiFile {
 			return pageSettings.isSet(property) || project.isPropertySet(property);
 		} else { return pageSettings.isSet(property); }
 	}
+	/** @param fallback Allows to fall back to a less prioritised value (file -> project -> default) */
 	public String getProperty(SettingsE property, boolean fallback) {
 		if (pageSettings.isSet(property)) { return pageSettings.get_(property); }
 		else {

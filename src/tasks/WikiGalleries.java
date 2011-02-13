@@ -56,6 +56,7 @@ public class WikiGalleries extends WikiTask {
 
 		BufferedReader b = new BufferedReader(new StringReader(file.getContent().toString()));
 		StringBuffer out = new StringBuffer();
+		StringBuffer cache = new StringBuffer();
 
 		GalleryProperties gp = null;
 
@@ -74,6 +75,8 @@ public class WikiGalleries extends WikiTask {
 						out.append(gp.getPlaceholder());
 
 					} else {
+
+						cache.append(line + '\n');
 						
 						if (line.startsWith("//")) {
 							// Comment. Do not add image.
@@ -86,6 +89,7 @@ public class WikiGalleries extends WikiTask {
 						prop.set_(EImageProperties.number, Integer.toString(id));
 						gp.imagePropertiesList.add(prop);
 						prop.readArguments(line);
+						prop.setContext(EImageContext.gallery);
 						prop.set_(EImageProperties.context, EImageContext.gallery.property);
 						prop.set_(EImageProperties.galleryNumber, gp.get_(EGalleryProperties.number));
 					}
@@ -97,13 +101,25 @@ public class WikiGalleries extends WikiTask {
 						int id = file.addGalleryProperties(gp);
 						gp.set_(EGalleryProperties.number, Integer.toString(id));
 						
+						gp.readArguments(line);
+						
+						// Cache all lines following the gallery tag in case it is not closed correctly.
+						cache = new StringBuffer();
+						cache.append(line + '\n');
+						
 					} else {
 						// add line
 						out.append(line + '\n');
 					}
 				}
 
+			}
 
+			if (open) {
+				// Unclosed gallery tag. Add all text without processing.
+				file.galleryPropertiesList.remove(gp);
+				out.append(cache);
+				System.err.println("Gallery was not closed in " + file.name);
 			}
 
 		} catch (IOException e) {
@@ -115,46 +131,18 @@ public class WikiGalleries extends WikiTask {
 		}
 		gp = null;
 		
-		// Link all items
-		ImageProperties previousIP = null;
-		for (ImageProperties currentIP : file.imagePropertiesList) {
-			if (EImageContext.gallery.property.equals(currentIP.get_(EImageProperties.context))) {
-				if (previousIP != null) {
-					if (currentIP.get_(EImageProperties.galleryNumber).equals(previousIP.get_(EImageProperties.galleryNumber))) {
-						previousIP.nextIP = currentIP;
-						currentIP.previousIP = previousIP;
-					}
-				}
-				previousIP = currentIP;
-			}
-		}
-		
-		// Create all image pages
-		for (GalleryProperties gap : file.galleryPropertiesList) {
-			for (ImageProperties p : gap.imagePropertiesList) {
-				if (p.isSet(EImageProperties.path) && !p.isSet(EImageProperties.direct)) {
-					WikiImages.generateImagepage(p);
-				}
-			}
-		}
-		
 		// Insert the galleries by replacing their placeholders
 		int last = 0;
 		for (GalleryProperties gap : file.galleryPropertiesList) {
 			final String placeholder = gap.getPlaceholder();
-			for (ImageProperties p : gap.imagePropertiesList) {
-				try {
-					gap.append_(EGalleryProperties.content, WikiImages.generateThumbnailEntry(p).toString());
-				} catch (IOException e) {
-					System.err.println("Error in file " + file.name);
-					e.printStackTrace();
-				}
-			}
 			last = out.indexOf(placeholder);
 			if (last >= 0) {
 				try {
-					out = out.replace(last, last+placeholder.length(), WikiImages.generateGalleryContainer(gap).toString());
+					out = out.replace(last, last+placeholder.length(), gap.generateGallery());
+					counter++;
 				} catch (FileNotFoundException e) {
+					e.printStackTrace();
+				} catch (IOException e) {
 					e.printStackTrace();
 				}
 			}

@@ -125,7 +125,7 @@ public final class ResProjectSettings {
 		argsLink ("argsLink", "Additional link arguments, e.g. when working with LightBox"),
 		caption ("caption", "Image caption"),
 		clear ("clear", "css:clear, may be before, after and both"),
-		/** One of {@link EImageContext} */
+		/** One of {@link EImageContext} TODO delete */
 		context ("context", "Image context: gallery or normal"),
 		direct ("direct", "Link directly to the file"),
 		file ("file", "Filename alone"),
@@ -143,6 +143,8 @@ public final class ResProjectSettings {
 		path ("path", "Image path"),
 		pos ("pos", "Desired thumbnail position: left, center, right"),
 		prev ("prev", "Link to previous image on the page"),  // TODO fill in
+		rowStart("rowStart", "true if the image is the first in the current row"),
+		rowEnd("rowEnd", "true if the image is the last in the current row"),
 		small ("small", "Small image, to inform imagepage about not enlarging it"),
 		text ("text", "Text provided"),
 		title ("title", "What to use as title: caption, file, text"),
@@ -164,7 +166,9 @@ public final class ResProjectSettings {
 				"that this is a container and not an item"),
 		content ("content", "Content (all images)"),
 		id ("id", "Automatically generated gallery ID"),
-		number ("number", "Gallery number");
+		number ("number", "Gallery number"),
+		// TODO Doc <gallery> tag: http://meta.wikimedia.org/wiki/Help:Images_and_other_uploaded_files#Gallery
+		perrow("perrow", "Number of images per row");
 		public final String property;
 		public final String desc;
 		private EGalleryProperties(String property, String desc) {

@@ -1,5 +1,5 @@
 /*
- *   Copyright (C) 2007-2011 Simon Eugster <granjow@users.sf.net>
+ *   Copyright (C) 2007-2011 Simon A. Eugster <simon.eu@gmail.com>
 
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -38,6 +38,7 @@ import src.ptm.PTMArgumentNameNode;
 import src.ptm.PTMArgumentNode;
 import src.ptm.PTMRootNode;
 import src.ptm.PTMState;
+import src.resources.ResProjectSettings.EImageContext;
 import src.resources.ResProjectSettings.EImageProperties;
 import src.resources.ResProjectSettings.SettingsE;
 import src.utilities.XMLTools;
@@ -57,9 +58,13 @@ public class ImageProperties extends StringSettings<EImageProperties> {
 	/** The next image on the page */
 	public ImageProperties nextIP = null;
 	
-	public final WikiFile parentFile;
-	
+	/** All name/value bindings (properties) for this image */
 	public PTMState argumentBindings = null;
+	
+	private EImageContext context = EImageContext.thumb;
+	public void setContext(EImageContext context) { this.context = context; }
+	
+	public final WikiFile parentFile;
 
 	public ImageProperties(WikiFile parent) {
 		parentFile = parent;
@@ -169,7 +174,13 @@ public class ImageProperties extends StringSettings<EImageProperties> {
 	}
 	
 	public FallbackFile getTemplate() throws NoFileFoundException {
-		return parentFile.project.locate(Container_Resources.sTplImage);
+		switch (context) {
+		case gallery:
+			return parentFile.project.locate(Container_Resources.sTplGallery);
+		case thumb:
+		default:
+			return parentFile.project.locate(Container_Resources.sTplImage);
+		}
 	}
 	
 

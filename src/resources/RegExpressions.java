@@ -1,9 +1,29 @@
+/*
+ *   Copyright (C) 2007-2011 Simon A. Eugster <simon.eu@gmail.com>
+
+ *   This program is free software: you can redistribute it and/or modify
+ *   it under the terms of the GNU General Public License as published by
+ *   the Free Software Foundation, either version 3 of the License, or
+ *   (at your option) any later version.
+
+ *   This program is distributed in the hope that it will be useful,
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *   GNU General Public License for more details.
+
+ *   You should have received a copy of the GNU General Public License
+ *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package src.resources;
 
 import java.util.regex.Pattern;
 
 import src.Constants;
 
+/**
+ * Pre-compiled regular expression. Will only be compiled once.
+ */
 public final class RegExpressions {
 	
 
@@ -65,10 +85,6 @@ public final class RegExpressions {
 	/** If a parameter has a name given with name=attribute, the regex will match. */
 	public static final Pattern templateParameter = Pattern.compile("^\\s*((?:" + rCdataNogroups + "|\\S)*?)\\s*=\\s*((?:" + rCdataNogroups + "|.)*)$");
 
-	/** Matches a parameter in a template which can be replaced, e.g. {{{1}}} or {{{lang|de}}}.
-	 *  Group 1 contains the content, group 0 contains {{{\1}}}. */
-	public static final Pattern tplParameterInTemplate = Pattern.compile("\\{\\{\\{([^\\}]*)\\}\\}\\}");
-
 	/** Matches a CDATA section.
 	 *  Group 1 contains the content, group 0 contains &lt;![CDATA[\1]]!&gt;. */
 	public static final Pattern cdata = Pattern.compile(rCDATA);
@@ -85,14 +101,6 @@ public final class RegExpressions {
 											   ")*)				# in any order, or nothing at all."
 										   );
 
-	/** Matches template blocks.
-	 *  Group 1 contains the template arguments, group 0 contains {{:\1}}. */
-	public static final Pattern template = Pattern.compile(
-											   "(?x)(?s)			# Allow comments, dot matches all \n" +
-											   "(?<!\\{) \\{\\{(?!\\{):	# Templates start with {{: \n" +
-											   "((?:(?!\\}\\}).)*) # Any text except of two closing curly brackets \n" +
-											   "\\}\\}				# Template ends with }}"
-										   );
 
 	/** Pattern matching the head block.
 	 *  Group 1 contains the head content, group 0 contains &lt;!--head--&gt;\1&lt;!--/head--&gt; */
