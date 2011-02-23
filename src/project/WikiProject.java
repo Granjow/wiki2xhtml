@@ -1,3 +1,20 @@
+/*
+ *   Copyright (C) 2007-2011 Simon A. Eugster <simon.eu@gmail.com>
+
+ *   This program is free software: you can redistribute it and/or modify
+ *   it under the terms of the GNU General Public License as published by
+ *   the Free Software Foundation, either version 3 of the License, or
+ *   (at your option) any later version.
+
+ *   This program is distributed in the hope that it will be useful,
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *   GNU General Public License for more details.
+
+ *   You should have received a copy of the GNU General Public License
+ *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package src.project;
 
 import src.Constants;
@@ -18,30 +35,13 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.Vector;
 
-/*
- *   Copyright (C) 2007-2010 Simon Eugster <granjow@users.sf.net>
-
- *   This program is free software: you can redistribute it and/or modify
- *   it under the terms of the GNU General Public License as published by
- *   the Free Software Foundation, either version 3 of the License, or
- *   (at your option) any later version.
-
- *   This program is distributed in the hope that it will be useful,
- *   but WITHOUT ANY WARRANTY; without even the implied warranty of
- *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *   GNU General Public License for more details.
-
- *   You should have received a copy of the GNU General Public License
- *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
- */
-
 /**
  * Bundles multiple WikiFiles and project settings.
  */
 public class WikiProject {
 	
-	public final File projectDirectory;
-	public File targetDirectory;
+	private File projectDirectory;
+	private File outputDirectory;
 	public File styleDirectory;
 
 	public Sitemap sitemap = new Sitemap();
@@ -61,7 +61,7 @@ public class WikiProject {
 	public WikiProject(String projectDirectory) {
 		this.projectDirectory = new File(projectDirectory);
 		this.styleDirectory = this.projectDirectory;
-		this.targetDirectory = new File(this.projectDirectory.getAbsolutePath() + File.separator + "xhtml-Output");
+		this.outputDirectory = new File(this.projectDirectory.getAbsolutePath() + File.separator + Constants.Directories.target);
 		
 		// TODO create directories
 		
@@ -73,14 +73,44 @@ public class WikiProject {
 		projectSettings.set_(SettingsE.galleryImagesPerLine, Constants.Standards.galleryImagesPerLine);
 	}
 	
+	public File projectDirectory() { return projectDirectory; }
+	/** Setting the project directory is only allowed if no files have been added yet. */
+	public boolean setProjectDirectory(File f) {
+		if (fileCount() == 0) {
+			projectDirectory = f;
+			return true;
+		}
+		return false;
+	}
+	public File outputDirectory() { return outputDirectory; }
+	/** @see #setProjectDirectory(File) */
+	public boolean setoutputDirectory(File f) {
+		if (fileCount() == 0) {
+			try {
+				checkOutputDirectoryLocation();
+				outputDirectory = f;
+				return true;
+			} catch (InvalidTargetDirectoryLocationException e) {
+				e.printStackTrace();
+			}
+		}
+		return false;
+	}
+	
 	
 	public WikiFile getFile(int id) {
 		return fileMap.get(id);
 	}
 	
-	public void addFile(WikiFile f) {
-		fileMap.put(nextID(), f);
+	public void addFile(WikiFile f) throws InvalidLocationException {
+		if (f.validLocation()) {
+			fileMap.put(nextID(), f);
+		} else {
+			throw new InvalidLocationException(String.format("File %s is not at a valid location.", f.name));
+		}
 	}
+	
+	public int fileCount() { return fileMap.size(); }
 	
 	public String getProperty(SettingsE property) {
 		return projectSettings.get_(property);
@@ -89,9 +119,25 @@ public class WikiProject {
 		return projectSettings.isSet(property);
 	}
 	
+	public void checkOutputDirectoryLocation() throws InvalidTargetDirectoryLocationException {
+		if (projectDirectory.equals(outputDirectory)) {
+			throw new InvalidTargetDirectoryLocationException("Source directory must not be equal to the target directory.");
+		}
+		try {
+			if (projectDirectory.getCanonicalPath().startsWith(outputDirectory.getCanonicalPath())) {
+				throw new InvalidTargetDirectoryLocationException("Project directory must not be a subdirectory of the output directory.");
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+			throw new InvalidTargetDirectoryLocationException(e.getMessage());
+		}
+	}
+	
 	
 	////////// PARSING ///////////
-	public void make() {
+	public void make() throws IOException, InvalidTargetDirectoryLocationException {
+		checkOutputDirectoryLocation();
+		
 		// Make the project
 		for (WikiFile f : fileMap.values()) {
 			f.parse();
@@ -126,7 +172,7 @@ public class WikiProject {
 		if (parts.length < 2) {
 //			ca.ol("Wrong sitemap definition! Use --sitemap=filename;base URI.", CALevel.ERRORS);
 		} else {
-			sitemap = new Sitemap(targetDirectory, new File(targetDirectory.getAbsolutePath() + File.separatorChar + parts[0]), parts[1]);
+			sitemap = new Sitemap(outputDirectory, new File(outputDirectory.getAbsolutePath() + File.separatorChar + parts[0]), parts[1]);
 			worked = true;
 		}
 		return worked;
@@ -234,7 +280,17 @@ public class WikiProject {
 		
 	}	
 	
-	public static void main(String[] args) {
+	public static class InvalidLocationException extends Exception {
+		private static final long serialVersionUID = 1L;
+		public InvalidLocationException(String msg) { super(msg); }
+	}
+	
+	public static class InvalidTargetDirectoryLocationException extends Exception {
+		private static final long serialVersionUID = 1L;
+		public InvalidTargetDirectoryLocationException(String msg) { super(msg); }
+	}
+	
+	public static void main(String[] args) throws InvalidLocationException, IOException, InvalidTargetDirectoryLocationException {
 		WikiProject p = new WikiProject(".");
 		StringBuffer sb = new StringBuffer();
 		sb.append("Hallo. [[link.html]]\n*bla");

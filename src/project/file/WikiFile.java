@@ -17,6 +17,7 @@
 
 package src.project.file;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -44,8 +45,22 @@ public abstract class WikiFile {
 	public final boolean sitemap;
 	
 	private final boolean parse;
-	/** Filename of this file */
+	/** <p>Filename of this file.<br/>
+	 * Usually denotes the file name relative to the project directory. Some examples:</p>
+	 * <ul>
+	 * <li><code>project/filename1</code> with <code>filename1 = index.txt</code><li>
+	 * <li><code>project/filename2</code> with <code>filename2 = pics/summer2010.txt</code></li>
+	 * </ul> 
+	 * @see {@link #internalName} -- the name used for linking.
+	 * @deprecated until correct usage of internalName is checked.
+	 */
 	public final String name;
+	/**
+	 * <p>An internal representation of the file name, which always uses / as file separator
+	 * and nothing else. To be used in Wiki-Links, for OS-wide consistency.</p>
+	 * @see {{@link #name}
+	 */
+	public final String internalName;
 	public final Generators generators;
 	
 	public final WikiProject project;
@@ -77,9 +92,16 @@ public abstract class WikiFile {
 				tasks.add(t);
 			}
 		}
+		if (File.separator.equals("/")) {
+			internalName = name;
+		} else {
+			internalName = name.replace(File.separator, "/");
+		}
 	}
 	
 	abstract public boolean equals(Object obj);
+	/** Verifies the location of the file. E.g. it might need to be located in the project directory or a subdirectory. */
+	abstract public boolean validLocation();
 	abstract public void write();
 	abstract public StringBuffer getContent();
 	
@@ -87,7 +109,6 @@ public abstract class WikiFile {
 	public void setContent(StringBuffer newContent) {
 		content = newContent;
 	}
-	
 	
 	
 	public boolean isPropertySet(SettingsE property, boolean fallback) {

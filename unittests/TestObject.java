@@ -47,7 +47,7 @@ abstract class TestObject {
 	}
 	
 	public void writeFile(String filename, String content) throws IOException {
-		File f = new File(project.projectDirectory.getAbsolutePath() + File.separator + filename);
+		File f = new File(project.projectDirectory().getAbsolutePath() + File.separator + filename);
 		f.deleteOnExit();
 		IOWrite.writeString(f, content, false);
 	}

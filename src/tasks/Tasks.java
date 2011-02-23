@@ -17,7 +17,8 @@ public class Tasks {
 		Galleries ("Galleries"),
 		InsertNowiki ("Insert Nowiki Content"),
 		XMLNames ("Convert XML names"),
-		References ("References");
+		References ("References"),
+		Cleanup ("Cleanup");
 		
 		public final String name;
 		

@@ -38,6 +38,14 @@ import src.utilities.StringTools;
  */
 public class WikiReferences extends WikiTask {
 
+	public WikiTask nextTask() {
+		return new WikiCleanup();
+	}
+
+	public Task desc() {
+		return Task.References;
+	}
+
 	public ArrayList<StringBuffer> makeReferences(WikiFile file) {
 		short counter = 0;
 		
@@ -115,14 +123,6 @@ public class WikiReferences extends WikiTask {
 			StringBuffer refs = generateReferencesList(references);
 			file.getContent().replace(pos, pos + s.length(), refs.toString());
 		}
-	}
-
-	public WikiTask nextTask() {
-		return null;
-	}
-
-	public Task desc() {
-		return Task.References;
 	}
 	
 }

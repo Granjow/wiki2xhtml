@@ -109,7 +109,7 @@ public class ImageProperties extends StringSettings<EImageProperties> {
 
 		if (!filenameOnly) {
 			if (filesystemPath) {
-				name.append(parentFile.project.targetDirectory.getAbsolutePath() + File.separatorChar);
+				name.append(parentFile.project.outputDirectory().getAbsolutePath() + File.separatorChar);
 			}
 			name.append(parentFile.getProperty(SettingsE.imagepagesDir, true));
 

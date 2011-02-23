@@ -1,3 +1,20 @@
+/*
+ *   Copyright (C) 2007-2011 Simon A. Eugster <simon.eu@gmail.com>
+
+ *   This program is free software: you can redistribute it and/or modify
+ *   it under the terms of the GNU General Public License as published by
+ *   the Free Software Foundation, either version 3 of the License, or
+ *   (at your option) any later version.
+
+ *   This program is distributed in the hope that it will be useful,
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *   GNU General Public License for more details.
+
+ *   You should have received a copy of the GNU General Public License
+ *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package src.project.file;
 
 import java.io.File;
@@ -7,31 +24,56 @@ import src.project.WikiProject;
 import src.utilities.IORead_Stats;
 import src.utilities.IOWrite_Stats;
 
+/**
+ * Represents a file that really exists on the file system. Input and output files are generated from the 
+ * file name, the project (input) directory, and the project output directory.
+ */
 public class LocalWikiFile extends WikiFile {
-
-	protected LocalWikiFile(WikiProject project, String name, boolean sitemap, boolean parse) {
-		super(project, name, sitemap, parse);
-		File f1 = null, f2 = null;
-		try {
-			f1 = File.createTempFile("wiki2xhtml", "temp");
-			f2 = File.createTempFile("wiki2xhtml", "temp");
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		fSrc = f1;
-		fDest = f2;
-		fSrc.deleteOnExit();
-		fDest.deleteOnExit();
-	}
-	
-	public LocalWikiFile(WikiProject project, String name, boolean sitemap, boolean parse, File in, File out) {
-		super(project, name, sitemap, parse);
-		fSrc = in;
-		fDest = out;
-	}
 
 	private final File fSrc;
 	private final File fDest;
+
+	/** Creates a new WikiFile. Input and output files are generated automatically.
+	 * Does NOT check whether the location is valid. (E.g. input file equals output file.)*/
+	public LocalWikiFile(WikiProject project, String name, boolean sitemap, boolean parse) {
+		this(project, name, sitemap, parse, false);
+	}
+	public LocalWikiFile(WikiProject project, String name, boolean sitemap, boolean parse, boolean createTempFile) {
+		super(project, name, sitemap, parse);
+		if (createTempFile) {
+			File f1 = null, f2 = null;
+			try {
+				f1 = File.createTempFile("wiki2xhtml", "temp");
+				f2 = File.createTempFile("wiki2xhtml", "temp");
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			fSrc = f1;
+			fDest = f2;
+			fSrc.deleteOnExit();
+			fDest.deleteOnExit();
+		} else {
+			fSrc = new File(project.projectDirectory().getAbsolutePath() + File.separator + name);
+			String destName = name;
+			if (parse) {
+				if (name.endsWith(".txt")) {
+					destName = destName.substring(0, destName.length()-".txt".length()) + ".html";
+				}
+			}
+			fDest = new File(project.outputDirectory().getAbsolutePath() + File.separator + destName);
+			
+			System.out.printf("Input file: %s -- Output file: %s\n", fSrc.getAbsolutePath(), fDest.getAbsolutePath());
+		}
+	}
+	
+	public boolean validLocation() {
+		try {
+			return fSrc.getCanonicalPath().startsWith(project.projectDirectory().getCanonicalPath());
+		} catch (IOException e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
 
 	/** Needs to be overridden for comparing. */
 	public boolean equals(Object obj) {

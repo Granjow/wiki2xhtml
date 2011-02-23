@@ -55,7 +55,7 @@ public final class Constants {
 		public static final String workingDir2 = java.lang.System.getProperty("user.dir") + File.separatorChar;
 		public static final String settingsDir = userHome + File.separatorChar + ".wiki2xhtml";
 		public static final String imagePages = "imagePages";
-		public static final String target = "html";
+		public static final String target = "wiki2xhtml-output";
 	}
 
 	/** Standard files, like the configuration file */
@@ -133,7 +133,8 @@ public final class Constants {
 
 		}
 
-		/** Command line arguments (like -f footer.txt) for wiki2xhtml */
+		/** Command line arguments (like -f footer.txt) for wiki2xhtml
+		 * @deprecated */
 		public static final class Arg {
 
 			public static final String menu = "-m";
@@ -145,7 +146,8 @@ public final class Constants {
 
 		}
 
-		/** Combined command line arguments (like --footer=f.txt) for wiki2xhtml */
+		/** Combined command line arguments (like --footer=f.txt) for wiki2xhtml
+		 * @deprecated */
 		public static final class CombinedArg {
 
 			public static final String common = "--common=";
@@ -158,7 +160,8 @@ public final class Constants {
 			public static final String targetDir = "--target-dir=";
 		}
 
-		/** Command line flags (like --dead) for wiki2xhtml with no further arguments */
+		/** Command line flags (like --dead) for wiki2xhtml with no further arguments
+		 * @deprecated */
 		public static final class Flags {
 
 			public static final String dead = "--dead";

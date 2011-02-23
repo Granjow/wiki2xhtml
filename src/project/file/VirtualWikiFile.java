@@ -22,6 +22,10 @@ public class VirtualWikiFile extends WikiFile {
 		this.content = content;
 	}
 	
+	public boolean validLocation() {
+		return true;
+	}
+	
 	public boolean equals(Object obj) {
 		if (this == obj) { return true; }
 		if (obj instanceof WikiFile) {

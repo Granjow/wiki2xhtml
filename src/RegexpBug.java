@@ -57,11 +57,19 @@ public class RegexpBug {
 		String[] argsSizes = {"200px", "x300px", "200x300px", "px"};
 
 		String rIf = "{{#if:a|b|c}}";
-
+		
+		
+		testRegexSingleMatch("^\\s*", new String[] {"   <html>", "\r\r<html> "});
+		
 		//testRegexSingleMatch("a(?!b)", new String[] {"abc", "ac"});
 		
-		String size = "^(\\d+)?(?:x(\\d+))?(?<=\\d)(px|%)$";
-		testRegexSingleMatch(size, argsSizes);
+//		String size = "^(\\d+)?(?:x(\\d+))?(?<=\\d)(px|%)$";
+//		testRegexSingleMatch(size, argsSizes);
+		
+//		String[] split = "With\\ space. Arg.".split("(?<!\\\\)\\s");
+//		for (String s : split) {
+//			System.out.printf("Item: %s\n", s);
+//		}
 		
 //		testRegexSingleMatch(RegExpressions.argsFile.pattern(), argsFiles);
 
@@ -89,6 +97,10 @@ public class RegexpBug {
 //
 //		benchSbDeleteVsNew(1000);
 
+	}
+	
+	private static final String noNewlines(String s) {
+		return s.replace("\n", "\\n").replace("\r", "\\r").replace(" ", "␣");
 	}
 
 	/**
@@ -283,8 +295,8 @@ public class RegexpBug {
 			tn.start();
 			found = m.find();
 			tn.stop();
-			o.println('\n' + (found ? "String >>".toUpperCase() + m.group() + "<<" : "nothing".toUpperCase()) +
-					  " matched in >>".toUpperCase() + s + "<<" +
+			o.println('\n' + (found ? "String >>".toUpperCase() + noNewlines(m.group()) + "<<" : "nothing".toUpperCase()) +
+					  " matched in >>".toUpperCase() + noNewlines(s) + "<<" +
 					  (found ?
 					   (m.start() == m.end() ? ", position ".toUpperCase() + m.start() :
 						", characters ".toUpperCase() + m.start() + " to " + m.end()): ""

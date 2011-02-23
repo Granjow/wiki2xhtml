@@ -1,4 +1,24 @@
+/*
+ *   Copyright (C) 2007-2011 Simon A. Eugster <simon.eu@gmail.com>
+
+ *   This program is free software: you can redistribute it and/or modify
+ *   it under the terms of the GNU General Public License as published by
+ *   the Free Software Foundation, either version 3 of the License, or
+ *   (at your option) any later version.
+
+ *   This program is distributed in the hope that it will be useful,
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *   GNU General Public License for more details.
+
+ *   You should have received a copy of the GNU General Public License
+ *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package src.argsFilesReader;
+
+import jargs.gnu.CmdLineParser.IllegalOptionValueException;
+import jargs.gnu.CmdLineParser.UnknownOptionException;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -6,17 +26,13 @@ import java.io.IOException;
 import java.io.StringReader;
 
 import src.Constants;
-import src.Container_Files;
-import src.Handler_Arguments;
-import src.commentator.CommentAtor;
-import src.commentator.CommentAtor.CALevel;
+import src.Wiki2xhtmlArgsParser;
+import src.project.WikiProject;
+import src.project.WikiProject.InvalidLocationException;
+import src.project.file.LocalWikiFile;
 import src.utilities.IORead_Stats;
 
 public class ArgsFilesReader {
-	
-	private final CommentAtor ca = CommentAtor.getInstance();
-	
-	public ArgsFilesReader() { }
 	
 	/**
 	 * <p>Reads settings from a file.</p>
@@ -26,73 +42,89 @@ public class ArgsFilesReader {
 	 * <dt>Source directory</dt><dd>Line starting with <code>dir=</code>.
 	 * Attention: Setting the source directory does not work for the files listed in 
 	 * this config file. The <code>dir=</code> is valid for all files below 
-	 * util a new <code>dir=</code> entry is met.</dd>
+	 * util a new <code>dir=</code> entry is met. Spaces can be escaped by preceding a backslash.</dd>
 	 * <dt>Files</dt><dd>Any other line. The filename is the first entry in the line 
 	 * (without spaces). Possible additional arguments: See {@link Constants.Arguments.FileArgs}.</dd>
 	 * <dt>Examples</dt><dd><code>secret.txt nositemap</dd><dd><code>.htaccess nobuild nositemap</dd> 
 	 * </dl>
 	 * @param filename
-	 * @return Arguments given in the file
+	 * @throws UnknownOptionException 
+	 * @throws IllegalOptionValueException 
 	 * @since wiki2xhtml 2.4
 	 * TODO 0 Doc arg list
 	 */
-	public String read(String filename) {
+	public static void readArgsFile(WikiProject project, File file) throws IllegalOptionValueException, UnknownOptionException {
 		String args = "";
 		String dir = "";
-		String file;
 		boolean sitemap;
 		boolean parse;
 		
 		try {
-			StringBuffer content = IORead_Stats.readSBuffer(new File(filename));
+			StringBuffer content = IORead_Stats.readSBuffer(file);
 			BufferedReader b = new BufferedReader(new StringReader(content.toString()));
 			String line;
+			String s;
+			File fDir;
 			
-			ca.ol("Reading args file %s.\n", CALevel.V_MSG, filename);
+			System.out.printf("Reading args file %s.\n", file);
 			
 			for (line = b.readLine(); line != null; line = b.readLine()) {
 				if (line.startsWith("#")) {
 					// Comment.
 					continue;
-				}
-				if (line.startsWith("args=")) {
+					
+				} else if (line.startsWith("args=")) {
 					args += " " + line.substring("args=".length());
-					ca.ol("Arguments read: %s\n", CALevel.V_MSG, args);
+					new Wiki2xhtmlArgsParser().readArguments(project, line.substring("args=".length()).split("\\s"));
+					System.out.printf("Arguments read: %s\n", args);
+					
 				} else if (line.startsWith("dir=")) {
-					dir = line.substring("dir=".length()).trim() + File.separatorChar;
-					ca.ol("Dir: " + dir, CALevel.V_MSG);
+					// Only allow files in sub-directories.
+					dir = new String();
+					fDir = new File(project.projectDirectory().getAbsolutePath() + File.separator + line.substring("dir=".length()));
+					if (fDir.exists() && fDir.isDirectory()) {
+						if (fDir.getCanonicalPath().startsWith(project.projectDirectory().getCanonicalPath())) {
+							dir = fDir.getCanonicalPath().substring(project.projectDirectory().getCanonicalPath().length());
+						}
+					}
+					System.out.printf("Directory set to %s (argument was: %s)", dir, line);
+					
 				} else {
 					// File.
-					ca.ol("File read: %s\n", CALevel.V_MSG, line);
+					System.out.printf("File read: %s\n", line);
 					sitemap = true;
 					parse = true;
 					
-					String[] largs = line.split("\\s", 2);
+					// Split at spaces, except when preceded by a \
+					// TODO Doc: \ for spaces
+					String[] largs = line.split("(?<!\\\\)\\s", 2);
 					if (largs.length > 0) {
-						file = dir + largs[0];
-						ca.ol("File is %s\n", CALevel.V_MSG, file);
+						s = dir + File.separator + largs[0];
+						System.out.printf("File is %s\n", s);
 						if (largs.length > 1) {
 							if (largs[1].contains(Constants.Arguments.FileArgs.noSitemap)) {
 								sitemap = false;
-								ca.ol("No sitemap entry for %s\n", CALevel.MSG, file);
+								System.out.printf("No sitemap entry for %s\n", file);
 							}
 							if (largs[1].contains(Constants.Arguments.FileArgs.noParse)) {
 								parse = false;
-								ca.ol("Will not parse %s\n", CALevel.MSG, file);
+								System.out.printf("Will not parse %s\n", file);
 							}
 						}
-						Container_Files.getInstance().addFile(file, sitemap, parse);
+						try {
+							project.addFile(new LocalWikiFile(project, s, sitemap, parse));
+							System.out.printf("Added %s to the project.\n", s);
+						} catch (InvalidLocationException e) {
+							System.out.printf("Could not add %s to the project: %s\n", s, e.getMessage());
+						}
 					}
 				}
 			}
 			
 		} catch (IOException e) {
-			return null;
+			System.err.println("Could not read file " + file.getAbsolutePath());
 		}
 		
-		args = Handler_Arguments.handleReplaceArguments(args);
-		ca.ol("Added arguments from %s: %s\n", CALevel.MSG, filename, args);
-		return args;
 	}
 
 }

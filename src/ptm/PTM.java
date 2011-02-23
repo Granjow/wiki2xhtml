@@ -88,8 +88,12 @@ public class PTM {
 	/** Applies all parser functions to the input string 
 	 * @throws RecursionException */
 	public static final String parse(StringBuffer content) throws RecursionException {
-		PTMRootNode root = new PTMRootNode(content, new PTMState());
-		return root.evaluate();
+		if (content.length() > 0) {
+			PTMRootNode root = new PTMRootNode(content, new PTMState());
+			return root.evaluate();
+		} else {
+			return new String();
+		}
 	}
 	
 	/** Applies all parser functions to the input string, using the given start state. 

@@ -44,7 +44,7 @@ public final class GuiFunctions {
 
 	public static void targetDir(JTextField jtfTargetDir) {
 
-		if (Container_Files.getInstance().setTargetDirectory(jtfTargetDir.getText())) {
+		if (Container_Files.getInstance().setoutputDirectory(jtfTargetDir.getText())) {
 			if (new File(jtfTargetDir.getText()).exists())
 				ca.ol(className
 					  + i18n.tr("(Existing) Target directory set: ")

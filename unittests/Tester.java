@@ -24,6 +24,7 @@ public class Tester extends TestCase {
 		result.addTest(new TestSuite(SettingsTester.class));
 		result.addTest(new TestSuite(TemplateTester.class));
 		result.addTest(new TestSuite(WikiSettingsTester.class));
+		result.addTest(new TestSuite(CleanupTester.class));
 		return result;
 	}
 	
