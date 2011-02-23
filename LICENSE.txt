@@ -1,3 +1,16 @@
+wiki2xhtml is licensed under GPLv3.
+
+wiki2xhtml relies on additional libraries:
+* JarClassLoader
+  http://www.jdotsoft.com/JarClassLoader.php
+  License: GPLv2
+* Gettext Commons
+  http://code.google.com/p/gettext-commons/
+  License: Apache License 2.0
+  
+All Crystal*.png icons are licensed under the LGPL. 
+Source: http://everaldo.com/crystal/
+
                     GNU GENERAL PUBLIC LICENSE
                        Version 3, 29 June 2007
 

@@ -17,7 +17,7 @@ public class XMLNames extends WikiTask {
 		return Task.XMLNames;
 	}
 	public WikiTask nextTask() {
-		return null;
+		return new WikiReferences();
 	}
 	public void parse(WikiFile file) {
 		StringBuffer out = new StringBuffer();

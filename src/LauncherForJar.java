@@ -16,7 +16,7 @@ public class LauncherForJar {
 	public static void main(String[] args) {
 		JarClassLoader jcl = new JarClassLoader();
 		try {
-			jcl.invokeMain("src.UserInterface", args);
+			jcl.invokeMain("src.Main", args);
 		} catch (Throwable e) {
 			e.printStackTrace();
 		}

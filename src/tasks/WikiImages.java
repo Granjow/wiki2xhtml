@@ -18,7 +18,6 @@
 package src.tasks;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.regex.Matcher;
 
@@ -29,14 +28,12 @@ import src.project.WikiProject;
 import src.project.WikiProject.FallbackFile;
 import src.project.file.VirtualWikiFile;
 import src.project.file.WikiFile;
-import src.project.settings.GalleryProperties;
 import src.project.settings.ImageProperties;
-import src.ptm.PTMRootNode;
 import src.ptm.PTMObject.RecursionException;
+import src.ptm.PTMRootNode;
 import src.resources.RegExpressions;
 import src.resources.ResProjectSettings.EImageContext;
 import src.resources.ResProjectSettings.EImageProperties;
-import src.resources.ResProjectSettings.SettingsE;
 import src.tasks.Tasks.Task;
 import src.utilities.IOWrite_Stats;
 
@@ -186,39 +183,32 @@ public class WikiImages extends WikiTask {
 //		}
 //		return output;
 	}
-	
-
-	public static StringBuffer generateGalleryContainer(GalleryProperties gp) throws FileNotFoundException {
-		FallbackFile template = gp.parentFile.project.locate(Container_Resources.sTplGalleryContainer);
-		// TODO 0 Gallery
-//		Template tp = new Template(Container_Resources.sTplGalleryContainer, gp.parentFile.project);
-//		return tp.applyTemplate(gp.getBase64List("|", "="), gp.parentFile.project, true, null, null, null);
-		return new StringBuffer();
-	}
 
 	/**
 	 * Generates an image page
-	 * @since wiki2xhtml 3.4: Titles for image pages
 	 */
 	public static void generateImagepage(ImageProperties prop) {
 
 		try {
-			StringBuffer sb = new StringBuffer();
-//			Template tpl = new Template(Container_Resources.sTplImagepage, prop.parentFile.project);
+			FallbackFile template = prop.parentFile.project.locate(Container_Resources.sTplImagepage);
 			
-			String title = prop.parentFile.getProperty(SettingsE.titleRule, true);
-			if (title == null) {
-				title = "%caption %s";
-			}
-			if (prop.isSet(EImageProperties.caption)) {
-				title = title.replaceAll("%caption", prop.get_(EImageProperties.caption));
-			} else {
-				title = title.replaceAll("%caption", "");
-			}
+			PTMRootNode root = new PTMRootNode(template.getContent(), prop.argumentBindings);
 			
-			title = title.replaceAll("%path", prop.getImagePathHtml());
-			title = title.replaceAll("%name", prop.getImageFilenameHtml());
-			title = prop.parentFile.generators.title(title);
+			String s = root.evaluate();
+			
+//			String title = prop.parentFile.getProperty(SettingsE.titleRule, true);
+//			if (title == null) {
+//				title = "%caption %s";
+//			}
+//			if (prop.isSet(EImageProperties.caption)) {
+//				title = title.replaceAll("%caption", prop.get_(EImageProperties.caption));
+//			} else {
+//				title = title.replaceAll("%caption", "");
+//			}
+//			
+//			title = title.replaceAll("%path", prop.getImagePathHtml());
+//			title = title.replaceAll("%name", prop.getImageFilenameHtml());
+//			title = prop.parentFile.generators.title(title);
 			
 //			String args = Container_Resources.sTplImagepage;
 //			for (EImageProperties p : EImageProperties.values()) {
@@ -232,7 +222,7 @@ public class WikiImages extends WikiTask {
 			// Wiki tasks
 			
 			File f = new File(prop.getImagepagePath(true, false));
-			IOWrite_Stats.writeString(f, sb.toString(), false);
+			IOWrite_Stats.writeString(f, s, false);
 			if (prop.parentFile.sitemap) {
 				prop.parentFile.project.sitemap.add(f);
 			}
@@ -241,6 +231,10 @@ public class WikiImages extends WikiTask {
 
 		} catch (IOException e) {
 //			ca.ol("Error: Image page " + is.image.getImagepagePath(true, false) + " couldn't be created!\n", CALevel.ERRORS);
+			e.printStackTrace();
+
+			prop.set_(EImageProperties.pageCreated, prop.nullValue());
+		} catch (RecursionException e) {
 			e.printStackTrace();
 
 			prop.set_(EImageProperties.pageCreated, prop.nullValue());
