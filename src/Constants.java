@@ -145,10 +145,6 @@ public final class Constants {
 			public static final String footer = "-f";
 
 		}
-		
-		public static final class Blocks {
-			public static final String isBlock = "isBlock";
-		}
 
 		/** Combined command line arguments (like --footer=f.txt) for wiki2xhtml
 		 * @deprecated */
@@ -201,6 +197,18 @@ public final class Constants {
 		public static final String[] obsoleteArgs = new String[] {"-i", "-t", "--index-file", "--title="};
 		public static final String[] obsoleteCombined = new String[] {"--header=",  };
 
+	}
+	
+	public static final class Blocks {
+		public static final String isBlock = "isBlock";
+		public static final String text = "text";
+		/** Additional tag parameters (style="..." e.g.) */
+		public static final String args = "args";
+		/** Additional class=".." definitions, without the class= (class names only) */
+		public static final String classes = "classes";
+		/** Additional style="..." definitions extracted from the arguments.
+		 * Also for being used like <code>style="color: #444; {{{style|}}}"</code> in the template. */
+		public static final String style = "style";
 	}
 
 	/** Arguments for images */

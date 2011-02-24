@@ -83,16 +83,7 @@ public class Container_Resources {
 	public final InputStream iRPM = getClass().getResourceAsStream(sRPM);
 	public final InputStream iDEB = getClass().getResourceAsStream(sDEB);
 
-	// TODO 0 Removed, Doc!
-//	public static final String spicture = "/resources/picture.html";
-//	public static final String spictureT = "/resources/pictureT.html";
-//	public static final String sthumbPicture = "/resources/thumbPicture.html";
-//	public static final String sthumbPictureT = "/resources/thumbPictureT.html";
-//	public static final String sgalleryText = "/resources/galleryText.html";
-//	public static final String sgalleryImageNodesc = "/resources/galleryImageNodesc.html";
-//	public static final String sgalleryImage = "/resources/galleryImage.html";
-//	public static final String sgalleryContainer = "/resources/galleryContainer.html";
-	
+	// TODO Doc: update used templates
 	public static final String sTplImage = "tplImage.txt";
 	
 	public static final String sTplGallery = "tplGallery.txt";

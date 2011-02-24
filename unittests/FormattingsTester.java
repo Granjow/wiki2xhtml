@@ -2,12 +2,18 @@ package unittests;
 
 import java.io.IOException;
 
+import org.junit.Test;
+
 import junit.framework.TestCase;
 import src.project.file.VirtualWikiFile;
 import src.tasks.Tasks.Task;
 
 public class FormattingsTester extends TestCase {
+	
+	private static final String templateCode = "{{{isBlock|}}}<code{{{args}}}>{{{text}}}</code>";
+	private static final String templateCode2 = "{{{isBlock|}}}<code style=\"w: 100px;{{{style|}}}\" class=\"c {{{classes|}}}\"{{{args|}}}>{{{text}}}</code>";
 
+	@Test
 	public void testBoldItalic() throws IOException {
 		assertEquals("<strong>just bold.</strong>", p("'''just bold.'''"));
 		assertEquals("<strong>'ts bold too</strong>", p("''''ts bold too'''"));
@@ -19,12 +25,33 @@ public class FormattingsTester extends TestCase {
 		assertEquals("<em>'ts italic too</em>", p("'''ts italic too''"));
 	}
 	
-
+	@Test
+	public void testCode() throws IOException {
+		assertEquals("<code>code here</code>", p("$$code here$$"));
+		assertEquals("<code id=\"myID\">code here</code>", p("$$((id=\"myID\"))code here$$"));
+		assertEquals("<code style=\"w: 100px;h: 200px;\" class=\"c d\" >code here</code>", p2("$$((style=\"h: 200px;\" class=\"d\"))code here$$"));
+	}
 	
+	@Test
+	public void testCodeBlock() throws IOException {
+		assertEquals("true<code>code here</code>", p("$$\ncode here\n$$"));
+		assertEquals("no$$code here$$", p("no$$\ncode here\n$$"));
+		assertEquals("true<code style=\"w: 100px;h: 200px;\" class=\"c d\" >code here</code>", p2("$$((style=\"h: 200px;\" class=\"d\"))\ncode here\n$$"));
+	}
+	
+
+
 	private static final String p(String testString) throws IOException {
 		TestObject to = new TestObject(testString, "");
+		to.writeFile("tplCode.txt", templateCode);
 		return to.real();
 	}
+	private static final String p2(String testString) throws IOException {
+		TestObject to = new TestObject(testString, "");
+		to.writeFile("tplCode.txt", templateCode2);
+		return to.real();
+	}
+	
 	
 	private static class TestObject extends unittests.TestObject {
 		public TestObject(String test, String result) throws IOException {

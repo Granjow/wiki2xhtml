@@ -58,7 +58,12 @@ public class RegexpBug {
 
 		String rIf = "{{#if:a|b|c}}";
 		
-		testRegexSingleMatch("(?s)^(?:<br[^>]*/?>|<references\\s*/>)", new String[] {"<br/>", "<br style=\"clear: both;\"/>"});
+		
+		testRegexSingleMatch(RegExpressions.textCode.pattern(), new String[] { "asdf $$bla$$ bb", "abc $$((something)) code$$ def" });
+		
+//		testRegexSingleMatch("class=\"([^\"]+)\"", new String[] { "bla class=\"myClass\" \"" });
+		
+//		testRegexSingleMatch("(?s)^(?:<br[^>]*/?>|<references\\s*/>)", new String[] {"<br/>", "<br style=\"clear: both;\"/>"});
 
 //		testRegexSingleMatch("(?s)<ref(\\s+name=\"(\\w+)\")?>(.*?)</ref>", 
 //				new String[] { "<ref>hallo</ref>", "<ref name=\"refName\">velo</ref>", "<ref>a\nb</ref>" });

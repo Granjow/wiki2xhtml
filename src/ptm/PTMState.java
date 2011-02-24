@@ -31,11 +31,16 @@ public class PTMState extends HashMap<String, PTMArgumentValueNode> {
 		}
 	}
 	
-	/** Manually binds a value to a name. Overwrites existing bindings.
+	/** <p>Manually binds a value to a name. Overwrites existing bindings.</p>
+	 * <p>If <code>value.length()</code> is 0, the binding will be removed.</p>
 	 * @return The old value as returned by {@link #resolve(String)}, if the binding to this name already existed */
 	public String bind(String name, String value) {
 		String oldVal = resolve(name);
-		put(name, new PTMArgumentValueNode(new StringBuffer(value)));
+		if (value.length() > 0) {
+			put(name, new PTMArgumentValueNode(new StringBuffer(value)));
+		} else {
+			remove(name);
+		}
 		return oldVal;
 	}
 	/** 

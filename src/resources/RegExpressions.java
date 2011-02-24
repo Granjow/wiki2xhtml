@@ -142,19 +142,27 @@ public final class RegExpressions {
 	
 	public static final Pattern namespace = Pattern.compile("(?m)^(.+?)=(.+)$");
 
-	/** Matches $$code$$ */
-	public static final Pattern textCode= Pattern.compile(
+	/** <p>Matches:</p>
+	 * <ul><li><code>$$code$$</code></li>
+	 * <li><code>$$((args))code$$</code></li></ul>
+	 * <p>Pattern groups: <code>[1: character]$$((2:args))3:code$$</code></p>
+	 * <p>The first character is used to avoid lookbehinds (speedup).</p>
+	 * @see #textCodeBlock*/
+	public static final Pattern textCode = Pattern.compile(
 											  "(?x)				# just like above \n" +
 											  "(?:" +
-											  "([" + specialCharacters + "]|^)" +
-											  "\\$\\$(?!\\s)" +
+												  "([" + specialCharacters + "]|^)" +
+												  "\\$\\$(?!\\s)" +
 											  ")" +
 											  "(?:\\(\\((.+?)\\)\\))?" +
 											  "(.*?[^\\s])" +
 											  "(?:\\$\\$(?=(?:[" + specialCharacters + "]|$)))"
 										  );
 
-	/** Matches <br/>$$<br/>code blocks<br/>$$ */
+	/** <p>Matches <br/>$$<br/>code blocks<br/>$$</p>
+	 * <p>The first <code>$$</code> may be followed by <code>((arguments))</code>.</p>
+	 * <p>Pattern groups: <code>$$\n((1:args))\n2:code\n$$</code></p>
+	 * @see {@link #textCode} */
 	public static final Pattern textCodeBlock = Pattern.compile(
 				"(?x)(?s)" +
 				"(?:^|\\n)\\$\\$" +

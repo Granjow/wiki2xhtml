@@ -21,10 +21,17 @@ package src.tasks;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import src.Constants.Blocks;
+import src.Container_Resources;
 import src.Statistics;
+import src.project.WikiProject.FallbackFile;
 import src.project.file.WikiFile;
+import src.ptm.PTMObject.RecursionException;
+import src.ptm.PTMRootNode;
+import src.ptm.PTMState;
 import src.resources.RegExpressions;
 import src.tasks.Tasks.Task;
+import src.utilities.Tuple;
 
 /**
  * Handles ''italic'', '''bold''' text.
@@ -41,7 +48,7 @@ public class WikiFormattings extends WikiTask {
 	}
 
 	public void parse(WikiFile file) {
-		file.setContent(makeCode(makeItalicType(makeBoldType(file.getContent()))));
+		file.setContent(makeCode(file, makeItalicType(makeBoldType(file.getContent()))));
 	}
 	
 	
@@ -116,35 +123,75 @@ public class WikiFormattings extends WikiTask {
 		return out;
 	}
 	
-	//TODO Doc removed functions
-	public static final StringBuffer makeCode(final StringBuffer input) {
+	//TODO Doc removed functions, arguments
+	public static final StringBuffer makeCode(final WikiFile file, final StringBuffer input) {
 
-		// TODO use template
 		Statistics.getInstance().sw.timeFormattingCode.continueTime();
-
-		StringBuffer in = input;
 		
+		StringBuffer template;
+		try {
+			template = new FallbackFile(Container_Resources.sTplCode, file.project).getContent();
+		} catch (Exception e) {
+			e.printStackTrace();
+			template = new StringBuffer(e.getMessage());
+		}
+		assert template.length() > 0;
+		
+		StringBuffer in = input;
 		StringBuffer out = new StringBuffer();
+		StringTuple tuple;
+		String s;
 		String args;
+		String argClass;
+		String argStyle;
 
+		PTMState sigma;
+		
 		Pattern p;
 		Matcher m;
-		int first, last;
+		int first;
 		
 		p = RegExpressions.textCode;
 		m = p.matcher(in);
 
 		first = 0;
 		while (m.find()) {
-			last = m.start();
 			args = (m.group(2) != null ? " " + m.group(2).trim() : "");
-
-			out.append(in.subSequence(first, last) + m.group(1) + "<code" + args + ">" + m.group(3) + "</code>");
+			if (args.length() > 0) {
+				tuple = extractClassArgs(args);
+				argClass = tuple.k();
+				args = tuple.v();
+				tuple = extractStyleArgs(args);
+				argStyle = tuple.k();
+				args = tuple.v().trim();
+				args = " " + args;
+			} else {
+				argClass = "";
+				argStyle = "";
+			}
+			
+			sigma = new PTMState()
+				.b(Blocks.args, args)
+				.b(Blocks.classes, argClass)
+				.b(Blocks.style, argStyle)
+				.b(Blocks.text, m.group(3));
+			
+			out.append(m.group(1));
+			
+			try {
+				s = new PTMRootNode(template, sigma).evaluate();
+			} catch (RecursionException e) {
+				e.printStackTrace();
+				s = e.getMessage();
+			}
+			out.append(s);
 
 			first = m.end();
 		}
 		out.append(in.subSequence(first, in.length()));
 
+		
+		
 		in = out;
 		out = new StringBuffer();
 
@@ -153,21 +200,35 @@ public class WikiFormattings extends WikiTask {
 
 		first = 0;
 		while (m.find()) {
-			last = m.start();
 			args = (m.group(1) != null ? " " + m.group(1).trim() : "");
-
-			out.append(
-				in.subSequence(first, last) +
-				"\n<code" +
-				(
-					(args = combineArgs("class=\"block\"", args)).length() > 0
-					? " " + args
-					: "") +
-				">" +
-				m.group(2) +
-				"</code>\n"
-			);
-
+			if (args.length() > 0) {
+				tuple = extractClassArgs(args);
+				argClass = tuple.k();
+				args = tuple.v();
+				tuple = extractStyleArgs(args);
+				argStyle = tuple.k();
+				args = tuple.v().trim();
+				args = " " + args;
+			} else {
+				argClass = "";
+				argStyle = "";
+			}
+			
+			sigma = new PTMState()
+				.b(Blocks.args, args)
+				.b(Blocks.classes, argClass)
+				.b(Blocks.style, argStyle)
+				.b(Blocks.text, m.group(2))
+				.b(Blocks.isBlock, "true");
+			
+			try {
+				s = new PTMRootNode(template, sigma).evaluate();
+			} catch (RecursionException e) {
+				e.printStackTrace();
+				s = e.getMessage();
+			}
+			out.append(s);
+			
 			first = m.end();
 		}
 		out.append(in.subSequence(first, in.length()));
@@ -177,39 +238,41 @@ public class WikiFormattings extends WikiTask {
 
 		return out;
 	}
-
+	
+	private static final Pattern pClassArgs = Pattern.compile("class=\"([^\"]+)\"");
 	/**
-	 * @return Both strings together with classes and style arguments united
+	 * @return <ClassArgs, RemainingArgs>
 	 */
-	public static String combineArgs(String arg, String argUser) {
-		Pattern p;
-		Matcher mU;
-		Matcher m;
-		boolean processed = false;
-
-		p = Pattern.compile("(class=\")([^\"]+)(\")");
-		mU = p.matcher(argUser);
-		m = p.matcher(arg);
-
-		if (m.find() && mU.find()) {
-			argUser = mU.replaceFirst((mU.group(1) + mU.group(2)+ " " + m.group(2) + mU.group(3)).trim());
-			processed = true;
+	private static final StringTuple extractClassArgs(String args) {
+		Matcher m = pClassArgs.matcher(args);
+		if (m.find()) {
+			String classArgs = m.group(1);
+			String rest = args.substring(0, m.start()) + args.substring(m.end());
+			return new StringTuple(classArgs, rest);
+		} else {
+			return new StringTuple("", args); 
 		}
-
-		p = Pattern.compile("(style=\")([^\"]+)(\")");
-		mU = p.matcher(argUser);
-		m = p.matcher(arg);
-
-		if (m.find() && mU.find()) {
-			argUser = mU.replaceFirst((mU.group(1) + mU.group(2)+ " " + m.group(2) + mU.group(3)).trim());
-			processed = true;
-		}
-
-		if (!processed)
-			argUser += " " + arg;
-
-		return argUser.trim();
 	}
 	
+	private static final Pattern pStyleArgs = Pattern.compile("style=\"([^\"]+)\"");
+	/**
+	 * @return <ClassArgs, RemainingArgs>
+	 */
+	private static final StringTuple extractStyleArgs(String args) {
+		Matcher m = pStyleArgs.matcher(args);
+		if (m.find()) {
+			String classArgs = m.group(1);
+			String rest = args.substring(0, m.start()) + args.substring(m.end());
+			return new StringTuple(classArgs, rest);
+		} else {
+			return new StringTuple("", args); 
+		}
+	}
+	
+	private static final class StringTuple extends Tuple<String, String> {
+		public StringTuple(String classArgs, String rest) {
+			super(classArgs, rest);
+		}
+	}
 
 }
