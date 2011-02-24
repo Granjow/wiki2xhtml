@@ -31,13 +31,25 @@ public class PTMState extends HashMap<String, PTMArgumentValueNode> {
 		}
 	}
 	
-	/** Manually binds a value to a name */
+	/** Manually binds a value to a name. Overwrites existing bindings.
+	 * @return The old value as returned by {@link #resolve(String)}, if the binding to this name already existed */
 	public String bind(String name, String value) {
 		String oldVal = resolve(name);
 		put(name, new PTMArgumentValueNode(new StringBuffer(value)));
 		return oldVal;
 	}
+	/** 
+	 * @see #bind(String, String)
+	 * @return <code><strong>this</strong></code> for usage like <br/><code>sigma.b("a", "alpha").b("b", "beta")...</code>
+	 */
+	public PTMState b(String name, String value) {
+		bind(name, value);
+		return this;
+	}
 	
+	/**
+	 * @return The value bound to <code>name</code>, or an empty String by default.
+	 */
 	public String resolve(String name) {
 		return resolve(name, "");
 	}

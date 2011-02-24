@@ -321,6 +321,24 @@ public final class Constants {
 		public static final String right = "right";
 
 	}
+	
+	public static final class References {
+		/** Reference text */
+		public static final String text = "text";
+		/** Number of the reference (1, 2, ...) */
+		public static final String number = "number";
+		/** ID of the reference link (reference; in-text), for linking/anchoring */
+		public static final String refID = "citeRefID";
+		/** ID of the reference entry (note; page bottom), for linking/anchoring */
+		public static final String noteID = "citeNoteID";
+		/** For the references list.
+		 * Intention: When isContainer is not empty, text is set to the 
+		 * reference entry list, and the reference template can build
+		 * additional tags around it, like: <code>&lt;ol&gt;{{{text|}}}&lt;/ol&gt;</code>. 
+		 */
+		public static final String container = "isContainer";
+		
+	}
 
 	/** Tags used in templates */
 	@Deprecated public static final class TemplateTags {

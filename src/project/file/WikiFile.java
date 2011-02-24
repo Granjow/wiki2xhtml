@@ -19,14 +19,17 @@ package src.project.file;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import src.Constants;
 import src.project.WikiProject;
 import src.project.settings.GalleryProperties;
 import src.project.settings.ImageProperties;
 import src.project.settings.LocalSettings;
 import src.project.settings.PageSettings;
+import src.ptm.PTMState;
 import src.resources.ResProjectSettings.SettingsE;
 import src.resources.ResProjectSettings.SettingsLocalE;
 import src.tasks.WikiPreparser;
@@ -76,8 +79,12 @@ public abstract class WikiFile {
 	public ArrayList<ImageProperties> imagePropertiesList = new ArrayList<ImageProperties>();
 	/** @see #addGalleryProperties(GalleryProperties) for inserting new properties! */
 	public ArrayList<GalleryProperties> galleryPropertiesList = new ArrayList<GalleryProperties>();
+	/** List of reference bindings.
+	 * @see {@link Constants.References} for the bound names */
+	public HashMap<String, PTMState> references = null;
 
 	private ArrayList<NamespaceObject> linkNamespaces;
+	
 	
 	
 	protected WikiFile(WikiProject project, String name, boolean sitemap, boolean parse) {

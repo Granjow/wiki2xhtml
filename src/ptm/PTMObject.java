@@ -45,6 +45,9 @@ abstract public class PTMObject {
 		if (content == null) {
 			throw new NullPointerException("Content must not be null");
 		}
+		if (content.length() <= 0) {
+			throw new IndexOutOfBoundsException(String.format("Template file: Length must be > 0 (is %s).", content.length()));
+		}
 		if (beginIndex < 0 || beginIndex >= content.length()) {
 			throw new IndexOutOfBoundsException("Index must be > 0 and < content length; is " + beginIndex);
 		}

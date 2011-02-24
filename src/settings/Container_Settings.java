@@ -22,6 +22,7 @@ package src.settings;
 /**
  *
  * A container for some settings.
+ * TODO 0 Delete.
  *
  * @author Simon Eugster
  */

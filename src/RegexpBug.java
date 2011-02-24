@@ -57,9 +57,11 @@ public class RegexpBug {
 		String[] argsSizes = {"200px", "x300px", "200x300px", "px"};
 
 		String rIf = "{{#if:a|b|c}}";
+
+		testRegexSingleMatch("(?s)<ref(\\s+name=\"(\\w+)\")?>(.*?)</ref>", 
+				new String[] { "<ref>hallo</ref>", "<ref name=\"refName\">velo</ref>", "<ref>a\nb</ref>" });
 		
-		
-		testRegexSingleMatch("^\\s*", new String[] {"   <html>", "\r\r<html> "});
+//		testRegexSingleMatch("^\\s*", new String[] {"   <html>", "\r\r<html> "});
 		
 		//testRegexSingleMatch("a(?!b)", new String[] {"abc", "ac"});
 		
@@ -303,7 +305,7 @@ public class RegexpBug {
 					  )
 					 );
 			if (found) {
-				for (int i = 0; i < m.groupCount(); i++) {
+				for (int i = 0; i <= m.groupCount(); i++) {
 					o.println("Group ".toUpperCase() + i + ": >>" + m.group(i) + "<<");
 				}
 			}

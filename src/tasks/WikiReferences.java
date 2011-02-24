@@ -17,24 +17,28 @@
 
 package src.tasks;
 
-import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.TreeSet;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import src.Container_Resources;
+import src.Constants.References;
 import src.Statistics;
-import src.project.file.VirtualWikiFile;
+import src.project.WikiProject.FallbackFile;
 import src.project.file.WikiFile;
+import src.ptm.PTMObject.RecursionException;
+import src.ptm.PTMRootNode;
+import src.ptm.PTMState;
 import src.tasks.Tasks.Task;
-import src.utilities.StringTools;
 
 /**
- * Creates references in a text. References may be given with <ref>content</ref>
- * and inserted with <references />.
- *
- * @author Simon Eugster
- * ,		hb9eia
- *
- * TODO 5 Footnotes
+ * <p>Creates references in a text.</p>
+ * <p>References may be given with <code>&lt;ref&gt;content&lt;/ref&gt;</code>. To refer to a single reference multiple times,
+ * use <code>&lt;ref name="aUniqueName"&gt;Reference notes&lt;/ref&gt;</code> and later <code>&lt;ref name="aUniqueName"&gt;This text
+ * will be ignored&lt;/ref&gt;.</p>
+ * <p>The tag &lt;references/&gt; (if available) will be replaced by the reference notes.</p>
  */
 public class WikiReferences extends WikiTask {
 
@@ -46,10 +50,33 @@ public class WikiReferences extends WikiTask {
 		return Task.References;
 	}
 
-	public ArrayList<StringBuffer> makeReferences(WikiFile file) {
+	
+	public void parse(WikiFile file) {
+		
+		String s = "<references />";
+		if (file.getContent().indexOf(s) < 0) {
+			s = "<references/>";
+		}
+		
+		if (file.getContent().indexOf(s) >= 0) {
+			
+			makeReferences(file);
+			
+			String refs = generateReferenceNotesList(file, file.references);
+			
+			int pos = file.getContent().indexOf(s);
+			file.getContent().replace(pos, pos + s.length(), refs.toString());
+			
+		}
+	}
+
+	/**
+	 * Removes <ref> entries from the file and extracts them to {@link WikiFile#references}.
+	 */
+	public void makeReferences(WikiFile file) {
 		short counter = 0;
 		
-		ArrayList<StringBuffer> references = new ArrayList<StringBuffer>();
+		HashMap<String, PTMState> references = new HashMap<String, PTMState>();
 		StringBuffer content = file.getContent();
 		
 
@@ -57,72 +84,142 @@ public class WikiReferences extends WikiTask {
 			;
 		else {
 			short refNr = 0;
+			String name;
+			String linkEntry;
+			
+			StringBuffer template = null;
+			try {
+				template = file.project.locate(Container_Resources.sTplCiteRef).getContent();
+			} catch (Exception e) {
+				template = new StringBuffer(e.getMessage());
+			}
+			assert template != null;
+			assert template.length() > 0;
+			
+			
+			PTMState sigma = new PTMState();
+			
 			// (?s) makes the dot match also new lines
-			Matcher m = Pattern.compile("(?s)<ref>(.*?)</ref>").matcher(content.toString());
+			// Group 1: name="refName"
+			// Group 2: refName
+			// Group 3: reference text
+			Matcher m = Pattern.compile("(?s)<ref(\\s+name=\"(\\w+)\")?>(.*?)</ref>").matcher(content.toString());
 			StringBuffer out = new StringBuffer();
 			int last = 0, first;
 			if (m.find()) {
 				do {
-					refNr++;
 					counter++;
 
 					first = m.start();
 					out.append(content.subSequence(last, first));
 					last = m.end();
-					out = StringTools.removeChars(out, ' ', false, true);
-					references.add(new StringBuffer(m.group(1)));
-					out
-					.append("<sup><a href=\"#refnote_" + refNr +
-							"\" style=\"border-bottom: none; text-decoration: none;\"" +
-							" id=\"refmark_" + refNr + "\"" +
-							" class=\"refmark\"" +
-							">[" + refNr + "]</a></sup>");
+					
+					name = m.group(2);
+					if (name == null) {
+						name = "cite_" + (refNr+1);
+					}
+					
+					if (!references.containsKey(name)) {
+						refNr++;
+						sigma = new PTMState()
+							.b(References.text, m.group(3))
+							.b(References.number, Integer.toString(refNr))
+							.b(References.refID, name + "-ref")
+							.b(References.noteID, name + "-note");
+						references.put(name, sigma);
+						System.out.println("Reference added: " + name);
+						
+					} else {
+						sigma = references.get(name);
+						System.out.println("Reference already available for " + name);
+					}
+					assert sigma != null;
+					
+					try {
+						linkEntry = new PTMRootNode(template, sigma).evaluate();
+					} catch (RecursionException e) {
+						e.printStackTrace();
+						linkEntry = e.getMessage();
+					}
+					out.append(linkEntry);
 				} while (m.find());
 				out.append(content.subSequence(last, content.length()));
 				content = new StringBuffer(out);
 				file.setContent(out);
+				
 			}
 		}
 
 		/* Statistics */
 		Statistics.getInstance().counter.references.increase(counter);
 		
-		return references;
+		file.references = references;
 	}
 
-	public StringBuffer generateReferencesList(ArrayList<StringBuffer> references) {
+	/**
+	 * Builds a list of all reference notes.
+	 */
+	public final String generateReferenceNotesList(final WikiFile file, final HashMap<String, PTMState> references) {
 		StringBuffer out = new StringBuffer();
-		if (references.size() > 0) {
-			short i = 0;
-			for (StringBuffer s : references) {
-				i++;
+		StringBuffer template = null;
+		
+		try {
+			template = new FallbackFile(Container_Resources.sTplCiteNote, file.project).getContent();
+		} catch (Exception e) {
+			e.printStackTrace();
+			template = new StringBuffer(e.getMessage());
+		}
+		
+
+		String result;
+		
+		if (template.length() > 0) {
+			if (references.size() > 0) {
 				
-				// TODO 0 Use a template
-				out.append("\n#" +
-									  (i == 1 ? " ((class=\"references\"))" : "") +
-									  " class=\"reference\" id=\"refnote_" + i + "\" | <a href=\"#refmark_" + i +
-									  "\">[↑]</a> " + s);
+				// The TreeSet sorts the references by their number
+				TreeSet<PTMState> sigmaSet = new TreeSet<PTMState>(new PTMStateComparator());
+				sigmaSet.addAll(references.values());
+				
+				for (PTMState sigma : sigmaSet) {
+					
+					try {
+						out.append(new PTMRootNode(template, sigma).evaluate());
+					} catch (RecursionException e) {
+						e.printStackTrace();
+						out.append(e.getMessage());
+					}
+				}
 			}
-
-			VirtualWikiFile vf = new VirtualWikiFile(null, "", false, true, out);
-			vf.addTask(Task.Lists);
-			vf.parse();
-			out = vf.getContent();
+			
+			PTMState sigma = new PTMState()
+				.b(References.text, out.toString())
+				.b(References.container, "true");
+			
+			try {
+				result = new PTMRootNode(template, sigma).evaluate();
+			} catch (RecursionException e) {
+				e.printStackTrace();
+				result = e.getMessage();
+			}
+		} else {
+			result = "";
 		}
-		return out;
+		
+		return result;
 	}
+	
+	private static final class PTMStateComparator implements Comparator<PTMState> {
 
-	public void parse(WikiFile file) {
-		int pos;
-		String s = "<references />";
-		if (file.getContent().indexOf(s) < 0) {
-			s = "<references/>";
+		public int compare(PTMState o1, PTMState o2) {
+			int diff;
+			try {
+				diff = Integer.parseInt(o1.resolve(References.number)) - Integer.parseInt(o2.resolve(References.number));
+			} catch (NumberFormatException e) {
+				diff = 0;
+			}
+			return diff;
 		}
-		if ((pos = file.getContent().indexOf(s)) >= 0) {
-			ArrayList<StringBuffer> references = makeReferences(file);
-			StringBuffer refs = generateReferencesList(references);
-			file.getContent().replace(pos, pos + s.length(), refs.toString());
-		}
+		
 	}
 	
 }

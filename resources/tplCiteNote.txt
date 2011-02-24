@@ -1,0 +1,1 @@
+{{#if:{{{isContainer|}}}|<ol>{{{text}}}</ol>|<li><a id="{{{citeNoteID}}}" class="refEntry" href="#{{{citeRefID}}}">^</a> {{{text}}}</li>}}

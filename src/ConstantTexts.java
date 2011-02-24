@@ -27,6 +27,7 @@ import org.xnap.commons.i18n.I18nFactory;
  * @since wiki2xhtml 3.3
  *
  * @author Simon Eugster
+ * @deprecated
  */
 public abstract class ConstantTexts {
 
