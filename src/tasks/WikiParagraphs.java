@@ -1,4 +1,4 @@
-package src;
+package src.tasks;
 
 import java.io.PrintStream;
 import java.util.ArrayList;
@@ -8,46 +8,32 @@ import java.util.regex.Pattern;
 import org.xnap.commons.i18n.I18n;
 import org.xnap.commons.i18n.I18nFactory;
 
+import src.Resources;
+import src.Statistics;
+import src.project.file.WikiFile;
+import src.tasks.Tasks.Task;
 import src.utilities.Placeholder;
 
+public class WikiParagraphs extends WikiTask {
 
-/*
- *   Copyright (C) 2007-2010 Simon Eugster <granjow@users.sf.net>
+	public WikiTask nextTask() {
+		return new WikiInsertNowikiContent();
+	}
 
- *   This program is free software: you can redistribute it and/or modify
- *   it under the terms of the GNU General Public License as published by
- *   the Free Software Foundation, either version 3 of the License, or
- *   (at your option) any later version.
+	public Task desc() {
+		return Task.Paragraphs;
+	}
 
- *   This program is distributed in the hope that it will be useful,
- *   but WITHOUT ANY WARRANTY; without even the implied warranty of
- *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *   GNU General Public License for more details.
-
- *   You should have received a copy of the GNU General Public License
- *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
- *
- */
-
-/**
- *
- * Plays around with paragraphs.
- *
- * @author Simon Eugster
- */
-public class WikiParagraphs {
 
 	static final I18n i18n = I18nFactory.getI18n(WikiParagraphs.class, "bin.l10n.Messages", src.Globals.getLocale());
 
 	public static final PrintStream o = System.out;
 
-	/**
-	 * Inserts paragraphs where they are required.
-	 * @param in
-	 * @return
-	 */
-	public static StringBuffer makeParagraphs(StringBuffer in) {
-		StringBuffer out = in;
+	public void parse(WikiFile file) {
+		
+
+		StringBuffer out = file.getContent();
+		
 		ArrayList<Placeholder> phs = new ArrayList<Placeholder>();
 
 		Statistics.getInstance().sw.timeInsertingParagraphs.continueTime();
@@ -62,10 +48,10 @@ public class WikiParagraphs {
 			phs.add(p);
 		}
 		/* Temporarily replace references tag and TOC */
-		Matcher m = Pattern.compile("<references />").matcher(out);
-		out = new StringBuffer(m.replaceAll("<references></references>"));
-		Matcher m2 = Pattern.compile("\\{\\{TOC\\}\\}").matcher(out);
-		out = new StringBuffer(m2.replaceAll("<toc></toc>"));
+//		Matcher m = Pattern.compile("<references />").matcher(out);
+//		out = new StringBuffer(m.replaceAll("<references></references>"));
+//		Matcher m2 = Pattern.compile("\\{\\{TOC\\}\\}").matcher(out);
+//		out = new StringBuffer(m2.replaceAll("<toc></toc>"));
 
 		/* Create block pattern (no paragraphs allowed there) */
 		StringBuffer blocks = new StringBuffer();
@@ -77,12 +63,15 @@ public class WikiParagraphs {
 		Pattern pBlocksEnd = Pattern.compile("(?s)^</(?:" + blocks.substring(0, blocks.length() - 1) + ")[\\s>]");
 		Matcher mBlocksStart;
 		Matcher mBlocksEnd;
+		
+		Pattern pExceptions = Pattern.compile("(?s)^(?:<br[^>]*/?>|<references\\s*/>)");
+		Matcher mExceptions;
 
 		boolean open = false;
 		boolean block = false;
 		int pos = -1;
 		int last = 0;
-		in = out;
+		StringBuffer in = out;
 		out = new StringBuffer();
 
 		/* Insert paragraphs */
@@ -132,10 +121,15 @@ public class WikiParagraphs {
 						if (mBlocksStart.find()) {
 							block = true;
 						} else {
-							out.append(in.substring(last, pos));
-							out.append("<p>");
-							last = pos;
-							open = true;
+							mExceptions = pExceptions.matcher(in.substring(pos, ( pos + 512 > in.length()? in.length() : pos+512 )));
+							if (mExceptions.find()) { // <br/> etc.
+								pos += mExceptions.group().length();
+							} else {
+								out.append(in.substring(last, pos));
+								out.append("<p>");
+								last = pos;
+								open = true;
+							}
 						}
 					}
 
@@ -158,10 +152,15 @@ public class WikiParagraphs {
 						if (mBlocksStart.find()) {
 							block = true;
 						} else {
-							out.append(in.substring(last, pos));
-							out.append("<p>");
-							last = pos;
-							open = true;
+							mExceptions = pExceptions.matcher(in.substring(pos, ( pos + 512 > in.length()? in.length() : pos+512 )));
+							if (mExceptions.find()) { // <br/> etc.
+								pos += mExceptions.group().length();
+							} else {
+								out.append(in.substring(last, pos));
+								out.append("<p>");
+								last = pos;
+								open = true;
+							}
 						}
 					}
 				}
@@ -170,10 +169,10 @@ public class WikiParagraphs {
 		out.append(in.substring(last, in.length()));
 
 		/* Insert original reference tags and TOC again */
-		m2 = Pattern.compile("<toc></toc>").matcher(out);
-		out = new StringBuffer(m2.replaceAll("{{TOC}}"));
-		m = Pattern.compile("<references></references>").matcher(out);
-		out = new StringBuffer(m.replaceAll("<references />"));
+//		m2 = Pattern.compile("<toc></toc>").matcher(out);
+//		out = new StringBuffer(m2.replaceAll("{{TOC}}"));
+//		m = Pattern.compile("<references></references>").matcher(out);
+//		out = new StringBuffer(m.replaceAll("<references />"));
 
 		/* Insert the removed blocks again
 		 * Reverse insert! (otherwise: problems with nested elements */
@@ -181,9 +180,9 @@ public class WikiParagraphs {
 			out = phs.get(i).insertContent(out);
 		}
 
+		file.setContent(out);
+		
 		Statistics.getInstance().sw.timeInsertingParagraphs.stop();
-
-		return out;
 	}
 
 }

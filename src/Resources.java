@@ -55,7 +55,7 @@ public class Resources {
 	public static final String[] tagsBlockW3 = new String[] {"p", "h1", "h2", "h3", "h4", "h5", "h6", "ul", "ol",
 			"pre", "dl", "div", "noscript", "blockquote", "form", "hr", "table", "fieldset", "address"
 															};
-	public static final String[] tagsBlockNoParagraphsInside = new String[] {"gallery", "nowiki", "div", "h1", "h2", "h3", "h4", "h5", "h6",
+	public static final String[] tagsBlockNoParagraphsInside = new String[] {"br", "gallery", "nowiki", "div", "h1", "h2", "h3", "h4", "h5", "h6",
 			"ul", "ol", "pre", "dl", "noscript", "blockquote", "form", "table", "fieldset", "address", "code", "\\?"
 																			};
 	public static final String[] tagsBlockAll = new String[] {"p", "gallery", "div", "h1", "h2", "h3", "h4", "h5", "h6",

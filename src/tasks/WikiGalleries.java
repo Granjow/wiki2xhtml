@@ -40,7 +40,7 @@ public class WikiGalleries extends WikiTask {
 		return Task.Galleries;
 	}
 	public WikiTask nextTask() {
-		return new WikiInsertNowikiContent();
+		return new WikiParagraphs();
 	}
 	/**
 	 * <p>Builds all galleries.</p>

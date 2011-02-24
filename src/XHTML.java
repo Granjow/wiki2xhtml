@@ -34,46 +34,11 @@ import src.utilities.StringTools;
  * The main file of wiki2xhtml which parses the files.
  *
  * @author Simon Eugster
+ * @deprecated
  */
 public class XHTML {
 
-	public static final String operatingSystem = java.lang.System
-			.getProperty("os.name"), fileSep = java.lang.System
-											   .getProperty("file.separator"), lineSepOS = java.lang.System.getProperty("line.separator"),
-													   lineSep = "\n";
-
-	public static File baseStyleDir = new File(Constants.Directories.workingDir + File.separatorChar + "style");
-
-
-	public static ArrayList<String> headingIDs = new ArrayList<String>();
-	public static void clearHeadings() {
-		headingIDs.clear();
-	}
-
-	public static void updateBaseStyleDir(File f) {
-		baseStyleDir = f;
-	}
-
-
-	public static String PC() {
-		StringBuffer out = new StringBuffer();
-		out.append("\n=====");
-		out.append("\nOS: " + java.lang.System.getProperty("os.name") + " (" + java.lang.System.getProperty("os.arch") + ")");
-		out.append("\nHi " + java.lang.System.getProperty("user.name") + "!");
-		out.append("\nJava Version: " + java.lang.System.getProperty("java.version"));
-		out.append("\nPosition: " + java.lang.System.getProperty("user.dir"));
-		out.append("\nFile Separator: " + java.lang.System.getProperty("file.separator"));
-		if (lineSepOS.equals("\r\n"))
-			out.append("\nLine Separator: \\r\\n (Windows)");
-		else if (lineSepOS.equals("\n\r"))
-			out.append("\nLine Separator: \\n\\r (Mac)");
-		else
-			out.append("\nLine Separator: \\n (Unix)");
-
-		out.append("\n=====\n");
-		return out.toString();
-	}
-
+	
 	/**
 	 * Insert title, body etc in the template and returns the result.
 	 *
@@ -195,47 +160,22 @@ public class XHTML {
 		StringTools.replaceAll(out, "\\\\ \n", "<br />\n");
 		StringTools.replaceAll(out, "\\\\ ", "<br />\n");
 		p(94);
-		out = WikiParagraphs.makeParagraphs(out);
-		p(96);
+//		out = WikiParagraphs.makeParagraphs(out);
+//		p(96);
 //		out = WikiNoWiki.insertNowikiContent(out);
-		p(98);
-		if (sc.removeLineBreaks)
-			out = StringTools.removeAllChars(out, "\n");
-		if (lineSepOS.equals("\r\n"))
-			out = makeWindowsLines(out);
-		p(99);
+//		p(98);
+//		if (sc.removeLineBreaks)
+//			out = StringTools.removeAllChars(out, "\n");
+//		if (lineSepOS.equals("\r\n"))
+//			out = makeWindowsLines(out);
+//		p(99);
 
-		while (out.length() > 0 && out.charAt(0) == '\n')
-			out.deleteCharAt(0);
+//		while (out.length() > 0 && out.charAt(0) == '\n')
+//			out.deleteCharAt(0);
 
 		p(100);
 
 		return out;
-	}
-
-	/**
-	 * Remove the \r (Carriage Return) from Windows files and leave only the \n
-	 * back
-	 *
-	 * @param in -
-	 *            input
-	 * @return input without \r
-	 */
-	public static StringBuffer makeUnixLines(StringBuffer in) {
-		return StringTools.replaceAll(in, "\r", "");
-	}
-
-	/**
-	 * Make a file with «Windows lines» (with carriage returns)
-	 *
-	 * @param in
-	 * @return input with \r
-	 *
-	 */
-	public static StringBuffer makeWindowsLines(StringBuffer in) {
-		// Regular Expression for the Windows Linebreaks:
-		// \r\n (Carriage Return + Line Feed)
-		return new StringBuffer(in.toString().replaceAll("\\n", "\r\n"));
 	}
 
 	public static StringBuffer makeHLines(StringBuffer in) {

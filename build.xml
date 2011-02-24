@@ -1,7 +1,7 @@
 <?xml version="1.0"?> 
 <project name="wiki2xhtml" basedir="." default="build">
 
-  <property name="wiki2xhtml.version" value="3.4b8"/>
+  <property name="wiki2xhtml.version" value="4.0a1"/>
   <property name="build.classes" value="build"/>
   <property name="build.libs" value="build/lib"/>
   <property name="build.test" value="build-test"/>

@@ -42,7 +42,7 @@ public class Placeholder {
 	/** Temporarily removed content */
 	public ArrayList<String> content = new ArrayList<String>();
 
-	/** Generates a new Placeholder which will temporarily remove the content between {@link #patternStart} and part2. */
+	/** Generates a new Placeholder which will temporarily remove the content between patternStart and patternEnd. */
 	public Placeholder(String patternStart, String patternEnd) {
 		this.patternStart = patternStart;
 		this.patternEnd = patternEnd;

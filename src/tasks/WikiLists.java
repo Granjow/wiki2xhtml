@@ -8,7 +8,6 @@ import java.util.regex.Pattern;
 
 import src.Resources;
 import src.Statistics;
-import src.XHTML;
 import src.project.file.WikiFile;
 import src.resources.RegExpressions;
 import src.tasks.Tasks.Task;
@@ -116,7 +115,7 @@ public class WikiLists extends WikiTask {
 
 				if (newList.size() == 0 && oldList.size() == 0) {
 					// No need to do anything, no list
-					if (!fileStart) out.append(XHTML.lineSep);
+					if (!fileStart) out.append('\n');
 
 				} else {
 
@@ -243,7 +242,7 @@ public class WikiLists extends WikiTask {
 				counter++;
 				first = m.start();
 				out.append(file.getContent().subSequence(last, first));
-				out.append(XHTML.lineSep);
+				out.append('\n');
 				last = m.end();
 			} while (m.find());
 			out.append(file.getContent().subSequence(last, file.getContent().length()));

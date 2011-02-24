@@ -57,9 +57,11 @@ public class RegexpBug {
 		String[] argsSizes = {"200px", "x300px", "200x300px", "px"};
 
 		String rIf = "{{#if:a|b|c}}";
+		
+		testRegexSingleMatch("(?s)^(?:<br[^>]*/?>|<references\\s*/>)", new String[] {"<br/>", "<br style=\"clear: both;\"/>"});
 
-		testRegexSingleMatch("(?s)<ref(\\s+name=\"(\\w+)\")?>(.*?)</ref>", 
-				new String[] { "<ref>hallo</ref>", "<ref name=\"refName\">velo</ref>", "<ref>a\nb</ref>" });
+//		testRegexSingleMatch("(?s)<ref(\\s+name=\"(\\w+)\")?>(.*?)</ref>", 
+//				new String[] { "<ref>hallo</ref>", "<ref name=\"refName\">velo</ref>", "<ref>a\nb</ref>" });
 		
 //		testRegexSingleMatch("^\\s*", new String[] {"   <html>", "\r\r<html> "});
 		
