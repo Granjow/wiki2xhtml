@@ -20,7 +20,7 @@ public class Testground {
 		System.out.println(ff.pathInfo());
 		
 		File f = new File("/tmp/w2xtest/index.txt");
-		IOWrite.writeString(f, "Hallo.<ref>Das ist ein Test.</ref>\n" +
+		IOWrite.writeString(f, "Hallo.<ref>Das ist ein ''schräger'' Test.</ref>\n" +
 				"<gallery>\n" +
 				"Image:test.jpg\n" +
 				"Text\n" +

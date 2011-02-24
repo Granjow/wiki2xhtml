@@ -142,33 +142,6 @@ public final class RegExpressions {
 	
 	public static final Pattern namespace = Pattern.compile("(?m)^(.+?)=(.+)$");
 
-	/** Matches ++inserted++ text */
-	public static final Pattern textIns = Pattern.compile(
-											  "(?x)				# Allow comments \n" +
-											  "(?:				# Non-capturing \n" +
-//				"(?<=(?:[" + specialCharacters + "]|^))" +	// Lookbehind: Extremely slow!
-											  "((?:[" + specialCharacters + "]|^))" +
-											  "\\+\\+(?!\\s)	# Two ++ NOT followed by a space but preceeded by one (or a new line or a special character) \n" +
-											  ")" +
-											  "(?:\\(\\((.+?)\\)\\))?		# Perhaps arguments \n" +
-											  "(.*?[^\\s])				# At least one non-whitespace-character at the end \n" +
-											  "(?:\\+\\+(?=(?:[" + specialCharacters + "]|$)))"
-										  );
-
-	/** Matches --deleted-- text
-	 * @since 3.3.1 no leading ! allowed because of HTML comments */
-	public static final Pattern textDel = Pattern.compile(
-											  "(?x)				# just like above \n" +
-											  "(?:" +
-											  "([" + specialCharacters + "]|^)" +
-											  "(?<!!)" +
-											  "--(?!\\s)" +
-											  ")" +
-											  "(?:\\(\\((.+?)\\)\\))?" +
-											  "(.*?[^\\s])" +
-											  "(?:--(?=(?:[" + specialCharacters + "]|$)))"
-										  );
-
 	/** Matches $$code$$ */
 	public static final Pattern textCode= Pattern.compile(
 											  "(?x)				# just like above \n" +
@@ -188,69 +161,6 @@ public final class RegExpressions {
 				"(?:\\(\\((.+?)\\)\\))?\\n" +
 				"(.+?)\\n" +
 				"\\$\\$(?:\\n|$)"
-			);
-
-	/** Matches ::samples:: */
-	public static final Pattern textSample= Pattern.compile(
-												"(?x)				# just like above \n" +
-												"(?:" +
-												"([" + specialCharacters + "]|^)" +
-												"::(?!\\s)" +
-												")" +
-												"(?:\\(\\((.+?)\\)\\))?" +
-												"(.*?[^\\s])" +
-												"(?:::(?=(?:[" + specialCharacters + "]|$)))"
-											);
-
-	/** Matches <br/>::<br/>sample blocks<br/>:: */
-	public static final Pattern textSampleBlock = Pattern.compile(
-				"(?x)(?s)" +
-				"(?:^|\\n)\\s::" +
-				"(?:\\(\\((.+?)\\)\\))?\\n" +
-				"(.+?)\\n" +
-				"\\s::(?:\\n|$)"
-			);
-
-	/** Matches @@cite@@ */
-	public static final Pattern textCite= Pattern.compile(
-											  "(?x)" +
-											  "(?:" +
-											  "([" + specialCharacters + "]|^)" +
-											  "@@(?!\\s)" +
-											  ")" +
-											  "(?:\\(\\((.+?)\\)\\))?" +
-											  "(.*?[^\\s])" +
-											  "(?:@@(?=(?:[" + specialCharacters + "]|$)))"
-										  );
-
-	/** Matches <br/>@@<br/>cite blocks<br/>@@ */
-	public static final Pattern textCiteBlock = Pattern.compile(
-				"(?x)(?s)" +
-				"(?:^|\\n)@@" +
-				"(?:\\(\\((.+?)\\)\\))?\\n" +
-				"(.+?)\\n" +
-				"@@(?:\\n|$)"
-			);
-
-	/** Matches 01kbd01 */
-	public static final Pattern textKbd= Pattern.compile(
-											 "(?x)" +
-											 "(?:" +
-											 "([" + specialCharacters + "]|^)" +
-											 "01(?!\\s)" +
-											 ")" +
-											 "(?:\\(\\((.+?)\\)\\))?" +
-											 "(.*?[^\\s])" +
-											 "(?:01(?=(?:[" + specialCharacters + "]|$)))"
-										 );
-
-	/** Matches <br/>01<br/>kbd blocks<br/>01 */
-	public static final Pattern textKbdBlock = Pattern.compile(
-				"(?x)(?s)" +
-				"(?:^|\\n)01" +
-				"(?:\\(\\((.+?)\\)\\))?\\n" +
-				"(.+?)\\n" +
-				"01(?:\\n|$)"
 			);
 
 	public static final Pattern scriptModeFile = Pattern.compile("(?i)(?s)\\.(php[345]?|aspx?)$");

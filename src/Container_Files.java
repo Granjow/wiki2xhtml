@@ -40,6 +40,7 @@ import src.utilities.IOWrite_Stats;
  * Contains all necessary information about a project which has to be parsed.
  *
  * @author Simon Eugster
+ * @deprecated
  */
 public class Container_Files {
 

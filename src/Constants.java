@@ -145,6 +145,10 @@ public final class Constants {
 			public static final String footer = "-f";
 
 		}
+		
+		public static final class Blocks {
+			public static final String isBlock = "isBlock";
+		}
 
 		/** Combined command line arguments (like --footer=f.txt) for wiki2xhtml
 		 * @deprecated */

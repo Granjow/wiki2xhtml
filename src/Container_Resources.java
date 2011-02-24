@@ -99,10 +99,16 @@ public class Container_Resources {
 	public static final String sTplGalleryContainer = "tplGalleryContainer.txt";
 	public static final String sTplImagepage = "tplImagepage.txt";
 	
-	/** Template for the in-text link to the reference note */
+	/** Template for the in-text link to the reference note
+	 * @see Constants.References */
 	public static final String sTplCiteRef = "tplCiteRef.txt";
-	/** Template for the reference note at the bottom of the page */
+	/** Template for the reference note at the bottom of the page
+	 * @see Constants.References */
 	public static final String sTplCiteNote = "tplCiteNote.txt";
+	
+	/** Template for $$code blocks$$ 
+	 * @see Constants.Blocks */ 
+	public static final String sTplCode = "tplCode.txt";
 	
 	public static final String sTOC = resdir + "tplTOC.txt";
 	public static final String sabout = resdir + "about.html";
