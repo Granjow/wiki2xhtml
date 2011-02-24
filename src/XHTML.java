@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.regex.*;
 
 import src.settings.*;
-import src.typo.Formattings;
 import src.utilities.StringTools;
 
 
@@ -100,29 +99,6 @@ public class XHTML {
 		return out;
 	}
 
-	private static StringBuffer replaceHead(StringBuffer in) {
-
-		StringBuffer n = new StringBuffer();
-		String head;
-		int last = 0;
-		Matcher m = Constants.TemplateTags.regexHead.matcher(in.toString());
-		while (m.find()) {
-			n.append(in.substring(last, m.start()));
-			head = xhs.local.head(m.group(1));
-			if (head != null) n.append(head);
-			last = m.end();
-		}
-		if (n.length() > 0) {
-			n.append(in.substring(last));
-			return n;
-		}
-		return in;
-	}
-
-	private static void p(int i) {
-		UserInterface.setProgress(i);
-	}
-
 	/**
 	 * Convert from Wiki to HTML
 	 *
@@ -174,31 +150,6 @@ public class XHTML {
 //			out.deleteCharAt(0);
 
 		p(100);
-
-		return out;
-	}
-
-	public static StringBuffer makeHLines(StringBuffer in) {
-
-		StringBuffer out = new StringBuffer();
-		Matcher m = Pattern.compile("(?m)^----\\s*$").matcher(in.toString());
-
-		short counter = 0;
-
-		if (m.find()) {
-			int last = 0, first;
-			do {
-				counter++;
-				first = m.start();
-				out.append(in.subSequence(last, first));
-				last = m.end();
-				out.append("<hr />" + lineSep);
-			} while (m.find());
-			out.append(in.subSequence(last, in.length()));
-		} else
-			out = in;
-
-		Statistics.getInstance().counter.horizontalLines.increase(counter);
 
 		return out;
 	}

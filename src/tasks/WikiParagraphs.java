@@ -22,9 +22,6 @@ import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.xnap.commons.i18n.I18n;
-import org.xnap.commons.i18n.I18nFactory;
-
 import src.Resources;
 import src.Statistics;
 import src.project.file.WikiFile;
@@ -41,8 +38,6 @@ public class WikiParagraphs extends WikiTask {
 		return Task.Paragraphs;
 	}
 
-
-	static final I18n i18n = I18nFactory.getI18n(WikiParagraphs.class, "bin.l10n.Messages", src.Globals.getLocale());
 
 	public static final PrintStream o = System.out;
 

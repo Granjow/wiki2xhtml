@@ -51,7 +51,7 @@ public class ArgsFilesReader {
 	 * @throws UnknownOptionException 
 	 * @throws IllegalOptionValueException 
 	 * @since wiki2xhtml 2.4
-	 * TODO 0 Doc arg list
+	 * TODO Doc arg list
 	 */
 	public static void readArgsFile(WikiProject project, File file) throws IllegalOptionValueException, UnknownOptionException {
 		String args = "";

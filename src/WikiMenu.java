@@ -10,7 +10,8 @@ import java.util.Vector;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import src.typo.Formattings;
+import src.project.file.VirtualWikiFile;
+import src.tasks.Tasks.Task;
 import src.utilities.IORead_Stats;
 
 
@@ -134,7 +135,10 @@ public class WikiMenu {
 	 * @return The generated menu in XHTML
 	 */
 	public StringBuffer getMenu() {
-		return WikiLists.makeList(getMenuAsList());
+		VirtualWikiFile f = new VirtualWikiFile(null, "--", false, true, getMenuAsList());
+		f.addTask(Task.Lists);
+		f.parse();
+		return f.getContent();
 	}
 
 	/**

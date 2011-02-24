@@ -11,7 +11,6 @@ import java.util.regex.Pattern;
 import javax.swing.KeyStroke;
 import javax.swing.filechooser.FileFilter;
 
-import src.Args.GetPolicyE;
 import src.project.settings.Settings.Checker;
 import src.project.settings.Settings.ValuePreparser;
 import src.resources.ResProjectSettings;
@@ -114,16 +113,17 @@ public final class Constants {
 	/** Command line arguments for wiki2xhtml */
 	public static final class Arguments {
 
-		public static final Args stdArgs = new Args("-m menu.txt -f footer.txt -c common.txt ");
-
-		public static final Args stdArgsHelpDe = new Args("-m menu-de.txt -f footer-de.txt -c common-de.txt " +
-				"-s hd --source-dir=doc/txt --target-dir=help err404.php help-de.txt doc-de.txt index-de.txt download-de.txt quickstart-de.txt " +
-				"news-de.txt changelog-de.txt faq-de.txt examples-de.txt ex-php-reload-de.php " +
-				"php-de.txt doc-design-de.txt quickref-de.txt about-de.txt links-de.txt usage-de.txt");
-
-		public static final Args stdArgsHelpEn = new Args(stdArgs.getArgs(GetPolicyE.AllArgs) +
-				" -s hd --source-dir=doc/txt --target-dir=help err404.php index.txt help.txt doc.txt download.txt quickstart.txt quickstart-ru.txt quickstart-it.txt news.txt faq.txt php.txt " +
-				"examples.txt ex-php-reload.php doc-design.txt quickref.txt about.txt changelog.txt testpage.txt links.txt usage.txt");
+		//TODO remove
+//		public static final Args stdArgs = new Args("-m menu.txt -f footer.txt -c common.txt ");
+//
+//		public static final Args stdArgsHelpDe = new Args("-m menu-de.txt -f footer-de.txt -c common-de.txt " +
+//				"-s hd --source-dir=doc/txt --target-dir=help err404.php help-de.txt doc-de.txt index-de.txt download-de.txt quickstart-de.txt " +
+//				"news-de.txt changelog-de.txt faq-de.txt examples-de.txt ex-php-reload-de.php " +
+//				"php-de.txt doc-design-de.txt quickref-de.txt about-de.txt links-de.txt usage-de.txt");
+//
+//		public static final Args stdArgsHelpEn = new Args(stdArgs.getArgs(GetPolicyE.AllArgs) +
+//				" -s hd --source-dir=doc/txt --target-dir=help err404.php index.txt help.txt doc.txt download.txt quickstart.txt quickstart-ru.txt quickstart-it.txt news.txt faq.txt php.txt " +
+//				"examples.txt ex-php-reload.php doc-design.txt quickref.txt about.txt changelog.txt testpage.txt links.txt usage.txt");
 
 		/** Special command line arguments */
 		public static final class Special {

@@ -443,70 +443,12 @@ public class Container_Files {
 		sc.incremental = b;
 	}
 
-	public Args fileList() {
-		Args a = new Args();
-		for (int i = 0; i < cont.files.size(); i++)
-			a.add(cont.files.get(i).f.getPath());
-		return a;
-	}
-
 	public File[] fileArray() {
 		File[] fa = new File[cont.files.size()];
 		for (short i = 0; i < cont.files.size(); i++) {
 			fa[i] = cont.files.get(i).f;
 		}
 		return fa;
-	}
-
-	/**
-	 *
-	 * @return String with all arguments except the files to convert, the
-	 *         --stdout, the ones I forgot and the --help/verbose/... for
-	 *         cmdline-Output.
-	 */
-	public Args allArguments() {
-		Args a = new Args();
-
-//		a.add("--lang=" + src.Globals.getLocale());
-
-		if (has.menu) {
-			a.add(Constants.Arguments.Arg.menu + " ");
-			a.add(cont.menuFile.getPath());
-		}
-
-		if (has.style) {
-			a.add(Constants.Arguments.Arg.style + " ");
-			a.add(cont.styleDir.getPath());
-		}
-
-		if (has.common) {
-			a.add(Constants.Arguments.Arg.common + " ");
-			a.add(cont.commonFile.getPath());
-		}
-
-		if (has.footer) {
-			a.add(Constants.Arguments.Arg.footer + " ");
-			a.add(cont.footerFile.getPath());
-		}
-
-		if (sc.onlyCode) {
-			a.add(Constants.Arguments.Flags.onlyCode);
-		}
-
-		if (has.noTypo) {
-			a.add("--remove-linebreaks");
-		}
-
-		if (has.target) {
-			a.add(Constants.Arguments.Arg.targetDir + " ");
-			a.add(cont.targetDir.getPath());
-		}
-
-		if (sc.incremental) {
-			a.add(Constants.Arguments.Flags.incremental);
-		}
-
-		return a;
 	}
 
 	private boolean fulfilsTextFileQualifications(String filename) {
