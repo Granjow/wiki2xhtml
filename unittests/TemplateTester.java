@@ -29,6 +29,15 @@ public class TemplateTester extends junit.framework.TestCase {
 	}
 	
 	@Test
+	public void testForwardState() throws Exception {
+		assertEquals(".:#", p2(":{{:%s}}", "#", ".{{:%s}}"));
+		assertEquals(".", p2("{{:%s|FORWARD_STATE}}", "{{{1}}}", "{{:%s|.}}"));
+		assertEquals(".nr2", p2("{{:%s|FORWARD_STATE|nr2}}", "{{{1}}}{{{2}}}", "{{:%s|.}}"));
+		assertEquals("argument a", p2("{{:%s|FORWARD_STATE|nr2}}", "{{{a}}}", "{{:%s|.|a=argument a}}"));
+		assertEquals("argument b", p2("{{:%s|FORWARD_STATE|a=argument b}}", "{{{a}}}", "{{:%s|.|a=argument a}}"));
+	}
+	
+	@Test
 	public void testPTMRecursion1() throws Exception {
 		File f = File.createTempFile("tpl", ".txt");
 		File f2 = File.createTempFile("tpl", ".txt");
@@ -81,7 +90,7 @@ public class TemplateTester extends junit.framework.TestCase {
 	}
 	
 	
-	public static final String p(String tpl, String txt) throws IOException, RecursionException {
+	private static final String p(String tpl, String txt) throws IOException, RecursionException {
 		File f = File.createTempFile("tpl", ".txt");
 		f.deleteOnExit();
 		BufferedWriter bw = new BufferedWriter(new FileWriter(f));
@@ -90,6 +99,28 @@ public class TemplateTester extends junit.framework.TestCase {
 		
 		StringBuffer sb = new StringBuffer(String.format(txt, f.getAbsolutePath()));
 		return new PTMRootNode(sb, null).evaluate();
+	}
+	
+	private static final String p2(String tplDepth1, String tplDepth2, String txt) throws IOException, RecursionException {
+		
+		BufferedWriter bw;
+		
+		File f2 = File.createTempFile("tpl", ".txt");
+		f2.deleteOnExit();
+		bw = new BufferedWriter(new FileWriter(f2));
+		bw.write(tplDepth2);
+		bw.close();
+		
+		File f1 = File.createTempFile("tpl", ".txt");
+		f1.deleteOnExit();
+		bw = new BufferedWriter(new FileWriter(f1));
+		bw.write(String.format(tplDepth1, f2.getAbsolutePath()));
+		bw.close();
+		
+		
+		StringBuffer sb = new StringBuffer(String.format(txt, f1.getAbsolutePath(), f2.getAbsolutePath()));
+		return new PTMRootNode(sb, null).evaluate();
+		
 	}
 	
 	

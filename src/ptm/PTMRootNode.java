@@ -1,5 +1,6 @@
 package src.ptm;
 
+import java.io.File;
 import java.util.List;
 
 import src.ptm.PTM.PTMObjects;
@@ -26,6 +27,10 @@ import src.utilities.StringTools;
  * <p>This root node builds an entire tree from a given input.</p>
  */
 public class PTMRootNode extends PTMNode {
+	
+	private File templateDirectory = null;
+	public File templateDirectory() { return templateDirectory; }
+	public void setTemplateDirectory(File dir) { templateDirectory = dir; }
 
 	public PTMRootNode(StringBuffer content, PTMState sigma) {
 		this(content, sigma, null);

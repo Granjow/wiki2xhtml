@@ -11,6 +11,7 @@ import src.ptm.PTMObject.RecursionException;
  */
 public class PTMState extends HashMap<String, PTMArgumentValueNode> {
 	private static final long serialVersionUID = 1L;
+	public static final String forwardState = "FORWARD_STATE";
 
 	public PTMState() {}
 	
@@ -18,6 +19,9 @@ public class PTMState extends HashMap<String, PTMArgumentValueNode> {
 		readState(parent);
 	}
 	
+	/**
+	 * Reads name/value bindings from a tree containing PTMArgumentNodes.
+	 */
 	public void readState(PTMNode parent) {
 		for (PTMObject o : parent.childTree) {
 			if (o instanceof PTMArgumentNode) {
@@ -32,11 +36,11 @@ public class PTMState extends HashMap<String, PTMArgumentValueNode> {
 	}
 	
 	/** <p>Manually binds a value to a name. Overwrites existing bindings.</p>
-	 * <p>If <code>value.length()</code> is 0, the binding will be removed.</p>
+	 * <p>If <code>value == <strong>null</strong> || value.length() == 0</code>, the binding will be removed.</p>
 	 * @return The old value as returned by {@link #resolve(String)}, if the binding to this name already existed */
 	public String bind(String name, String value) {
 		String oldVal = resolve(name);
-		if (value.length() > 0) {
+		if (value != null && value.length() > 0) {
 			put(name, new PTMArgumentValueNode(new StringBuffer(value)));
 		} else {
 			remove(name);

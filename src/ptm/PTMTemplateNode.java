@@ -29,6 +29,12 @@ import src.utilities.IORead_Stats;
 /**
  * <p>This class handles templates.</p>
  * <p><code>{{: name | args }}</code></p>
+ * <p>States, i.e. name/value bindings, can be forwarded from one template to the other
+ * by passing one argument named {@link PTMState#forwardState}:</p>
+ * <p><code>{{:name|args|FORWARD_STATE}}</code></p>
+ * <p>The <em>name</em> template will then obtain the argument/value bindings from the current template
+ * (except for those names which have been bound to a newer value already by this template call).</p>
+ * TODO Doc State forwarding
  */
 public class PTMTemplateNode extends PTMNode {
 
@@ -98,16 +104,43 @@ public class PTMTemplateNode extends PTMNode {
 	}
 
 	public String evaluate() throws RecursionException {
+
+		File template;
+		if (root.templateDirectory() != null) {
+			template = new File(root.templateDirectory().getAbsolutePath() + File.separator + childTree.get(0).evaluate().trim());
+		} else {
+			template = new File(childTree.get(0).evaluate().trim());
+		}
 		
 		try {
 			// Read the template from the template file and parse it.
 			// Detect recursion via maximum depth (a calls b, b calls a).
 			
-			StringBuffer sb = IORead_Stats.readSBuffer(new File(childTree.get(0).evaluate().trim()));
+			StringBuffer sb = IORead_Stats.readSBuffer(template);
 			
 			// Read the new state into variables.
 			PTMState state = new PTMState();
 			state.readState(this);
+			
+			final String identifier = PTMArgumentNode.identifier + PTMState.forwardState; 
+			forwardingSearch: for (PTMObject o : childTree) {
+				if (identifier.equals(o.getRawContent())) {
+					// Bind values from the root node to this node, except if a newer value is available
+					System.out.println("Forwarding state.");
+					state.printValues();
+					for (String key : root.sigma.keySet()) {
+						if (!state.containsKey(key) || PTMState.forwardState.equals(state.resolve(key))) {
+							System.out.printf("Re-binding %s to %s (template value is %s).\n", key, root.sigma.resolve(key), state.resolve(key));
+							state.bind(key, root.sigma.resolve(key));
+						} else {
+							System.out.printf("%s is already bound to %s.\n", key, state.resolve(key));
+						}
+					}
+					System.out.println("Forwarded. Result:");
+					state.printValues();
+					break forwardingSearch;
+				}
+			}
 			
 			int depth;
 			try {
@@ -133,7 +166,7 @@ public class PTMTemplateNode extends PTMNode {
 			e.printStackTrace();
 		}
 		
-		return "Error reading the template file " + childTree.get(0).evaluate().trim() + ". ";
+		return String.format("Error reading the template file %s (%s).", childTree.get(0).evaluate().trim(), template.getAbsolutePath());
 	}
 
 }
