@@ -1,5 +1,6 @@
 package src.ptm;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -87,9 +88,10 @@ public class PTM {
 	
 	/** Applies all parser functions to the input string 
 	 * @throws RecursionException */
-	public static final String parse(StringBuffer content) throws RecursionException {
+	public static final String parse(StringBuffer content, File templateDirectory) throws RecursionException {
 		if (content.length() > 0) {
 			PTMRootNode root = new PTMRootNode(content, new PTMState());
+			root.setTemplateDirectory(templateDirectory);
 			return root.evaluate();
 		} else {
 			return new String();

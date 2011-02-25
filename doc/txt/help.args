@@ -1,0 +1,5 @@
+args=-m menu.txt -s ../../style/hd -o ../../wiki2xhtml-help
+
+index.txt
+about.txt
+#changelog.txt

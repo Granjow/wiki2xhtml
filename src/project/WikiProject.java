@@ -39,7 +39,7 @@ public class WikiProject {
 	
 	private File projectDirectory;
 	private File outputDirectory;
-	public File styleDirectory;
+	private File styleDirectory;
 	private String styleOutputDirectory;
 
 	public Sitemap sitemap = new Sitemap();
@@ -75,7 +75,11 @@ public class WikiProject {
 	/** Setting the project directory is only allowed if no files have been added yet. */
 	public boolean setProjectDirectory(File f) {
 		if (fileCount() == 0) {
-			projectDirectory = f;
+			try {
+				projectDirectory = f.getCanonicalFile();
+			} catch (IOException e) {
+				projectDirectory = f;
+			}
 			return true;
 		}
 		return false;
@@ -86,11 +90,27 @@ public class WikiProject {
 		if (fileCount() == 0) {
 			try {
 				checkOutputDirectoryLocation();
-				outputDirectory = f;
+				try {
+					outputDirectory = f.getCanonicalFile();
+				} catch (IOException e) {
+					outputDirectory = f;
+				}
 				return true;
 			} catch (InvalidOutputDirectoryLocationException e) {
 				e.printStackTrace();
 			}
+		}
+		return false;
+	}
+	public File styleDirectory() { return styleDirectory; }
+	public boolean setStyleDirectory(File f) {
+		if (fileCount() == 0) {
+			try {
+				styleDirectory = f.getCanonicalFile();
+			} catch (IOException e) {
+				styleDirectory = f;
+			}
+			return true;
 		}
 		return false;
 	}

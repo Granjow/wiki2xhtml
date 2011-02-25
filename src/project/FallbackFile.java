@@ -85,7 +85,7 @@ public class FallbackFile {
 			case project:
 				if (file == null) file = new File(project.projectDirectory().getAbsolutePath() + File.separatorChar + filename);
 			case style:
-				if (file == null) file = new File(project.styleDirectory.getAbsolutePath() + File.separatorChar + filename); 
+				if (file == null) file = new File(project.styleDirectory().getAbsolutePath() + File.separatorChar + filename); 
 				if (file.exists()) {
 					this.location = location;
 					this.url = null;

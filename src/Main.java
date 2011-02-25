@@ -35,7 +35,7 @@ public class Main {
 
 		WikiProject project = null;
 		
-		project = new Wiki2xhtmlArgsParser().readArguments(project, args);
+		project = new Wiki2xhtmlArgsParser().readArguments(project, args, null);
 		assert project != null;
 		
 		project.make();

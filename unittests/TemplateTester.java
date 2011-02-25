@@ -90,7 +90,7 @@ public class TemplateTester extends junit.framework.TestCase {
 	}
 	
 	
-	private static final String p(String tpl, String txt) throws IOException, RecursionException {
+	static final String p(String tpl, String txt) throws IOException, RecursionException {
 		File f = File.createTempFile("tpl", ".txt");
 		f.deleteOnExit();
 		BufferedWriter bw = new BufferedWriter(new FileWriter(f));

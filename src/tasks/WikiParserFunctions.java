@@ -15,7 +15,7 @@ public class WikiParserFunctions extends WikiTask {
 	}
 	public void parse(WikiFile file) {
 		try {
-			file.setContent(new StringBuffer(PTM.parse(file.getContent())));
+			file.setContent(new StringBuffer(PTM.parse(file.getContent(), file.project.projectDirectory())));
 		} catch (RecursionException e) {
 			e.printStackTrace();
 			System.err.println("ERROR: Recursion could not be removed. In: " + file.name);

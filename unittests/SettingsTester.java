@@ -10,6 +10,7 @@ import src.project.settings.LocalSettingsReader;
 import src.project.settings.Settings;
 import src.project.settings.Settings.Checker;
 import src.project.settings.Settings.ValuePreparser;
+import src.resources.ResProjectSettings.SettingsE;
 import src.resources.ResProjectSettings.SettingsLocalE;
 import src.tasks.Tasks.Task;
 
@@ -34,7 +35,8 @@ public class SettingsTester extends junit.framework.TestCase {
 		a,b,c;
 	}
 	
-	@Test public void testRedirect() {
+	@Test
+	public void testRedirect() {
 		StringBuffer sb = new StringBuffer("#REDIRECT 1 nowhere.html\nHallo");
 		LocalSettings settings = new LocalSettings();
 		LocalSettingsReader reader = new LocalSettingsReader(sb, settings);
@@ -45,15 +47,22 @@ public class SettingsTester extends junit.framework.TestCase {
 		System.out.println(settings.get_(SettingsLocalE.redirect));
 	}
 	
-	@Test public void testRecognition() throws IOException {
-		StringBuffer sb = new StringBuffer("{{Namespace:a=b}}\nhall{{Author:him}}o");
+	@Test
+	public void testRecognition() throws IOException {
+		assertEquals("hallo", p("{{Namespace:a=b}}\nhall{{Author:him}}o"));
+	}
+	
+	@Test
+	public void testBindings() throws IOException {
+		StringBuffer sb = new StringBuffer("{{Bind:a=b}}\nhall{{Bind:c=d}}o");
 		
 		VirtualWikiFile vf = new VirtualWikiFile(VirtualWikiFile.createTempProject(), "a.html", false, true, sb);
 		vf.removeAllTasks();
 		vf.addTask(Task.Settings);
 		vf.parse();
-		
+
 		assertEquals("hallo", vf.getContent().toString().trim());
+		assertEquals("a=b\nc=d", vf.getProperty(SettingsE.bind, false));
 	}
 	
 	@Test public void testChecker() {
@@ -131,5 +140,14 @@ public class SettingsTester extends junit.framework.TestCase {
 		assertEquals("hallo", stgs.get_(Tst.a));
 		assertTrue(stgs.set_(Tst.a, mynull));
 		assertNull(stgs.get_(Tst.a));
+	}
+	
+	private static final String p(String text) throws IOException {
+		VirtualWikiFile vf = new VirtualWikiFile(VirtualWikiFile.createTempProject(), "a.html", false, true, new StringBuffer(text));
+		vf.removeAllTasks();
+		vf.addTask(Task.Settings);
+		vf.parse();
+		
+		return vf.getContent().toString().trim();
 	}
 }

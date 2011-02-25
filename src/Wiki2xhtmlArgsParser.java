@@ -80,12 +80,15 @@ public class Wiki2xhtmlArgsParser extends CmdLineParser {
 	/**
 	 * @param project If <code>null</code>, then a new project will be created.
 	 */
-	public WikiProject readArguments(WikiProject project, String[] args) throws IllegalOptionValueException, UnknownOptionException {
+	public WikiProject readArguments(WikiProject project, String[] args, File relativeTo) throws IllegalOptionValueException, UnknownOptionException {
 		
 		parse(args);
 		
+		String filename;
 		String alternative;
 		boolean success;
+		
+		String prefix = (relativeTo == null) ? "" : relativeTo.getAbsolutePath() + File.separator;
 		
 		
 		// Project directory
@@ -98,7 +101,7 @@ public class Wiki2xhtmlArgsParser extends CmdLineParser {
 			o.println("Project working dir is: " + project.projectDirectory().getAbsolutePath());
 		} else {
 			if (getOptionValue(inputDir) != null) {
-				project.setProjectDirectory(new File((String)getOptionValue(inputDir)));
+				project.setProjectDirectory(new File(prefix + (String)getOptionValue(inputDir)));
 			}
 		}
 		
@@ -109,24 +112,24 @@ public class Wiki2xhtmlArgsParser extends CmdLineParser {
 		} else {
 			alternative = Constants.Directories.workingDir + File.separator + Constants.Directories.target;
 		}
-		success = project.setOutputDirectory(new File((String)getOptionValue(
-				outputDir, 
-				alternative
-				)));
+		filename = (String)getOptionValue(outputDir);
+		if (filename == null) { filename = alternative; }
+		else { filename = prefix + filename; }
+		success = project.setOutputDirectory(new File(filename));
 		o.printf("Output directory is: %s (Success: %s)\n", project.outputDirectory().getAbsolutePath(), success);
 		
 		
 		// Style directory
-		if (project.styleDirectory != null) {
-			alternative = project.styleDirectory.getAbsolutePath();
+		if (project.styleDirectory() != null) {
+			alternative = project.styleDirectory().getAbsolutePath();
 		} else {
 			alternative = project.projectDirectory().getAbsolutePath() + File.separator + Constants.Directories.style;
 		}
-		project.styleDirectory = new File((String)getOptionValue(
-				styleDir, 
-				alternative
-				));
-		o.println("Style directory is: " + project.styleDirectory.getAbsolutePath());
+		filename = (String)getOptionValue(styleDir);
+		if (filename == null) { filename = alternative; }
+		else { filename = prefix + filename; }
+		project.setStyleDirectory(new File(filename));
+		o.println("Style directory is: " + project.styleDirectory().getAbsolutePath());
 		
 		
 		// Style output directory
@@ -145,6 +148,14 @@ public class Wiki2xhtmlArgsParser extends CmdLineParser {
 				if (s.endsWith(".args")) {
 					// Read the argument file
 					o.println("Args file: " + f.getAbsolutePath());
+					if (!f.getParentFile().equals(project.projectDirectory())) {
+						project.setProjectDirectory(f.getParentFile());
+						o.printf("Project directory set, based on the location of the args file (%s), to %s\n", 
+								f.getAbsolutePath(),
+								project.projectDirectory().getAbsolutePath(),
+								project.styleOutputDirectory().getAbsolutePath()
+								);
+					}
 					ArgsFilesReader.readArgsFile(project, f);
 					
 				} else {
@@ -163,8 +174,6 @@ public class Wiki2xhtmlArgsParser extends CmdLineParser {
 				o.println("Error: " + f.getAbsolutePath() + " does not exist, not added.");
 			}
 		}
-		
-		System.out.println("Footer: " + getOptionValue(footerFile));
 		
 		return project;
 	}

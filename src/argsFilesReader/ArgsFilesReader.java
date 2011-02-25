@@ -73,9 +73,13 @@ public class ArgsFilesReader {
 					// Comment.
 					continue;
 					
+				} else if (line.trim().length() == 0) {
+					// Empty line.
+					continue;
+					
 				} else if (line.startsWith("args=")) {
 					args += " " + line.substring("args=".length());
-					new Wiki2xhtmlArgsParser().readArguments(project, line.substring("args=".length()).split("\\s"));
+					new Wiki2xhtmlArgsParser().readArguments(project, line.substring("args=".length()).split("\\s"), file.getParentFile());
 					System.out.printf("Arguments read: %s\n", args);
 					
 				} else if (line.startsWith("dir=")) {
@@ -99,7 +103,7 @@ public class ArgsFilesReader {
 					// TODO Doc: \ for spaces
 					String[] largs = line.split("(?<!\\\\)\\s", 2);
 					if (largs.length > 0) {
-						s = dir + File.separator + largs[0];
+						s = ((dir.length() > 0) ? dir + File.separator : "") + largs[0];
 						System.out.printf("File is %s\n", s);
 						if (largs.length > 1) {
 							if (largs[1].contains(Constants.Arguments.FileArgs.noSitemap)) {

@@ -17,7 +17,7 @@ public class WikiStyle {
 	}
 	
 	public final void copyFiles() {
-		IOUtils.copyWithRsync(_project.styleDirectory, _project.styleOutputDirectory());
+		IOUtils.copyWithRsync(_project.styleDirectory(), _project.styleOutputDirectory());
 	}
 	
 }

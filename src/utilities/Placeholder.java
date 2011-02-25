@@ -73,6 +73,7 @@ public class Placeholder {
 		/** Close */
 		int c = 0;
 
+		CommentAtor.getInstance().setDebug();
 
 		if (okay = mo.find()) {
 
@@ -80,7 +81,7 @@ public class Placeholder {
 			contentStart = mo.end();
 			deep++;
 			try {
-				CommentAtor.getInstance().ol("o>>>" + input.substring(mo.start(), mo.start()+50).replace("\n", "\\ ") + "<<<, " + mo.start(), CALevel.DEBUG);
+				CommentAtor.getInstance().ol("o>>>" + input.substring(mo.start(), mo.start()+50).replace("\n", "\\ ") + "<<<, " + mo.start() + " " + mo.pattern(), CALevel.DEBUG);
 			} catch (IndexOutOfBoundsException e) {}
 
 		} else {
@@ -95,7 +96,7 @@ public class Placeholder {
 
 				c = mc.start();
 				try {
-					CommentAtor.getInstance().ol(">c>>" + input.substring(c, c+50).replace("\n", "\\ ") + "<<<, " + c, CALevel.DEBUG);
+					CommentAtor.getInstance().ol(">c>>" + input.substring(c, c+50).replace("\n", "\\ ") + "<<<, " + c + " " + mc.pattern(), CALevel.DEBUG);
 				} catch (IndexOutOfBoundsException e) {}
 				deep--;
 
@@ -103,7 +104,7 @@ public class Placeholder {
 
 					o = mo.start();
 					try {
-						CommentAtor.getInstance().ol("o>>>" + input.substring(o, o+50).replace("\n", "\\ ") + "<<<, " + o, CALevel.DEBUG);
+						CommentAtor.getInstance().ol("o>>>" + input.substring(o, o+50).replace("\n", "\\ ") + "<<<, " + o + " " + mo.pattern(), CALevel.DEBUG);
 					} catch (IndexOutOfBoundsException e) {}
 
 					if (deep == 0 && o > c) {
