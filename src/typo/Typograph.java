@@ -5,6 +5,7 @@ import java.util.regex.*;
 import org.xnap.commons.i18n.I18n;
 import org.xnap.commons.i18n.I18nFactory;
 
+import src.project.file.WikiFile;
 import src.utilities.StringTools;
 
 /*
@@ -34,7 +35,6 @@ import src.utilities.StringTools;
  */
 public class Typograph {
 
-	private static I18n i18n = I18nFactory.getI18n(Typograph.class, "bin.l10n.Messages", src.Globals.getLocale());
 	private StringBuffer content = new StringBuffer();
 
 	//Typo: dash spaces(abbr) zoll quot
@@ -47,11 +47,11 @@ public class Typograph {
 		return content;
 	}
 
-	public void replace(String arguments) {
-		content = replace(content, arguments);
+	public void replace(final WikiFile file, String arguments) {
+		content = replace(file, content, arguments);
 	}
 
-	public StringBuffer replace(StringBuffer in, String arguments) {
+	public StringBuffer replace(final WikiFile file, StringBuffer in, String arguments) {
 		boolean all = false;
 
 		StringBuffer out = in;
@@ -66,10 +66,10 @@ public class Typograph {
 			out = makeDashes(in);
 
 		if (all || arguments.contains("z"))
-			out = makeZollChars(in);
+			out = makeZollChars(file, in);
 
 		if (all || arguments.contains("q"))
-			out = makeQuotationMarks(in);
+			out = makeQuotationMarks(file, in);
 
 		return out;
 	}
@@ -171,7 +171,8 @@ public class Typograph {
 		return out;
 	}
 
-	public StringBuffer makeZollChars(StringBuffer in) {
+	public StringBuffer makeZollChars(final WikiFile file, StringBuffer in) {
+		I18n i18n = I18nFactory.getI18n(Typograph.class, "bin.l10n.Messages", file.getLocale());
 		StringBuffer out = new StringBuffer();
 		short counter = 0;
 		int first, last = 0;
@@ -205,7 +206,9 @@ public class Typograph {
 		return in;
 	}
 
-	public StringBuffer makeQuotationMarks(StringBuffer in) {
+	public StringBuffer makeQuotationMarks(final WikiFile file, StringBuffer in) {
+		I18n i18n = I18nFactory.getI18n(Typograph.class, "bin.l10n.Messages", file.getLocale());
+		
 		StringBuffer out = new StringBuffer();
 		short counter = 0;
 		int first, last = 0;

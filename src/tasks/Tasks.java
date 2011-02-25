@@ -20,6 +20,7 @@ public class Tasks {
 		InsertNowiki ("Insert Nowiki Content"),
 		XMLNames ("Convert XML names"),
 		References ("References"),
+		PageTemplate ("Page template"),
 		Cleanup ("Cleanup");
 		
 		public final String name;

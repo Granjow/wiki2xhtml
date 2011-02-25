@@ -366,6 +366,7 @@ public class RegexpBug {
 
 	}
 
+	/*
 	private static void benchWiki2xhtml(int n, String[] args) {
 		Stopwatch t = new Stopwatch();
 
@@ -385,6 +386,7 @@ public class RegexpBug {
 						   (n > 1 ? "\nAverage time: " + StringTools.formatTimeMilliseconds(t.getStoppedTime()/n) : ""));
 		t.reset();
 	}
+	*/
 
 	private static void benchStringBuffer(int exp) {
 		double n = Math.pow(10, exp);

@@ -23,7 +23,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import src.Container_Resources;
-import src.project.WikiProject.FallbackFile;
+import src.project.FallbackFile;
 import src.project.file.WikiFile;
 import src.ptm.PTMObject.RecursionException;
 import src.ptm.PTMRootNode;

@@ -16,6 +16,7 @@ public class Wiki2xhtmlArgsParser extends CmdLineParser {
 	public final Option inputDir;
 	public final Option outputDir;
 	public final Option styleDir;
+	public final Option styleOutputDir;
 	
 	public final Option menuFile;
 	public final Option commonFile;
@@ -44,6 +45,7 @@ public class Wiki2xhtmlArgsParser extends CmdLineParser {
 		inputDir = addStringOption('i', "input-dir");
 		outputDir = addStringOption('o', "output-dir");
 		styleDir = addStringOption('s', "style");
+		styleOutputDir = addStringOption("style-output-dir"); // Must be relative to the project directory
 		
 		menuFile = addStringOption('m', "menu");
 		commonFile = addStringOption('c', "common");
@@ -84,17 +86,17 @@ public class Wiki2xhtmlArgsParser extends CmdLineParser {
 		}
 		
 		
-		// Target directory
+		// Output directory
 		if (project.outputDirectory() != null) {
 			alternative = project.outputDirectory().getAbsolutePath();
 		} else {
 			alternative = Constants.Directories.workingDir + File.separator + Constants.Directories.target;
 		}
-		success = project.setoutputDirectory(new File((String)getOptionValue(
+		success = project.setOutputDirectory(new File((String)getOptionValue(
 				outputDir, 
 				alternative
 				)));
-		o.printf("Target directory is: %s (Success: %s)\n", project.outputDirectory().getAbsolutePath(), success);
+		o.printf("Output directory is: %s (Success: %s)\n", project.outputDirectory().getAbsolutePath(), success);
 		
 		
 		// Style directory
@@ -108,6 +110,11 @@ public class Wiki2xhtmlArgsParser extends CmdLineParser {
 				alternative
 				));
 		o.println("Style directory is: " + project.styleDirectory.getAbsolutePath());
+		
+		
+		// Style output directory
+		project.setStyleOutputDirectory((String)getOptionValue(styleOutputDir, project.styleOutputDirectoryName()));
+		o.println("Style output directory is: " + project.styleOutputDirectory().getAbsolutePath());
 		
 		
 		// Input files

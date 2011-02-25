@@ -10,14 +10,7 @@ import java.net.URL;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.xnap.commons.i18n.I18n;
-import org.xnap.commons.i18n.I18nFactory;
-
-import src.ConstantTexts;
 import src.Constants;
-import src.commentator.CommentAtor;
-import src.commentator.CommentAtor.CALevel;
-
 import static src.Constants.Updater;
 
 /*
@@ -46,8 +39,6 @@ import static src.Constants.Updater;
  */
 public final class UpdateChecker {
 	
-	private static final I18n i18n = I18nFactory.getI18n(UpdateChecker.class, "bin.l10n.Messages", src.Globals.getLocale());
-
 	/** Contains the update information from the file in the web */
 	private static final StringBuffer content = new StringBuffer();
 
@@ -136,10 +127,10 @@ public final class UpdateChecker {
 
 			}
 			catch (FileNotFoundException e) {
-				CommentAtor.getInstance().ol(ConstantTexts.fileNotFound + ": " + urls[i].getHost() + urls[i].getPath(), CALevel.MSG);
+				System.err.println("File not found: " + urls[i].getHost() + urls[i].getPath());
 			}
 			catch (IOException e) {
-				CommentAtor.getInstance().ol(ConstantTexts.NounCap.error + ": " + e.getMessage(), CALevel.MSG);
+				System.err.println("Error: " + e.getMessage());
 			}
 
 		}
@@ -153,10 +144,10 @@ public final class UpdateChecker {
 		refresh();
 
 		if (isNewerVersionAvailable()) {
-			out.append(i18n.tr("<p>New version: <strong>{0}</strong> from {1}.</p>", getProperty(Updater.currentVersionFullname), getProperty(Updater.currentVersionDate)));
-			out.append(i18n.tr("<p>Changes in this version: {0}</p>", getProperty(Updater.htmlVersionNotes)));
+			out.append(String.format("<p>New version: <strong>%s</strong> from %s.</p>", getProperty(Updater.currentVersionFullname), getProperty(Updater.currentVersionDate)));
+			out.append(String.format("<p>Changes in this version: %s</p>", getProperty(Updater.htmlVersionNotes)));
 		} else {
-			out.append(i18n.tr("<p>Your version of wiki2xhtml is up-to-date.</p>"));
+			out.append("<p>Your version of wiki2xhtml is up-to-date.</p>");
 		}
 
 		return out;

@@ -7,14 +7,14 @@ import java.io.IOException;
 import src.project.WikiProject;
 import src.project.WikiProject.FallbackFile;
 import src.project.WikiProject.InvalidLocationException;
-import src.project.WikiProject.InvalidTargetDirectoryLocationException;
+import src.project.WikiProject.InvalidOutputDirectoryLocationException;
 import src.project.file.LocalWikiFile;
 import src.project.file.WikiFile;
 import src.utilities.IOWrite;
 
 public class Testground {
 
-	public static void main(String[] args) throws IOException, InvalidLocationException, InvalidTargetDirectoryLocationException {
+	public static void main(String[] args) throws IOException, InvalidLocationException, InvalidOutputDirectoryLocationException {
 		WikiProject proj = new WikiProject(".");
 		FallbackFile ff = proj.locate("tplImage.txt");
 		System.out.println(ff.pathInfo());
@@ -32,8 +32,6 @@ public class Testground {
 		WikiFile wf = new LocalWikiFile(wp, f.getName(), false, true);
 		wp.addFile(wf);
 		wp.make();
-		
-		System.out.println(" \ta ".trim() + "<");
 	}
 	
 }

@@ -26,7 +26,7 @@ import java.util.regex.Pattern;
 import src.Container_Resources;
 import src.Constants.References;
 import src.Statistics;
-import src.project.WikiProject.FallbackFile;
+import src.project.FallbackFile;
 import src.project.file.WikiFile;
 import src.ptm.PTMObject.RecursionException;
 import src.ptm.PTMRootNode;
@@ -43,7 +43,7 @@ import src.tasks.Tasks.Task;
 public class WikiReferences extends WikiTask {
 
 	public WikiTask nextTask() {
-		return new WikiCleanup();
+		return new PageTemplate();
 	}
 
 	public Task desc() {

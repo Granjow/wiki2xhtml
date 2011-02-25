@@ -17,23 +17,20 @@
 
 package src.project;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Vector;
+
 import src.Constants;
-import src.Container_Resources;
-import src.project.WikiProject.FallbackFile.FallbackLocation;
-import src.project.WikiProject.FallbackFile.NoFileFoundException;
+import src.project.FallbackFile.FallbackLocation;
+import src.project.FallbackFile.NoFileFoundException;
 import src.project.file.VirtualWikiFile;
 import src.project.file.WikiFile;
 import src.project.settings.PageSettings;
 import src.project.settings.Settings;
 import src.resources.ResProjectSettings.SettingsE;
-import src.utilities.IORead_Stats;
-
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.net.URL;
-import java.util.HashMap;
-import java.util.Vector;
+import src.utilities.IOUtils;
 
 /**
  * Bundles multiple WikiFiles and project settings.
@@ -43,8 +40,10 @@ public class WikiProject {
 	private File projectDirectory;
 	private File outputDirectory;
 	public File styleDirectory;
+	private String styleOutputDirectory;
 
 	public Sitemap sitemap = new Sitemap();
+	private WikiStyle wikiStyle = new WikiStyle(this);
 	
 	// Settings
 	private Settings<SettingsE, String> projectSettings = new PageSettings();
@@ -59,11 +58,10 @@ public class WikiProject {
 	
 	
 	public WikiProject(String projectDirectory) {
-		this.projectDirectory = new File(projectDirectory);
-		this.styleDirectory = this.projectDirectory;
+		setProjectDirectory(new File(projectDirectory));
+		this.styleDirectory = new File(this.projectDirectory.getAbsolutePath() + File.separator + "style");
 		this.outputDirectory = new File(this.projectDirectory.getAbsolutePath() + File.separator + Constants.Directories.target);
-		
-		// TODO create directories
+		styleOutputDirectory = "style";
 		
 		/** Initialize global settings with default values */
 		projectSettings.set_(SettingsE.imagepagesDir, Constants.Directories.imagePages);
@@ -84,17 +82,22 @@ public class WikiProject {
 	}
 	public File outputDirectory() { return outputDirectory; }
 	/** @see #setProjectDirectory(File) */
-	public boolean setoutputDirectory(File f) {
+	public boolean setOutputDirectory(File f) {
 		if (fileCount() == 0) {
 			try {
 				checkOutputDirectoryLocation();
 				outputDirectory = f;
 				return true;
-			} catch (InvalidTargetDirectoryLocationException e) {
+			} catch (InvalidOutputDirectoryLocationException e) {
 				e.printStackTrace();
 			}
 		}
 		return false;
+	}
+	public String styleOutputDirectoryName() { return styleOutputDirectory; }
+	public File styleOutputDirectory() { return new File(outputDirectory.getAbsolutePath() + File.separator + styleOutputDirectory); }
+	public void setStyleOutputDirectory(String dirName) {
+		styleOutputDirectory = dirName;
 	}
 	
 	
@@ -119,24 +122,27 @@ public class WikiProject {
 		return projectSettings.isSet(property);
 	}
 	
-	public void checkOutputDirectoryLocation() throws InvalidTargetDirectoryLocationException {
+	public void checkOutputDirectoryLocation() throws InvalidOutputDirectoryLocationException {
 		if (projectDirectory.equals(outputDirectory)) {
-			throw new InvalidTargetDirectoryLocationException("Source directory must not be equal to the target directory.");
+			throw new InvalidOutputDirectoryLocationException("Source directory must not be equal to the output directory.");
 		}
 		try {
 			if (projectDirectory.getCanonicalPath().startsWith(outputDirectory.getCanonicalPath())) {
-				throw new InvalidTargetDirectoryLocationException("Project directory must not be a subdirectory of the output directory.");
+				throw new InvalidOutputDirectoryLocationException("Project directory must not be a subdirectory of the output directory.");
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
-			throw new InvalidTargetDirectoryLocationException(e.getMessage());
+			throw new InvalidOutputDirectoryLocationException(e.getMessage());
 		}
 	}
 	
 	
 	////////// PARSING ///////////
-	public void make() throws IOException, InvalidTargetDirectoryLocationException {
+	public void make() throws IOException, InvalidOutputDirectoryLocationException {
 		checkOutputDirectoryLocation();
+		
+		wikiStyle.copyFiles();
+		copyFiles();
 		
 		// Make the project
 		for (WikiFile f : fileMap.values()) {
@@ -178,119 +184,24 @@ public class WikiProject {
 		return worked;
 	}
 	
-	/**
-	 *  Tries to locate a file by searching for it in several locations like:
-	 *  <ul><li>.jar</li>
-	 *  <li>project directory</li>
-	 *  <li>style directory</li></ul>
-	 */
-	public static class FallbackFile {
-		/** The original filename */
-		public final String filename;
-		private File file;
-		private URL url;
-		private FallbackLocation location = FallbackLocation.none;
-		
-		public static final Vector<FallbackLocation> bottomUpLocations;
-		
-		static {
-			bottomUpLocations = new Vector<FallbackLocation>();
-			bottomUpLocations.add(FallbackLocation.system);
-			bottomUpLocations.add(FallbackLocation.project);
-			bottomUpLocations.add(FallbackLocation.style);
-			bottomUpLocations.add(FallbackLocation.jar);
-		}
-		
-		public static enum FallbackLocation {
-			system, project, style, jar, none;
-		}
-		
-		public StringBuffer getContent() throws NoFileFoundException, IOException {
-			switch (location) {
-			case none:
-				throw new NoFileFoundException(filename);
-			case jar:
-				return IORead_Stats.readSBuffer(url);
-			default:
-				return IORead_Stats.readSBuffer(file);
-			}
-		}
-		
-		/** @return null if the file is in a .jar or not available */
-		public final File file() { return file; }
-		/** @return null if the file is not in the .jar */
-		public final URL url() { return url; }
-		/** @return null, if no path available */
-		public final String pathInfo() {
-			if (file != null) { return file.getAbsolutePath(); }
-			if (url != null) { return url.getFile(); }
-			return null;
-		}
-		
-		/** Using default fallback priority. See {@link #bottomUpLocations}. */
-		public FallbackFile(String filename, WikiProject project) throws NoFileFoundException {
-			this(filename, project, bottomUpLocations);
-		}
-		public FallbackFile(String filename, WikiProject project, Vector<FallbackLocation> fallback) throws NoFileFoundException {
-			this.filename = filename;
-			File file;
-			URL url;
-			forLoop : for (FallbackLocation location : fallback) {
-				file = null;
-				switch (location) {
-				case system:
-					if (file == null) file = new File(filename);
-					// Fall through
-				case project:
-					if (file == null) file = new File(project.projectDirectory.getAbsolutePath() + File.separatorChar + filename);
-				case style:
-					if (file == null) file = new File(project.styleDirectory.getAbsolutePath() + File.separatorChar + filename); 
-					if (file.exists()) {
-						this.location = location;
-						this.url = null;
-						this.file = file;
-						break forLoop;
-					}
-					break;
-				case jar:
-					url = this.getClass().getResource(filename);
-					if (url == null) {
-						url = this.getClass().getResource(Container_Resources.resdir + filename);
-					}
-					if (url != null) {
-						this.url = url;
-						this.file = null;
-						this.location = location;
-						break forLoop;
-					}
-					break;
-				}
-			}
-			if (location == FallbackLocation.none) {
-				throw new NoFileFoundException(filename);
-			}
-		}
-		
-		public static class NoFileFoundException extends FileNotFoundException {
-			private static final long serialVersionUID = 1L;
-			public NoFileFoundException(String filename) {
-				super("No file like " + filename + " found.");
-			}
-		}
-		
-	}	
+	public void copyFiles() {
+		IOUtils.copyWithRsync(projectDirectory, outputDirectory);
+	}
+	
+	
+	
 	
 	public static class InvalidLocationException extends Exception {
 		private static final long serialVersionUID = 1L;
 		public InvalidLocationException(String msg) { super(msg); }
 	}
 	
-	public static class InvalidTargetDirectoryLocationException extends Exception {
+	public static class InvalidOutputDirectoryLocationException extends Exception {
 		private static final long serialVersionUID = 1L;
-		public InvalidTargetDirectoryLocationException(String msg) { super(msg); }
+		public InvalidOutputDirectoryLocationException(String msg) { super(msg); }
 	}
 	
-	public static void main(String[] args) throws InvalidLocationException, IOException, InvalidTargetDirectoryLocationException {
+	public static void main(String[] args) throws InvalidLocationException, IOException, InvalidOutputDirectoryLocationException {
 		WikiProject p = new WikiProject(".");
 		StringBuffer sb = new StringBuffer();
 		sb.append("Hallo. [[link.html]]\n*bla");

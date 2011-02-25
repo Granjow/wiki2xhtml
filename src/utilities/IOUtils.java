@@ -33,6 +33,55 @@ import java.util.regex.*;
  * ,		hb9eia
  */
 public class IOUtils {
+	
+	
+	public static final boolean copyWithRsync(File src, File dst) {
+		
+		boolean worked = false;
+
+		File resourcesFile = new File(src.getAbsolutePath() + File.separator + "resources.txt");
+		if (resourcesFile.exists() && resourcesFile.isFile()) {
+			System.out.printf("Reading files to copy from resources file (%s) ...\n", resourcesFile.getAbsolutePath());
+			try {
+				dst.mkdirs();
+				String cmd = String.format("rsync -uav %s %s --include-from=%s", 
+						src.getAbsolutePath() + File.separator, 
+						dst.getAbsolutePath() + File.separator, 
+						resourcesFile.getAbsolutePath());
+				System.out.println("Copying style files: " + cmd);
+				Process rsync = Runtime.getRuntime().exec(cmd);
+				
+				try {
+					rsync.waitFor();
+					InputStream stdout = rsync.getInputStream();
+					InputStreamReader outReader = new InputStreamReader(stdout);
+					BufferedReader br = new BufferedReader(outReader);
+					String line;
+					while ( (line = br.readLine()) != null) {
+						System.out.println("\t" + line);
+					}
+					br = new BufferedReader(new InputStreamReader(rsync.getErrorStream()));
+
+					while ( (line = br.readLine()) != null) {
+						System.err.println("\t" + line);
+					}
+					
+					worked = rsync.exitValue() == 0;
+					
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+					System.err.println("Please check whether rsync is installed!");
+				}
+				
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		} else {
+			System.out.printf("Resources file (%s) does not exist, not copying additional files.\n", resourcesFile.getAbsolutePath());
+		}
+		
+		return worked;
+	}
 
 	public static boolean copyFile(InputStream is, OutputStream os) {
 		boolean ok = true;

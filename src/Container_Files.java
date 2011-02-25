@@ -110,7 +110,7 @@ public class Container_Files {
 		private File targetDir; // Target directory
 		public File targetDir() {
 			if (targetDir == null)
-				Container_Files.getInstance().setoutputDirectory(Constants.Directories.target);
+				Container_Files.getInstance().setOutputDirectory(Constants.Directories.target);
 			return targetDir;
 		}
 

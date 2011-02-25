@@ -1,0 +1,5 @@
+{{#if:{{{isBlock|}}}|
+<div>
+}}<code{{{args|}}} class="{{{classes|}}}" style="{{{style|}}}">{{{text|}}}</code>{{#if:{{{isBlock|}}}|
+</div>
+}}

@@ -42,8 +42,6 @@ import src.tasks.WikiImages;
  */
 public class Generators {
 	
-	private static I18n i18n = I18nFactory.getI18n(Generators.class, "bin.l10n.Messages", src.Globals.getLocale());
-	
 	private final WikiFile file;
 	
 	public Generators(WikiFile file) {
@@ -125,12 +123,12 @@ public class Generators {
 	/**
 	 * @return The page title, replacing %s and %p by standard title and page number
 	 */
-	public String title() {
+	public String title(final WikiFile file) {
 		String title = file.getProperty(SettingsE.title, false);
 		if (title == null) {
 			title = file.getProperty(SettingsE.h1, true);
 		} else {
-			title = title(title);
+			title = title(file, title);
 		}
 		if (title == null) title = "";
 		return title;
@@ -140,7 +138,7 @@ public class Generators {
 	 * @param pattern Input title
 	 * @return The pattern with %s and %p replaced; see {@link #title()}
 	 */
-	public String title(String pattern) {
+	public String title(final WikiFile file, final String pattern) {
 		String title = pattern;
 		int pos = title.indexOf(Constants.Tags.Title.titleTag);
 		if (pos >= 0) {
@@ -154,7 +152,7 @@ public class Generators {
 		pos = title.indexOf(Constants.Tags.Title.pageTag);
 		if (pos >= 0) {
 			title = title.substring(0, pos)
-					+ page(DisplayRule.pageXofY)
+					+ page(file, DisplayRule.pageXofY)
 					+ title.substring(pos + 2, title.length());
 		}
 		return title;
@@ -163,7 +161,10 @@ public class Generators {
 	public static enum DisplayRule {
 		pageXofY, pageX, X;
 	}
-	public String page(final DisplayRule displayRule) {
+	public String page(final WikiFile file, final DisplayRule displayRule) {
+		
+		I18n i18n = I18nFactory.getI18n(Generators.class, "bin.l10n.Messages", file.getLocale());
+		
 		String page;
 		String number = file.getProperty(SettingsLocalE.pageNumber);
 		String totalPages = file.getProperty(SettingsLocalE.pagesTotal);

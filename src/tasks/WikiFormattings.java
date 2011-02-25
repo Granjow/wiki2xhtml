@@ -24,7 +24,7 @@ import java.util.regex.Pattern;
 import src.Constants.Blocks;
 import src.Container_Resources;
 import src.Statistics;
-import src.project.WikiProject.FallbackFile;
+import src.project.FallbackFile;
 import src.project.file.WikiFile;
 import src.ptm.PTMObject.RecursionException;
 import src.ptm.PTMRootNode;

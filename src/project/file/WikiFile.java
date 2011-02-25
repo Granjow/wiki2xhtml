@@ -20,6 +20,7 @@ package src.project.file;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -188,6 +189,14 @@ public abstract class WikiFile {
 		}
 		return linkNamespaces;
 	}
+	
+	public Locale getLocale() {
+		// TODO read locale
+		return Locale.ENGLISH;
+	}
+	
+	
+	
 	
 	public void parse() {
 		if (!parse) return;
