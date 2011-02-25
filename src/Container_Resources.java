@@ -51,10 +51,10 @@ public class Container_Resources {
 	public static final String sTplImagepage = "tplImagepage.txt";
 	
 	/** Template for the in-text link to the reference note
-	 * @see Constants.References */
+	 * @see Constants.Template_References */
 	public static final String sTplCiteRef = "tplCiteRef.txt";
 	/** Template for the reference note at the bottom of the page
-	 * @see Constants.References */
+	 * @see Constants.Template_References */
 	public static final String sTplCiteNote = "tplCiteNote.txt";
 	
 	/** Template for $$code blocks$$ 

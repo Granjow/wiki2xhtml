@@ -76,7 +76,7 @@ public class WikiImages extends WikiTask {
 			prop.set_(EImageProperties.context, EImageContext.thumb.property);
 			
 			// Generate an image page if they are to be generated, a isThumbDesired has to be inserted and it's no direct link.
-			if ("true".equals(prop.getValue(Constants.Images.thumb)) && !"direct".equals(prop.getValue(Constants.Images.direct))) {
+			if ("true".equals(prop.getValue(Constants.Template_Images.thumb)) && !"direct".equals(prop.getValue(Constants.Template_Images.direct))) {
 				generateImagepage(prop);
 			}
 

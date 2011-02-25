@@ -221,9 +221,9 @@ public class ImageProperties extends StringSettings<EImageProperties> {
 		for (ArgumentItem ai : a) {
 			
 			mPImage = pImage.matcher(ai.fullArg);
-			if (mPImage.matches() && props.get(Constants.Images.path) == null) {
+			if (mPImage.matches() && props.get(Constants.Template_Images.path) == null) {
 				// Image:<path>
-				props.put(Constants.Images.path, mPImage.group(1));
+				props.put(Constants.Template_Images.path, mPImage.group(1));
 				continue;
 			}
 
@@ -231,30 +231,30 @@ public class ImageProperties extends StringSettings<EImageProperties> {
 			if (mSize.find()) {
 				// 200x300px
 				if (mSize.group(1) != null) {
-					props.put(Constants.Images.width, mSize.group(1) + mSize.group(3));
+					props.put(Constants.Template_Images.width, mSize.group(1) + mSize.group(3));
 				}
 				if (mSize.group(2) != null) {
-					props.put(Constants.Images.height, mSize.group(2) + mSize.group(3));
+					props.put(Constants.Template_Images.height, mSize.group(2) + mSize.group(3));
 				}
 				continue;
 			}
 
-			if (Constants.Images.thumb.equals(ai.fullArg)) {
+			if (Constants.Template_Images.thumb.equals(ai.fullArg)) {
 				// thumb
-				props.put(Constants.Images.type, "thumb");
+				props.put(Constants.Template_Images.type, "thumb");
 				continue;
 			}
 			
-			if (Constants.Images.direct.equals(ai.fullArg)) {
+			if (Constants.Template_Images.direct.equals(ai.fullArg)) {
 				// direct
-				props.put(Constants.Images.type, "direct");
+				props.put(Constants.Template_Images.type, "direct");
 				continue;
 			}
 
-			if (ai.fullArg.startsWith(Constants.Images.thumb + SEP)) {
+			if (ai.fullArg.startsWith(Constants.Template_Images.thumb + SEP)) {
 				// thumb=<path>
-				props.put(Constants.Images.thumb, ai.fullArg.substring(Constants.Images.thumb.length()+1));
-				props.put(Constants.Images.type, "thumb");
+				props.put(Constants.Template_Images.thumb, ai.fullArg.substring(Constants.Template_Images.thumb.length()+1));
+				props.put(Constants.Template_Images.type, "thumb");
 				continue;
 			}
 
@@ -262,7 +262,7 @@ public class ImageProperties extends StringSettings<EImageProperties> {
 					|| Constants.Position.right.equals(ai.fullArg)
 					|| Constants.Position.center.equals(ai.fullArg)) {
 				// left/center/right
-				props.put(Constants.Images.location, ai.fullArg);
+				props.put(Constants.Template_Images.location, ai.fullArg);
 				continue;
 			}
 			
@@ -275,48 +275,48 @@ public class ImageProperties extends StringSettings<EImageProperties> {
 				continue;
 			}
 			
-			if (ai.fullArg.startsWith(Constants.Images.link + SEP)) {
+			if (ai.fullArg.startsWith(Constants.Template_Images.link + SEP)) {
 				// link=<custom link>
-				props.put(Constants.Images.link, ai.fullArg.substring(Constants.Images.link.length()+1));
+				props.put(Constants.Template_Images.link, ai.fullArg.substring(Constants.Template_Images.link.length()+1));
 				continue;
 			}
 			
-			if (ai.fullArg.startsWith(Constants.Images.alt + SEP)) {
+			if (ai.fullArg.startsWith(Constants.Template_Images.alt + SEP)) {
 				// alt=<alternative text>
-				props.put(Constants.Images.alt, ai.fullArg.substring(Constants.Images.alt.length()+1));
+				props.put(Constants.Template_Images.alt, ai.fullArg.substring(Constants.Template_Images.alt.length()+1));
 				continue;
 			}
 			
 			mCaption = pCaption.matcher(ai.fullArg);
 			if (mCaption.matches()) {
 				// caption=<image caption>
-				props.put(Constants.Images.caption, mCaption.group(1));
+				props.put(Constants.Template_Images.caption, mCaption.group(1));
 				continue;
 			}
 
 
-			if (Constants.Images.noscale.equals(ai.fullArg)) {
+			if (Constants.Template_Images.noscale.equals(ai.fullArg)) {
 				// noscale
 				// Indicates that the image should not be scaled on the image page
-				props.put(Constants.Images.noscale, "true");
+				props.put(Constants.Template_Images.noscale, "true");
 				continue;
 			}
 			
-			if (Constants.Images.clear.equals(ai.fullArg)) {
+			if (Constants.Template_Images.clear.equals(ai.fullArg)) {
 				// clear
-				props.put(Constants.Images.clear, "both");
+				props.put(Constants.Template_Images.clear, "both");
 				continue;
 			}
-			if (ai.fullArg.startsWith(Constants.Images.clear + SEP)) {
+			if (ai.fullArg.startsWith(Constants.Template_Images.clear + SEP)) {
 				// clear=<left/right>
-				props.put(Constants.Images.clear, ai.fullArg.substring(Constants.Images.clear.length() + 1));
+				props.put(Constants.Template_Images.clear, ai.fullArg.substring(Constants.Template_Images.clear.length() + 1));
 				continue;
 			}
 			
 
 			if (ai.fullArg.startsWith("ld" + SEP)) {
 				// ld=<long description>
-				props.put(Constants.Images.longDesc, ai.fullArg.substring(3));
+				props.put(Constants.Template_Images.longDesc, ai.fullArg.substring(3));
 				continue;
 			}
 
@@ -328,10 +328,10 @@ public class ImageProperties extends StringSettings<EImageProperties> {
 				}
 				append_(EImageProperties.text, ai.fullArg);
 				
-				String s = props.get(Constants.Images.text);
+				String s = props.get(Constants.Template_Images.text);
 				if (s == null) { s = ""; }
 				else { s += "&#124;"; }
-				props.put(Constants.Images.text, s + ai.fullArg);
+				props.put(Constants.Template_Images.text, s + ai.fullArg);
 			}
 		}
 		

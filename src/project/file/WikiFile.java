@@ -81,7 +81,7 @@ public abstract class WikiFile {
 	/** @see #addGalleryProperties(GalleryProperties) for inserting new properties! */
 	public ArrayList<GalleryProperties> galleryPropertiesList = new ArrayList<GalleryProperties>();
 	/** List of reference bindings.
-	 * @see {@link Constants.References} for the bound names */
+	 * @see {@link Constants.Template_References} for the bound names */
 	public HashMap<String, PTMState> references = null;
 
 	private ArrayList<NamespaceObject> linkNamespaces;
@@ -205,7 +205,7 @@ public abstract class WikiFile {
 			if (tasks.contains(task.desc())) {
 				task.parse(this);
 			} else {
-				System.err.println("Omitted: " + task.desc().name);
+				System.err.printf("Omitted: %s (%s)\n", task.desc().name, task.desc().description);
 			}
 		} while ((task = task.nextTask()) != null);
 	}

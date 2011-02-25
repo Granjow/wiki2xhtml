@@ -1,6 +1,5 @@
 package src;
 
-import java.awt.event.KeyEvent;
 import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -8,8 +7,6 @@ import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import javax.swing.KeyStroke;
-import javax.swing.filechooser.FileFilter;
 
 import src.project.settings.Settings.Checker;
 import src.project.settings.Settings.ValuePreparser;
@@ -125,66 +122,6 @@ public final class Constants {
 //				" -s hd --source-dir=doc/txt --target-dir=help err404.php index.txt help.txt doc.txt download.txt quickstart.txt quickstart-ru.txt quickstart-it.txt news.txt faq.txt php.txt " +
 //				"examples.txt ex-php-reload.php doc-design.txt quickref.txt about.txt changelog.txt testpage.txt links.txt usage.txt");
 
-		/** Special command line arguments */
-		public static final class Special {
-
-			public static final String menufileUpdater = "menu";
-			public static final String templateUpdater = "template";
-
-		}
-
-		/** Command line arguments (like -f footer.txt) for wiki2xhtml
-		 * @deprecated */
-		public static final class Arg {
-
-			public static final String menu = "-m";
-			public static final String style = "-s";
-			public static final String common = "-c";
-			public static final String sourceDir = "--sd";
-			public static final String targetDir = "--td";
-			public static final String footer = "-f";
-
-		}
-
-		/** Combined command line arguments (like --footer=f.txt) for wiki2xhtml
-		 * @deprecated */
-		public static final class CombinedArg {
-
-			public static final String common = "--common=";
-			public static final String footer = "--footer=";
-			public static final String lang = "--lang=";
-			public static final String menu = "--menu-file=";
-			public static final String sitemap = "--sitemap=";
-			public static final String style = "--style=";
-			public static final String sourceDir = "--source-dir=";
-			public static final String targetDir = "--target-dir=";
-		}
-
-		/** Command line flags (like --dead) for wiki2xhtml with no further arguments
-		 * @deprecated */
-		public static final class Flags {
-
-			public static final String dead = "--dead";
-			public static final String debug = "--debug";
-			public static final String help = "-h";
-			public static final String helpLong = "--help";
-			public static final String helpfilesDe = "--helpfiles-de";
-			public static final String helpfiles = "--helpfiles";
-			public static final String noupdatecheck = "--noupdatecheck";
-			public static final String incremental = "--incremental";
-			public static final String standard = "--standard";
-			public static final String silent = "--silent";
-			public static final String verbose = "--verbose";
-			public static final String updateCheck = "--www";
-
-			public static final String onlyCode = "--only-code";
-			public static final String stdout = "--stdout";
-			public static final String removeLinebreaks = "--remove-linebreaks";
-			public static final String typos = "--typos";
-
-			public static final String gui = "--gui";
-
-		}
 		
 		public static final class FileArgs {
 			
@@ -192,10 +129,6 @@ public final class Constants {
 			public static final String noParse = "noparse";
 			
 		}
-
-		public static final String[] obsoleteFlags = new String[] {"-pn", "-pns", "--header" };
-		public static final String[] obsoleteArgs = new String[] {"-i", "-t", "--index-file", "--title="};
-		public static final String[] obsoleteCombined = new String[] {"--header=",  };
 
 	}
 	
@@ -210,9 +143,68 @@ public final class Constants {
 		 * Also for being used like <code>style="color: #444; {{{style|}}}"</code> in the template. */
 		public static final String style = "style";
 	}
+	
+	public static final class Links {
+		
+		/**
+		 * @since wiki2xhtml 3.4
+		 * TODO 0 Doc: Link arguments
+		 */
+		public static enum LinksE {
+			/**
+			 * <p>Decides whether a link also has to be disabled
+			 * when it links to an anchor in the current page.</p>
+			 * 
+			 * <p>Example: In navigation bars:<br/>
+			 * <code>[[p1.html#top|First|disable]] [[p2.html#top|Second|disable]]</code><br/>
+			 * If you're on page p1.html, the first link needs to be disabled. However links like<br/>
+			 * <code>[[#top|Go to top of the page]]</code><br/>
+			 * must _not_ be disabled, therefore this argument.</p>
+			 */
+			disable ("disable"),
+			/**
+			 * Additional arguments for the link
+			 */
+			args ("args");
+			
+			private final String arg;
+			LinksE(String arg) {
+				this.arg = arg;
+			}
+			public String arg() { return arg; }
+		}
+		
+		/** Expression for URIs to be recognized.
+		 *  @since wiki2xhtml 3.4 */
+		public static final String supportedURIs = "https?://|ftps?://";
+		public static final String supportedURIsShortened = "www\\.|ftp\\.";
+		
+	}
+
+	/** Menu tags which may followed after a <code>#!</code> at line beginning in the menu file. */
+	public static final class MenuTags {
+
+		public static final String linkDeactivate = "link_deactivate";
+		public static final String linkDeactivateNot = "link_deactivate0";
+
+		public static final String linkStrong = "link_strong";
+		public static final String linkStrongNot = "link_strong0";
+
+	}
+
+	/** Parser functions */
+	public static final class ParserFunctions {
+
+		public static final String pIf = "#if:";
+		public static final String pIfeq = "#ifeq:";
+		public static final String pSwitch = "#switch:";
+
+		public static final String defaultValue = "#default";
+
+	}
 
 	/** Arguments for images */
-	public static final class Images {
+	public static final class Template_Images {
 
 		/** Additional HTML arguments for the image
 		public static final String args = "args=";
@@ -262,68 +254,6 @@ public final class Constants {
 		public static final String galleryComment = "//";
 
 	}
-	
-	public static final class Links {
-		
-		/**
-		 * @since wiki2xhtml 3.4
-		 * TODO 0 Doc: Link arguments
-		 */
-		public static enum LinksE {
-			/**
-			 * <p>Decides whether a link also has to be disabled
-			 * when it links to an anchor in the current page.</p>
-			 * 
-			 * <p>Example: In navigation bars:<br/>
-			 * <code>[[p1.html#top|First|disable]] [[p2.html#top|Second|disable]]</code><br/>
-			 * If you're on page p1.html, the first link needs to be disabled. However links like<br/>
-			 * <code>[[#top|Go to top of the page]]</code><br/>
-			 * must _not_ be disabled, therefore this argument.</p>
-			 */
-			disable ("disable"),
-			/**
-			 * Additional arguments for the link
-			 */
-			args ("args");
-			
-			private final String arg;
-			LinksE(String arg) {
-				this.arg = arg;
-			}
-			public String arg() { return arg; }
-		}
-		
-		/** @deprecated */
-		public static final String disable = "|disable";
-		
-		/** Expression for URIs to be recognized.
-		 *  @since wiki2xhtml 3.4 */
-		public static final String supportedURIs = "https?://|ftps?://";
-		public static final String supportedURIsShortened = "www\\.|ftp\\.";
-		
-	}
-
-	/** Menu tags which may followed after a <code>#!</code> at line beginning in the menu file. */
-	public static final class MenuTags {
-
-		public static final String linkDeactivate = "link_deactivate";
-		public static final String linkDeactivateNot = "link_deactivate0";
-
-		public static final String linkStrong = "link_strong";
-		public static final String linkStrongNot = "link_strong0";
-
-	}
-
-	/** Parser functions */
-	public static final class ParserFunctions {
-
-		public static final String pIf = "#if:";
-		public static final String pIfeq = "#ifeq:";
-		public static final String pSwitch = "#switch:";
-
-		public static final String defaultValue = "#default";
-
-	}
 
 	/** Positions */
 	public static final class Position {
@@ -334,7 +264,19 @@ public final class Constants {
 
 	}
 	
-	public static final class References {
+	public static final class Template_Page {
+		public static final String h1 = "h1";
+		public static final String homelink = "homelink";
+		public static final String icon = "icon";
+		public static final String text = "text";
+		public static final String title = "title";
+		// Metadata
+		public static final String keywords = "keywords";
+		public static final String lang = "lang";
+		public static final String author = "author";
+	}
+	
+	public static final class Template_References {
 		/** Reference text */
 		public static final String text = "text";
 		/** Number of the reference (1, 2, ...) */
@@ -493,65 +435,6 @@ public final class Constants {
 		public static final String lastArgs = "LastArguments";
 		public static final String locale = "Locale";
 		public static final String ignoreNewVersion = "IgnoreNewVersion";
-
-	}
-
-	public static final class Keys {
-
-		public static final KeyStroke quit = KeyStroke.getKeyStroke(KeyEvent.VK_Q, KeyEvent.CTRL_DOWN_MASK);
-		public static final KeyStroke close = KeyStroke.getKeyStroke(KeyEvent.VK_W, KeyEvent.CTRL_DOWN_MASK);
-		public static final KeyStroke esc = KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0);
-		public static final KeyStroke ctrlNext = KeyStroke.getKeyStroke(KeyEvent.VK_RIGHT, KeyEvent.CTRL_DOWN_MASK);
-		public static final KeyStroke ctrlPrev = KeyStroke.getKeyStroke(KeyEvent.VK_LEFT, KeyEvent.CTRL_DOWN_MASK);
-		public static final KeyStroke ctrlPgDown = KeyStroke.getKeyStroke(KeyEvent.VK_PAGE_DOWN, KeyEvent.CTRL_DOWN_MASK);
-		public static final KeyStroke ctrlPgUp = KeyStroke.getKeyStroke(KeyEvent.VK_PAGE_UP, KeyEvent.CTRL_DOWN_MASK);
-
-		public static final KeyStroke toggleCodeWindow = KeyStroke.getKeyStroke(KeyEvent.VK_C, KeyEvent.ALT_DOWN_MASK);
-
-	}
-
-	public static final class Filters {
-
-		/**
-		 * Filter filtering unwanted files in the style directory.
-		 */
-		public static final java.io.FileFilter designFiles = new java.io.FileFilter() {
-			@Override
-			public boolean accept(File f) {
-				String name = f.getName().toLowerCase();
-				if (name.endsWith(".tmp") || name.endsWith("~") || name.endsWith(".bak") || name.endsWith(".xcf")
-						|| name.equals(".svn") || name.equals(".cvs")) {
-					return false;
-				}
-				return true;
-			}
-		};
-
-		/**
-		 * Files which will be copied only and not processed by wiki2xhtml.
-		 */
-		public static final java.io.FileFilter copyOnly = new java.io.FileFilter() {
-			@Override
-			public boolean accept(File f) {
-				if (f.isDirectory())
-					return true;
-				String name = f.getName();
-				return
-					name.endsWith(".html") || name.endsWith(".htm");
-			}
-		};
-
-		public static final FileFilter scriptFile = new FileFilter() {
-			@Override
-			public boolean accept(File f) {
-				Matcher m = RegExpressions.scriptModeFile.matcher(f.getName());
-				return m.find();
-			}
-			@Override
-			public String getDescription() {
-				return "Script file, e.g. php or asp";
-			}
-		};
 
 	}
 

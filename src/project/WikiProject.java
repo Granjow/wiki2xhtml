@@ -43,7 +43,7 @@ public class WikiProject {
 	private String styleOutputDirectory;
 
 	public Sitemap sitemap = new Sitemap();
-	private WikiStyle wikiStyle = new WikiStyle(this);
+	public WikiStyle wikiStyle = new WikiStyle(this);
 	
 	// Settings
 	private Settings<SettingsE, String> projectSettings = new PageSettings();

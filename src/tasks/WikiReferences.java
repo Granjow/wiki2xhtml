@@ -24,7 +24,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import src.Container_Resources;
-import src.Constants.References;
+import src.Constants.Template_References;
 import src.Statistics;
 import src.project.FallbackFile;
 import src.project.file.WikiFile;
@@ -122,10 +122,10 @@ public class WikiReferences extends WikiTask {
 					if (!references.containsKey(name)) {
 						refNr++;
 						sigma = new PTMState()
-							.b(References.text, m.group(3))
-							.b(References.number, Integer.toString(refNr))
-							.b(References.refID, name + "-ref")
-							.b(References.noteID, name + "-note");
+							.b(Template_References.text, m.group(3))
+							.b(Template_References.number, Integer.toString(refNr))
+							.b(Template_References.refID, name + "-ref")
+							.b(Template_References.noteID, name + "-note");
 						references.put(name, sigma);
 						System.out.println("Reference added: " + name);
 						
@@ -192,8 +192,8 @@ public class WikiReferences extends WikiTask {
 			}
 			
 			PTMState sigma = new PTMState()
-				.b(References.text, out.toString())
-				.b(References.container, "true");
+				.b(Template_References.text, out.toString())
+				.b(Template_References.container, "true");
 			
 			try {
 				result = new PTMRootNode(template, sigma).evaluate();
@@ -213,7 +213,7 @@ public class WikiReferences extends WikiTask {
 		public int compare(PTMState o1, PTMState o2) {
 			int diff;
 			try {
-				diff = Integer.parseInt(o1.resolve(References.number)) - Integer.parseInt(o2.resolve(References.number));
+				diff = Integer.parseInt(o1.resolve(Template_References.number)) - Integer.parseInt(o2.resolve(Template_References.number));
 			} catch (NumberFormatException e) {
 				diff = 0;
 			}

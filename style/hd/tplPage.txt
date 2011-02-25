@@ -25,21 +25,18 @@
 <div id="h1">
 {{{h1}}}
 </div><!--end h1-->
-}}
 
-{{#if:{{{menu|}}}|
+}}{{#if:{{{menu|}}}|
 <div id="menu">
 {{{menu}}}
 </div><!-- end menu -->
-}}
 
-{{#if:{{{content|}}}|
+}}{{#if:{{{text|}}}|
 <div id="content">
-{{{content}}}
+{{{text}}}
 </div><!-- end content -->
-}}
 
-{{#if:{{{footer|}}}|
+}}{{#if:{{{footer|}}}|
 <div id="footer">
 {{{footer}}}
 </div><!-- end footer -->

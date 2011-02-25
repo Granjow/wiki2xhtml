@@ -4,8 +4,8 @@ package src;
 import java.io.File;
 import java.io.IOException;
 
+import src.project.FallbackFile;
 import src.project.WikiProject;
-import src.project.WikiProject.FallbackFile;
 import src.project.WikiProject.InvalidLocationException;
 import src.project.WikiProject.InvalidOutputDirectoryLocationException;
 import src.project.file.LocalWikiFile;
