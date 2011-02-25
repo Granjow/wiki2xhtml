@@ -16,7 +16,7 @@ import src.resources.ResProjectSettings.ImagepageCaptionAlternatives;
 
 
 /*
- *   Copyright (C) 2007-2010 Simon Eugster <granjow@users.sf.net>
+ *   Copyright (C) 2007-2011 Simon Eugster <granjow@users.sf.net>
 
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -369,6 +369,11 @@ public final class Constants {
 					System.err.println("Argument must be eiter true or false");
 					return false;
 				}
+			};
+		};
+		public static final Checker<String> equalSignChecker = new Checker<String>() {
+			public boolean check(String value) {
+				return value.indexOf('=') >= 0;
 			};
 		};
 		public static final Checker<String> captionAlternativeChecker = new Checker<String>() {

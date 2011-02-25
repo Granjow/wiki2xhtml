@@ -21,11 +21,15 @@ public class PageSettingsReader  {
 			reader.attachReader(new SettingReader<SettingsE, String>() {
 				
 				public boolean read(Settings<SettingsE, String> settings, StringBuffer in, boolean remove) {
+					boolean worked = false;
 					String val = getProperty(p, content, remove);
 					if (val != null) {
-						return settings.set_(p, val);
+						worked = settings.set_(p, val);
+						if (!worked) {
+							System.err.printf("Could not set {{%s:%s}}. Argument is not valid.\n", p.keyword(), val);
+						}
 					}
-					return false;
+					return worked;
 				}
 				public String getID() {
 					return p.keyword().toString();

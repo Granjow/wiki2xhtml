@@ -18,6 +18,11 @@
 package src.tasks;
 
 
+import java.io.IOException;
+import java.io.StringReader;
+
+import java.io.BufferedReader;
+
 import src.Constants.Template_Page;
 import src.project.file.WikiFile;
 import src.ptm.PTMObject.RecursionException;
@@ -44,9 +49,14 @@ public class PageTemplate extends WikiTask {
 			content = new StringBuffer(e.getMessage());
 			e.printStackTrace();
 		}
+
+		PTMState sigma = new PTMState();
 		
-		PTMState sigma = new PTMState()
-			.b(Template_Page.text, file.getContent().toString())
+		// Add project-wide name/value bindings set with {{Bind:name=value}} (overwritten by newer values below)
+		bindValues(sigma, file.getProperty(SettingsE.bind, false));
+		
+		// Add general name/value bindings
+		sigma.b(Template_Page.text, file.getContent().toString())
 			.b(Template_Page.title, file.getProperty(SettingsE.title, true))
 			.b(Template_Page.h1, file.getProperty(SettingsE.h1, true))
 			.b(Template_Page.homelink, file.getProperty(SettingsE.homelink, true))
@@ -55,6 +65,11 @@ public class PageTemplate extends WikiTask {
 			.b(Template_Page.lang, file.getProperty(SettingsE.lang, true))
 			.b(Template_Page.keywords, file.getProperty(SettingsE.keywords, true));
 		
+		// Add page specific name/value bindings
+		bindValues(sigma, file.getProperty(SettingsE.bind, false));
+		
+		
+		// Apply the template
 		PTMRootNode root = new PTMRootNode(content, sigma);
 		root.setTemplateDirectory(file.project.projectDirectory());
 		
@@ -64,6 +79,34 @@ public class PageTemplate extends WikiTask {
 			e.printStackTrace();
 		}
 		
+	}
+	
+	private void bindValues(PTMState sigma, String bindings) {
+		if (bindings != null) {
+			BufferedReader br = new BufferedReader(new StringReader(bindings));
+			String line;
+			int pos;
+			String key;
+			String value;
+			try {
+				while ((line = br.readLine()) != null) {
+					System.err.println(">>>>>>>> " + line);
+					pos = line.indexOf('=');
+					if (pos > 0) {
+						key = line.substring(0, pos);
+						value = line.substring(pos+1);
+						if (key.length() > 0 && value.length() > 0) {
+							sigma.b(key, value);
+							System.out.printf("Bound %s to %s.\n", key, value);
+						} else {
+							System.out.printf("Did not bind %s to %s.\n", key, value);
+						}
+					}
+				}
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 
 }

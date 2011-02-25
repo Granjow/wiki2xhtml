@@ -24,7 +24,7 @@ public final class ResProjectSettings {
 	 */
 	public static enum SettingsE {
 		/** Meta data: Author */			author ("Author"),
-//		/** Default title for all pages */	defaultTitle ("DefaultTitle"), // use title for project instead
+		/** Name/Value bindings */			bind ("Bind", true, "\n", Checkers.equalSignChecker),
 		/** Meta data: Page description */	desc ("Desc(?:ription)?"),
 		/** Footer */						footer ("Footer"),
 		/**
