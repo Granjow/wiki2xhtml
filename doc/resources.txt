@@ -1,0 +1,9 @@
++ robots.txt
++ wx-icon.png
++ *.jpg
+- *.txt
+- *.args
+- *.php
+- *~
+- docs/*.odt
+- docs/*.ott

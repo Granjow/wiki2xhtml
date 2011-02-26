@@ -22,9 +22,7 @@
 <a{{#if:{{{homelink|}}}| href={{{homelink}}} }} id="header"></a><!-- end header -->
 
 {{#if:{{{h1|}}}|
-<div id="h1">
-{{{h1}}}
-</div><!--end h1-->
+<div id="h1"><h1>{{{h1}}}</h1></div>
 
 }}{{#if:{{{menu|}}}|
 <div id="menu">
