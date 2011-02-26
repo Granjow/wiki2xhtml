@@ -18,27 +18,30 @@ public class HeadingTester extends junit.framework.TestCase {
 	
 	@Test
 	public void testSimpleHeadings() throws IOException {
-		TestObject to;
-		to = new TestObject("==Titel==", "<h2 id=\"h_Titel\">Titel</h2>");
-		assertEquals(to.correct(), to.real());
-		
-		to = new TestObject("== Titel ==  ", "<h2 id=\"h_Titel\">Titel</h2>");
-		assertEquals(to.correct(), to.real());
-		
-		to = new TestObject("=== Titel ===  ", "<h3 id=\"h_Titel\">Titel</h3>");
-		assertEquals(to.correct(), to.real());
+		assertEquals("<h2 id=\"h_Titel\">Titel</h2>", p("==Titel=="));
+		assertEquals("<h2 id=\"h_Titel\">Titel</h2>", p("== Titel ==  "));
+		assertEquals("<h3 id=\"h_Titel\">Titel</h3>", p("=== Titel ===  "));
+		assertEquals("<h2 id=\"h_H2\">H2</h2>\n<h3 id=\"h_H3\">H3</h3>", p("== H2 ==\n=== H3 ==="));
 	}
 	
 	@Test
 	public void testIDs() throws IOException {
-		TestObject to;
-		to = new TestObject("==Titel==\n==Titel==", "<h2 id=\"h_Titel\">Titel</h2>\n<h2 id=\"h_Titel_\">Titel</h2>");
-		System.out.println(to.real());
-		assertEquals(to.correct(), to.real());
+		assertEquals("<h2 id=\"h_Titel\">Titel</h2>\n<h2 id=\"h_Titel_\">Titel</h2>", p("==Titel==\n==Titel=="));
+	}
+	
+	@Test
+	public void testAppending() throws IOException {
+		assertEquals("a<h2 id=\"h_Titel\">Titel</h2>b", p("a\n==Titel==\nb").replace("\n", ""));
 	}
 	
 	
 
+	
+
+	private static final String p(String testString) throws IOException {
+		TestObject to = new TestObject(testString, "");
+		return to.real();
+	}
 	
 	private static class TestObject extends unittests.TestObject {
 		public TestObject(String test, String result) throws IOException {

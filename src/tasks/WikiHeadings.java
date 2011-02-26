@@ -36,6 +36,8 @@ public class WikiHeadings extends WikiTask {
 
 		for (byte i = 6; i >= 2; i--) {
 
+			in = file.getContent();
+			
 			Matcher mHeading = RegExpressions.wikiHeading(i).matcher(in);
 			last = 0;
 
