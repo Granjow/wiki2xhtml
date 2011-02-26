@@ -24,6 +24,7 @@ import java.io.StringReader;
 import java.io.BufferedReader;
 
 import src.Constants.Template_Page;
+import src.project.WikiMenu;
 import src.project.file.WikiFile;
 import src.ptm.PTMObject.RecursionException;
 import src.ptm.PTMRootNode;
@@ -32,7 +33,7 @@ import src.resources.ResProjectSettings.SettingsE;
 import src.tasks.Tasks.Task;
 
 public class PageTemplate extends WikiTask {
-
+	
 	public WikiTask nextTask() {
 		return new WikiCleanup();
 	}
@@ -62,8 +63,10 @@ public class PageTemplate extends WikiTask {
 			.b(Template_Page.homelink, file.getProperty(SettingsE.homelink, true))
 			.b(Template_Page.icon, file.getProperty(SettingsE.icon, true))
 			.b(Template_Page.author, file.getProperty(SettingsE.author, true))
+			.b(Template_Page.keywords, file.getProperty(SettingsE.keywords, true))
 			.b(Template_Page.lang, file.getProperty(SettingsE.lang, true))
-			.b(Template_Page.keywords, file.getProperty(SettingsE.keywords, true));
+			.b(Template_Page.menu, buildMenu(file))
+			;
 		
 		// Add page specific name/value bindings
 		bindValues(sigma, file.getProperty(SettingsE.bind, false));
@@ -107,6 +110,16 @@ public class PageTemplate extends WikiTask {
 				e.printStackTrace();
 			}
 		}
+	}
+	
+	
+	private String buildMenu(WikiFile file) {
+		String out = null;
+		WikiMenu menu = file.project.wikiMenu();
+		if (menu != null) {
+			out = menu.getMenu(file.internalName(), WikiMenu.SearchLocation.LINK).toString();
+		}
+		return out;
 	}
 
 }

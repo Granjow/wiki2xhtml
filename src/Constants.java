@@ -268,6 +268,7 @@ public final class Constants {
 		public static final String h1 = "h1";
 		public static final String homelink = "homelink";
 		public static final String icon = "icon";
+		public static final String menu = "menu";
 		public static final String text = "text";
 		public static final String title = "title";
 		// Metadata

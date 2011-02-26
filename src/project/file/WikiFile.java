@@ -48,23 +48,24 @@ public abstract class WikiFile {
 	
 	public final boolean sitemap;
 	
-	private final boolean parse;
+	protected final boolean parse;
 	/** <p>Filename of this file.<br/>
 	 * Usually denotes the file name relative to the project directory. Some examples:</p>
 	 * <ul>
 	 * <li><code>project/filename1</code> with <code>filename1 = index.txt</code><li>
 	 * <li><code>project/filename2</code> with <code>filename2 = pics/summer2010.txt</code></li>
 	 * </ul> 
-	 * @see {@link #internalName} -- the name used for linking.
+	 * @see {@link #internalName()} -- the name used for linking.
 	 * @deprecated until correct usage of internalName is checked.
 	 */
 	public final String name;
+	private String internalName;
 	/**
-	 * <p>An internal representation of the file name, which always uses / as file separator
+	 * <p>An internal representation of the output file name, which always uses / as file separator
 	 * and nothing else. To be used in Wiki-Links, for OS-wide consistency.</p>
-	 * @see {{@link #name}
+	 * @see {@link #name}
 	 */
-	public final String internalName;
+	public String internalName() { return internalName; }
 	public final Generators generators;
 	
 	public final WikiProject project;

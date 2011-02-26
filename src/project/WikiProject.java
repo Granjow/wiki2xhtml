@@ -23,6 +23,7 @@ import java.util.HashMap;
 import java.util.Vector;
 
 import src.Constants;
+import src.Wiki2xhtmlArgsParser;
 import src.project.FallbackFile.FallbackLocation;
 import src.project.FallbackFile.NoFileFoundException;
 import src.project.file.VirtualWikiFile;
@@ -44,9 +45,11 @@ public class WikiProject {
 
 	public Sitemap sitemap = new Sitemap();
 	public WikiStyle wikiStyle = new WikiStyle(this);
+	public Wiki2xhtmlArgsParser argsParser = null;
 	
 	// Settings
 	private Settings<SettingsE, String> projectSettings = new PageSettings();
+	private WikiMenu wikiMenu = null;
 	
 	private int id = 0;
 	private int nextID() {
@@ -118,6 +121,25 @@ public class WikiProject {
 	public File styleOutputDirectory() { return new File(outputDirectory.getAbsolutePath() + File.separator + styleOutputDirectory); }
 	public void setStyleOutputDirectory(String dirName) {
 		styleOutputDirectory = dirName;
+	}
+	
+	/** Returns the WikiMenu object or <strong><code>null</code></strong>, if no menu is set. */
+	public WikiMenu wikiMenu() {
+		if (wikiMenu == null && argsParser != null) {
+			String menuLocation = (String)argsParser.getOptionValue(argsParser.menuFile);
+			if (menuLocation != null) {
+				try {
+					FallbackFile fMenu = locate(menuLocation);
+					String content = fMenu.getContent().toString();
+					wikiMenu = new WikiMenu();
+					wikiMenu.readNewMenu(content);
+					
+				} catch (Exception e) {
+					System.err.println(e.getMessage());
+				}
+			}
+		}
+		return wikiMenu;
 	}
 	
 	

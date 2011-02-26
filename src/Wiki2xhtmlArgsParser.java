@@ -106,6 +106,9 @@ public class Wiki2xhtmlArgsParser extends CmdLineParser {
 		}
 		
 		
+		project.argsParser = this;
+		
+		
 		// Output directory
 		if (project.outputDirectory() != null) {
 			alternative = project.outputDirectory().getAbsolutePath();

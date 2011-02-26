@@ -15,6 +15,7 @@ import src.commentator.Logger;
 import src.commentator.CommentAtor.CALevel;
 import src.pagesplitter.SplitPageContainer;
 import src.pagesplitter.SplitPageLinks;
+import src.project.WikiMenu;
 import src.settings.XhtmlSettings;
 import src.tools.UpdateMenufile;
 import src.utilities.IORead_Stats;

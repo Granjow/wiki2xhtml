@@ -32,6 +32,22 @@ public class LocalWikiFile extends WikiFile {
 
 	private final File fSrc;
 	private final File fDest;
+	
+	/**
+	 * @return <p>The {@link WikiFile#internalName()} of the local file.
+	 * <code>.txt</code> files will be renamed to <code>.html</code> if they are parsed.</p>
+	 * <p>Example: {@code my\file.txt} results in {@code my/file.html}</p>
+	 */
+	public final String internalName() {
+		return buildInternalName(super.internalName());
+	}
+	private final String buildInternalName(String name) {
+		String destName = name;
+		if (parse && name.endsWith(".txt")) {
+			destName = destName.substring(0, destName.length()-".txt".length()) + ".html";
+		}
+		return destName;
+	}
 
 	/** Creates a new WikiFile. Input and output files are generated automatically.
 	 * Does NOT check whether the location is valid. (E.g. input file equals output file.)*/
@@ -54,12 +70,7 @@ public class LocalWikiFile extends WikiFile {
 			fDest.deleteOnExit();
 		} else {
 			fSrc = new File(project.projectDirectory().getAbsolutePath() + File.separator + name);
-			String destName = name;
-			if (parse) {
-				if (name.endsWith(".txt")) {
-					destName = destName.substring(0, destName.length()-".txt".length()) + ".html";
-				}
-			}
+			String destName = buildInternalName(name);
 			fDest = new File(project.outputDirectory().getAbsolutePath() + File.separator + destName);
 			
 			System.out.printf("Input file: %s -- Output file: %s\n", fSrc.getAbsolutePath(), fDest.getAbsolutePath());

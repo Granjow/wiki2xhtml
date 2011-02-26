@@ -1,7 +1,6 @@
-package src;
+package src.project;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.IOException;
 import java.io.StringReader;
 import java.util.ArrayList;
@@ -10,9 +9,11 @@ import java.util.Vector;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import src.Constants;
 import src.project.file.VirtualWikiFile;
+import src.resources.RegExpressions;
+import src.tasks.WikiFormattings;
 import src.tasks.Tasks.Task;
-import src.utilities.IORead_Stats;
 
 
 /*
@@ -44,10 +45,10 @@ import src.utilities.IORead_Stats;
  */
 public class WikiMenu {
 
-	/** Search for a name in the entries */
-	final static int NAME = 1 << 0;
-	/** Search for a link in the entries */
-	final static int LINK = 1 << 1;
+	public enum SearchLocation {
+		NAME,
+		LINK
+	};
 
 	/** Contains the whole menu */
 	private ArrayList<MenuEntry> menu = new ArrayList<MenuEntry>();
@@ -63,10 +64,9 @@ public class WikiMenu {
 	public final int MAX_DEPTH = 3;
 
 	/** Reads the menu from a menu file */
-	public void readNewMenu(File file) throws IOException {
-		StringBuffer in = IORead_Stats.readSBuffer(file);
+	public void readNewMenu(String content) {
 
-		BufferedReader b = new BufferedReader(new StringReader(in.toString()));
+		BufferedReader b = new BufferedReader(new StringReader(content));
 		ArrayList<String> al;
 		String line;
 
@@ -134,17 +134,19 @@ public class WikiMenu {
 	/**
 	 * @return The generated menu in XHTML
 	 */
-	public StringBuffer getMenu() {
-		VirtualWikiFile f = new VirtualWikiFile(null, "--", false, true, getMenuAsList());
-		f.addTask(Task.Lists);
-		f.parse();
-		return f.getContent();
+	synchronized public StringBuffer getMenu(String searchText, SearchLocation where) {
+		VirtualWikiFile vf = new VirtualWikiFile(VirtualWikiFile.createEmptyProject(), "--", false, true, getMenuAsList(searchText, where));
+		vf.removeAllTasks();
+		vf.addTask(Task.Lists);
+		vf.parse();
+		return vf.getContent();
 	}
 
 	/**
 	 * @return The generated menu, as a Wiki-List
 	 */
-	public StringBuffer getMenuAsList() {
+	public StringBuffer getMenuAsList(String searchText, SearchLocation where) {
+		openItem(searchText, where);
 		StringBuffer s = new StringBuffer();
 		boolean openChild;
 
@@ -180,17 +182,22 @@ public class WikiMenu {
 	 * @param text The item to open
 	 * @return false, if the item couln't be found
 	 */
-	public boolean openItem(String text, int what) {
+	private boolean openItem(String text, SearchLocation where) {
 		Vector<Short> v;
 
 		/*
 		 * Find out whether the user wants to search for a link
 		 * or the text entry
 		 */
-		if ((what & NAME) > 0)
+		switch (where) {
+		case NAME:
 			v = findByName(text);
-		else
+			break;
+		case LINK:
+		default:
 			v = findByLink(text);
+			break;
+		}
 
 		/*
 		 * Close all entries
@@ -322,7 +329,7 @@ public class WikiMenu {
 		String arguments;
 		int pos;
 
-		Pattern p = Resources.Regex.listGroupArguments;
+		Pattern p = RegExpressions.listGroupArguments;
 
 		try {
 			Matcher m;
@@ -527,8 +534,8 @@ public class WikiMenu {
 				return new StringBuffer("<hr />");
 			else {
 				StringBuffer out;
-				out = Formattings.makeBoldType(new StringBuffer(in), false);
-				out = Formattings.makeItalicType(out, false);
+				out = WikiFormattings.makeBoldType(new StringBuffer(in));
+				out = WikiFormattings.makeItalicType(out);
 				return out;
 			}
 		}
