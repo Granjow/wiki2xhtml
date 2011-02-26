@@ -39,6 +39,12 @@ public class TablesTester extends junit.framework.TestCase {
 		assertEquals("<table><tr><td #args#>a</td><td #args2#>b</td></tr></table>", p("{|\n| #args# | a || #args2# | b\n|}"));
 	}
 	
+	@Test
+	public void testAppending() throws IOException {
+		assertEquals("A<table><tr><td>a</td><td>b</td></tr></table>B", p("A\n{|\n|a||b\n|}\nB"));
+		assertEquals("<table><tr><td>a</td><td>b</td></tr></table>C", p("{|\n|a||b\n|}C"));
+	}
+	
 	
 	
 	

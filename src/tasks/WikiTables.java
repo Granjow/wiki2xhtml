@@ -77,6 +77,7 @@ public class WikiTables extends WikiTask {
 						if (opened) {
 							ca.ol(funcName + "Table closed at line " + lnr, CALevel.DEBUG);
 							out.append("\n" + closeTr + '\n' + closeTable);
+							out.append(line.substring("|}".length()));
 							opened = false;
 						} else
 							out.append('\n' + line);
