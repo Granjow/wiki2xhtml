@@ -1,15 +1,5 @@
-package src.utilities;
-
-import java.util.ArrayList;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import src.commentator.CommentAtor;
-import src.commentator.CommentAtor.CALevel;
-
-
 /*
- *   Copyright (C) 2007-2010 Simon Eugster <granjow@users.sf.net>
+ *   Copyright (C) 2010-2011 Simon A. Eugster <simon.eu@gmail.com>
 
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -23,8 +13,16 @@ import src.commentator.CommentAtor.CALevel;
 
  *   You should have received a copy of the GNU General Public License
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
- *
  */
+
+package src.utilities;
+
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.TreeSet;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 
 /**
  *
@@ -40,7 +38,7 @@ public class Placeholder {
 	private String patternEnd = "";
 
 	/** Temporarily removed content */
-	public ArrayList<String> content = new ArrayList<String>();
+	public ArrayList<String> content;
 
 	/** Generates a new Placeholder which will temporarily remove the content between patternStart and patternEnd. */
 	public Placeholder(String patternStart, String patternEnd) {
@@ -55,101 +53,106 @@ public class Placeholder {
 	 * @return The input with removed contents
 	 */
 	public StringBuffer removeContent(StringBuffer input) {
-		StringBuffer out = new StringBuffer();
-		content.clear();
+		content = new ArrayList<String>();
+		StringBuffer out;
 
 		Pattern po = Pattern.compile(patternStart);
 		Pattern pc = Pattern.compile(patternEnd);
 
 		Matcher mo = po.matcher(input);
 		Matcher mc = pc.matcher(input);
+		
+		
+		TreeSet<Position> map = new TreeSet<Placeholder.Position>(new Comparator<Position>() {
+			public int compare(Position o1, Position o2) {
+				return o1._start - o2._start;
+			};
+		});
 
-		boolean okay = true;
-		int deep = 0;
-		int start = 0;
-		int contentStart = 0;
-		/** Open */
-		int o = 0;
-		/** Close */
-		int c = 0;
-
-		CommentAtor.getInstance().setDebug();
-
-		if (okay = mo.find()) {
-
-			out.append(input.substring(start, mo.end()));
-			contentStart = mo.end();
-			deep++;
-			try {
-				CommentAtor.getInstance().ol("o>>>" + input.substring(mo.start(), mo.start()+50).replace("\n", "\\ ") + "<<<, " + mo.start() + " " + mo.pattern(), CALevel.DEBUG);
-			} catch (IndexOutOfBoundsException e) {}
-
-		} else {
-
-			return input;
-
+		while (mo.find()) {
+			map.add(new Position(mo.start(), mo.end(), Position.Type.opening));
 		}
-
-		while (okay) {
-
-			if (okay = mc.find()) {
-
-				c = mc.start();
-				try {
-					CommentAtor.getInstance().ol(">c>>" + input.substring(c, c+50).replace("\n", "\\ ") + "<<<, " + c + " " + mc.pattern(), CALevel.DEBUG);
-				} catch (IndexOutOfBoundsException e) {}
-				deep--;
-
-				if (okay = mo.find()) {
-
-					o = mo.start();
-					try {
-						CommentAtor.getInstance().ol("o>>>" + input.substring(o, o+50).replace("\n", "\\ ") + "<<<, " + o + " " + mo.pattern(), CALevel.DEBUG);
-					} catch (IndexOutOfBoundsException e) {}
-
-					if (deep == 0 && o > c) {
-
-						out.append(input.substring(c, mo.end()));
-						content.add(input.substring(contentStart, mc.start()));
-
-						contentStart = mo.end();
-						start = c;
-
+		while (mc.find()) {
+			map.add(new Position(mc.start(), mc.end(), Position.Type.closing));
+		}
+		
+		int depth = 0;
+		Position prev = null;
+		for (Position p : map) {
+			
+			depth += p._type.depthDelta;
+			p._depth = depth;
+			
+			prev = p;
+		}
+		
+		// Mark elements which are enclosed by other elements, e.g. the inner ul tags in:
+		// <ul> <ul></ul> </ul>
+		// These can be ignored since they will be removed by the surrounding ul tags.
+		boolean stop;
+		boolean updatePrev;
+		do {
+			stop = true;
+			prev = null;
+			
+			for (Position p : map) {
+				
+				updatePrev = !p._ignore;
+				
+				if (prev != null && !p._ignore) {
+					if (prev._type == Position.Type.opening && p._type == Position.Type.closing) {
+						if (p._depth > 0) {
+							p._ignore = true;
+							prev._ignore = true;
+							stop = false;
+//							System.out.printf("Ignoring %s (%s) and %s (%s) at %s/%s.\n", prev._type.name, prev._depth, p._type.name, p._depth, prev._start, p._start);
+						}
 					}
-
-					deep++;
-
-				} else {
-
-					if (deep == 0 && o < c) {
-
-						start = mc.start();
-
-					}
-
 				}
-
-			} else {
-//				CommentAtor.getInstance().ol(
-//					String.format("\noooops. Closing element \"%s\" (Regex-Pattern) is missing! " +
-//								  "Please check whether it was wiki2xhtml's fault and report a bug if it is so. File: %s.",
-//								  patternEnd,
-//								  Container_Files.getInstance().currentFilename
-//								 ), CALevel.ERRORS);
-				start = contentStart;
+				
+				if (updatePrev) {
+//					System.out.printf("Updating prev (%s) to %s\n", prev == null ? "null" : prev._start, p._start);
+					prev = p;
+				} else {
+//					System.out.printf("NOT Updating prev (%s) to %s\n", prev == null ? "null" : prev._start, p._start);
+				}
 			}
 
+//			for (Position p : map) {
+//				System.out.printf("Found %s (%s) at %s. Ignored: %s\n", p._type.name, p._depth, p._start, p._ignore);
+//			}
+			
+		} while (!stop);
+		
+		
+		if (map.size() > 0) {
+			int last = 0;
+			out = new StringBuffer();
+			
+			prev = null;
+			for (Position p : map) {
+				
+				if (prev != null && !p._ignore) {
+					assert !prev._ignore;
+					if (prev._type == Position.Type.opening && p._type == Position.Type.closing) {
+						content.add(input.substring(prev._end, p._start));
+						out.append(input.substring(last, prev._end));
+						last = p._start;
+						p = null;
+					}
+				}
+				
+				if (p == null || !p._ignore) {
+					prev = p;
+				}
+				
+			}
+			out.append(input.substring(last));
+		} else {
+			out = input;
 		}
-		try {
-			content.add(input.substring(contentStart, mc.start()));
-		} catch (IllegalStateException e) {
-
-		}
-		out.append(input.substring(start, input.length()));
 
 		return out;
-//		 err.println("copied! " + fs[i].getPath() + " to "
-//		 + dest);
 	}
 
 	/**
@@ -177,7 +180,7 @@ public class Placeholder {
 			counter++;
 			last = m.end();
 		}
-		out.append(input.substring(last, input.length()));
+		out.append(input.substring(last));
 
 		return out;
 	}
@@ -192,6 +195,33 @@ public class Placeholder {
 			this.patternStart = patternStart;
 		if (patternEnd != null)
 			this.patternEnd = patternEnd;
+	}
+	
+	private static class Position {
+		
+		enum Type {
+			opening("opening", +1), closing("closing", -1);
+			
+			@SuppressWarnings("unused")
+			public final String name;
+			public final int depthDelta;
+			
+			Type(String name, int delta) { this.name = name; this.depthDelta = delta; }
+		}
+		
+		public final int _start;
+		public final int _end;
+		public final Type _type;
+		
+		public int _depth = 0;
+		/** If this is a nested element, then it can be ignored (will be removed with the parent element). */
+		public boolean _ignore = false;
+		
+		public Position(int start, int end, Type type) {
+			_start = start;
+			_end = end;
+			_type = type;
+		}
 	}
 
 }

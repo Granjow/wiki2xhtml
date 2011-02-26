@@ -21,6 +21,7 @@ public class ParagraphTester extends junit.framework.TestCase {
 	public void testHtmlNegativeTags() throws IOException {
 		assertEquals("<br/>", p("<br/>"));
 		assertEquals("<p>This.</p>", p("<p>This.</p>"));
+		assertEquals("<!--This.-->", p("<!--This.-->"));
 		assertEquals("<div style=\"width: 800px;\"></div>", p("<div style=\"width: 800px;\"></div>"));
 	}
 	

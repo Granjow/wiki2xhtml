@@ -83,8 +83,9 @@ public class WikiFormattings extends WikiTask {
 			Statistics.getInstance().counter.boldType.increase(counter);
 			Statistics.getInstance().sw.timeFormattingCode.stop();
 
-		} else
-			return in;
+		} else {
+			out = in;
+		}
 
 		return out;
 	}
@@ -117,8 +118,9 @@ public class WikiFormattings extends WikiTask {
 			Statistics.getInstance().sw.timeFormattingCode.stop();
 			Statistics.getInstance().counter.italicType.increase(counter);
 
-		} else
-			return in;
+		} else {
+			out = in;
+		}
 
 		return out;
 	}
@@ -149,46 +151,55 @@ public class WikiFormattings extends WikiTask {
 		
 		Pattern p;
 		Matcher m;
-		int first;
+		int last;
 		
 		p = RegExpressions.textCode;
 		m = p.matcher(in);
 
-		first = 0;
-		while (m.find()) {
-			args = (m.group(2) != null ? " " + m.group(2).trim() : "");
-			if (args.length() > 0) {
-				tuple = extractClassArgs(args);
-				argClass = tuple.k();
-				args = tuple.v();
-				tuple = extractStyleArgs(args);
-				argStyle = tuple.k();
-				args = tuple.v().trim();
-				args = " " + args;
-			} else {
-				argClass = "";
-				argStyle = "";
-			}
+		if (m.find()) {
+			m.reset();
+			last = 0;
 			
-			sigma = new PTMState()
-				.b(Blocks.args, args)
-				.b(Blocks.classes, argClass)
-				.b(Blocks.style, argStyle)
-				.b(Blocks.text, m.group(3));
-			
-			out.append(m.group(1));
-			
-			try {
-				s = new PTMRootNode(template, sigma).evaluate();
-			} catch (RecursionException e) {
-				e.printStackTrace();
-				s = e.getMessage();
-			}
-			out.append(s);
+			while (m.find()) {
+				out.append(in.substring(last, m.start()));
+				
+				args = (m.group(2) != null ? " " + m.group(2).trim() : "");
+				if (args.length() > 0) {
+					tuple = extractClassArgs(args);
+					argClass = tuple.k();
+					args = tuple.v();
+					tuple = extractStyleArgs(args);
+					argStyle = tuple.k();
+					args = tuple.v().trim();
+					args = " " + args;
+				} else {
+					argClass = "";
+					argStyle = "";
+				}
+				
+				sigma = new PTMState()
+					.b(Blocks.args, args)
+					.b(Blocks.classes, argClass)
+					.b(Blocks.style, argStyle)
+					.b(Blocks.text, m.group(3));
+				
+				out.append(m.group(1));
+				
+				try {
+					s = new PTMRootNode(template, sigma).evaluate();
+				} catch (RecursionException e) {
+					e.printStackTrace();
+					s = e.getMessage();
+				}
+				out.append(s);
 
-			first = m.end();
+				last = m.end();
+			}
+			out.append(in.substring(last));
+			
+		} else {
+			out = in;
 		}
-		out.append(in.subSequence(first, in.length()));
 
 		
 		
@@ -198,40 +209,48 @@ public class WikiFormattings extends WikiTask {
 		p = RegExpressions.textCodeBlock;
 		m = p.matcher(in);
 
-		first = 0;
-		while (m.find()) {
-			args = (m.group(1) != null ? " " + m.group(1).trim() : "");
-			if (args.length() > 0) {
-				tuple = extractClassArgs(args);
-				argClass = tuple.k();
-				args = tuple.v();
-				tuple = extractStyleArgs(args);
-				argStyle = tuple.k();
-				args = tuple.v().trim();
-				args = " " + args;
-			} else {
-				argClass = "";
-				argStyle = "";
+		if (m.find()) {
+			m.reset();
+			last = 0;
+			
+			while (m.find()) {
+				out.append(in.substring(last, m.start()));
+				
+				args = (m.group(1) != null ? " " + m.group(1).trim() : "");
+				if (args.length() > 0) {
+					tuple = extractClassArgs(args);
+					argClass = tuple.k();
+					args = tuple.v();
+					tuple = extractStyleArgs(args);
+					argStyle = tuple.k();
+					args = tuple.v().trim();
+					args = " " + args;
+				} else {
+					argClass = "";
+					argStyle = "";
+				}
+				
+				sigma = new PTMState()
+					.b(Blocks.args, args)
+					.b(Blocks.classes, argClass)
+					.b(Blocks.style, argStyle)
+					.b(Blocks.text, m.group(2))
+					.b(Blocks.isBlock, "true");
+				
+				try {
+					s = new PTMRootNode(template, sigma).evaluate();
+				} catch (RecursionException e) {
+					e.printStackTrace();
+					s = e.getMessage();
+				}
+				out.append(s);
+				
+				last = m.end();
 			}
-			
-			sigma = new PTMState()
-				.b(Blocks.args, args)
-				.b(Blocks.classes, argClass)
-				.b(Blocks.style, argStyle)
-				.b(Blocks.text, m.group(2))
-				.b(Blocks.isBlock, "true");
-			
-			try {
-				s = new PTMRootNode(template, sigma).evaluate();
-			} catch (RecursionException e) {
-				e.printStackTrace();
-				s = e.getMessage();
-			}
-			out.append(s);
-			
-			first = m.end();
+			out.append(in.substring(last));
+		} else {
+			out = in;
 		}
-		out.append(in.subSequence(first, in.length()));
 
 
 		Statistics.getInstance().sw.timeFormattingCode.stop();

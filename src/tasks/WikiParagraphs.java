@@ -70,9 +70,10 @@ public class WikiParagraphs extends WikiTask {
 		for (String s : Resources.tagsBlockAll) {
 			blocks.append(s + "|");
 		}
-//		Pattern pBlocksStart = Pattern.compile("(?s)^<(?:" + blocks.substring(0, blocks.length() - 1) + ")");
-		Pattern pBlocksStart = Pattern.compile("(?s)^<(?:" + blocks.substring(0, blocks.length() - 1) + ")[\\s>]");
-		Pattern pBlocksEnd = Pattern.compile("(?s)^</(?:" + blocks.substring(0, blocks.length() - 1) + ")[\\s>]");
+		
+		// Special case for <!-- comments -->.
+		Pattern pBlocksStart = Pattern.compile("(?s)^<(?:(?:" + blocks.substring(0, blocks.length() - 1) + ")[\\s>]|!--)");
+		Pattern pBlocksEnd = Pattern.compile("(?s)^(?:</(?:" + blocks.substring(0, blocks.length() - 1) + ")[\\s>]|-->)");
 		Matcher mBlocksStart;
 		Matcher mBlocksEnd;
 		

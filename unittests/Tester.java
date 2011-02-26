@@ -23,6 +23,7 @@ public class Tester extends TestCase {
 		result.addTest(new TestSuite(ParagraphTester.class));
 		result.addTest(new TestSuite(ParserFunctionsTester.class));
 		result.addTest(new TestSuite(PicTester.class));
+		result.addTest(new TestSuite(PlaceholderTester.class));
 		result.addTest(new TestSuite(ReferencesTester.class));
 		result.addTest(new TestSuite(RegexTester.class));
 		result.addTest(new TestSuite(SettingsTester.class));

@@ -14,6 +14,7 @@ public class PicTester extends junit.framework.TestCase {
 	public void testSimpleImages() throws IOException {
 		assertEquals("<img src=\"img.jpg\"/>", p("[[Image:img.jpg]]"));
 		assertEquals("<img src=\"img.jpg\"/>", p("[[Image:img.jpg|Image:img2.jpg]]"));
+		assertEquals("a<img src=\"img.jpg\"/>b", p("a[[Image:img.jpg]]b"));
 	}
 	
 	@Test

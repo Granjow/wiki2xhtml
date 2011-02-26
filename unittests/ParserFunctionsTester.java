@@ -66,5 +66,10 @@ public class ParserFunctionsTester extends junit.framework.TestCase {
 		assertEquals(" correct", p("{{#switch: nonexistant| a=incorrect |b=incorrect| #default = correct}}"));
 	}
 	
+	@Test
+	public void testAppending() {
+		assertEquals("abc", p("a{{#if:a|b|c}}c"));
+	}
+	
 
 }

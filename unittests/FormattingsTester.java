@@ -39,6 +39,13 @@ public class FormattingsTester extends TestCase {
 		assertEquals("true<code style=\"w: 100px;h: 200px;\" class=\"c d\" >code here</code>", p2("$$((style=\"h: 200px;\" class=\"d\"))\ncode here\n$$"));
 	}
 	
+	@Test
+	public void testAppended() throws IOException {
+		assertEquals("really<strong>not</strong>everything", p("really'''not'''everything"));
+		assertEquals("really<em>not</em>everything", p("really''not''everything"));
+		assertEquals("really<code>not</code>everything", p("really $$not$$ everything").replace(" ", ""));
+	}
+	
 
 
 	private static final String p(String testString) throws IOException {
