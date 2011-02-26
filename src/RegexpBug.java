@@ -57,9 +57,15 @@ public class RegexpBug {
 		String[] argsSizes = {"200px", "x300px", "200x300px", "px"};
 
 		String rIf = "{{#if:a|b|c}}";
+
 		
+		testRegexSingleMatch("(?m)^\\{\\{:tplTOC.txt((?:\\|.*)?)\\}\\}", new String[] { "{{:tplTOC.txt}}", "bla\n{{:tplTOC.txt|arg}} etc" });
 		
-		testRegexSingleMatch(RegExpressions.textCode.pattern(), new String[] { "asdf $$bla$$ bb", "abc $$((something)) code$$ def" });
+//		testRegexSingleMatch("^(=={1,5})(.*[^=])\\1(?:[^=]|$)", new String[] { "== Title ==", "== No title ===", "= No title either ==", "====== Title=6 ======" });
+		
+//		testRegexSingleMatch("^<h([2-6])[^>]*>(.*)</h\\1>", new String[] { "<h2>blabla</h2>", "<h2>A <em>regular</em> expression</h2>" });
+		
+//		testRegexSingleMatch(RegExpressions.textCode.pattern(), new String[] { "asdf $$bla$$ bb", "abc $$((something)) code$$ def" });
 		
 //		testRegexSingleMatch("class=\"([^\"]+)\"", new String[] { "bla class=\"myClass\" \"" });
 		

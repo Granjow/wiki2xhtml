@@ -125,7 +125,8 @@ public abstract class WikiFile {
 			return pageSettings.isSet(property) || project.isPropertySet(property);
 		} else { return pageSettings.isSet(property); }
 	}
-	/** @param fallback Allows to fall back to a less prioritised value (file -> project -> default) */
+	/** @param fallback Allows to fall back to a less prioritised value (file -> project -> default)
+	 * @return The property as String, or <strong>{@code null}</strong>, if the property was never set. */
 	public String getProperty(SettingsE property, boolean fallback) {
 		if (pageSettings.isSet(property)) { return pageSettings.get_(property); }
 		else {

@@ -1,10 +1,5 @@
 package src;
 
-import java.awt.Image;
-import java.io.IOException;
-
-import javax.imageio.ImageIO;
-
 import src.utilities.IORead_Stats;
 
 
@@ -41,6 +36,7 @@ public class Container_Resources {
 		return cr;
 	}
 	
+	/** Location of some fallback resources delivered by wiki2xhtml */
 	public static final String resdir = "/resources/";
 
 	// TODO Doc: update used templates
@@ -62,30 +58,17 @@ public class Container_Resources {
 	public static final String sTplCode = "tplCode.txt";
 	
 	/** Template for the whole page
-	 * TODO 0 Page template arguments */
+	 * @see Constants.Template_Page */
 	public static final String sTplPage = "tplPage.txt";
+
+	/** Template for the Table of Contents */
+	public static final String sTplTOC = "tplTOC.txt";
 	
-	/** Contains a list of files to copy
-	 * TODO 0 read resources file */
+	/** Contains a list of files to copy */
 	public static final String sStyleResources = "resources.txt";
 	
-	public static final String sTOC = resdir + "tplTOC.txt";
-	public static final String smissingTemplate = resdir + "tplMissingTemplate.txt";
+	/** Template for recursion warnings */
 	public static final String srecursionTemplateName = "tplRecursion.txt";
-	public static final String srecursionTemplate = resdir + "" + srecursionTemplateName;
-
-	public static final java.net.URL uabout = Container_Resources.class.getResource(resdir + "gui-about.html");
-	public static final java.net.URL uhelp = Container_Resources.class.getResource(resdir + "gui-help.html");
-
-	public final Image getIcon() {
-		try {
-			return ImageIO.read(getClass().getResource(resdir + "wx-icon.png"));
-		} catch (IOException e) {
-
-			e.printStackTrace();
-			return null;
-		}
-	}
 
 	public static StringBuffer readResource(String s) {
 		return IORead_Stats.readFromJar(s);

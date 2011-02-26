@@ -40,7 +40,7 @@ New since wiki2xhtml 3.4:
 * [[#h_Images Images: Arguments]]
 * [[#h_Meta-Information Meta Information: Custom meta content]]
 
-{{TOC}}
+{{:tplTOC.txt}}
 
 == Creating new pages ==
 

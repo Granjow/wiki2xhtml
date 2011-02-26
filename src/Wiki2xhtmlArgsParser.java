@@ -46,7 +46,6 @@ public class Wiki2xhtmlArgsParser extends CmdLineParser {
 	public final Option showHelp;
 	public final Option checkUpdate;
 
-//	public final Option generateHelpfiles;
 //	public final Option lang;
 //	public final Option noupdatecheck;
 //	public final Option updateMenuFile;
@@ -67,8 +66,6 @@ public class Wiki2xhtmlArgsParser extends CmdLineParser {
 		menuFile = addStringOption('m', "menu");
 		commonFile = addStringOption('c', "common");
 		footerFile = addStringOption('f', "footer");
-		
-//		generateHelpfiles = addStringOption("helpfiles");
 		
 		incremental = addBooleanOption("incremental");
 		stdout = addBooleanOption("stdout");

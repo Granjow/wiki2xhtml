@@ -1,3 +1,20 @@
+/*
+ *   Copyright (C) 2010-2011 Simon A. Eugster <simon.eu@gmail.com>
+
+ *   This program is free software: you can redistribute it and/or modify
+ *   it under the terms of the GNU General Public License as published by
+ *   the Free Software Foundation, either version 3 of the License, or
+ *   (at your option) any later version.
+
+ *   This program is distributed in the hope that it will be useful,
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *   GNU General Public License for more details.
+
+ *   You should have received a copy of the GNU General Public License
+ *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package src.tasks;
 
 import java.util.ArrayList;
@@ -81,7 +98,7 @@ public class WikiHeadings extends WikiTask {
 
 //		ca.ol("(" + heading + ")", CALevel.DEBUG);
 
-		out.append("<h" + level + " id=\"" + getIDtoHeading(heading, headingIDs) + "\">");
+		out.append("<h" + level + " id=\"" + getIDtoHeading(heading, level, headingIDs) + "\">");
 		out.append(heading);
 		out.append("</h" + level + ">");
 
@@ -94,9 +111,9 @@ public class WikiHeadings extends WikiTask {
 	 * @param usedHeadingIDs IDs already used in this document, to avoid duplicates
 	 * @return A (unique) ID for the heading
 	 */
-	public static final String getIDtoHeading(String heading, ArrayList<String> usedHeadingIDs) {
+	public static final String getIDtoHeading(String heading, int level, ArrayList<String> usedHeadingIDs) {
 
-		StringBuilder id = new StringBuilder("h_");
+		StringBuilder id = new StringBuilder("h" + level + "_");
 
 		Matcher mNameChar = Resources.XmlNames.patternNameChar.matcher(heading);
 

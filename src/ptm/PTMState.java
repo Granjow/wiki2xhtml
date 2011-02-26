@@ -94,4 +94,29 @@ public class PTMState extends HashMap<String, PTMArgumentValueNode> {
 		
 		return vals;
 	}
+	
+	/**
+	 * <p>Adds bindings from a string list, with each string of the form<br/>
+	 * {@code name=value}</p>
+	 */
+	public void bindValuesFromList(String... bindings) {
+		if (bindings != null) {
+			int pos;
+			String key;
+			String value;
+			for (String line : bindings) {
+				pos = line.indexOf('=');
+				if (pos > 0) {
+					key = line.substring(0, pos);
+					value = line.substring(pos+1);
+					if (key.length() > 0 && value.length() > 0) {
+						b(key, value);
+						System.out.printf("Bound %s to %s.\n", key, value);
+					} else {
+						System.out.printf("Did not bind %s to %s.\n", key, value);
+					}
+				}
+			}
+		}
+	}
 }

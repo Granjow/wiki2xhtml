@@ -18,11 +18,6 @@
 package src.tasks;
 
 
-import java.io.IOException;
-import java.io.StringReader;
-
-import java.io.BufferedReader;
-
 import src.Constants.Template_Page;
 import src.project.WikiMenu;
 import src.project.file.WikiFile;
@@ -52,13 +47,17 @@ public class PageTemplate extends WikiTask {
 		}
 
 		PTMState sigma = new PTMState();
+		String bindings;
 		
 		// Add project-wide name/value bindings set with {{Bind:name=value}} (overwritten by newer values below)
-		bindValues(sigma, file.getProperty(SettingsE.bind, false));
+		bindings = file.project.getProperty(SettingsE.bind);
+		if (bindings != null) {
+			sigma.bindValuesFromList(bindings.split("\\n"));
+		}
 		
 		// Add general name/value bindings
 		sigma.b(Template_Page.text, file.getContent().toString())
-			.b(Template_Page.title, file.getProperty(SettingsE.title, true))
+			.b(Template_Page.title, file.generators.title(file))
 			.b(Template_Page.h1, file.getProperty(SettingsE.h1, true))
 			.b(Template_Page.homelink, file.getProperty(SettingsE.homelink, true))
 			.b(Template_Page.icon, file.getProperty(SettingsE.icon, true))
@@ -69,7 +68,10 @@ public class PageTemplate extends WikiTask {
 			;
 		
 		// Add page specific name/value bindings
-		bindValues(sigma, file.getProperty(SettingsE.bind, false));
+		bindings = file.getProperty(SettingsE.bind, false);
+		if (bindings != null) {
+			sigma.bindValuesFromList(bindings.split("\\n"));
+		}
 		
 		
 		// Apply the template
@@ -82,34 +84,6 @@ public class PageTemplate extends WikiTask {
 			e.printStackTrace();
 		}
 		
-	}
-	
-	private void bindValues(PTMState sigma, String bindings) {
-		if (bindings != null) {
-			BufferedReader br = new BufferedReader(new StringReader(bindings));
-			String line;
-			int pos;
-			String key;
-			String value;
-			try {
-				while ((line = br.readLine()) != null) {
-					System.err.println(">>>>>>>> " + line);
-					pos = line.indexOf('=');
-					if (pos > 0) {
-						key = line.substring(0, pos);
-						value = line.substring(pos+1);
-						if (key.length() > 0 && value.length() > 0) {
-							sigma.b(key, value);
-							System.out.printf("Bound %s to %s.\n", key, value);
-						} else {
-							System.out.printf("Did not bind %s to %s.\n", key, value);
-						}
-					}
-				}
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
 	}
 	
 	

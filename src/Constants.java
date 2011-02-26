@@ -294,6 +294,15 @@ public final class Constants {
 		public static final String container = "isContainer";
 		
 	}
+	
+	public static final class Template_TOC {
+		public static final String isBlock = "isBlock";
+		public static final String level = "level";
+		public static final String text = "text";
+		public static final String ol = "ol";
+		public static final String ul = "ul";
+		public static final String id = "id";
+	}
 
 	/** Tags used in templates */
 	@Deprecated public static final class TemplateTags {

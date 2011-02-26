@@ -1,3 +1,6 @@
-<div id="toc"><h2>__TOC__</h2>
-[toc]
+{{#if:{{{isBlock}}}|
+<div id="toc"><h2>Table of Contents</h2>
+{{{text}}}
 </div><br style="clear: left;" />
+|
+{{{ul}}} [[#{{{id}}} {{{text}}}]]}}

@@ -24,6 +24,12 @@ public class TemplateTester extends junit.framework.TestCase {
 	}
 	
 	@Test
+	public void testResolving() throws Exception {
+		assertEquals("one", p("{{{1}}}", "{{:%s|one}}"));
+//		assertEquals("{{{1}}}", p("{{{1}}}", "{{:%s}}")); // Really desired?
+	}
+	
+	@Test
 	public void testPTMCdata() throws Exception {
 		assertEquals("Arguments <o|ne> <two>.", p("Arguments <{{{1}}}> <{{{2}}}>.", "{{:%s|o<![CDATA[|]]>ne|two}}"));
 	}

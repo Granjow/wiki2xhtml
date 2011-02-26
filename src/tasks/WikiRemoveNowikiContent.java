@@ -13,7 +13,7 @@ public class WikiRemoveNowikiContent extends WikiTask {
 		return Task.RemoveNowiki;
 	}
 	public WikiTask nextTask() {
-		return new WikiParserFunctions();
+		return new WikiTOC();
 	}
 
 	/**

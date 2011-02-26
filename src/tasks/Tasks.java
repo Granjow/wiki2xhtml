@@ -7,6 +7,7 @@ public class Tasks {
 		Preparse ("Preparser", "Preparsing"),
 		Settings ("Settings", "Settings"),
 		RemoveNowiki ("RemoveNowiki", "Remove Nowiki Content"),
+		TOC ("TOC", "Table of Contents"),
 		ParserFunctions ("ParserFunctions", "Parser Functions and templates"),
 		Tables ("Tables", "Tables"),
 		Headings ("Headings", "Headings"),
@@ -20,7 +21,8 @@ public class Tasks {
 		XMLNames ("XMLNames", "Convert XML names"),
 		References ("References", "References"),
 		PageTemplate ("PageTemplate", "Page template"),
-		Cleanup ("Cleanup", "Cleanup");
+		Cleanup ("Cleanup", "Cleanup"),
+		;
 		
 		public final String name;
 		public final String description;
