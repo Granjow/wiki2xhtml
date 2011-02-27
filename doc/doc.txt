@@ -343,7 +343,7 @@ List elements may be committed elements like CSS formattings. Everything standin
 
 === Tables ===
 Tables may have a table header at the top. You insert tables according to the following example:
-{{:tplSample.txt|
+{{:tplSample.txt|1=
 <nowiki>
 {|<br />
 | <br />
@@ -572,24 +572,24 @@ $$
 The (x)html files can contain some more information (&ldquo;meta-data&rdquo;). It is/was used by search engines, but today they are often ignored, because like that the search engines can be manipulated. Today they usually search the visible text. wiki2xhtml supports the following keywords:
 * '''Description:''' A short description of the page content.
 {{:tplSample.txt|
-&#123;{Description:&hellip;}}
+&#123;{Description:&hellip;}&#125;
 }}
 * '''Keywords:''' The keywords someone could type to find your page, separated with a comma.
 {{:tplSample.txt|
-&#123;{Keywords:&hellip;}}
+&#123;{Keywords:&hellip;}&#125;
 }}
 * '''Author:''' The author of the site.
 {{:tplSample.txt|
-&#123;{Author:&hellip;}}
+&#123;{Author:&hellip;}&#125;
 }}
 * '''Language:''' The language used on the current page, e.g. en or de
 {{:tplSample.txt|
-&#123;{Lang:&hellip;}}
+&#123;{Lang:&hellip;}&#125;
 }}
-* |'''Custom:''' (See also: [[w:Meta element|Wikipedia: Meta element]]
-{{:tplSample.txt|
-&#123;{Meta:name=content}} (name/content combinations)\\ 
-&#123;{Meta:anything you like}} (any other combination)
+* |'''Custom:''' (See also: [[w:Meta element|Wikipedia: Meta element]])
+{{:tplSample.txt|1=
+&#123;{Meta:name=content}&#125; (name/content combinations)\\ 
+&#123;{Meta:anything you like}&#125; (any other combination)
 }}
 
 All these commands work either in the Common File or in the text itself.
@@ -606,7 +606,7 @@ This redirects him after 2 seconds to the page index.html. Don't forget to depos
 === Icon ===
 To use a page icon ([http://en.wikipedia.org/wiki/Favicon Favicon]), the following command (anywhere in the text or in the Common File) works:
 {{:tplSample.txt|
-&#123;{Icon:&hellip;}}
+&#123;{Icon:&hellip;}&#125;
 }}
 {{:Top}}
 

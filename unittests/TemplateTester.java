@@ -21,6 +21,12 @@ public class TemplateTester extends junit.framework.TestCase {
 	public void testPTMArguments() throws IOException, RecursionException {
 		assertEquals("Arguments <one> <two>.", p("Arguments <{{{1}}}> <{{{2}}}>.", "{{:%s|one|two}}"));
 		assertEquals("Argument <two>.", p("Argument <{{{3|{{{2|}}}}}}>.", "{{:%s|one|two}}"));
+		assertEquals("Argument <\ntwo>.", p("Argument <{{{3|{{{2|}}}}}}>.", "{{:%s|one|\ntwo}}"));
+		String s = "\n&#123;{Meta:name=content}&#125; (name/content combinations)\\\\ \n" +
+		"&#123;{Meta:anything you like}&#125; (any other combination)\n";
+
+		assertEquals("", p("{{{1}}}", "{{:%s|" + s + "}}"));
+		assertEquals(s, p("{{{1}}}", "{{:%s|1=" + s + "}}"));
 	}
 	
 	@Test

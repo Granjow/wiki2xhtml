@@ -19,7 +19,7 @@ public class Tasks {
 		Tags ("Tags", "Tags ({{$Version}} ...)"),
 		Paragraphs ("Paragraphs", "Create Paragraphs"),
 		InsertNowiki ("InsertNowiki", "Insert Nowiki Content (<nowiki> tags)"),
-		XMLNames ("XMLNames", "Convert XML names"),
+		XMLNames ("XMLNames", "Convert text between <xmlname> tags to XML names"),
 		References ("References", "References (<ref> and <references/> tags)"),
 		PageTemplate ("PageTemplate", "Page template"),
 		Cleanup ("Cleanup", "Cleanup"),

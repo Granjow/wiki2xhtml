@@ -131,6 +131,17 @@ public class PTMObjectFactory {
 			}
 		}
 		
+		// CDATA <![CDATA[text]]>
+		if (obj == null) {
+			if (allowedChildnodes.contains(PTMObjects.CDATA)) {
+				if (indicator.startsWith(PTMCdataNode.startString)) {
+					try {
+						obj = new PTMCdataNode(content, index, parent, root);
+					} catch (ObjectNotApplicableException e) { obj = null; }
+				}
+			}
+		}
+		
 		// Argument arg1|arg2|arg3
 		if (obj == null) {
 			if (allowedChildnodes.contains(PTMObjects.Argument)) {

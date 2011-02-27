@@ -41,7 +41,8 @@ public class PTM {
 		Template,
 		Argument,
 		ArgumentName,
-		ArgumentValue
+		ArgumentValue,
+		CDATA
 	}
 
 	public static final int recursionMaxDepth = 50;
@@ -56,7 +57,7 @@ public class PTM {
 		eofAbortFunction = createAbortFunction(new ArrayList<String>());
 		defaultChildren = new ArrayList<PTMObjects>();
 		for (PTMObjects o : new PTMObjects[] { PTMObjects.Text,
-				PTMObjects.Function, PTMObjects.Parameter, PTMObjects.Template }) {
+				PTMObjects.Function, PTMObjects.Parameter, PTMObjects.Template, PTMObjects.CDATA }) {
 			defaultChildren.add(o);
 		}
 	}

@@ -10,15 +10,6 @@ import src.ptm.PTMRootNode;
 
 public class ParserFunctionsTester extends junit.framework.TestCase {
 	
-	public String p(String s) {
-		try {
-			return new PTMRootNode(new StringBuffer(s), null).evaluate();
-		} catch (RecursionException e) {
-			e.printStackTrace();
-			return "FAILED";
-		}
-	}
-	
 	@Test
 	public void testIf() {
 		assertEquals("nothing", p("nothing"));
@@ -67,8 +58,28 @@ public class ParserFunctionsTester extends junit.framework.TestCase {
 	}
 	
 	@Test
+	public void testCDATA() {
+		assertEquals("<![CDATA[", p("<![CDATA["));
+		assertEquals("", p("<![CDATA[]]>"));
+		assertEquals("ABC", p("A<![CDATA[B]]>C"));
+		assertEquals("A|C", p("A<![CDATA[|]]>C"));
+		assertEquals("AB]]>C", p("A<![CDATA[B]]>]]>C"));
+		assertEquals("|", p("{{#if:a|<![CDATA[|]]>|b}}"));
+	}
+	
+	@Test
 	public void testAppending() {
 		assertEquals("abc", p("a{{#if:a|b|c}}c"));
+	}
+	
+	
+	public static final String p(String s) {
+		try {
+			return new PTMRootNode(new StringBuffer(s), null).evaluate();
+		} catch (RecursionException e) {
+			e.printStackTrace();
+			return "FAILED";
+		}
 	}
 	
 
