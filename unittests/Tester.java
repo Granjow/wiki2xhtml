@@ -28,6 +28,7 @@ public class Tester extends TestCase {
 		result.addTest(new TestSuite(RegexTester.class));
 		result.addTest(new TestSuite(SettingsTester.class));
 		result.addTest(new TestSuite(TablesTester.class));
+		result.addTest(new TestSuite(TagsTester.class));
 		result.addTest(new TestSuite(TemplateTester.class));
 		result.addTest(new TestSuite(TOCTester.class));
 		result.addTest(new TestSuite(WikiSettingsTester.class));

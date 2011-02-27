@@ -39,7 +39,7 @@ Das Programm wird folgendermassen gestartet:
 Im nun erscheinenden Dialogfeld kann bei «Select/Add files» durch einen Klick auf einen der Buttons die Datei (index.txt) hinzugefügt werden. Klicke auf «Next», dann auf «Go!». Die Datei index.html wird nun im Verzeichnis «html» erstellt. 
 
 Falls dir das reicht, kannst du das Programm nun mit «Exit» beenden. Falls nicht, kannst du wieder einen vorherigen Tab<ref>Ein Tab wird auch [http://de.wikipedia.org/wiki/Registerkarte Registerkarte (Wikipedia)] genannt.</ref> anwählen, die Einstellungen ändern und mit dem Schnellstart-Tutorial weiterfahren.
-{{Top}}
+{{:Top}}
 == Ein Menu hinzufügen ==
 Sobald eine Internetseite aus mehr als einer Seite besteht &ndash; was normalerweise der Fall ist &ndash;, benötigt man ein Menu zur Navigation. Damit dies nicht bei jeder Seite neu eingetippt werden muss und so bei einer Änderung alle Seiten geändert werden müssen, wird es in einer separaten Datei gespeichert. Diese ist nach dem Muster «* Titel 1, Dateiname 1 &#x21b5; * Titel 2, Dateiname 2 &#x21b5; &hellip;» aufgebaut (&#x21b5; bezeichnet einen Zeilenumbruch). Erstelle eine zweite Textdatei (blindtext.txt) mit beliebigem Inhalt (je nach Belieben noch eine dritte oder vierte). Dass die Endung der Dateien nach dem Konvertieren nicht mehr $$.txt$$ lautet, sondern $$.html$$, muss berücksichtigt werden! Aus index.txt wird nun also index.html, aus blindtext.txt wird blindtext.html. Die beiden Dateien sollen im Menu den Namen «Home» und «Blindtext» bekommen. Erstelle eine neue Textdatei für das Navigationsmenu (navigation.txt) und schreibe dort nun das Menu hinein:
 $$
@@ -48,7 +48,7 @@ $$
 $$
 
 Wähle nun in wiki2xhtml beim Tab «Settings» unter «Set the index file» die Datei navigation.txt und klicke wieder auf «Go!». Die Seite verfügt nun über ein Menu.
-{{Top}}
+{{:Top}}
 == Formatierung ==
 Es gibt noch ein paar wenige Befehle, die du kennen solltest. Eine Übersicht über alle möglichen Befehle findest du bei der [[doc-de.html Dokumentation]].
 
@@ -75,7 +75,7 @@ Daraus resultiert folgender Link: [[doc.html english]]. Bei Problemen mit Links:
 $$
 <nowiki>'''Fett''' und ''kursiv'' zusammen ist '''''schrecklick!'''''</nowiki>
 $$
-{{Top}}
+{{:Top}}
 
 == Fussnoten ==
 <references />

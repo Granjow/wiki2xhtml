@@ -37,6 +37,12 @@ public class LinkTester extends junit.framework.TestCase {
 	}
 	
 	@Test
+	public void testAnchors() throws IOException {
+		assertEquals("<a id=\"myID\"></a>", p("~~myID~~"));
+		assertEquals("<a id=\"myID\"></a> ", p("~~myID~~ ~~myID~~")); // No duplicates allowed
+	}
+	
+	@Test
 	public void testAppending() throws IOException {
 		assertEquals("a <a href=\"Target\" class=\"internal\">Target</a> here", p("a [[Target]] here"));
 	}

@@ -21,7 +21,7 @@ package src.tasks;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import src.Constants.Blocks;
+import src.Constants.Template_Blocks;
 import src.Container_Resources;
 import src.Statistics;
 import src.project.FallbackFile;
@@ -40,7 +40,7 @@ public class WikiFormattings extends WikiTask {
 
 
 	public WikiTask nextTask() {
-		return new WikiParagraphs();
+		return new WikiTags();
 	}
 
 	public Task desc() {
@@ -178,10 +178,10 @@ public class WikiFormattings extends WikiTask {
 				}
 				
 				sigma = new PTMState()
-					.b(Blocks.args, args)
-					.b(Blocks.classes, argClass)
-					.b(Blocks.style, argStyle)
-					.b(Blocks.text, m.group(3));
+					.b(Template_Blocks.args, args)
+					.b(Template_Blocks.classes, argClass)
+					.b(Template_Blocks.style, argStyle)
+					.b(Template_Blocks.text, m.group(3));
 				
 				out.append(m.group(1));
 				
@@ -231,11 +231,11 @@ public class WikiFormattings extends WikiTask {
 				}
 				
 				sigma = new PTMState()
-					.b(Blocks.args, args)
-					.b(Blocks.classes, argClass)
-					.b(Blocks.style, argStyle)
-					.b(Blocks.text, m.group(2))
-					.b(Blocks.isBlock, "true");
+					.b(Template_Blocks.args, args)
+					.b(Template_Blocks.classes, argClass)
+					.b(Template_Blocks.style, argStyle)
+					.b(Template_Blocks.text, m.group(2))
+					.b(Template_Blocks.isBlock, "true");
 				
 				try {
 					s = new PTMRootNode(template, sigma).evaluate();

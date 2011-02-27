@@ -54,7 +54,7 @@ public class Container_Resources {
 	public static final String sTplCiteNote = "tplCiteNote.txt";
 	
 	/** Template for $$code blocks$$ 
-	 * @see Constants.Blocks */ 
+	 * @see Constants.Template_Blocks */ 
 	public static final String sTplCode = "tplCode.txt";
 	
 	/** Template for the whole page

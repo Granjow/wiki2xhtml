@@ -39,7 +39,7 @@ The program is started in the following way:
 In the now appearing dialogue field you can add your file (index.txt) by clicking the button &ldquo;Select/Add files&rdquo;. Click &ldquo;Next&rdquo; and &ldquo;Go!&rdquo;. The file index.html will be created in the directory &ldquo;html&rdquo;.
 
 If that is enough for you, you now can terminate the program by clicking &ldquo;Exit&rdquo;. If not, you can go back to the previous tab<ref>Wikipedia: [http://en.wikipedia.org/wiki/Tab_%28GUI%29 Tab].</ref> and change the settings (and go on with the quick start guide).
-{{Top}}
+{{:Top}}
 == Add a menu ==
 As soon as your web page is made up of more than one page─what usually is the circumstance─you will need a menu to navigate. In order that it does not have to be entered on every page again and, if you have to change something, you do not have to change it on every page, it is stored in a separate file which is built-on according to the pattern &ldquo;* Title 1, Filename 1 &#x21b5; * Title 2, Filename 2 &#x21b5; &hellip;» (&#x21b5; betokens a return). Create a second text file (blindtext.txt) with any content (and at will another one). You have to consider that the file extension is $$.html$$ after converting the $$.txt$$ file! So index.txt becomes index.html, blindtext.txt becomes blindtext.html. The new files now are to have the name &ldquo;Home&rdquo; and &ldquo;Blindtext&rdquo; in the menu. Create a new text file for the navigation menu (navigation.txt) and insert the menu:
 $$
@@ -47,7 +47,7 @@ $$
 * Blindtext, blindtext.html</nowiki>
 $$
 Now (in wiki2xhtml) choose the file navigation.txt under &ldquo;Settings › Set the index file&rdquo; and click again on &ldquo;Go!&rdquo;. And the page possesses a menu.
-{{Top}}
+{{:Top}}
 
 == Formatting ==
 There are still a few commands you ought to know. You can find an overview over all possible commands in the [[doc.html Documentation]].
@@ -78,7 +78,7 @@ That brings you the following link: [[doc-de.html German]]. If you encounter pro
 $$
 <nowiki>'''Bold''' and ''italic'' together is '''''terrible!'''''</nowiki>
 $$
-{{Top}}
+{{:Top}}
 
 == Footnotes ==
 <references />

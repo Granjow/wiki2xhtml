@@ -23,7 +23,7 @@ Questo programma è avviato in questo modo:
 Nella finestra di dialogo che appare si può aggiungere il file desiderato (index.txt) cliccando sul bottone «Select/Add files». Click «Next» e «Vai!». Il file  index.html sarà creato nella directory «html».
 
 Se questo è abbastanza, «Exit». Se no, si può ritornare alla precedente visualizzazione<ref>Wikipedia: [http://it.wikipedia.org/wiki/Interfaccia_grafica Tab].</ref>  e cambia le impostazioni (e si va avanti con la guida rapida).
-{{Top}}
+{{:Top}}
 == Aggiungi un menù ==
 In poco tempo le pagine web aumentano, tutto normale! – sarà necessario un menù per la navigazione. Per evitare di inserire questo menù in ogni pagina e per evitare di modificare ciascuna pagina in caso  di  variazioni, si può salvare il menù in un file separato. E' costruito secondo il pattern «* Title 1, Filename 1 &#x21b5; * Title 2, Filename 2 &#x21b5; &hellip;» (&#x21b5; premere una volta invio). Creare un secondo file di testo (blindtext.txt) vuoto (e ancora un altro). Bisogna considerare che l'estensione del file è  $$.html$$ mentre prima della conversione l'estensione del file era $$.txt$$ ! Così index.txt diventa index.html, blindtext.txt diventa blindtext.html. I nuovi file ora hanno nel menù i nomi «Home» e «Blindtext&rdquo. Creare un nuovo file di testo per la barra del menù (navigation.txt) e inserire il menù:
 
@@ -33,7 +33,7 @@ $$
 $$
 
 Ora (in wiki2xhtml) scegliere il file navigation.txt sotto «Settings > Imposta il file index» e cliccare ancora su «Go!»
-{{Top}}
+{{:Top}}
 == Formattazione ==
 Ci sono ancora pochi comandi da conoscere. Si può avere una completa visione di tutti i possibili comandi in [[doc.html Documentation]].
 
@@ -62,7 +62,7 @@ $$
 <nowiki>'''Bold''' e ''italic'' insieme e'  '''''orrendo!'''''</nowiki>
 $$
 
-{{Top}}
+{{:Top}}
 
 == Footnotes ==
 <references />

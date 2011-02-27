@@ -11,7 +11,6 @@ import java.util.regex.Pattern;
 import src.project.settings.Settings.Checker;
 import src.project.settings.Settings.ValuePreparser;
 import src.resources.ResProjectSettings;
-import src.resources.RegExpressions;
 import src.resources.ResProjectSettings.ImagepageCaptionAlternatives;
 
 
@@ -65,16 +64,11 @@ public final class Constants {
 	/** wiki2xhtml settings, like the version number */
 	public static final class Wiki2xhtml {
 
-		// TODO 0 check for git
-		public static final String revision = "$Revision: 1894 $".replace("$", "");
-		public static final String revisionDate = "$Date$".replace("$", "");
-		public static final String progName = "wiki2xhtml";
-		public static final String versionNumber = "3.4b9";
-		public static final String versionDate = "Jan 28, 2010";
+		public static final String versionNumber = "4.0a2";
+		public static final String versionDate = "Feb 2011";
 		/** Old versions which will be ignored by the update checker. */
 		//TODO 0 update version numbers
 		public static final String[] versionsTillNow = new String[] { "3.4b8", "3.3.2", "3.3.1", "3.3", "3.2.1", "3.1.0", "3.0.4" };
-		public static final String version = versionNumber + " (" + versionDate + ")";
 		public static final String webpage = "http://wiki2xhtml.sf.net";
 		public static final URL[] getUpdateURLs() {
 			try {
@@ -83,11 +77,6 @@ public final class Constants {
 				e.printStackTrace();
 				return null;
 			}
-		}
-		public static final String revisionNumber() {
-			Matcher m = RegExpressions.num.matcher(Constants.Wiki2xhtml.revision);
-			if (m.find()) { return m.group(0); }
-			return "(unknown)";
 		}
 
 	}
@@ -110,19 +99,6 @@ public final class Constants {
 	/** Command line arguments for wiki2xhtml */
 	public static final class Arguments {
 
-		//TODO remove
-//		public static final Args stdArgs = new Args("-m menu.txt -f footer.txt -c common.txt ");
-//
-//		public static final Args stdArgsHelpDe = new Args("-m menu-de.txt -f footer-de.txt -c common-de.txt " +
-//				"-s hd --source-dir=doc/txt --target-dir=help err404.php help-de.txt doc-de.txt index-de.txt download-de.txt quickstart-de.txt " +
-//				"news-de.txt changelog-de.txt faq-de.txt examples-de.txt ex-php-reload-de.php " +
-//				"php-de.txt doc-design-de.txt quickref-de.txt about-de.txt links-de.txt usage-de.txt");
-//
-//		public static final Args stdArgsHelpEn = new Args(stdArgs.getArgs(GetPolicyE.AllArgs) +
-//				" -s hd --source-dir=doc/txt --target-dir=help err404.php index.txt help.txt doc.txt download.txt quickstart.txt quickstart-ru.txt quickstart-it.txt news.txt faq.txt php.txt " +
-//				"examples.txt ex-php-reload.php doc-design.txt quickref.txt about.txt changelog.txt testpage.txt links.txt usage.txt");
-
-		
 		public static final class FileArgs {
 			
 			public static final String noSitemap = "nositemap";
@@ -130,18 +106,6 @@ public final class Constants {
 			
 		}
 
-	}
-	
-	public static final class Blocks {
-		public static final String isBlock = "isBlock";
-		public static final String text = "text";
-		/** Additional tag parameters (style="..." e.g.) */
-		public static final String args = "args";
-		/** Additional class=".." definitions, without the class= (class names only) */
-		public static final String classes = "classes";
-		/** Additional style="..." definitions extracted from the arguments.
-		 * Also for being used like <code>style="color: #444; {{{style|}}}"</code> in the template. */
-		public static final String style = "style";
 	}
 	
 	public static final class Links {
@@ -203,6 +167,27 @@ public final class Constants {
 
 	}
 
+	/** Positions */
+	public static final class Position {
+
+		public static final String left = "left";
+		public static final String center = "center";
+		public static final String right = "right";
+
+	}
+	
+	public static final class Template_Blocks {
+		public static final String isBlock = "isBlock";
+		public static final String text = "text";
+		/** Additional tag parameters (style="..." e.g.) */
+		public static final String args = "args";
+		/** Additional class=".." definitions, without the class= (class names only) */
+		public static final String classes = "classes";
+		/** Additional style="..." definitions extracted from the arguments.
+		 * Also for being used like <code>style="color: #444; {{{style|}}}"</code> in the template. */
+		public static final String style = "style";
+	}
+
 	/** Arguments for images */
 	public static final class Template_Images {
 
@@ -252,15 +237,6 @@ public final class Constants {
 		
 		/** To comment out a gallery entry */
 		public static final String galleryComment = "//";
-
-	}
-
-	/** Positions */
-	public static final class Position {
-
-		public static final String left = "left";
-		public static final String center = "center";
-		public static final String right = "right";
 
 	}
 	
@@ -337,7 +313,6 @@ public final class Constants {
 		public static final String meta = "[meta]";
 		public static final String title = "[title]";
 		public static final String head = "[head]";
-		public static final Pattern regexHead = RegExpressions.reckHead;
 		public static final String textheader = "[textheader]";
 		public static final String menu = "[menu]";
 		public static final String footer = "[footer]";
@@ -416,12 +391,10 @@ public final class Constants {
 	/** Tags which will be replaced in the document, e.g. by the current version */
 	public static final class Tags {
 
-		public static final String anchor = "~~(.+?)~~";
-		public static final String splitPageNav = "{{$SplitPageNav}}";
+//		public static final String splitPageNav = "{{$SplitPageNav}}";
+		
 		public static final String version = "{{$Version}}";
-		public static final String top = "{{Top}}";
-		public static final Pattern regexToc = RegExpressions.toc;
-		public static final String pagename = "{{$Pagename}}";
+		public static final String pagename = "{{$Pagename}}"; // TODO Doc {{$Pagename}}
 		public static final String wiki2xhtml = "{{$wiki2xhtml}}";
 
 		public static final class Title {
@@ -435,12 +408,6 @@ public final class Constants {
 			public static final String imgPath = "%path";
 
 		}
-
-	}
-
-	public static final class Placeholder {
-
-		public static final String toc = "__TOC__";
 
 	}
 

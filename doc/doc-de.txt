@@ -48,7 +48,7 @@ Im GUI kannst du die Dateien, die du parsen willst, sowie die weiteren benötigt
 : <img src="open.png" alt="Icon «Öffnen»" /> (Nur eine Datei kann ausgewählt werden, z.&thinsp;B. die header-Datei)
 : <img src="mopen.png" alt="Icon «Mehrere Öffnen»" /> (Um mehrere Dateien auszuwählen; Hier kannst du ''Shift'' oder ''Ctrl'' halten) oder
 : <img src="dir.png" alt="Icon «Ordner wählen»" /> (Um einen Ordner zu wählen)
-{{Top}}
+{{:Top}}
 
 === Menu ===
 Das Menu wird aus einer Datei gelesen, damit man es nicht bei jeder Seite manuell einfügen muss (und bei einer Änderung auch wieder überall ändern&nbsp;&hellip;). Jeder Eintrag steht auf einer neuen Zeile in Listenform.
@@ -68,7 +68,7 @@ Hier kommt nach der Überschrift «Menu» ein Eintrag «Links» mit einem Unterm
 Die oben genannten Einstellungen können auch explizit deaktiviert werden, indem man ihnen eine Null anhängt ($$link_strong0$$).
 
 Zeilen können mit einem # auskommentiert werden und werden dann nicht verarbeitet.
-{{Top}}
+{{:Top}}
 
 === Fenstertitel === 
 Es bestehen zwei Möglichkeiten, den Fenstertitel, der in der Menuleiste erscheint, zu ändern, und man kann diese beiden Möglichkeiten sogar kombinieren. Die erste ist für viele Seiten gedacht, denn da wird der Titel in die Konfigurationsdatei gespeichert und bei allen Seiten eingefügt. Die zweite Möglichkeit ist, den Titel irgendwo in der Quelldatei mit einem &#123;{Title:&hellip;}} zu übergeben.
@@ -84,7 +84,7 @@ In der Datei common.txt musst du nun die folgende Zeile, die den allgemeinen Tit
 <nowiki>{{DefaultTitle:– .::sourceforge.net}}</nowiki>
  ::
 Das $$%p$$ wird, falls das Dokument Seitenumbrüche enthält, mit «Seite x von y» ersetzt.
-{{Top}}
+{{:Top}}
 
 === Header ===
 Der Header wird heute oft dazu verwendet, Benutzer wieder zurück auf die Startseite zu führen -- eine nützliche Hilfe! Der Link zurück zur Startseite kann mit &#123;{Homelink:&hellip;}} (irgendwo im Text oder auch in der Konfigurationsdatei) gesetzt werden. Als Beispiel nach sf.net/projects/wiki2xhtml:
@@ -94,7 +94,7 @@ $$
 $$
 </nowiki>
 Klickt man nun auf den Header (meistens ein Bild), gelangt man hierhin zurück.
-{{Top}}
+{{:Top}}
 
 === Footer ===
 Der Footer, ein kurzes Stück Text am Ende der Seite, muss auch in eine separate Datei geschrieben werden. Er könnte folgendermassen ausschauen:
@@ -109,11 +109,11 @@ Du kannst einen Footer mit dem Argument <code>-f DATEI</code> oder <code>--foote
 $ java -jar wiki2xhtml help.txt --footer=footer.txt
 $ java -jar wiki2xhtml help.txt -f footer.txt
 01
-{{Top}}
+{{:Top}}
 
 === Inhaltsverzeichnis ===
 Mit &#123;{TOC}} kann an einer beliebigen Stelle im Text ''ein'' Inhaltsverzeichnis eingefügt werden. Der Standardtitel kann durch eine alternative Überschrift ersetzt werden mit {{TOC|Überschrift}}.
-{{Top}}
+{{:Top}}
 
 === Quellenangaben ===
 Um im Text Fussnoten oder Quellenangaben einzufügen, kann der ref-Befehl verwendet werden. So steht die Erklärung/Quelle nicht störend mitten im Text. Sie können am Ende der Seite mit <code>&lt;references /&gt;</code> wieder eingefügt werden. Im Text sieht das zum Beispiel folgendermassen aus:
@@ -126,7 +126,7 @@ Fussnoten&lt;ref&gt;Durch eine Fussnote können Anmerkungen oder Quellenangaben 
 Das Resultat: «Fussnoten<ref>Durch eine Fussnote können Anmerkungen oder Quellenangaben im Fliesstext ausgelagert werden.</ref> sind oft schwerer zu spielen, da die Füsse weniger beweglich sind als die Hände.»
 
 {{:hint-de.txt|Vor den Fussnoten werden keine Leerschläge gesetzt.}}
-{{Top}}
+{{:Top}}
 
 === Konfigurationsdatei ===
 Um die Handhabung der verschiedenen Einstellungen (wie Autor und Sprache, Übersicht in der [[quickref-de.html Quickref]]) etwas zu vereinfachen, können diese Einstellungen nun in einer einzigen Datei gesetzt werden.
@@ -135,7 +135,7 @@ Die Konfigurationsdatei (hier common.txt genannt; common steht für «gemeinsam�
 01
 $ java -jar wiki2xhtml.jar -c common.txt
 01
-{{Top}}
+{{:Top}}
 
 == Seitengestaltung ==
 
@@ -148,7 +148,7 @@ Der Seitentitel, also die erste Überschrift, kann mit &#123;{H1:&hellip;}} gese
  ::
 &#123;{H1:Fotografie ohne Kamera}}
  ::
-{{Top}}
+{{:Top}}
 
 === Absätze ===
 Absätze können mit einer neuen (leeren) Linie eingefügt werden.
@@ -156,11 +156,11 @@ Absätze können mit einer neuen (leeren) Linie eingefügt werden.
 Er stand alleine im Raum den Arm ausgestreckt, als ob er etwas suchte. Dann&amp;nbsp;&amp;ndash; plötzlich wurde es dunkel um ihn!<br /><br />
 Er konnte einfach nicht schlafen, wenn das Licht an ist.
  ::
-{{Top}}
+{{:Top}}
 
 === Zeilenumbrüche  ===
 Zeilenumbrüche können mit zwei Backslashes gefolgt von einem Leerzeichen\\ $$&#92;&#92;&nbsp;$$ \\ eingefügt werden.
-{{Top}}
+{{:Top}}
 
 === Seitenumbrüche ===
 Seitenumbrüche werden mit folgenden Zeilen eingefügt:
@@ -178,7 +178,7 @@ Um Text kursiv oder fett zu formatieren, umschliesse ihn mit entweder zwei oder 
  ::
 Ein &#39;&#39;&#39;Lemma&#39;&#39;&#39; is etwas, um das es sich in einem Absatz oder sogar ganzen Text &#39;&#39;handelt.&#39;&#39;
  ::
-{{Top}}
+{{:Top}}
 
 === Links ===
 Es gibt zwei Arten von Links: Absolute und relative. Der Unterschied: Ein absoluter oder externer Link führt gewöhnlicherweise zu einer Seite wie http://www.gimp.org. Ein relativer oder interner Link wird benutzt, um zusammengehörende Seiten untereinander zu verlinken, die oft auch im selben Verzeichnis liegen.
@@ -216,7 +216,7 @@ Um nun einen Link auf einen solchen Anker zu setzen, hängt man dem Ziel ein <co
  ::
 &#x007e;~gallery&#x007e;~<br />&hellip;<br /> &#91;[doc-de.html#gallery Galerie]] hat das selbe Ziel wie &#91;[#gallery Galerie]]<br />&#91;[#'''h_'''Tabellen Tabellen]] (Gross-/Kleinschreibung nicht vergessen!)
  ::
-{{Top}}
+{{:Top}}
 
 === Bilder ===
 Es ist einfach, Bilder einzufügen. Wenn du zum Beispiel ein Bild mit dem Namen «img.jpg» hast, füge deiner Seite den Code <code>&#91;&#91;Image:img.jpg&#93;&#93;</code> hinzu. Du kannst an Stelle von <code>Image:</code> auch <code>Bild:</code> verwenden. Eine Beschreibung kannst du nach einem Vertikalen Strich (Pipe-Zeichen) angeben.
@@ -289,7 +289,7 @@ Die ausfürhliche Beschreibung wurde weggelassen, da durch die direkte Verlinkun
 
 [[Image:ahorn-300.jpg|thumb|direct|thumb=ahorn-thumb.jpg|Silber-Ahorn]]
 
-{{Top}}
+{{:Top}}
 
 {{:hint-de.txt|Du kannst mit $$&#123;&#123;DirImages:…&#125;&#125;$$ ein Standardverzeichnis für die Bilder setzen. Um auf eine Datei zuzugreifen, die nicht in diesem Verzeichnis ist, kann $$./$$ vor den Pfad geschrieben werden ($$.$$ bedeutet das aktuelle Verzeichnis). Siehe [[quickref-de.html Quickref]] für weitere Einstellungen.}}
 
@@ -304,7 +304,7 @@ Image:meer.jpg|Mein Boot. Ich habe es&amp;nbsp;&amp;hellip; ähm, ausgeliehen.<b
 &lt;gallery&gt;
 </nowiki>
  ::
-{{Top}}
+{{:Top}}
 
 ~~gallery~~
 <gallery caption="Bildergalerie">
@@ -318,7 +318,7 @@ Image:img7.jpg|ld=Der Scharfe Rand bei der Sonne deutet auf eine Stratusschicht 
 Image:img8.jpg|ld=Beschreibungen, die nur auf der Bildseite erscheinen, können mit dem Argument <code>ld=...</code> eingefügt werden.
 Image:img9.jpg
 </gallery>
-{{Top}}
+{{:Top}}
 
 === Listen ===
 Listen können hier viel einfacher als mit HTML eingefügt werden: Für ein Element reicht ein * am Anfang der Zeile. Numerierte Listen können mit dem Zeichen # generiert werden.
@@ -336,7 +336,7 @@ Den Listenpunkten können Argumente wie zum Beispiel CSS-Definitionen übergeben
 <nowiki>*</nowiki> style="color: #f00;" | Dieser Listeneintrag ist rot gefärbt.
  ::
 * style="color: #f00;" | Dieser Listeneintrag ist rot gefärbt.
-{{Top}}
+{{:Top}}
 
 === Tabellen ===
 Tabellen können Tabellenüberschrifte haben. Du kannst Tabellen entsprechend dem folgenden Beispiel einfügen:
@@ -396,7 +396,7 @@ Du kannst auch Eigenschaften wie die Breite einer Zelle oder ihre Hintergrundfar
 |}
 
 Hinweis: Verwechsle Tabellen nicht mit Listen! Sie haben verschiedene Anwendungsbereiche.
-{{Top}}
+{{:Top}}
 \\ 
 '''Weitere Möglichkeiten''' 
 
@@ -437,7 +437,7 @@ Der dazu benötigte Code:
  ::
 
 {{:hint-de.txt|<![CDATA[Steht in einer Zelle ein |, wird der Inhalt davor als Argument interpretiert (und abgeschnitten). Setze ein |, mit Leerschlägen getrennt, an den Anfang des Zellinhaltes, um dieses Problem zu vermeiden (siehe auch oben).]]>}}
-{{Top}}
+{{:Top}}
 
 === Beispiele, Zitate ===
 Siehe auch: [[#h_Zeichenescapen Zeichen «escapen»]]
@@ -473,14 +473,14 @@ Ein Beispiel (Leerzeichen vor den beiden Doppelpunkten beachten! Sonst wird es a
  ::
 Der Gedankenstrich – genau der – kann unter Windows über die Tastenkombination &#x0030;1Alt+015001 eingefügt werden.
  ::
-{{Top}}
+{{:Top}}
 
 === Horizontale Linien ===
 Du kannst horizontale Linien einfügen, solltest sie aber nur verwenden, wenn es wirklich nötig ist. Der Code:
  ::
 &#x002d;---
  ::
-{{Top}}
+{{:Top}}
 
 == Vorlagen ==
 Inhalt, der immer wieder vorkommt (wie hier der Button zum wechseln der Sprache), kann in einer Datei im selben Verzeichnis wie die Quelldateien gespeichert werden. Diese, in diesem Beispiel ''tplLang-de.txt'', kann dann wie folgt eingebaut werden:
@@ -491,7 +491,7 @@ Der Text von der Vorlagenseite läuft auch durch den Parser, Wikitext wird also 
 $$
 &#123;&#123;:tplLang-de.txt|'''&lt;![CDATA[''' «&#125;&#125;» sind zwei schliessende geschweifte Klammern, «|» ist ein Pipe-Symbol.. ''']]&gt;'''&#125;&#125;
 $$
-{{Top}}
+{{:Top}}
 
 == Tipps ==
 Mein Programm macht nicht alles. Ein paar Dinge sind nur ein wenig HTML und CSS, aber andere kann das Programm nicht oder nur wenig beeinflussen, wie zum Beispiel richtige Typografie.  Ich werde dir nun einen kleinen Überblick über die Möglichkeiten verschaffen, die du hast.
@@ -503,7 +503,7 @@ $ java -jar wiki2xhtml.jar help-de.txt
 Dies würde die Datei doc-de.html erstellen, ohne menu und weitere Specials.
 
 Es ist möglich, mehrere Dateien gleichzeitig zu kompilieren. Da der *-Operator jedoch noch nicht funktioniert, muss jede Datei von Hand eingegeben werden. Oder halt ein Skript schreiben ;)
-{{Top}}
+{{:Top}}
 
 ~~escape~~
 === Zeichen «escapen» ===
@@ -538,7 +538,7 @@ In [http://de.wikipedia.org/wiki/Uniform_Resource_Identifier URIs] kann es spezi
 Ein Beispiellink zu einem (nicht existierenden) Dokument namens «mit leerschlag.html» würde nun so ausschauen: &#91;&#91;mit%20leerschlag.html mit Leerschlag]]. Das Resultat: [[mit%20leerschlag.html mit Leerschlag]]. Alternativ kannst du bei internen Links auch eine vertikale Linie («|») verwenden, um Link und Linkname zu trennen: &#91;&#91;mit leerschlag.html|mit Leerschlag]]. Das führt zum selben Resultat: [[mit leerschlag.html|mit Leerschlag]]
 
 Im Internet gibt es ein sehr gutes Nachschlagewerk, wo beinahe alle Codes, die man braucht, aufgelistet sind:  [http://www.w3schools.com/tags/ref_entities.asp w3schools.com].
-{{Top}}
+{{:Top}}
 
 ~~thumbs~~
 === Thumbnails ===
@@ -565,7 +565,7 @@ Beispiele (Originaldateiname: image.jpg):
 |-
 | thumbs || image.png || &#123;{Thumbnails:thumbs/%w.png}}
 |}
-{{Top}}
+{{:Top}}
 
 === Meta-Informationen  ===
 Den (x)html-Dateien können noch weitere Informationen mitgegeben werden, so genannte [http://de.wikipedia.org/wiki/Meta-Tags Metadaten]. Sie dien(t)en der Unterstützung von Suchmaschinen; heute werden sie jedoch wegen der Anfälligkeit für Manipulationen weitgehend ignoriert und stattdessen der sichtbare Textteil interpretiert. wiki2xhtml unterstützt folgende Informationen:
@@ -591,7 +591,7 @@ Den (x)html-Dateien können noch weitere Informationen mitgegeben werden, so gen
 &#123;{Meta:anything you like}} (irgendwelche Kombinationen)
  ::
 Diese Informationen können sowohl in der Konfigurationsdatei als auch in der Textdatei selber gesetzt werden.
-{{Top}}
+{{:Top}}
 
 === Automatische Weiterleitung ===
 Du kannst den Benutzer zu einer anderen Seite weiterleiten, indem du die folgende Zeile einfügst:
@@ -599,14 +599,14 @@ Du kannst den Benutzer zu einer anderen Seite weiterleiten, indem du die folgend
 &#x0023;REDIRECT 2 index.html
  ::
 So wird er innerhalb von zwei Sekunden zur Seite index.html weitergeleitet. Vergiss nicht, eine kurze Notitz zu hinterlassen, da die automatische Weiterleitung von einigen Browsern nicht unterstützt wird.
-{{Top}}
+{{:Top}}
 
 === Icon ===
 Um der Seite ein Icon ([http://de.wikipedia.org Favicon]) zuzuweisen, reicht folgender Befehl (irgendwo im Text oder in der Konfigurationsdatei):
  ::
 &#123;{Icon:&hellip;}}
  ::
-{{Top}}
+{{:Top}}
 
 === PHP, JavaScript und CSS seitenspezifisch ===
 Für seitenspezifisches PHP, JavaScript, CSS und ähnliches können zwei verschiedene Befehle verwendet werden. Falls der Code noch vor die gesamte Seite gehört, auch vor das $$html$$-Tag, wie dies bei PHP notwendig ist, kann der Code am Anfang der Seite eingefügt werden und mit dem Befehl 
@@ -625,7 +625,7 @@ body {
 $$
 
 Siehe auch die [[php-de.html Dokumentationsseite zu PHP]].
-{{Top}}
+{{:Top}}
 
 
 === Typografie<ref>Kurzes und präzises Dokument über Typografie: [http://zvisionwelt.de typokurz]</ref> ===
@@ -639,7 +639,7 @@ Die &bdquo;Wikipedia&rdquo; gehört zu den zehn am meisten aufgerufenen Seiten i
  ::
 Es regnet&nbsp;&hellip;<br />warum auch nicht?s
  ::
-{{Top}}
+{{:Top}}
 
 
 == Kommandozeilenmodus ==
@@ -672,9 +672,9 @@ $ java -jar wiki2xhtml.jar --pns {Datei(en), Argumente, ...}
 
 
 Mit -v (oder --verbose) werden mehr Informationen zu den durchgeführten Schritten angegeben, mit --silent nur das Notwendigste. --debug ist für die Aufspürung von Fehlern gedacht.
-{{Top}}
+{{:Top}}
 
 
 == Quellen, Bemerkungen ==
 <references />
-{{Top}}
+{{:Top}}

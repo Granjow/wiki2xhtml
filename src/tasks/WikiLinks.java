@@ -71,6 +71,7 @@ public class WikiLinks extends WikiTask {
 				file.setContent(out);
 			}
 		}
+		replaceAnchors(file);
 	}
 
 	/** 
@@ -172,6 +173,53 @@ public class WikiLinks extends WikiTask {
 		}
 		
 		return sLink.toString();
+	}
+	
+	
+
+	
+
+	
+	private static final Pattern pAnchor = Pattern.compile("~~(.+?)~~");
+	/**
+	 * Searches for ~~name~~ and replaces it with <a id="name"></a>.
+	 */
+	public void replaceAnchors(WikiFile file) {
+		
+		StringBuffer in = file.getContent();
+		Matcher m = pAnchor.matcher(in);
+		StringBuffer out = null;
+		
+		if (m.find()) {
+			
+			ArrayList<String> checklist = new ArrayList<String>();
+			String name;
+			out = new StringBuffer();
+			
+			int last = 0, first;
+			do {
+				first = m.start();
+				out.append(in.subSequence(last, first));
+				last = m.end();
+
+				name = m.group(1);
+				if (checklist.contains(name)) {
+					System.err.printf("Warning: Duplicate mark (%s) in %s! Mark removed.\n", name, file.name);
+				} else if (name.indexOf("\"") >= 0) {
+					System.err.printf("Warning: Mark must not contain such a character (%s) in %s! Mark removed.\n", "\"", file.name);
+				} else {
+					checklist.add(name);
+					out.append("<a id=\"");
+					out.append(name);
+					out.append("\"></a>");
+				}
+
+			} while (m.find());
+			
+			out.append(in.subSequence(last, in.length()));
+			file.setContent(out);
+			
+		}
 	}
 	
 
