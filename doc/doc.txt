@@ -336,7 +336,7 @@ Inserting a list is a little easier here than it would be in HTML: You only need
 
 List elements may be committed elements like CSS formattings. Everything standing after a pipe character (&ldquo;|&rdquo;) is regarded as an argument. The argument <code>style="color: #f00;"</code> e.g. colorizes the line red.
 {{:tplSample.txt|
-<nowiki>*</nowiki> style="color: #f00;" | This list element is colorized red.
+<![CDATA[<nowiki>*</nowiki> style="color: #f00;" | This list element is colorized red.]]>
 }}
 * style="color: #f00;" | This list element is colourized red.
 {{:Top}}

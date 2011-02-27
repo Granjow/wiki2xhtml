@@ -39,7 +39,7 @@ public class WikiRemoveNowikiContent extends WikiTask {
 				 * Insert the nowiki-tags again that the
 				 * expression can be inserted afterwards at the right place
 				 */
-				out.append("<nowiki></nowiki>");
+				out.append("<nowiki>" + (file.nowiki.size()-1) + "</nowiki>");
 
 				last = m.end();
 			}

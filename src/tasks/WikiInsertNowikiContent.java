@@ -60,7 +60,7 @@ public class WikiInsertNowikiContent extends WikiTask {
 				 * Re-insert the expression
 				 */
 				try {
-					out.append(file.nowiki.get(counter));
+					out.append(file.nowiki.get(Integer.parseInt(m.group(1))));
 				} catch (IndexOutOfBoundsException e) {
 //					ca.ol(String.format("Error while trying to insert nowiki-content Nr. %d!", counter), CALevel.ERRORS);
 					e.printStackTrace();
