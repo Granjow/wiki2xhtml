@@ -61,7 +61,7 @@ public class RegexpBug {
 		
 		File f = new File("./a/b//c/../d./e/.f/./g");
 		File f2 = new File(".");
-		System.out.println(f.getCanonicalPath().substring(f2.getCanonicalPath().length()));
+		System.out.println(f.getCanonicalPath().substring(f2.getCanonicalPath().length()+1));
 		
 		System.out.println("./a/b//c/../d./e/.f/./g".replaceAll("(?<=/|^)\\./", "").replaceAll("//+", "/"));
 		

@@ -188,6 +188,11 @@ public final class Constants {
 		 * Also for being used like <code>style="color: #444; {{{style|}}}"</code> in the template. */
 		public static final String style = "style";
 	}
+	
+	public static final class Template_Gallery {
+		public static final String id = "id";
+		public static final String number = "number";
+	}
 
 	/** Arguments for images
 	 * TODO Doc everything*/
@@ -236,6 +241,14 @@ public final class Constants {
 		
 		/** Number of the image on the current page */
 		public static final String number = "number";
+		
+		/** <p>Is {@code "true"} if this is the first image in a row.</p>
+		 * <p>Available in the template only.</p> */
+		public static final String rowStart = "rowStart";
+		/** <p>Is {@code "true"} if this is the last image in a row.
+		 * The row width is set with {@link SettingsE#galleryImagesPerLine}.</p>
+		 * <p>Available in the template only.</p> */
+		public static final String rowEnd = "rowEnd";
 
 		/** Long description of the image */
 		public static final String longDesc = "longdesc";

@@ -1,9 +1,10 @@
 
 {{#if: {{{path|}}} |<dl id="{{{id|missingID}}}">
-<dt><a href="{{{link}}}"><img src="{{{thumb}}}" width="200px" /></a></dt>
-{{#if: {{{text|}}} | <dd>{{{text}}}</dd>}}
+<dt><a href="{{{link}}}"><img src="{{{thumb}}}" width="200px" /></a></dt>{{#if: {{{text|}}} |
+ <dd>{{{text}}}</dd>}}
 </dl>
 |<dl>
 <dd class="onlyDesc">{{{text|}}}</dd>
 </dl>
+}}{{#if: {{{rowEnd}}}|<br style="clear: both;"/>
 }}

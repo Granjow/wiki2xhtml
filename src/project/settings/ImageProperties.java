@@ -63,14 +63,26 @@ public class ImageProperties extends StringSettings<EImageProperties> {
 	public PTMState argumentBindings = null;
 	
 	private EImageContext context = EImageContext.thumb;
-	public void setContext(EImageContext context) { this.context = context; }
+	public void setContext(EImageContext context) {
+		this.context = context;
+		set_(EImageProperties.context, context.property);
+		if (context == EImageContext.gallery) {
+			argumentBindings.b(Template_Images.type, "thumb");
+		}
+	}
 	
 	public final WikiFile parentFile;
+	
+	private GalleryProperties galleryProperties = null;
 
 	public ImageProperties(WikiFile parent) {
 		parentFile = parent;
 		imagepageCreated = false;
 		argumentBindings = new PTMState();
+	}
+	public ImageProperties(WikiFile parent, GalleryProperties galleryProperties) {
+		this(parent);
+		this.galleryProperties = galleryProperties;
 	}
 	
 	/**
@@ -79,26 +91,6 @@ public class ImageProperties extends StringSettings<EImageProperties> {
 	 */
 	public String getPlaceholder() {
 		return String.format(">>>image-%s-placeholder<<<", argumentBindings.resolve(Template_Images.number));
-	}
-	
-	/**
-	 * Ensures that the image ID is bound to {@link Template_Images#id}.
-	 * @return The image ID.
-	 */
-	public String buildID() {
-		String id;
-		if (!argumentBindings.containsKey(Template_Images.id)) {
-			String number = argumentBindings.resolve(Template_Images.number);
-			String path = argumentBindings.resolve(Template_Images.path);
-			id = String.format("img_%s_%s", number, path); 
-			argumentBindings.b(Template_Images.id, id);
-			
-			assert number.length() > 0;
-			
-		} else {
-			id = argumentBindings.resolve(Template_Images.id);
-		}
-		return id;
 	}
 	
 	/**
@@ -412,6 +404,30 @@ public class ImageProperties extends StringSettings<EImageProperties> {
 		
 //		System.out.println("Arguments, reconstructed: \n");
 //		root.printTree(System.out, " ");
+	}
+
+	/**
+	 * Ensures that the image ID is bound to {@link Template_Images#id}.
+	 * @return The image ID.
+	 */
+	private String buildID() {
+		String id;
+		if (!argumentBindings.containsKey(Template_Images.id)) {
+			String number = argumentBindings.resolve(Template_Images.number);
+			String path = argumentBindings.resolve(Template_Images.path);
+			String prefix = "";
+			if (galleryProperties != null) {
+				prefix = "g" + galleryProperties.sigma.resolve(Template_Images.number) + "_";
+			}
+			id = String.format("%sim%s_%s", prefix, number, path); 
+			argumentBindings.b(Template_Images.id, id);
+			
+			assert number.length() > 0;
+			
+		} else {
+			id = argumentBindings.resolve(Template_Images.id);
+		}
+		return id;
 	}
 	
 	

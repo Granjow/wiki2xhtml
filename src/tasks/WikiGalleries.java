@@ -28,9 +28,7 @@ import src.project.file.VirtualWikiFile;
 import src.project.file.WikiFile;
 import src.project.settings.GalleryProperties;
 import src.project.settings.ImageProperties;
-import src.resources.ResProjectSettings.EGalleryProperties;
 import src.resources.ResProjectSettings.EImageContext;
-import src.resources.ResProjectSettings.EImageProperties;
 import src.tasks.Tasks.Task;
 
 public class WikiGalleries extends WikiTask {
@@ -72,7 +70,7 @@ public class WikiGalleries extends WikiTask {
 					if (line.startsWith("</gallery>")) {
 
 						open = false;
-						out.append(gp.getPlaceholder());
+						out.append(gp.placeholder());
 
 					} else {
 
@@ -84,21 +82,18 @@ public class WikiGalleries extends WikiTask {
 						}
 
 						// Add a new item
-						ImageProperties prop = new ImageProperties(file);
+						ImageProperties prop = new ImageProperties(file, gp);
+						prop.setContext(EImageContext.gallery);
 						file.addImageProperties(prop);
 						gp.imagePropertiesList.add(prop);
 						prop.readArguments(line);
-						prop.setContext(EImageContext.gallery);
-						prop.set_(EImageProperties.context, EImageContext.gallery.property);
-						prop.set_(EImageProperties.galleryNumber, gp.get_(EGalleryProperties.number));
 					}
 				} else {
 					if (line.startsWith("<gallery ") || line.startsWith("<gallery>")) {
 						// add gallery start
 						open = true;
 						gp = new GalleryProperties(file);
-						int id = file.addGalleryProperties(gp);
-						gp.set_(EGalleryProperties.number, Integer.toString(id));
+						file.addGalleryProperties(gp);
 						
 						gp.readArguments(line);
 						
@@ -133,7 +128,7 @@ public class WikiGalleries extends WikiTask {
 		// Insert the galleries by replacing their placeholders
 		int last = 0;
 		for (GalleryProperties gap : file.galleryPropertiesList) {
-			final String placeholder = gap.getPlaceholder();
+			final String placeholder = gap.placeholder();
 			last = out.indexOf(placeholder);
 			if (last >= 0) {
 				try {

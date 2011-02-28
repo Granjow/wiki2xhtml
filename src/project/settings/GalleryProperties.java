@@ -22,6 +22,8 @@ import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import src.Constants.Template_Gallery;
+import src.Constants.Template_Images;
 import src.Container_Resources;
 import src.project.FallbackFile;
 import src.project.file.WikiFile;
@@ -32,7 +34,6 @@ import src.resources.ResProjectSettings.EGalleryProperties;
 import src.resources.ResProjectSettings.EImageProperties;
 import src.resources.ResProjectSettings.SettingsE;
 import src.tasks.WikiImages;
-import src.utilities.XMLTools;
 
 
 /**
@@ -45,7 +46,7 @@ public class GalleryProperties extends StringSettings<EGalleryProperties> {
 	public final ArrayList<ImageProperties> imagePropertiesList;
 	
 	
-	private PTMState sigma = null;
+	public PTMState sigma = null;
 	
 	
 	/** caption="<caption>" */
@@ -61,26 +62,14 @@ public class GalleryProperties extends StringSettings<EGalleryProperties> {
 	public GalleryProperties(WikiFile parentFile) {
 		this.parentFile = parentFile;
 		imagePropertiesList = new ArrayList<ImageProperties>();
-		set_(EGalleryProperties.container, "true");
 		sigma = new PTMState();
-		
-		// Add the ID generator
-		addPreparser(new ValuePreparser<String>() {
-			public String adjust(String value) {
-				String number = "unknown";
-				if (isSet(EGalleryProperties.number)) { number = get_(EGalleryProperties.number); }
-				return XMLTools.getXmlNameChar(String.format("gallery_%s", number));
-			};
-		}, EGalleryProperties.id);
-		// Set a fake ID so that the property is not null
-		set_(EGalleryProperties.id, "fakeID");
 	}
 	
 	/**
 	 * @return A placeholder for an image. Used for replacing image tags and insert the code
 	 * afterwards after the images have been linked.
 	 */
-	public String getPlaceholder() {
+	public String placeholder() {
 		return String.format(">>>gallery-%s-placeholder<<<", get_(EGalleryProperties.number));
 	}
 	
@@ -95,6 +84,8 @@ public class GalleryProperties extends StringSettings<EGalleryProperties> {
 				sigma.bind(m.group(1), m.group(2));
 			}
 		}
+		
+		buildID();
 		
 		System.out.println("Gallery arguments:");
 		sigma.printValues();
@@ -111,7 +102,6 @@ public class GalleryProperties extends StringSettings<EGalleryProperties> {
 		
 		int imagesPerLine = Integer.parseInt(parentFile.getProperty(SettingsE.galleryImagesPerLine, true));
 		try {
-			
 			imagesPerLine = Integer.parseInt(sigma.resolve(EGalleryProperties.perrow.property));
 		} catch (NumberFormatException e) {}
 		
@@ -122,17 +112,17 @@ public class GalleryProperties extends StringSettings<EGalleryProperties> {
 			// The template can decide how to realize n images per row.
 			pos++;
 			if (pos == 1) {
-				p.argumentBindings.bind(EImageProperties.rowStart.property, "true");
+				p.argumentBindings.bind(Template_Images.rowStart, "true");
 			}
 			if (pos == imagesPerLine) {
-				p.argumentBindings.bind(EImageProperties.rowEnd.property, "true");
+				p.argumentBindings.bind(Template_Images.rowEnd, "true");
 			}
 			pos = pos % imagesPerLine;
 			
 			try {
 				content.append(WikiImages.generateThumbnailEntry(p).toString());
 			} catch (IOException e) {
-				System.err.println("Error in file " + parentFile.name);
+				System.err.println("Error in file " + parentFile.internalName());
 				e.printStackTrace();
 			}
 		}
@@ -150,19 +140,17 @@ public class GalleryProperties extends StringSettings<EGalleryProperties> {
 		}
 	}
 	
-	public void buildImagePages() {
+	private void buildImagePages() {
 		for (ImageProperties p : imagePropertiesList) {
-			// TODO consider this in linkImages() as well?
-			if (p.isSet(EImageProperties.path) && !p.isSet(EImageProperties.direct)) {
-				WikiImages.generateImagepage(p);
-			}
+			// TODO consider only generated pages in linkImages()?
+			WikiImages.generateImagepage(p);
 		}
 	}
 	
 	/**
 	 * Updates the predecessor and the successor of each image in the list.
 	 */
-	public void linkImages() {
+	private void linkImages() {
 		ImageProperties previousIP = null;
 		for (ImageProperties currentIP : imagePropertiesList) {
 			if (previousIP != null) {
@@ -171,6 +159,18 @@ public class GalleryProperties extends StringSettings<EGalleryProperties> {
 			}
 			previousIP = currentIP;
 		}
+	}
+	
+	private String buildID() {
+		String id;
+		if (!sigma.containsKey(Template_Gallery.id)) {
+			String number = sigma.resolve(Template_Gallery.number);
+			id = String.format("gallery%s", number);
+			sigma.b(Template_Gallery.id, id);
+		} else {
+			id = sigma.resolve(Template_Gallery.id);
+		}
+		return id;
 	}
 	
 }

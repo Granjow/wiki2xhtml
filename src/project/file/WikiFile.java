@@ -169,10 +169,13 @@ public abstract class WikiFile {
 		prop.argumentBindings.b(Template_Images.number, Integer.toString(nr));
 		return nr;
 	}
-	/** Adds an gallery property and directly returns its number in the list */
+	/** Adds an gallery property and directly returns its number in the list 
+	 * Additionally, sets {@link Template_Images#number} for {@code prop}. */
 	public int addGalleryProperties(GalleryProperties prop) {
 		galleryPropertiesList.add(prop);
-		return galleryPropertiesList.indexOf(prop);
+		int nr = galleryPropertiesList.indexOf(prop);
+		prop.sigma.b(Template_Images.number, Integer.toString(nr));
+		return nr;
 	}
 	
 	public final ArrayList<NamespaceObject> getNamespaces() {

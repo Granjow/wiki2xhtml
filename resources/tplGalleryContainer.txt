@@ -1,4 +1,5 @@
-<div class="gallery" id={{{id|missingID}}}">
+<div class="gallery" id={{{id|missingID}}}">{{#if:{{{caption|}}}|
+<h3>{{{caption}}}</h3>}}
 {{{content|}}}
 </div>
 <br style="clear: both;" />

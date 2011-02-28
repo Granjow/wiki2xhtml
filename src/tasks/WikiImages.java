@@ -77,9 +77,7 @@ public class WikiImages extends WikiTask {
 			prop.set_(EImageProperties.context, EImageContext.thumb.property);
 			
 			// Generate an image page if they are to be generated, a isThumbDesired has to be inserted and it's no direct link.
-			if (!"true".equals(prop.argumentBindings.resolve(Template_Images.direct))) {
-				generateImagepage(prop);
-			}
+			generateImagepage(prop);
 
 			// Insert a placeholder
 			out.append(prop.getPlaceholder());
@@ -156,58 +154,61 @@ public class WikiImages extends WikiTask {
 	}
 
 	/**
-	 * Generates an image page
+	 * Generates an image page if {@link Template_Images#direct} is not set to {@code true}.
 	 */
-	public static void generateImagepage(ImageProperties prop) {
-
-		try {
-			FallbackFile template = prop.parentFile.project.locate(Container_Resources.sTplImagepage);
-			
-			if (prop.nextIP != null) {
-				String s = prop.nextIP.getImagepagePath();
-				prop.argumentBindings.b(Template_ImagePage.nextPage, s.substring(s.lastIndexOf('/')));
+	public static boolean generateImagepage(ImageProperties prop) {
+		boolean generated = false;
+		if (!"true".equals(prop.argumentBindings.resolve(Template_Images.direct))) {
+			try {
+				FallbackFile template = prop.parentFile.project.locate(Container_Resources.sTplImagepage);
+				
+				if (prop.nextIP != null) {
+					String s = prop.nextIP.getImagepagePath();
+					prop.argumentBindings.b(Template_ImagePage.nextPage, s.substring(s.lastIndexOf('/')+1));
+				}
+				if (prop.previousIP != null) {
+					String s = prop.previousIP.getImagepagePath();
+					prop.argumentBindings.b(Template_ImagePage.prevPage, s.substring(s.lastIndexOf('/')+1));
+				}
+				
+				StringBuffer back = new StringBuffer();
+				String ppath = prop.getImagepagePath();
+				int depth = 0;
+				int index = 0;
+				while ((index = ppath.indexOf('/', ++index)) > 0) { depth++; }
+				for (int i = 0; i < depth; i++) {
+					back.append("../");
+				}
+				prop.argumentBindings.b(Template_ImagePage.back, back.toString());
+				
+				prop.argumentBindings.b(Template_ImagePage.sourcePage, prop.parentFile.internalName());
+				
+				
+				PTMRootNode root = new PTMRootNode(template.getContent(), prop.argumentBindings);
+				
+				String s = root.evaluate();
+				
+				File f = new File(prop.parentFile.project.outputDirectory().getAbsolutePath() + File.separator + prop.getImagepagePath());
+				IOWrite_Stats.writeString(f, s, false);
+				if (prop.parentFile.sitemap) {
+					prop.parentFile.project.sitemap.add(f);
+				}
+	
+				prop.imagepageCreated = true;
+				generated = true;
+	
+			} catch (IOException e) {
+	//			ca.ol("Error: Image page " + is.image.getImagepagePath(true, false) + " couldn't be created!\n", CALevel.ERRORS);
+				e.printStackTrace();
+	
+				prop.set_(EImageProperties.pageCreated, prop.nullValue());
+			} catch (RecursionException e) {
+				e.printStackTrace();
+	
+				prop.set_(EImageProperties.pageCreated, prop.nullValue());
 			}
-			if (prop.previousIP != null) {
-				String s = prop.previousIP.getImagepagePath();
-				prop.argumentBindings.b(Template_ImagePage.prevPage, s.substring(s.lastIndexOf('/')));
-			}
-			
-			StringBuffer back = new StringBuffer();
-			String ppath = prop.getImagepagePath();
-			int depth = 0;
-			int index = 0;
-			while ((index = ppath.indexOf('/', ++index)) > 0) { depth++; }
-			for (int i = 0; i < depth; i++) {
-				back.append("../");
-			}
-			prop.argumentBindings.b(Template_ImagePage.back, back.toString());
-			
-			prop.argumentBindings.b(Template_ImagePage.sourcePage, prop.parentFile.internalName());
-			
-			
-			PTMRootNode root = new PTMRootNode(template.getContent(), prop.argumentBindings);
-			
-			String s = root.evaluate();
-			
-			File f = new File(prop.parentFile.project.outputDirectory().getAbsolutePath() + File.separator + prop.getImagepagePath());
-			IOWrite_Stats.writeString(f, s, false);
-			if (prop.parentFile.sitemap) {
-				prop.parentFile.project.sitemap.add(f);
-			}
-
-			prop.imagepageCreated = true;
-
-		} catch (IOException e) {
-//			ca.ol("Error: Image page " + is.image.getImagepagePath(true, false) + " couldn't be created!\n", CALevel.ERRORS);
-			e.printStackTrace();
-
-			prop.set_(EImageProperties.pageCreated, prop.nullValue());
-		} catch (RecursionException e) {
-			e.printStackTrace();
-
-			prop.set_(EImageProperties.pageCreated, prop.nullValue());
 		}
-
+		return generated;
 	}
 	
 	public static void main(String[] args) {

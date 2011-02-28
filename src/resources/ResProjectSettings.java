@@ -164,10 +164,10 @@ public final class ResProjectSettings {
 	}
 	public static enum EGalleryProperties {
 		caption ("caption", "Gallery caption"),
-		container ("container", "true, for telling the template " +
-				"that this is a container and not an item"),
+//		container ("container", "true, for telling the template " +
+//				"that this is a container and not an item"),
 		content ("content", "Content (all images)"),
-		id ("id", "Automatically generated gallery ID"),
+//		id ("id", "Automatically generated gallery ID"),
 		number ("number", "Gallery number"),
 		// TODO Doc <gallery> tag: http://meta.wikimedia.org/wiki/Help:Images_and_other_uploaded_files#Gallery
 		perrow("perrow", "Number of images per row");
