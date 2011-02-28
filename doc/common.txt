@@ -2,7 +2,7 @@
 {{Author:Simon A. Eugster}}
 {{Lang:en}}
 {{Homelink:http://wiki2xhtml.sourceforge.net}}
-{{DefaultTitle:– .::wiki2xhtml.sf.net}}
+{{Title:– .::wiki2xhtml.sf.net}}
 {{TextHeader:<span>wiki2xhtml</span>}}
 {{Icon:favicon.ico}}
 {{Namespace:w=http://en.wikipedia.org/wiki/%s,w:de=http://de.wikipedia.org/wiki/%s}}

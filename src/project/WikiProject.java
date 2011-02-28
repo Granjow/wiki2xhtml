@@ -29,6 +29,7 @@ import src.project.FallbackFile.NoFileFoundException;
 import src.project.file.VirtualWikiFile;
 import src.project.file.WikiFile;
 import src.project.settings.PageSettings;
+import src.project.settings.PageSettingsReader;
 import src.project.settings.Settings;
 import src.resources.ResProjectSettings.SettingsE;
 import src.utilities.IOUtils;
@@ -182,6 +183,14 @@ public class WikiProject {
 	////////// PARSING ///////////
 	public void make() throws IOException, InvalidOutputDirectoryLocationException {
 		checkOutputDirectoryLocation();
+		
+		// Read the common file
+		String commonFile = (String)argsParser.getOptionValue(argsParser.commonFile, false);
+		if (commonFile != null) {
+			FallbackFile ff = locate(commonFile);
+			PageSettingsReader psr = new PageSettingsReader(ff.getContent(), (PageSettings) projectSettings);
+			psr.readSettings(false);
+		}
 		
 		wikiStyle.copyFiles();
 		copyFiles();

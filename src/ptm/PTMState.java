@@ -48,7 +48,7 @@ public class PTMState extends HashMap<String, PTMArgumentValueNode> {
 		return oldVal;
 	}
 	/** 
-	 * @see #bind(String, String)
+	 * Abbreviation for {@link #bind(String, String)}, returning <code><strong>this</strong></code>
 	 * @return <code><strong>this</strong></code> for usage like <br/><code>sigma.b("a", "alpha").b("b", "beta")...</code>
 	 */
 	public PTMState b(String name, String value) {

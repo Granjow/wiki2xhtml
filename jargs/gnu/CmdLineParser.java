@@ -356,17 +356,25 @@ public class CmdLineParser {
     /**
      * Equivalent to {@link #getOptionValue(Option, Object) getOptionValue(o,
      * null)}.
+     * @deprecated
      */
     public final Object getOptionValue( Option o ) {
-        return getOptionValue(o, null);
+    	return getOptionValue(o, true);
+    }
+    public final Object getOptionValue( Option o, boolean remove ) {
+        return getOptionValue(o, null, remove);
     }
 
 
     /**
      * @return the parsed value of the given Option, or null if the
-     * option was not set
+     * option was not set. <em>removes</em> the element!
+     * @deprecated
      */
     public final Object getOptionValue( Option o, Object def ) {
+    	return getOptionValue(o, def, true);
+    }
+    public final Object getOptionValue( Option o, Object def, boolean remove ) {
         Vector v = (Vector)values.get(o.longForm());
 
         if (v == null) {
@@ -377,7 +385,9 @@ public class CmdLineParser {
         }
         else {
             Object result = v.elementAt(0);
-            v.removeElementAt(0);
+            if (remove) {
+            	v.removeElementAt(0);
+            }
             return result;
         }
     }

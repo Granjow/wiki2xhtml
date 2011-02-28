@@ -1,31 +1,31 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" 
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <head>
-  <title>{{{title|No title}}}</title>
-  <meta http-equiv="Content-type" content="text/html; charset=utf-8" />[meta]
-  <link rel="stylesheet" type="text/css" media="screen, projection, tv" href="../style/style_image.css" />
+  <title>{{{title|{{{path}}} }}}</title>
+  <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" type="text/css" media="screen, projection, tv" href="{{{back}}}style/style_image.css" />
 </head>
 <body>
 <div id="wrap">
 
 
-<div id="nav">>nav>
-<a href="[previmage]">‹ prev</a>
-<a href="[nextimage]">next ›</a><nav<
-<a href="[back]">« back</a>
+<div id="nav">
+{{#if:{{{prevPage}}}|<a href="{{{prevPage}}}">‹ prev</a>}}
+{{#if:{{{nextPage}}}|<a href="{{{nextPage}}}">next ›</a>}}
+<a href="{{{back}}}{{{sourcePage}}}#{{{id}}}">« back</a>
 <br />
 </div>
 
-<a href="[pre][imagepath]" id="image">
-<span id="name"><h1>[imagecaption]</h1></span>
-<img src="[pre][imagepath]" [width] alt="[alt]" />
+<a href="{{{back}}}{{{path}}}" id="image">
+<span id="name"><h1>{{{caption}}}</h1></span>
+<img src="{{{back}}}{{{path}}}" />
 </a>
 
->desc><div id="desc">
-[desc]
+<div id="desc">
+{{{text}}}
 </div>
 
-<desc<</div><!-- end wrap -->
+</div><!-- end wrap -->
 
 <!-- Created with wiki2xhtml {{$version}} -->
 <!-- {{$wiki2xhtml}} -->

@@ -12,6 +12,7 @@ import src.project.settings.Settings.Checker;
 import src.project.settings.Settings.ValuePreparser;
 import src.resources.ResProjectSettings;
 import src.resources.ResProjectSettings.ImagepageCaptionAlternatives;
+import src.resources.ResProjectSettings.SettingsE;
 
 
 /*
@@ -188,49 +189,53 @@ public final class Constants {
 		public static final String style = "style";
 	}
 
-	/** Arguments for images */
+	/** Arguments for images
+	 * TODO Doc everything*/
 	public static final class Template_Images {
 
-		/** Additional HTML arguments for the image
-		public static final String args = "args=";
-		/** Additional HTML arguments for the image link, e.g. for use with plug-ins
-		 * @since wiki2xhtml 3.4 *
-		 * TODO doc: removed
-		public static final String argsLink = "argsLink=";
-		/** Clear before and after (insert clear=both) to put it on a new line
-		 * @since wiki2xhtml 3.4 */
+		/** Clear before and after (insert clear=both) to put it on a new line */
 		public static final String clear = "clear";
-		// TODO doc: clear=arg
-//		/** Clear before an image
-//		 * @since wiki2xhtml 3.4 */
-//		public static final String clearBefore = "clear:before";
-//		/** Clear after an image
-//		 * @since wiki2xhtml 3.4 */
-//		public static final String clearAfter = "clear:after";
-		/** Direct link, no image page */
+		/** <p>Don't create an image page, link directly.</p>
+		 * <p>contains {@code "true"} (i.e. is not empty) if this property is set.</p> */
 		public static final String direct = "direct";
-		/** Do not scale the image on the image page. @since wiki2xhtml 4.0 TODO Doc renamed from «small» */
+		/** Do not scale the image on the image page. */
 		public static final String noscale = "noscale";
-		/** Path to the thumbnail */
+		/**This argument has two different meanings (which don't imply each other): 
+		 * <ol>
+		 * <li>Path to the thumbnail: {@code thumb=<path>} (results in {@code thumb=path} in the template)</li>
+		 * <li>Use a thumbnail box: {@code thumb} (results in {@code type=thumb} in the template)</li>
+		 * </ol>
+		 * <p>If no thumbnail path is given explicitly, and if {@code type=thumb}, then wiki2xhtml tries to
+		 * create a thumbnail path based on {@link SettingsE#thumbsDir}, or uses the image path if no thumbnail
+		 * directory has been set.</p>
+		 * <p>If {@code type != thumb} and if no thumbnail path has been set for this image, then {@code {{{thumb}}}} should 
+		 * be empty. In templates, {@code {{{thumb|{{{path}}}}}}} should be safe to use.</p> */
 		public static final String thumb = "thumb";
-		/** Type: thumb (with image page) or direct (links directly). @since wiki2xhtml 4.0 */
+		/** Type: thumb (with image page) or nothing. Visual behaviour.
+		 * @see #thumb */
 		public static final String type = "type";
-		/** Image path. @since wiki2xhtml 4.0 */
+		/** Image path. Always resolves to the path given in {@code [[Image:PATH]]}. Only available in the template. */
 		public static final String path = "path";
-		/** Image width. @since wiki2xhtml 4.0 */
+		/** Image width. */
 		public static final String width = "width";
-		/** Image height. @since wiki2xhtml 4.0 */
+		/** Image height. */
 		public static final String height = "height";
-		/** Image description. @since wiki2xhtml 4.0 */
+		/** Image description. */
 		public static final String text = "text";
-		/** Horizontal position. @since wiki2xhtml 4.0 */
+		/** Horizontal position. */
 		public static final String location = "location";
-		/** Alternative link. @since wiki2xhtml 4.0 */
+		/** Argument: Custom link to use.<br/>
+		 * Template: Target link.*/
 		public static final String link = "link";
+		/** Image ID for linking/anchoring */
+		public static final String id = "id";
 		/** Image caption */
 		public static final String caption = "caption";
 		/** Alternative description (if the image cannot be displayed). @since wiki2xhtml 4.0 */
 		public static final String alt = "alt";
+		
+		/** Number of the image on the current page */
+		public static final String number = "number";
 
 		/** Long description of the image */
 		public static final String longDesc = "longdesc";
@@ -238,6 +243,14 @@ public final class Constants {
 		/** To comment out a gallery entry */
 		public static final String galleryComment = "//";
 
+	}
+	
+	/** Additional parameters available for image page templates */
+	public static final class Template_ImagePage {
+		public static final String nextPage = "nextPage";
+		public static final String prevPage = "prevPage";
+		public static final String back = "back";
+		public static final String sourcePage = "sourcePage";
 	}
 	
 	public static final class Template_Page {

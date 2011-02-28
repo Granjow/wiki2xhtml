@@ -1,22 +1,16 @@
 package src.project.file;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.StringReader;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import org.xnap.commons.i18n.I18n;
 import org.xnap.commons.i18n.I18nFactory;
 
 import src.Constants;
-import src.Statistics;
 import src.project.WikiProject;
 import src.project.settings.ImageProperties;
 import src.resources.ResProjectSettings.EImageProperties;
 import src.resources.ResProjectSettings.SettingsE;
 import src.resources.ResProjectSettings.SettingsLocalE;
-import src.tasks.WikiHeadings;
 import src.tasks.WikiImages;
 
 /*
@@ -42,10 +36,8 @@ import src.tasks.WikiImages;
  */
 public class Generators {
 	
-	private final WikiFile file;
 	
 	public Generators(WikiFile file) {
-		this.file = file;
 	}
 	
 	/**

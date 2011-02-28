@@ -18,6 +18,7 @@
 package src.project.settings;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map.Entry;
@@ -27,6 +28,7 @@ import java.util.regex.Pattern;
 import src.Constants;
 import src.Container_Resources;
 import src.Resources;
+import src.Constants.Template_Images;
 import src.argumentHandler.ArgumentItem;
 import src.argumentHandler.ArgumentReader;
 import src.project.FallbackFile;
@@ -41,7 +43,6 @@ import src.ptm.PTMState;
 import src.resources.ResProjectSettings.EImageContext;
 import src.resources.ResProjectSettings.EImageProperties;
 import src.resources.ResProjectSettings.SettingsE;
-import src.utilities.XMLTools;
 
 
 /**
@@ -69,23 +70,7 @@ public class ImageProperties extends StringSettings<EImageProperties> {
 	public ImageProperties(WikiFile parent) {
 		parentFile = parent;
 		imagepageCreated = false;
-		
-		// Add the ID generator
-		addPreparser(new ValuePreparser<String>() {
-			public String adjust(String value) {
-				String number = "unknown";
-				String path = "";
-				if (isSet(EImageProperties.number)) { number = get_(EImageProperties.number); }
-				if (isSet(EImageProperties.path)) { path = get_(EImageProperties.path); }
-				return XMLTools.getXmlNameChar(String.format("img_%s_%s", number, path));
-			};
-		}, EImageProperties.id);
-		// Set a fake ID so that the property is not null
-		set_(EImageProperties.id, "fakeID");
-	}
-	
-	public String getValue(String name) {
-		return argumentBindings.resolve(name);
+		argumentBindings = new PTMState();
 	}
 	
 	/**
@@ -93,40 +78,58 @@ public class ImageProperties extends StringSettings<EImageProperties> {
 	 * afterwards after the images have been linked.
 	 */
 	public String getPlaceholder() {
-		return String.format(">>>image-%s-placeholder<<<", get_(EImageProperties.number));
+		return String.format(">>>image-%s-placeholder<<<", argumentBindings.resolve(Template_Images.number));
+	}
+	
+	/**
+	 * Ensures that the image ID is bound to {@link Template_Images#id}.
+	 * @return The image ID.
+	 */
+	public String buildID() {
+		String id;
+		if (!argumentBindings.containsKey(Template_Images.id)) {
+			String number = argumentBindings.resolve(Template_Images.number);
+			String path = argumentBindings.resolve(Template_Images.path);
+			id = String.format("img_%s_%s", number, path); 
+			argumentBindings.b(Template_Images.id, id);
+			
+			assert number.length() > 0;
+			
+		} else {
+			id = argumentBindings.resolve(Template_Images.id);
+		}
+		return id;
 	}
 	
 	/**
 	 * Builds the filename and path for the image page.
-	 * @return Image page path
+	 * @return Image page path, in simplified form (no ../, ./, //, etc.)
 	 */
-	public String getImagepagePath(boolean filesystemPath, boolean filenameOnly) {
-		if (!isSet(EImageProperties.path)) {
-//			ca.ol("No image path available! Unable to getImagepagePath().", CALevel.ERRORS);
-			return null;
-		}
+	public String getImagepagePath() {
+		String path = argumentBindings.resolve(Template_Images.path);
+		String dirImagepages = parentFile.getProperty(SettingsE.imagepagesDir, true);
+		assert dirImagepages != null; // Default setting
+		assert path.length() > 0;
+		
+		
 		StringBuffer name = new StringBuffer();
-
-		if (!filenameOnly) {
-			if (filesystemPath) {
-				name.append(parentFile.project.outputDirectory().getAbsolutePath() + File.separatorChar);
-			}
-			name.append(parentFile.getProperty(SettingsE.imagepagesDir, true));
-
-			if (filesystemPath) {
-				// Path for the file is required, likely to create it, so create the sub-directory if necessary
-				File f = new File(name.toString());
-				if (!f.exists())
-					f.mkdirs();
-			}
-		}
-
-		name.append(parentFile.name.replace(".", "-"));
+		name.append(dirImagepages);
+		name.append(parentFile.internalName().replace("/", "+"));
 		name.append("_to_");
-		name.append(get_(EImageProperties.path).replace(".", "-").replace("/", "+").replace(" ", "_"));
+		name.append(path.replace("/", "+").replace(" ", "_"));
 		name.append(".html");
-
-		return name.toString();
+		
+		String finalName;
+		try {
+			finalName = new File(name.toString()).getCanonicalPath().substring(new File(".").getCanonicalPath().length());
+			assert finalName.length() > 0;
+			// Remove leading slash
+			finalName = finalName.substring(1);
+		} catch (IOException e) {
+			finalName = name.toString().replaceAll("(?<=/|^)\\./", "").replaceAll("//+", "/");
+		}
+		
+		return finalName;
 	}
 	
 	/**
@@ -187,24 +190,87 @@ public class ImageProperties extends StringSettings<EImageProperties> {
 
 
 
+	public void resolvePaths() {
+
+		if (!argumentBindings.containsKey(Template_Images.link)) {
+			if (imagepageCreated) {
+				argumentBindings.b(Template_Images.link, getImagepagePath());
+			} else {
+				argumentBindings.b(Template_Images.link, argumentBindings.resolve(Template_Images.path));
+			}
+		}
+		if (!argumentBindings.containsKey(Template_Images.thumb)) {
+			if ("thumb".equals(argumentBindings.resolve(Template_Images.type))) {
+				String dirPattern = parentFile.getProperty(SettingsE.thumbsDir, true);
+				if (dirPattern == null) {
+					dirPattern = "%n";
+				}
+				String thumb = getThumbnailSource(argumentBindings.resolve(Template_Images.path), dirPattern);
+				argumentBindings.b(Template_Images.thumb, thumb);
+			}
+		}
+	}
+	
+
+	/**
+	 * Replaces: (example: <code>dir/image.jpg</code>)
+	 * <ul>
+	 * <li>%n &#x2013; full name: <code>dir/image.jpg</code></li>
+	 * <li>%f &#x2013; file name: <code>image.jpg</code><li>
+	 * <li>%d &#x2013; directory: <code>dir</code></li>
+	 * <li>%b &#x2013; without extension: <code>image</code></li>
+	 * <li>%e &#x2013; file extension: <code>.jpg</code></li>
+	 * </ul>
+	 * @param nameThumb The name of the thumbnail
+	 * @return The location of a thumbnail
+	 */
+	public static final String getThumbnailSource(String imgPath, String dirPattern) {
+		assert dirPattern != null;
+		
+		int index;
+		String n, f, d, b, e;
+		
+		n = imgPath;
+		
+		index = imgPath.lastIndexOf('/');
+		if (index < 0) {
+			f = imgPath;
+			d = "";
+		} else {
+			f = imgPath.substring(index+1);
+			d = imgPath.substring(0, index);
+		}
+		
+		index = f.lastIndexOf('.');
+		if (index < 0) {
+			b = f;
+			e = "";
+		} else {
+			b = f.substring(0, index);
+			e = f.substring(index);
+		}
+		
+		String path = dirPattern
+			.replace("%n", n)
+			.replace("%f", f)
+			.replace("%d", d)
+			.replace("%b", b)
+			.replace("%e", e);
+
+		return path;
+	}
+	
 
 
 	/**
-	 * Reads arguments from an image tag ([[image:args]]).
+	 * Reads arguments from an image tag ([[image:args]]). Updates {@link #argumentBindings}.
 	 * @param args All image arguments, like &ldquo;<code>Image:venus.jpg|244px|The Venus</code>&rdquo;
 	 */
 	public void readArguments(final String args) {
 		
 		ArrayList<PTMObjects> allowedChildNodes = new ArrayList<PTMObjects>();
 		allowedChildNodes.add(PTMObjects.Argument);
-//		PTMRootNode root = new PTMRootNode(new StringBuffer(args + '|'), null, allowedChildNodes);
-//		root.printTree(System.out, " ");
-//		PTMState sigma = new PTMState(root);
-//		sigma.printValues();
-//		System.out.println("End of properties tree. Was: " + root.getRawContent());
-//		System.out.println("End of state.");
 		
-//		StringBuffer props = new StringBuffer();
 		HashMap<String, String> props = new HashMap<String, String>();
 
 		ArrayList<ArgumentItem> a = ArgumentReader.getArguments(args);
@@ -244,17 +310,16 @@ public class ImageProperties extends StringSettings<EImageProperties> {
 				props.put(Constants.Template_Images.type, "thumb");
 				continue;
 			}
-			
-			if (Constants.Template_Images.direct.equals(ai.fullArg)) {
-				// direct
-				props.put(Constants.Template_Images.type, "direct");
-				continue;
-			}
 
 			if (ai.fullArg.startsWith(Constants.Template_Images.thumb + SEP)) {
 				// thumb=<path>
 				props.put(Constants.Template_Images.thumb, ai.fullArg.substring(Constants.Template_Images.thumb.length()+1));
-				props.put(Constants.Template_Images.type, "thumb");
+				continue;
+			}
+			
+			if (Constants.Template_Images.direct.equals(ai.fullArg)) {
+				// direct
+				props.put(Constants.Template_Images.direct, "true");
 				continue;
 			}
 
@@ -341,17 +406,12 @@ public class ImageProperties extends StringSettings<EImageProperties> {
 		}
 		
 		PTMRootNode root = new PTMRootNode(arguments, null, allowedChildNodes);
-		argumentBindings = new PTMState(root);
+		argumentBindings.readState(root);
+		
+		buildID();
 		
 //		System.out.println("Arguments, reconstructed: \n");
 //		root.printTree(System.out, " ");
-		
-
-		// Check for non-ASCII characters
-//		Matcher m = Pattern.compile(Resources.pNotAscii).matcher(get_(EImageProperties.path));
-//		if (m.find()) {
-////			ca.o("Image contains non-ASCII characters! They should be removed.", CALevel.ERRORS);
-//		}
 	}
 	
 	

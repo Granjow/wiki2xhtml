@@ -6,12 +6,11 @@
 {{Keywords:wiki2xhtml, documentation, help file, java, xhtml}}
 {{Description:The complete help file or reference book to the functions from wiki2xhtml, including a short introduction.}}
 {{H1:› wiki2xhtml Documentation}}
-{{DescForCaption}}
 {{TitleRule:Image. %caption %s}}
 
 {{:tplLang.txt|de=doc-de.html}}
 
-{| id="navTable" style="width: 100%" cellpadding="0" cellspacing="2";
+{| id="navTable" style="width: 100%" cellpadding="0" cellspacing="2"
 |- style="background-color: #fa0;"
 | colspan="2" | [[quickstart.html Quickstart]]
 | colspan="2" | [[quickref.html Quickref]]
@@ -147,7 +146,7 @@ For headings, you always should begin with the second level, as the first one is
 }}
 The page title&mdash;the first heading&mdash;can be set with &#123;{H1:&hellip;}}. Example:
 {{:tplSample.txt|
-&#123;{H1:Photographing without a camera}}
+&#123;{H1:Photographing without a camera}&#125;
 }}
 {{:Top}}
 
@@ -244,7 +243,7 @@ Additionally:
 * ''$$argLink=&hellip;$$'' &ndash; Additional arguments for the $$a$$ tag (like for using [http://www.shadowbox-js.com/usage.html ShadowBox] with your images)
 * ''$$clear$$, $$clear:before$$, $$clear:after$$'' &ndash; Can be used if content is written over the image.
 
-{{:hint.txt|The link to the thumbnail can also be set separately for one image; if e.g. a PDF document (book.pdf) needs a special preview image (cover.png) you can replace the argument $$thumb$$ by the specific argument $$thumb=cover.png$$. Apart from that you should set a [[#thumbs default path to thumbnails]] and simply use $$thumb$$.}}
+{{:hint.txt|1=The link to the thumbnail can also be set separately for one image; if e.g. a PDF document (book.pdf) needs a special preview image (cover.png) you can replace the argument $$thumb$$ by the specific argument $$thumb=cover.png$$. Apart from that you should set a [[#thumbs default path to thumbnails]] and simply use $$thumb$$.}}
 
 ~~titlerule~~ The '''window title''' of image pages (also for images in galleries) can be adjusted with the command  $$&#123;&#123;TitleRule:''rule''&#125;&#125;$$. The rule hereby gives what the title has to look like. Additionally to $$%s$$ (see [[#h_Windowtitle window title]]), the following replacements are supported:
 * $$%caption$$ will be replaced by the image&#x2019;s caption
@@ -262,20 +261,20 @@ Image cloud.jpg: Cumulus  - .:MyPage
 ==== Examples for inserting images ====
 '''Without arguments'''
 
-$$<nowiki>[[Image:ahorn-300.jpg]]</nowiki>$$
+$$<nowiki>[[Image:ahorn-300.jpg|direct]]</nowiki>$$
 
 The image is inserted directly, in original size.
 
-[[Image:ahorn-300.jpg]]
+[[Image:ahorn-300.jpg|direct]]
 \\ 
 
 '''Labeled and resized'''
 
-$$<nowiki>[[Image:ahorn-300.jpg|Maple|150px]]</nowiki>$$
+$$<nowiki>[[Image:ahorn-300.jpg|Maple|150px|direct]]</nowiki>$$
 
 The image obtains a caption ''Maple'', and the image width is set to 150 pixels.
 
-[[Image:ahorn-300.jpg|Maple|150px]]
+[[Image:ahorn-300.jpg|Maple|150px|direct]]
 \\ 
 
 '''Thumbnail'''
@@ -301,11 +300,11 @@ The verbose description has been left away as by direct linking no image page is
 === Gallery ===
 You can add a gallery to your page with the tag $$&lt;gallery&gt;$$. Between the opening and the closing tag you can add an image on a new line (or, if you want, plain text)&nbsp;&ndash; see the gallery above. With the argument <code>caption=</code> you can set a caption for the gallery, and if you want to add a description, you can add it after a vertical line. An example code would look like this:
 {{:tplSample.txt|
-&lt;gallery caption="My Gallery"&gt;<br />
+<![CDATA[&lt;gallery caption="My Gallery"&gt;<br />
 Image:holiday.jpg<br />
 Yeah, these were nice times &amp;hellip; take a look at the guy on the left ;)<br />
 Image:sea.jpg|My boat. I have&amp;nbsp;&amp;hellip; ehm, borrowed it.<br />
-&lt;/gallery&gt;
+&lt;/gallery&gt;]]>
 }}
 {{:Top}}
 

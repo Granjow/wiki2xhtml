@@ -5,6 +5,7 @@ import java.io.IOException;
 import org.junit.Test;
 
 import src.project.file.VirtualWikiFile;
+import src.project.settings.ImageProperties;
 import src.tasks.Tasks.Task;
 
 public class PicTester extends junit.framework.TestCase {
@@ -28,11 +29,39 @@ public class PicTester extends junit.framework.TestCase {
 	
 	@Test
 	public void testThumb() throws IOException {
-		final String template = "{{#ifeq:{{{type}}}|thumb|t=thumb}}{{#ifeq:{{{type}}}|direct|t=direct}}{{#if:{{{thumb|}}}|p={{{thumb}}}}}";
+		final String template = "{{#ifeq:{{{type}}}|thumb|t=thumb}}{{#if:{{{direct}}}|d={{{direct}}}}}{{#if:{{{thumb|}}}|p={{{thumb}}}}}";
 		
-		assertEquals("t=thumb", p("[[Image:img.jpg|thumb]]", template));
-		assertEquals("t=thumbp=/some/where", p("[[Image:img.jpg|thumb=/some/where]]", template));
-		assertEquals("t=direct", p("[[Image:img.jpg|thumb|direct]]", template));
+		assertEquals("t=thumbp=img.jpg", p("[[Image:img.jpg|thumb]]", template));
+		assertEquals("p=/some/where", p("[[Image:img.jpg|thumb=/some/where]]", template));
+		assertEquals("t=thumbd=truep=img.jpg", p("[[Image:img.jpg|thumb|direct]]", template));
+	}
+	
+	@Test
+	public void testPathPatterns() {
+		final String dirPattern = "%n|%f|%d|%b|%e";
+		final String samplePath = "thumbs/%d/%f";
+		assertEquals("img.jpg|img.jpg||img|.jpg", ImageProperties.getThumbnailSource("img.jpg", dirPattern));
+		assertEquals("/my/dir/img.jpg|img.jpg|/my/dir|img|.jpg", ImageProperties.getThumbnailSource("/my/dir/img.jpg", dirPattern));
+		assertEquals("thumbs/dir/img.jpg", ImageProperties.getThumbnailSource("dir/img.jpg", samplePath));
+	}
+	
+	@Test
+	public void testThumbPath() throws IOException {
+		final String template = "{{{thumb|--{{{path}}}}}}";
+		assertEquals("--img.jpg", ps("[[Image:img.jpg]]", template));
+		assertEquals("--img.jpg", ps("{{Thumbnails:thumbs/%f}}[[Image:img.jpg]]", template));
+		assertEquals("img.jpg", ps("[[Image:img.jpg|thumb]]", template));
+		assertEquals("imgThumb.jpg", ps("[[Image:img.jpg|thumb=imgThumb.jpg]]", template));
+		assertEquals("thumbs/img.jpg", ps("{{Thumbnails:thumbs/%f}}[[Image:img.jpg|thumb]]", template));
+		assertEquals("imgThumb.jpg", ps("{{Thumbnails:thumbs/%f}}[[Image:img.jpg|thumb=imgThumb.jpg]]", template));
+	}
+	
+	@Test
+	public void testLink() throws IOException {
+		final String template = "{{#if:{{{link|}}}|l={{{link}}}}}";
+		assertEquals("l=linked", p("[[Image:img.jpg|link=linked]]", template));
+		assertEquals("l=imagePages/this-File.php_to_img.jpg.html", p("[[Image:img.jpg]]", template));
+		assertEquals("l=img.jpg", p("[[Image:img.jpg|direct]]", template));
 	}
 	
 	@Test
@@ -57,12 +86,6 @@ public class PicTester extends junit.framework.TestCase {
 		final String template = "{{#if:{{{text|}}}|text={{{text}}}}}";
 		assertEquals("text=this is text.", p("[[Image:img.jpg|this is text.]]", template));
 		assertEquals("text=more&#124;text", p("[[Image:img.jpg|more|text]]", template));
-	}
-	
-	@Test
-	public void testLink() throws IOException {
-		final String template = "{{#if:{{{link|}}}|l={{{link}}}}}";
-		assertEquals("l=linked", p("[[Image:img.jpg|link=linked]]", template));
 	}
 	
 	@Test
@@ -99,6 +122,14 @@ public class PicTester extends junit.framework.TestCase {
 		assertEquals("cap=image title", p("[[Image:img.jpg|c=image title]]", template));
 	}
 	
+	
+
+	
+	private static final String ps(String testString, String template) throws IOException {
+		TestObject2 to = new TestObject2(testString);
+		to.writeFile("tplImage.txt", template);
+		return to.real();
+	}
 
 	private static final String p(String testString, String template) throws IOException {
 		TestObject to = new TestObject(testString, "");
@@ -121,6 +152,15 @@ public class PicTester extends junit.framework.TestCase {
 
 		public String real() throws IOException {
 			return super.real().replace("\n", "").replace(" <", "<");
+		}
+	}
+	private static class TestObject2 extends TestObject {
+		public TestObject2(String test) throws IOException {
+			super(test, "");
+		}
+		void fillTasks(VirtualWikiFile vf) {
+			super.fillTasks(vf);
+			vf.addTask(Task.Settings);
 		}
 	}
 	

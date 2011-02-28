@@ -91,7 +91,7 @@ public class ImageSettings {
 		/** @return The link back to the calling image or thumbnail */
 		public String getBacklinkPage() {
 			ImageSettings is = ImageSettings.getInstance();
-			return is.page.getBacklinkDir() + is.page.get_(SettingsImgPageE.pageName) + "#" + getID();
+			return is.page.getBacklinkDir() + is.page.get_(SettingsImgPageE.pageName) + "#" + buildID();
 		}
 
 
@@ -180,46 +180,5 @@ public class ImageSettings {
 	}
 
 
-	/**
-	 * Replaces: (example: <code>dir/image.jpg</code>)
-	 * <ul>
-	 * <li>%n &#x2013; full name: <code>dir/image.jpg</code></li>
-	 * <li>%f &#x2013; file name: <code>image.jpg</code><li>
-	 * <li>%d &#x2013; directory: <code>dir</code></li>
-	 * <li>%w &#x2013; without extension: <code>image</code></li>
-	 * <li>%e &#x2013; file extension: <code>.jpg</code></li>
-	 * </ul>
-	 * @param nameThumb The name of the thumbnail
-	 * @return The location of a thumbnail
-	 */
-	public static String getThumbnailSource(String nameThumb) {
-		String out = XhtmlSettings.getInstance().local.getLocalOrGlobal_(SettingsE.thumbsDir);
-		if (out == null) out = "";
-		if (out.length() > 0) {
-
-			// Start replacing
-			String n = nameThumb, f = "", d = "", w = "", e = "";
-			if (nameThumb.indexOf("/") >= 0) {
-				f = nameThumb.substring(nameThumb.lastIndexOf("/") + 1, nameThumb.length());
-				d = nameThumb.substring(0, nameThumb.lastIndexOf("/"));
-			} else
-				f = nameThumb;
-
-			if (nameThumb.indexOf(".") >= 0) {
-				w = nameThumb.substring(0, nameThumb.lastIndexOf("."));
-				e = nameThumb.substring(nameThumb.lastIndexOf("."), nameThumb.length());
-			} else
-				w = nameThumb;
-			out = out.replace("%n", n);
-			out = out.replace("%f", f);
-			out = out.replace("%d", d);
-			out = out.replace("%w", w);
-			out = out.replace("%e", e);
-
-		} else
-			out = nameThumb;
-
-		return out;
-	}
 
 }

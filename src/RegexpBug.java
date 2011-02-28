@@ -47,7 +47,7 @@ public class RegexpBug {
 	static PrintStream o = System.out;
 	static StopwatchNano sn = new StopwatchNano();
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException {
 
 		String[] arg = {"--helpfiles", "--silent"};
 		String[] argDe = {"--helpfiles-de", "--silent"};
@@ -59,7 +59,13 @@ public class RegexpBug {
 		String rIf = "{{#if:a|b|c}}";
 
 		
-		testRegexSingleMatch("(?m)^\\{\\{:tplTOC.txt((?:\\|.*)?)\\}\\}", new String[] { "{{:tplTOC.txt}}", "bla\n{{:tplTOC.txt|arg}} etc" });
+		File f = new File("./a/b//c/../d./e/.f/./g");
+		File f2 = new File(".");
+		System.out.println(f.getCanonicalPath().substring(f2.getCanonicalPath().length()));
+		
+		System.out.println("./a/b//c/../d./e/.f/./g".replaceAll("(?<=/|^)\\./", "").replaceAll("//+", "/"));
+		
+//		testRegexSingleMatch("(?m)^\\{\\{:tplTOC.txt((?:\\|.*)?)\\}\\}", new String[] { "{{:tplTOC.txt}}", "bla\n{{:tplTOC.txt|arg}} etc" });
 		
 //		testRegexSingleMatch("^(=={1,5})(.*[^=])\\1(?:[^=]|$)", new String[] { "== Title ==", "== No title ===", "= No title either ==", "====== Title=6 ======" });
 		

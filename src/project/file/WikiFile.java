@@ -25,6 +25,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import src.Constants;
+import src.Constants.Template_Images;
 import src.project.WikiProject;
 import src.project.settings.GalleryProperties;
 import src.project.settings.ImageProperties;
@@ -84,7 +85,7 @@ public abstract class WikiFile {
 	/** List of reference bindings.
 	 * @see {@link Constants.Template_References} for the bound names */
 	public HashMap<String, PTMState> references = null;
-
+	/** List of available link namespaces */
 	private ArrayList<NamespaceObject> linkNamespaces;
 	
 	
@@ -160,10 +161,13 @@ public abstract class WikiFile {
 	}
 	
 
-	/** Adds an image property and directly returns its number in the list */
+	/** Adds an image property and directly returns its number in the list.
+	 * Additionally, sets {@link Template_Images#number} for {@code prop}. */
 	public int addImageProperties(ImageProperties prop) {
 		imagePropertiesList.add(prop);
-		return imagePropertiesList.indexOf(prop);
+		int nr = imagePropertiesList.indexOf(prop);
+		prop.argumentBindings.b(Template_Images.number, Integer.toString(nr));
+		return nr;
 	}
 	/** Adds an gallery property and directly returns its number in the list */
 	public int addGalleryProperties(GalleryProperties prop) {

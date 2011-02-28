@@ -85,8 +85,7 @@ public class WikiGalleries extends WikiTask {
 
 						// Add a new item
 						ImageProperties prop = new ImageProperties(file);
-						int id = file.addImageProperties(prop);
-						prop.set_(EImageProperties.number, Integer.toString(id));
+						file.addImageProperties(prop);
 						gp.imagePropertiesList.add(prop);
 						prop.readArguments(line);
 						prop.setContext(EImageContext.gallery);
@@ -119,7 +118,7 @@ public class WikiGalleries extends WikiTask {
 				// Unclosed gallery tag. Add all text without processing.
 				file.galleryPropertiesList.remove(gp);
 				out.append(cache);
-				System.err.println("Gallery was not closed in " + file.name);
+				System.err.println("Gallery was not closed in " + file.internalName());
 			}
 
 		} catch (IOException e) {

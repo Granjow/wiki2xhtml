@@ -40,7 +40,9 @@ public final class ResProjectSettings {
 		/** What to use as imagepage title alternative
 		 * @since wiki2xhtml 3.5 (multiple arguments before)
 		 */ 								imagepageTitle ("ImagepageTitle"),
-		/** Directory for image pages */	imagepagesDir ("DirImagepages", Preparsers.directoryTrailingSlashPreparser),
+		/** Directory for image pages
+		 * Guaranteed to end with a slash */	
+		 									imagepagesDir ("DirImagepages", Preparsers.directoryTrailingSlashPreparser),
 		/** Directory for images */			imagesDir ("DirImages", Preparsers.directoryTrailingSlashPreparser),
 		/** Meta data: page keywords */		keywords ("Keywords", true, ","),
 		/** Meta data: Page language */		lang ("Lang"),
@@ -130,12 +132,12 @@ public final class ResProjectSettings {
 		direct ("direct", "Link directly to the file"),
 		file ("file", "Filename alone"),
 		galleryNumber ("galleryNumber", "The gallery number in which the image is located"),
-		id ("id", "Automatically generated image ID"),
+//		id ("id", "Automatically generated image ID"),
 		link ("link", "Path to the image page or the image, depending on " +
 				"whether the image page has been created or not"),
 		meta ("meta", "Meta data"), // TODO fill in
 		next ("next", "Link to next image on the page"), // TODO fill in
-		number ("number", "The number of the image on the current page"),
+//		number ("number", "The number of the image on the current page"),
 		longdesc ("ld", "Long image description"),
 		pageCreated ("pageCreated", "Image page created?"),
 		/* TODO Doc removed.
