@@ -16,12 +16,12 @@ public class Tasks {
 		Lists ("Lists", "Lists (* ...)"),
 		Galleries ("Galleries", "Galleries (<gallery> tags)"),
 		Formattings ("Formattings", "Formattings (Bold, Italic ...)"),
-		Tags ("Tags", "Tags ({{$Version}} ...)"),
 		Paragraphs ("Paragraphs", "Create Paragraphs"),
 		InsertNowiki ("InsertNowiki", "Insert Nowiki Content (<nowiki> tags)"),
 		XMLNames ("XMLNames", "Convert text between <xmlname> tags to XML names"),
 		References ("References", "References (<ref> and <references/> tags)"),
 		PageTemplate ("PageTemplate", "Page template"),
+		Tags ("Tags", "Tags ({{$Version}} ...)"),
 		Cleanup ("Cleanup", "Cleanup"),
 		;
 		

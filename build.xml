@@ -1,7 +1,7 @@
 <?xml version="1.0"?> 
 <project name="wiki2xhtml" basedir="." default="build">
 
-  <property name="wiki2xhtml.version" value="4.0a1"/>
+  <property name="wiki2xhtml.version" value="4.0b3"/>
   <property name="build.classes" value="build"/>
   <property name="build.libs" value="build/lib"/>
   <property name="build.test" value="build-test"/>
@@ -87,8 +87,7 @@
         <include name="*.PHP"/>
         <include name="*.wx"/>
         <include name="wiki2xhtml"/>
-        <include name="start.bat"/>
-        <exclude name="howto-RELEASE.txt"/>
+          <exclude name="howto-RELEASE.txt"/>
       </fileset>
       <manifest>
         <attribute name="Built-By" value="Simon A. Eugster" />

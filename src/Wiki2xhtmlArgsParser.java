@@ -65,6 +65,7 @@ public class Wiki2xhtmlArgsParser extends CmdLineParser {
 		
 		menuFile = addStringOption('m', "menu");
 		commonFile = addStringOption('c', "common");
+		commonFile.setDescription("File containing the common settings like the header, the homelink, etc.");
 		footerFile = addStringOption('f', "footer");
 		
 		incremental = addBooleanOption("incremental");
@@ -84,6 +85,10 @@ public class Wiki2xhtmlArgsParser extends CmdLineParser {
 		String filename;
 		String alternative;
 		boolean success;
+		
+		if ((Boolean)getOptionValue(showHelp, Boolean.FALSE, false)) {
+			System.out.println(help());
+		}
 		
 		String prefix = (relativeTo == null) ? "" : relativeTo.getAbsolutePath() + File.separator;
 		

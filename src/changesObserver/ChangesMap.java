@@ -1,9 +1,10 @@
 package src.changesObserver;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import src.Container_Files.WikiFile;
+import src.project.WikiProject;
 
 
 /*
@@ -32,42 +33,40 @@ import src.Container_Files.WikiFile;
  */
 public class ChangesMap {
 
-	private HashMap<String, src.changesObserver.ChangesWriter.ChangeItem> hashes = null;
-
-	private src.Container_Files.Container c = null;
-
-	public void init() {
-		c = src.Container_Files.getInstance().cont;
+	private HashMap<String, src.changesObserver.ChangesWriter.ChangeItem> _hashes = null;
+	private final WikiProject _project;
+	private final File hashFile;
+	
+	public ChangesMap(WikiProject project) {
+		this._project = project;
+		hashFile = new File(_project.projectDirectory().getAbsolutePath() + File.separator + ".wiki2xhtml-hashes");
 	}
 
 	/**
 	 * Gets changed files
 	 */
 	public void buildHashes() {
-		// TODO 0 Templates: Read file and test
 		ArrayList<String> al = new ArrayList<String>();
 
 		// Add all files to be parsed to a list
-		for (WikiFile wf : c.files) {
-			al.add(wf.f.getPath());
+		for (int i = 0; i < _project.fileCount(); i++) {
+			al.add(_project.projectDirectory().getAbsolutePath() + File.separator + _project.getFile(i).name);
 		}
-		if (c.menuFile != null) al.add(c.menuFile.getPath());
-		if (c.footerFile != null) al.add(c.footerFile.getPath());
-		if (c.commonFile != null) al.add(c.commonFile.getPath());
+		// TODO common/menu files
 
 		// Get the old hashes of all files
-		hashes = ChangesWriter.getHashes(al);
+		_hashes = ChangesWriter.getHashes(al);
 
 		// Compare hashes with hashes of new files
-		ChangesWriter.getUnchangedFiles(c.hashFile, hashes, true);
+		ChangesWriter.getUnchangedFiles(hashFile, _hashes, true);
 	}
 
 	/**
 	 * Writes the new hashes
 	 */
 	public void writeHashes() {
-		if (hashes != null) {
-			ChangesWriter.write(c.hashFile, hashes);
+		if (_hashes != null) {
+			ChangesWriter.write(hashFile, _hashes);
 		}
 	}
 
@@ -77,14 +76,14 @@ public class ChangesMap {
 	 * @return Necessity to write the file
 	 */
 	public boolean needToWrite(String filename) {
-		if (!src.Container_Files.getInstance().sc.incremental) return true;
-		if ((c.menuFile != null && hasChanged(c.menuFile.getPath()))
-				|| (c.footerFile != null && hasChanged(c.footerFile.getPath()))
-				|| (c.commonFile != null && hasChanged(c.footerFile.getPath()))
-		   ) {
-			// Always rebuild files if menu, common or footer file has changed.
-			return true;
-		}
+//		if (!src.Container_Files.getInstance().sc.incremental) return true;
+//		if ((c.menuFile != null && hasChanged(c.menuFile.getPath()))
+//				|| (c.footerFile != null && hasChanged(c.footerFile.getPath()))
+//				|| (c.commonFile != null && hasChanged(c.footerFile.getPath()))
+//		   ) {
+//			// Always rebuild files if menu, common or footer file has changed.
+//			return true;
+//		}
 		return hasChanged(filename);
 	}
 
@@ -93,10 +92,10 @@ public class ChangesMap {
 	 * @return false, if the file has remained the same since last parsing
 	 */
 	private boolean hasChanged(String filename) {
-		if (hashes == null) return true;
+		if (_hashes == null) return true;
 
-		if (hashes.containsKey(filename)) {
-			return hashes.get(filename).changed;
+		if (_hashes.containsKey(filename)) {
+			return _hashes.get(filename).changed;
 		}
 		return true;
 	}

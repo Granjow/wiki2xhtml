@@ -2,7 +2,11 @@ package jargs.gnu;
 
 import java.text.NumberFormat;
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.Hashtable;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
 import java.util.Vector;
 import java.util.Locale;
 
@@ -168,10 +172,37 @@ public class CmdLineParser {
             throws IllegalOptionValueException {
             return null;
         }
+        
+        public void setDescription(String description) {
+        	this.description = description;
+        }
+        /**
+         * Creates a description of this option.
+         */
+        public String describe() {
+        	StringBuilder desc = new StringBuilder();
+        	if (shortForm != null) {
+        		desc.append('-');
+        		desc.append(shortForm);
+        	}
+        	if (shortForm != null && longForm != null) {
+        		desc.append(", ");
+        	}
+        	if (longForm != null) {
+        		desc.append("--");
+        		desc.append(longForm);
+        	}
+        	if (description != null) {
+        		desc.append("\t");
+        		desc.append(description);
+        	}
+        	return desc.toString();
+        }
 
         private String shortForm = null;
         private String longForm = null;
         private boolean wantsValue = false;
+        private String description = null;
 
         public static class BooleanOption extends Option {
             public BooleanOption( char shortForm, String longForm ) {
@@ -512,6 +543,24 @@ public class CmdLineParser {
 
         this.remainingArgs = new String[otherArgs.size()];
         otherArgs.copyInto(remainingArgs);
+    }
+    
+    
+    public final String help() {
+    	StringBuilder help = new StringBuilder();
+    	ArrayList<Option> list = new ArrayList<CmdLineParser.Option>();
+    	
+    	Set<Map.Entry<Object, Object>> entrySet = options.entrySet();
+    	for (Entry<Object, Object> e : entrySet) {
+    		if (!list.contains(e.getValue())) {
+    			list.add((Option)e.getValue());
+    		}
+    	}
+    	for (Option o : list) {
+    		help.append(o.describe());
+    		help.append('\n');
+    	}
+    	return help.toString();
     }
 
 

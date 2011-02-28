@@ -23,6 +23,7 @@ import java.util.HashMap;
 import java.util.Vector;
 
 import src.Constants;
+import src.Statistics;
 import src.Wiki2xhtmlArgsParser;
 import src.project.FallbackFile.FallbackLocation;
 import src.project.FallbackFile.NoFileFoundException;
@@ -127,7 +128,7 @@ public class WikiProject {
 	/** Returns the WikiMenu object or <strong><code>null</code></strong>, if no menu is set. */
 	public WikiMenu wikiMenu() {
 		if (wikiMenu == null && argsParser != null) {
-			String menuLocation = (String)argsParser.getOptionValue(argsParser.menuFile);
+			String menuLocation = (String)argsParser.getOptionValue(argsParser.menuFile, false);
 			if (menuLocation != null) {
 				try {
 					FallbackFile fMenu = locate(menuLocation);
@@ -182,6 +183,8 @@ public class WikiProject {
 	
 	////////// PARSING ///////////
 	public void make() throws IOException, InvalidOutputDirectoryLocationException {
+		Statistics.getInstance().sw.timeOverall.start();
+		
 		checkOutputDirectoryLocation();
 		
 		// Read the common file
@@ -200,6 +203,9 @@ public class WikiProject {
 			f.parse();
 			f.write();
 		}
+		
+		Statistics.getInstance().sw.timeOverall.stop();
+		System.out.printf("Total time taken: %s\n", Statistics.getInstance().sw.timeOverall.getStoppedTimeString());
 	}
 	
 	

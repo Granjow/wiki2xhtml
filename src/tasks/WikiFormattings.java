@@ -40,7 +40,7 @@ public class WikiFormattings extends WikiTask {
 
 
 	public WikiTask nextTask() {
-		return new WikiTags();
+		return new WikiParagraphs();
 	}
 
 	public Task desc() {

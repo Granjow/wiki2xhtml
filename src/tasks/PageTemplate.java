@@ -30,7 +30,7 @@ import src.tasks.Tasks.Task;
 public class PageTemplate extends WikiTask {
 	
 	public WikiTask nextTask() {
-		return new WikiCleanup();
+		return new WikiTags();
 	}
 
 	public Task desc() {

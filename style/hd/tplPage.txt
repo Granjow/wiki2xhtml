@@ -34,11 +34,10 @@
 {{{text}}}
 </div><!-- end content -->
 
-}}{{#if:{{{footer|}}}|
-<div id="footer">
-{{{footer}}}
-</div><!-- end footer -->
 }}
+<div id="footer"><!--New way for including the footer :) -->
+{{:footer.txt}}
+</div><!-- end footer -->
 
 </div><!-- end wrap -->
 </body>

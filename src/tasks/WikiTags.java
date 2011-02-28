@@ -8,7 +8,7 @@ import src.tasks.Tasks.Task;
 public class WikiTags extends WikiTask {
 
 	public WikiTask nextTask() {
-		return new WikiParagraphs();
+		return new WikiCleanup();
 	}
 
 	public Task desc() {
