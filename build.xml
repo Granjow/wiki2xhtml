@@ -71,7 +71,7 @@
   
   
   
-  <target name="copy-sources" description="Copies the source files and inserts the version number">
+  <target name="copy-sources" depends="clean" description="Copies the source files and inserts the version number">
     <copy todir="${build.sources}">
       <fileset refid="sources"/>
     </copy>
