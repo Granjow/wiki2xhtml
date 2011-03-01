@@ -108,7 +108,7 @@ public class ArgsFilesReader {
 						if (largs.length > 1) {
 							if (largs[1].contains(Constants.Arguments.FileArgs.noSitemap)) {
 								sitemap = false;
-								System.out.printf("No sitemap entry for %s\n", file);
+								System.out.printf("No sitemap entry for %s\n", s);
 							}
 						}
 						try {

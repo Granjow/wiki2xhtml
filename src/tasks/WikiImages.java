@@ -191,7 +191,7 @@ public class WikiImages extends WikiTask {
 				File f = new File(prop.parentFile.project.outputDirectory().getAbsolutePath() + File.separator + prop.getImagepagePath());
 				IOWrite_Stats.writeString(f, s, false);
 				if (prop.parentFile.sitemap) {
-					prop.parentFile.project.sitemap.add(f);
+					prop.parentFile.project.sitemap.add(prop.getImagepagePath());
 				}
 	
 				prop.imagepageCreated = true;

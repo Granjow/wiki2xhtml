@@ -5,4 +5,5 @@ l10n/po/*~
 .settings
 wiki2xhtml-help
 xhtml-Output
+bin
 build

@@ -39,6 +39,8 @@ public class Wiki2xhtmlArgsParser extends CmdLineParser {
 	public final Option menuFile;
 	public final Option commonFile;
 	
+	public final Option sitemap;
+	
 	
 	public final Option incremental;
 //	public final Option stdout;
@@ -68,6 +70,9 @@ public class Wiki2xhtmlArgsParser extends CmdLineParser {
 		menuFile.setDescription("Describes the menu of the page");
 		commonFile = addStringOption('c', "common");
 		commonFile.setDescription("File containing the common settings like the header, the homelink, etc.");
+		
+		sitemap = addStringOption("sitemap");
+		sitemap.setDescription("Creates a site map with the given prefix as URL.");
 		
 		incremental = addBooleanOption("incremental");
 		incremental.setDescription("Re-builds changed files only. Attention: Does not consider template files; don't use this flag if templates have changed.");

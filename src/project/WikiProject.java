@@ -83,6 +83,7 @@ public class WikiProject {
 				} catch (IOException e) {
 					outputDirectory = f;
 				}
+				updateSitemap();
 				return true;
 			} catch (InvalidOutputDirectoryLocationException e) {
 				e.printStackTrace();
@@ -169,6 +170,7 @@ public class WikiProject {
 		Statistics.getInstance().sw.timeOverall.start();
 		
 		checkOutputDirectoryLocation();
+		updateSitemap();
 		
 		boolean incremental = (Boolean)argsParser.getOptionValue(argsParser.incremental, Boolean.FALSE, false);
 		
@@ -196,6 +198,9 @@ public class WikiProject {
 				f.parse();
 				f.write();
 				fileChangesMap.update(f.name);
+				if (f.sitemap) {
+					sitemap.add(f.internalName());
+				}
 				System.out.printf("Processed %s.\n", f.internalName());;
 			}
 		}
@@ -203,6 +208,8 @@ public class WikiProject {
 		if (commonFile != null) {
 			fileChangesMap.update(commonFile);
 		}
+		
+		sitemap.write();
 		
 		Statistics.getInstance().sw.timeOverall.stop();
 		System.out.printf("Total time taken: %s\n", Statistics.getInstance().sw.timeOverall.getStoppedTimeString());
@@ -223,23 +230,6 @@ public class WikiProject {
 	
 	
 	///////////// VARIOUS FUNCTIONS /////////////
-	
-	
-	/**
-	 * @param map file;baseUri. Example: sitemap.txt;http://wiki2xhtml.sf.net
-	 */
-	public boolean setSitemap(String map) {
-		String[] parts = map.split(";", 2);
-		boolean worked = false;
-		
-		if (parts.length < 2) {
-//			ca.ol("Wrong sitemap definition! Use --sitemap=filename;base URI.", CALevel.ERRORS);
-		} else {
-			sitemap = new Sitemap(outputDirectory, new File(outputDirectory.getAbsolutePath() + File.separatorChar + parts[0]), parts[1]);
-			worked = true;
-		}
-		return worked;
-	}
 	
 	/**
 	 * <p>Copies project files with rsync. The list of files to copy is given in the file {@code resources.txt}
@@ -275,7 +265,7 @@ public class WikiProject {
 	private String styleOutputDirectory;
 	private FileChangesMap fileChangesMap;
 
-	public Sitemap sitemap = new Sitemap();
+	public Sitemap sitemap = null;
 	public WikiStyle wikiStyle = new WikiStyle(this);
 	public Wiki2xhtmlArgsParser argsParser = null;
 	
@@ -294,6 +284,21 @@ public class WikiProject {
 	/** If the project directory changes */
 	private void updateFileChangesMap() {
 		fileChangesMap = new FileChangesMap(projectDirectory(), ".wiki2xhtml-hashes"); 
+	}
+	
+	private void updateSitemap() {
+		sitemap = null;
+		if (argsParser != null) {
+			String prefix = (String)argsParser.getOptionValue(argsParser.sitemap, false);
+			boolean incremental = (Boolean)argsParser.getOptionValue(argsParser.incremental, Boolean.FALSE, false); 
+			if (prefix != null) {
+				File f = new File(outputDirectory().getAbsolutePath() + File.separator + "sitemap.txt");
+				sitemap = new Sitemap(f, prefix, incremental);
+			}
+		}
+		if (sitemap == null) {
+			sitemap = new Sitemap(null, "", false);
+		}
 	}
 	
 	
