@@ -48,6 +48,7 @@ public class PTMRootNode extends PTMNode {
 		
 		if (allowedChildNodes == null) { allowedChildNodes = PTM.defaultChildren; }
 		
+		@SuppressWarnings("unused")
 		long start = System.currentTimeMillis();
 		endIndex = 0;
 		
@@ -62,7 +63,7 @@ public class PTMRootNode extends PTMNode {
 			}
 		} while (obj != null);
 		
-		System.out.printf("Time taken to parse root node: %s\n", StringTools.formatTimeMilliseconds(System.currentTimeMillis()-start));
+//		System.out.printf("Time taken to parse root node: %s\n", StringTools.formatTimeMilliseconds(System.currentTimeMillis()-start));
 		
 		assert endIndex == content.length();
 		assert this.sigma != null;

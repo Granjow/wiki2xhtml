@@ -106,7 +106,7 @@ public class Generators {
 	
 	public static void main(String[] args) throws IOException {
 		WikiProject proj = new WikiProject(".");
-		ImageProperties prop = new ImageProperties(new VirtualWikiFile(proj, "name", false, false));
+		ImageProperties prop = new ImageProperties(new VirtualWikiFile(proj, "name", false));
 		prop.set_(EImageProperties.text, "Text.");
 		prop.set_(EImageProperties.path, "test.jpg");
 		StringBuffer out = WikiImages.generateThumbnailEntry(prop);

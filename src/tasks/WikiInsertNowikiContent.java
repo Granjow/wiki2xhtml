@@ -78,7 +78,7 @@ public class WikiInsertNowikiContent extends WikiTask {
 	
 	public static void main(String[] args) {
 		StringBuffer sb = new StringBuffer("Hallo [[link]]. <nowiki>[[link]]</nowiki>");
-		VirtualWikiFile vf = new VirtualWikiFile(null, "a", false, true, sb);
+		VirtualWikiFile vf = new VirtualWikiFile(null, "a", false, sb);
 		vf.parse();
 		System.out.println(vf.getContent());
 	}

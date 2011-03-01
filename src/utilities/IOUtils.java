@@ -48,7 +48,7 @@ public class IOUtils {
 						src.getAbsolutePath() + File.separator, 
 						dst.getAbsolutePath() + File.separator, 
 						resourcesFile.getAbsolutePath());
-				System.out.println("Copying style files: " + cmd);
+				System.out.println("Copying files: " + cmd);
 				Process rsync = Runtime.getRuntime().exec(cmd);
 				
 				try {

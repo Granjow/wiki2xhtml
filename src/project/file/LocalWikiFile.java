@@ -43,7 +43,7 @@ public class LocalWikiFile extends WikiFile {
 	}
 	private final String buildInternalName(String name) {
 		String destName = name;
-		if (parse && name.endsWith(".txt")) {
+		if (name.endsWith(".txt")) {
 			destName = destName.substring(0, destName.length()-".txt".length()) + ".html";
 		}
 		return destName;
@@ -51,11 +51,11 @@ public class LocalWikiFile extends WikiFile {
 
 	/** Creates a new WikiFile. Input and output files are generated automatically.
 	 * Does NOT check whether the location is valid. (E.g. input file equals output file.)*/
-	public LocalWikiFile(WikiProject project, String name, boolean sitemap, boolean parse) {
-		this(project, name, sitemap, parse, false);
+	public LocalWikiFile(WikiProject project, String name, boolean sitemap) {
+		this(project, name, sitemap, false);
 	}
-	public LocalWikiFile(WikiProject project, String name, boolean sitemap, boolean parse, boolean createTempFile) {
-		super(project, name, sitemap, parse);
+	public LocalWikiFile(WikiProject project, String name, boolean sitemap, boolean createTempFile) {
+		super(project, name, sitemap);
 		if (createTempFile) {
 			File f1 = null, f2 = null;
 			try {

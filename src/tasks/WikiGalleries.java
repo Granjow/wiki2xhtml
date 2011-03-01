@@ -154,7 +154,7 @@ public class WikiGalleries extends WikiTask {
 	public static void main(String[] args) {
 		StringBuffer sb = new StringBuffer("<gallery>\nImage:test.jpg\n</gallery>");
 		WikiProject wp = new WikiProject(".");
-		VirtualWikiFile vf = new VirtualWikiFile(wp, "name", false, true, sb);
+		VirtualWikiFile vf = new VirtualWikiFile(wp, "name", false, sb);
 		vf.removeAllTasks();
 		vf.addTask(Task.Galleries);
 		vf.parse();

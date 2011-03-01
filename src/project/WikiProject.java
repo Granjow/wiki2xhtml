@@ -170,7 +170,7 @@ public class WikiProject {
 		
 		checkOutputDirectoryLocation();
 		
-		boolean incremental = (Boolean)argsParser.getOptionValue(argsParser.incremental, false, false);
+		boolean incremental = (Boolean)argsParser.getOptionValue(argsParser.incremental, Boolean.FALSE, false);
 		
 		// Read the common file
 		String commonFile = (String)argsParser.getOptionValue(argsParser.commonFile, false);
@@ -178,11 +178,11 @@ public class WikiProject {
 			FallbackFile ff = locate(commonFile, FallbackFile.projectLocationOnly);
 			PageSettingsReader psr = new PageSettingsReader(ff.getContent(), (PageSettings) projectSettings);
 			psr.readSettings(false);
-			incremental = !fileChangesMap.queryUnchanged(ff.pathInfo());
+			incremental &= fileChangesMap.queryUnchanged(ff.pathInfo());
 		}
 		String menuFile = (String)argsParser.getOptionValue(argsParser.menuFile, false);
 		if (menuFile != null) {
-			incremental &= !fileChangesMap.queryUnchanged(menuFile);
+			incremental &= fileChangesMap.queryUnchanged(menuFile);
 		}
 		
 		wikiStyle.copyFiles();
@@ -190,12 +190,13 @@ public class WikiProject {
 		
 		// Make the project
 		for (WikiFile f : fileMap.values()) {
-			if (!incremental || !fileChangesMap.queryUnchanged(f.name)) {
+			if (incremental && fileChangesMap.queryUnchanged(f.name)) {
+				System.out.printf("Skipping %s (unchanged).\n", f.internalName());
+			} else {
 				f.parse();
 				f.write();
 				fileChangesMap.update(f.name);
-			} else {
-				System.out.printf("Skipping %s (unchanged).\n", f.internalName());
+				System.out.printf("Processed %s.\n", f.internalName());;
 			}
 		}
 		
@@ -303,7 +304,7 @@ public class WikiProject {
 		WikiProject p = new WikiProject(".");
 		StringBuffer sb = new StringBuffer();
 		sb.append("Hallo. [[link.html]]\n*bla");
-		VirtualWikiFile vf = new VirtualWikiFile(p,"myname", false,true,sb);
+		VirtualWikiFile vf = new VirtualWikiFile(p,"myname", false,sb);
 		p.addFile(vf);
 		p.make();
 		System.out.println(vf.getContent());

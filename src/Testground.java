@@ -29,7 +29,7 @@ public class Testground {
 				"<references/>", false);
 		f.mkdirs();
 		WikiProject wp = new WikiProject("/tmp/w2xtest");
-		WikiFile wf = new LocalWikiFile(wp, f.getName(), false, true);
+		WikiFile wf = new LocalWikiFile(wp, f.getName(), false);
 		wp.addFile(wf);
 		wp.make();
 	}

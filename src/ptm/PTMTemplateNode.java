@@ -126,8 +126,8 @@ public class PTMTemplateNode extends PTMNode {
 			forwardingSearch: for (PTMObject o : childTree) {
 				if (identifier.equals(o.getRawContent())) {
 					// Bind values from the root node to this node, except if a newer value is available
-					System.out.println("Forwarding state.");
-					state.printValues();
+//					System.out.println("Forwarding state.");
+//					state.printValues();
 					for (String key : root.sigma.keySet()) {
 						if (!state.containsKey(key) || PTMState.forwardState.equals(state.resolve(key))) {
 							System.out.printf("Re-binding %s to %s (template value is %s).\n", key, root.sigma.resolve(key), state.resolve(key));
@@ -136,8 +136,8 @@ public class PTMTemplateNode extends PTMNode {
 							System.out.printf("%s is already bound to %s.\n", key, state.resolve(key));
 						}
 					}
-					System.out.println("Forwarded. Result:");
-					state.printValues();
+//					System.out.println("Forwarded. Result:");
+//					state.printValues();
 					break forwardingSearch;
 				}
 			}

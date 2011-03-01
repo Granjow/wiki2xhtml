@@ -36,7 +36,7 @@ public class SettingsReader<K extends Comparable<?>, V extends Comparable<?>> {
 	/** Attaches a reader if it does not exist yet */
 	public boolean attachReader(SettingReader<K,V> reader) {
 		if (!pageSettingsReader.contains(reader)) {
-			System.err.println("Attaching reader " + reader.getID());
+//			System.err.println("Attaching reader " + reader.getID());
 			return pageSettingsReader.add(reader);
 		} else {
 			return false;

@@ -49,7 +49,6 @@ public abstract class WikiFile {
 	
 	public final boolean sitemap;
 	
-	protected final boolean parse;
 	/** <p>Filename of this file.<br/>
 	 * Usually denotes the file name relative to the project directory. Some examples:</p>
 	 * <ul>
@@ -90,17 +89,14 @@ public abstract class WikiFile {
 	
 	
 	
-	protected WikiFile(WikiProject project, String name, boolean sitemap, boolean parse) {
+	protected WikiFile(WikiProject project, String name, boolean sitemap) {
 		this.name = name;
 		this.project = project;
 		this.sitemap = sitemap;
-		this.parse = parse;
 		this.generators = new Generators(this);
 		this.linkNamespaces = new ArrayList<NamespaceObject>();
-		if (parse) {
-			for (Task t : Task.values()) {
-				tasks.add(t);
-			}
+		for (Task t : Task.values()) {
+			tasks.add(t);
 		}
 		if (File.separator.equals("/")) {
 			internalName = name;
@@ -208,13 +204,12 @@ public abstract class WikiFile {
 	
 	
 	public void parse() {
-		if (!parse) return;
 		WikiTask task = new WikiPreparser();
 		do {
 			if (tasks.contains(task.desc())) {
 				task.parse(this);
 			} else {
-				System.err.printf("Omitted: %s (%s)\n", task.desc().name, task.desc().description);
+//				System.err.printf("Omitted: %s (%s)\n", task.desc().name, task.desc().description);
 			}
 		} while ((task = task.nextTask()) != null);
 	}

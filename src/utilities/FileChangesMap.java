@@ -94,7 +94,7 @@ public class FileChangesMap extends HashMap<String, String> {
 				put(entry[1], entry[0]);
 			}
 		} catch (IOException e) {
-			System.out.println("Hash file does not exist: " + _hashFile.getAbsolutePath());
+//			System.out.println("Hash file does not exist: " + _hashFile.getAbsolutePath());
 		}
 	}
 

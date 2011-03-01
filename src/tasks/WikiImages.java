@@ -137,14 +137,14 @@ public class WikiImages extends WikiTask {
 		prop.resolvePaths();
 
 		FallbackFile tp = prop.getTemplate();
-		System.out.printf("Arguments: %s.\n", prop.getList("|", "=", false));
+//		System.out.printf("Arguments: %s.\n", prop.getList("|", "=", false));
 		
 		PTMRootNode root = new PTMRootNode(tp.getContent(), prop.argumentBindings);
 		
-		System.out.println("Thumbnail entry: ");
-		root.printTree(System.out, " ");
-		System.out.println("States: ");
-		prop.argumentBindings.printValues();
+//		System.out.println("Thumbnail entry: ");
+//		root.printTree(System.out, " ");
+//		System.out.println("States: ");
+//		prop.argumentBindings.printValues();
 		
 		try {
 			return new StringBuffer(root.evaluate());
@@ -214,7 +214,7 @@ public class WikiImages extends WikiTask {
 	public static void main(String[] args) {
 		WikiProject wp = new WikiProject(".");
 		StringBuffer sb = new StringBuffer("[[Image:a.jpg|400px|hallo.]]");
-		VirtualWikiFile vf = new VirtualWikiFile(wp, "name", false, true, sb);
+		VirtualWikiFile vf = new VirtualWikiFile(wp, "name", false, sb);
 		vf.removeAllTasks();
 		vf.addTask(Task.Images);
 		vf.parse();

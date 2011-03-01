@@ -432,7 +432,7 @@ public class ImageProperties extends StringSettings<EImageProperties> {
 	
 	
 	public static void main(String[] args) {
-		WikiFile wf = new VirtualWikiFile(null, "name", false, false, new StringBuffer());
+		WikiFile wf = new VirtualWikiFile(null, "name", false, new StringBuffer());
 		ImageProperties prop = new ImageProperties(wf);
 		prop.readArguments("Image:nowhere.jpg|thumb|right|this is a description");
 		prop.print(": ");

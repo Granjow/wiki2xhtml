@@ -21,7 +21,7 @@ public class NowikiTester extends junit.framework.TestCase {
 	
 
 	private static final String pr(String testString) throws IOException {
-		VirtualWikiFile vf = new VirtualWikiFile(VirtualWikiFile.createEmptyProject(), "file", false, true, new StringBuffer(testString));
+		VirtualWikiFile vf = new VirtualWikiFile(VirtualWikiFile.createEmptyProject(), "file", false, new StringBuffer(testString));
 		vf.removeAllTasks();
 		vf.addTask(Task.RemoveNowiki);
 		vf.parse();

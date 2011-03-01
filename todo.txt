@@ -3,6 +3,7 @@ Read CSS settings
 Scripts <!--endtop-->
 Parse templates in the page template? Move page template to the beginning?
 meta data?
+sitemap
 
 
 Image: → crash

@@ -135,7 +135,7 @@ public class WikiMenu {
 	 * @return The generated menu in XHTML
 	 */
 	synchronized public StringBuffer getMenu(String searchText, SearchLocation where) {
-		VirtualWikiFile vf = new VirtualWikiFile(VirtualWikiFile.createEmptyProject(), "--", false, true, getMenuAsList(searchText, where));
+		VirtualWikiFile vf = new VirtualWikiFile(VirtualWikiFile.createEmptyProject(), "--", false, getMenuAsList(searchText, where));
 		vf.removeAllTasks();
 		vf.addTask(Task.Lists);
 		vf.parse();

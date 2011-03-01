@@ -135,7 +135,7 @@ public class WikiHeadings extends WikiTask {
 	
 	public static void main(String[] args) {
 		StringBuffer sb = new StringBuffer("== Titel ==");
-		VirtualWikiFile vf = new VirtualWikiFile(null, "me.html", false, true, sb);
+		VirtualWikiFile vf = new VirtualWikiFile(null, "me.html", false, sb);
 		vf.removeAllTasks();
 		vf.addTask(Task.Headings);
 		vf.parse();

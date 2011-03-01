@@ -101,8 +101,6 @@ public class PTMFunctionSwitch extends PTMFunctionNode {
 		
 		boolean found = false;
 		
-		this.printTree(System.out, " ");
-		
 		String compare = childTree.get(0).evaluate().trim();
 		search: for (int i = 1; i < childTree.size(); i++) {
 			currentName = childTree.get(i).childTree.get(0).evaluate().trim();

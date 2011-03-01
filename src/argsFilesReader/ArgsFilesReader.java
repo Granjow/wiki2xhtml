@@ -95,29 +95,25 @@ public class ArgsFilesReader {
 					
 				} else {
 					// File.
-					System.out.printf("File read: %s\n", line);
+//					System.out.printf("File read: %s\n", line);
 					sitemap = true;
 					parse = true;
 					
 					// Split at spaces, except when preceded by a \
-					// TODO Doc: \ for spaces
+					// TODO Doc: \ for spaces, noparse removed
 					String[] largs = line.split("(?<!\\\\)\\s", 2);
 					if (largs.length > 0) {
-						s = ((dir.length() > 0) ? dir + File.separator : "") + largs[0];
-						System.out.printf("File is %s\n", s);
+						s = ((dir.length() > 0) ? dir + File.separator : "") + largs[0].replace("\\ ", " ");
+//						System.out.printf("File is %s\n", s);
 						if (largs.length > 1) {
 							if (largs[1].contains(Constants.Arguments.FileArgs.noSitemap)) {
 								sitemap = false;
 								System.out.printf("No sitemap entry for %s\n", file);
 							}
-							if (largs[1].contains(Constants.Arguments.FileArgs.noParse)) {
-								parse = false;
-								System.out.printf("Will not parse %s\n", file);
-							}
 						}
 						try {
-							project.addFile(new LocalWikiFile(project, s, sitemap, parse));
-							System.out.printf("Added %s to the project.\n", s);
+							project.addFile(new LocalWikiFile(project, s, sitemap));
+//							System.out.printf("Added %s to the project.\n", s);
 						} catch (InvalidLocationException e) {
 							System.out.printf("Could not add %s to the project: %s\n", s, e.getMessage());
 						}

@@ -31,7 +31,6 @@ import src.ptm.PTMObject.RecursionException;
 import src.ptm.PTMRootNode;
 import src.ptm.PTMState;
 import src.resources.ResProjectSettings.EGalleryProperties;
-import src.resources.ResProjectSettings.EImageProperties;
 import src.resources.ResProjectSettings.SettingsE;
 import src.tasks.WikiImages;
 
@@ -87,8 +86,8 @@ public class GalleryProperties extends StringSettings<EGalleryProperties> {
 		
 		buildID();
 		
-		System.out.println("Gallery arguments:");
-		sigma.printValues();
+//		System.out.println("Gallery arguments:");
+//		sigma.printValues();
 		
 	}
 	

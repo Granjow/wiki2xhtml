@@ -56,7 +56,7 @@ public class SettingsTester extends junit.framework.TestCase {
 	public void testBindings() throws IOException {
 		StringBuffer sb = new StringBuffer("{{Bind:a=b}}\nhall{{Bind:c=d}}o");
 		
-		VirtualWikiFile vf = new VirtualWikiFile(VirtualWikiFile.createTempProject(), "a.html", false, true, sb);
+		VirtualWikiFile vf = new VirtualWikiFile(VirtualWikiFile.createTempProject(), "a.html", false, sb);
 		vf.removeAllTasks();
 		vf.addTask(Task.Settings);
 		vf.parse();
@@ -143,7 +143,7 @@ public class SettingsTester extends junit.framework.TestCase {
 	}
 	
 	private static final String p(String text) throws IOException {
-		VirtualWikiFile vf = new VirtualWikiFile(VirtualWikiFile.createTempProject(), "a.html", false, true, new StringBuffer(text));
+		VirtualWikiFile vf = new VirtualWikiFile(VirtualWikiFile.createTempProject(), "a.html", false, new StringBuffer(text));
 		vf.removeAllTasks();
 		vf.addTask(Task.Settings);
 		vf.parse();

@@ -44,6 +44,7 @@ public class Wiki2xhtmlArgsParser extends CmdLineParser {
 //	public final Option stdout;
 	
 	public final Option showHelp;
+	public final Option showVersion;
 //	public final Option checkUpdate;
 
 //	public final Option lang;
@@ -74,6 +75,9 @@ public class Wiki2xhtmlArgsParser extends CmdLineParser {
 		
 		showHelp = addBooleanOption('h', "help");
 		showHelp.setDescription("Displays this help message");
+		
+		showVersion = addBooleanOption("version");
+		showVersion.setDescription("Display the wiki2xhtml version number");
 //		checkUpdate = addBooleanOption("www");
 	}
 	
@@ -87,9 +91,13 @@ public class Wiki2xhtmlArgsParser extends CmdLineParser {
 		String filename;
 		String alternative;
 		boolean success;
-		
+
 		if ((Boolean)getOptionValue(showHelp, Boolean.FALSE, false)) {
 			System.out.println(help());
+			System.exit(0);
+		}
+		if ((Boolean)getOptionValue(showVersion, Boolean.FALSE, false)) {
+			System.out.println(version());
 			System.exit(0);
 		}
 		
@@ -150,15 +158,22 @@ public class Wiki2xhtmlArgsParser extends CmdLineParser {
 		File f;
 		for (String s : getRemainingArgs()) {
 			
-			f = new File(project.projectDirectory().getAbsolutePath() + File.separator + s);
+			if (s.endsWith(".args") && new File(s).exists()) {
+				// .args files do not need to be prefixed! Check without first.
+				f = new File(s);
+			} else {
+				f = new File(project.projectDirectory().getAbsolutePath() + File.separator + s);
+			}
 			
 			if (f.exists()) {
 				
 				if (s.endsWith(".args")) {
 					// Read the argument file
 					o.println("Args file: " + f.getAbsolutePath());
-					if (!f.getParentFile().equals(project.projectDirectory())) {
-						project.setProjectDirectory(f.getParentFile());
+					File parentFile = f.getAbsoluteFile().getParentFile(); // f.getParentFile() alone is == null for e.g. f = new File("filenameOnly.args")
+					o.println("Parent file of " + f.getAbsolutePath() + ": " + (parentFile == null ? "null" : parentFile.getAbsolutePath()));
+					if (!parentFile.equals(project.projectDirectory())) {
+						project.setProjectDirectory(parentFile);
 						o.printf("Project directory set, based on the location of the args file (%s), to %s\n", 
 								f.getAbsolutePath(),
 								project.projectDirectory().getAbsolutePath(),
@@ -170,8 +185,8 @@ public class Wiki2xhtmlArgsParser extends CmdLineParser {
 				} else {
 					// Add as input file
 					try {
-						project.addFile(new LocalWikiFile(project, s, true, true));
-						o.println("File added: " + f.getAbsolutePath());
+						project.addFile(new LocalWikiFile(project, s, true));
+//						o.println("File added: " + f.getAbsolutePath());
 					} catch (InvalidLocationException e) {
 						e.printStackTrace();
 						o.printf("File %s (%s) could not be added: %s\n", s, f.getAbsolutePath(), e.getMessage());
@@ -189,11 +204,18 @@ public class Wiki2xhtmlArgsParser extends CmdLineParser {
 	
 	public String help() {
 		StringBuilder sb = new StringBuilder();
-		sb.append(String.format("wiki2xhtml %s (%s) (GPL)\n(c) Simon A. Eugster <simon.eu@gmail.com>\n", Constants.Wiki2xhtml.versionNumber, Constants.Wiki2xhtml.versionDate));
+		sb.append(version());
 		sb.append("Usage:\twiki2xhtml [OPTIONS] [FILES]\n\twiki2xhtml yourfile.args\n\n");
 		sb.append(super.help());
 		sb.append(".args File\tProject file containing all important information (files to parse, flags)");
 		return Indent.indent(sb.toString(), 3);
+	}
+	
+	public String version() {
+		StringBuilder sb = new StringBuilder();
+		sb.append(String.format("wiki2xhtml %s (%s) (GPL)\n(c) Simon A. Eugster <simon.eu@gmail.com>\n", Constants.Wiki2xhtml.versionNumber, Constants.Wiki2xhtml.versionDate));
+		return sb.toString();
+		
 	}
 	
 }

@@ -38,7 +38,7 @@ abstract class TestObject {
 		return output;
 	}
 	public String real() throws IOException {
-		VirtualWikiFile vf = new VirtualWikiFile(project, thisFile(), false, true, input);
+		VirtualWikiFile vf = new VirtualWikiFile(project, thisFile(), false, input);
 		vf.setPageSettings(pageSettings);
 		vf.removeAllTasks();
 		fillTasks(vf);

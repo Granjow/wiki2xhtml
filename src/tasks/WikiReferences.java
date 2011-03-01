@@ -127,7 +127,7 @@ public class WikiReferences extends WikiTask {
 							.b(Template_References.refID, name + "-ref")
 							.b(Template_References.noteID, name + "-note");
 						references.put(name, sigma);
-						System.out.println("Reference added: " + name);
+//						System.out.println("Reference added: " + name);
 						
 					} else {
 						sigma = references.get(name);

@@ -1,8 +1,8 @@
 doc/.wiki2xhtml-hashes
 wiki2xhtml.jar
+l10n/po/*~
 
 .settings
 wiki2xhtml-help
 xhtml-Output
-bin
-l10n/po/*~
+build

@@ -24,8 +24,8 @@ import src.project.WikiProject;
 
 public class VirtualWikiFile extends WikiFile {
 
-	protected VirtualWikiFile(WikiProject project, String name, boolean sitemap, boolean parse) {
-		super(project, name, sitemap, parse);
+	protected VirtualWikiFile(WikiProject project, String name, boolean sitemap) {
+		super(project, name, sitemap);
 		content = new StringBuffer();
 		assert project != null;
 	}
@@ -34,8 +34,8 @@ public class VirtualWikiFile extends WikiFile {
 	 * <p>The project is automatically filled with all tasks. To remove them, call {@link #removeAllTasks()}.</p>
 	 * @param project Must not be <code>null</code>. {@link #createTempProject()} or {@link #createEmptyProject()} can be used.
 	 */
-	public VirtualWikiFile(WikiProject project, String name, boolean sitemap, boolean parse, StringBuffer content) {
-		super(project, name, sitemap, parse);
+	public VirtualWikiFile(WikiProject project, String name, boolean sitemap, StringBuffer content) {
+		super(project, name, sitemap);
 		assert this.project != null;
 		this.content = content;
 	}
