@@ -33,6 +33,7 @@ import src.project.settings.PageSettings;
 import src.project.settings.PageSettingsReader;
 import src.project.settings.Settings;
 import src.resources.ResProjectSettings.SettingsE;
+import src.utilities.FileChangesMap;
 import src.utilities.IOUtils;
 
 /**
@@ -40,33 +41,14 @@ import src.utilities.IOUtils;
  */
 public class WikiProject {
 	
-	private File projectDirectory;
-	private File outputDirectory;
-	private File styleDirectory;
-	private String styleOutputDirectory;
-
-	public Sitemap sitemap = new Sitemap();
-	public WikiStyle wikiStyle = new WikiStyle(this);
-	public Wiki2xhtmlArgsParser argsParser = null;
-	
-	// Settings
-	private Settings<SettingsE, String> projectSettings = new PageSettings();
-	private WikiMenu wikiMenu = null;
-	
-	private int id = 0;
-	private int nextID() {
-		return id++;
-	}
-	
-	/** All files in the project */
-	private HashMap<Integer, WikiFile> fileMap = new HashMap<Integer, WikiFile>();
-	
 	
 	public WikiProject(String projectDirectory) {
 		setProjectDirectory(new File(projectDirectory));
-		this.styleDirectory = new File(this.projectDirectory.getAbsolutePath() + File.separator + "style");
-		this.outputDirectory = new File(this.projectDirectory.getAbsolutePath() + File.separator + Constants.Directories.target);
+		styleDirectory = new File(this.projectDirectory.getAbsolutePath() + File.separator + "style");
+		outputDirectory = new File(this.projectDirectory.getAbsolutePath() + File.separator + Constants.Directories.target);
 		styleOutputDirectory = "style";
+		
+		updateFileChangesMap();
 		
 		/** Initialize global settings with default values */
 		projectSettings.set_(SettingsE.imagepagesDir, Constants.Directories.imagePages);
@@ -85,6 +67,7 @@ public class WikiProject {
 			} catch (IOException e) {
 				projectDirectory = f;
 			}
+			updateFileChangesMap();
 			return true;
 		}
 		return false;
@@ -187,12 +170,19 @@ public class WikiProject {
 		
 		checkOutputDirectoryLocation();
 		
+		boolean incremental = (Boolean)argsParser.getOptionValue(argsParser.incremental, false, false);
+		
 		// Read the common file
 		String commonFile = (String)argsParser.getOptionValue(argsParser.commonFile, false);
 		if (commonFile != null) {
-			FallbackFile ff = locate(commonFile);
+			FallbackFile ff = locate(commonFile, FallbackFile.projectLocationOnly);
 			PageSettingsReader psr = new PageSettingsReader(ff.getContent(), (PageSettings) projectSettings);
 			psr.readSettings(false);
+			incremental = !fileChangesMap.queryUnchanged(ff.pathInfo());
+		}
+		String menuFile = (String)argsParser.getOptionValue(argsParser.menuFile, false);
+		if (menuFile != null) {
+			incremental &= !fileChangesMap.queryUnchanged(menuFile);
 		}
 		
 		wikiStyle.copyFiles();
@@ -200,8 +190,17 @@ public class WikiProject {
 		
 		// Make the project
 		for (WikiFile f : fileMap.values()) {
-			f.parse();
-			f.write();
+			if (!incremental || !fileChangesMap.queryUnchanged(f.name)) {
+				f.parse();
+				f.write();
+				fileChangesMap.update(f.name);
+			} else {
+				System.out.printf("Skipping %s (unchanged).\n", f.internalName());
+			}
+		}
+		
+		if (commonFile != null) {
+			fileChangesMap.update(commonFile);
 		}
 		
 		Statistics.getInstance().sw.timeOverall.stop();
@@ -241,6 +240,14 @@ public class WikiProject {
 		return worked;
 	}
 	
+	/**
+	 * <p>Copies project files with rsync. The list of files to copy is given in the file {@code resources.txt}
+	 * in the rsync include file format. Example:</p>
+	 * <p><code>+ images/*.jpg<br/>
+	 * - resources.txt<br/>
+	 * - *~</code></p>
+	 * <p>The space after the {@code +/-} is mandatory!</p>
+	 */
 	public void copyFiles() {
 		IOUtils.copyWithRsync(projectDirectory, outputDirectory);
 	}
@@ -257,6 +264,40 @@ public class WikiProject {
 		private static final long serialVersionUID = 1L;
 		public InvalidOutputDirectoryLocationException(String msg) { super(msg); }
 	}
+	
+	
+
+	
+	private File projectDirectory;
+	private File outputDirectory;
+	private File styleDirectory;
+	private String styleOutputDirectory;
+	private FileChangesMap fileChangesMap;
+
+	public Sitemap sitemap = new Sitemap();
+	public WikiStyle wikiStyle = new WikiStyle(this);
+	public Wiki2xhtmlArgsParser argsParser = null;
+	
+	// Settings
+	private Settings<SettingsE, String> projectSettings = new PageSettings();
+	private WikiMenu wikiMenu = null;
+	
+	private int id = 0;
+	private int nextID() {
+		return id++;
+	}
+	
+	/** All files in the project */
+	private HashMap<Integer, WikiFile> fileMap = new HashMap<Integer, WikiFile>();
+	
+	/** If the project directory changes */
+	private void updateFileChangesMap() {
+		fileChangesMap = new FileChangesMap(projectDirectory(), ".wiki2xhtml-hashes"); 
+	}
+	
+	
+	
+	
 	
 	public static void main(String[] args) throws InvalidLocationException, IOException, InvalidOutputDirectoryLocationException {
 		WikiProject p = new WikiProject(".");

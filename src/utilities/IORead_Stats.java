@@ -32,7 +32,7 @@ import src.Statistics;
  */
 public class IORead_Stats extends IORead {
 
-	public static StringBuffer readSBuffer(File f) throws IOException, NullPointerException {
+	public static StringBuffer readSBuffer(File f) throws IOException {
 		try {
 			Statistics.getInstance().sw.timeReadingFiles.continueTime();
 			return IORead.readSBuffer(f);

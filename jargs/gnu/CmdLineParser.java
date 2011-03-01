@@ -20,12 +20,13 @@ import java.util.Locale;
  * @version $Revision: 1.10 $
  * @see jargs.examples.gnu.OptionTest
  */
+@SuppressWarnings("serial")
 public class CmdLineParser {
 
     /**
      * Base class for exceptions that may be thrown when options are parsed
      */
-    public static abstract class OptionException extends Exception {
+	public static abstract class OptionException extends Exception {
         OptionException(String msg) { super(msg); }
     }
 
@@ -546,7 +547,7 @@ public class CmdLineParser {
     }
     
     
-    public final String help() {
+    public String help() {
     	StringBuilder help = new StringBuilder();
     	ArrayList<Option> list = new ArrayList<CmdLineParser.Option>();
     	

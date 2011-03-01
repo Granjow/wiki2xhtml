@@ -24,6 +24,7 @@ import src.argsFilesReader.ArgsFilesReader;
 import src.project.WikiProject;
 import src.project.WikiProject.InvalidLocationException;
 import src.project.file.LocalWikiFile;
+import src.utilities.Indent;
 import jargs.gnu.CmdLineParser;
 
 public class Wiki2xhtmlArgsParser extends CmdLineParser {
@@ -37,42 +38,43 @@ public class Wiki2xhtmlArgsParser extends CmdLineParser {
 	
 	public final Option menuFile;
 	public final Option commonFile;
-	public final Option footerFile;
 	
 	
 	public final Option incremental;
-	public final Option stdout;
+//	public final Option stdout;
 	
 	public final Option showHelp;
-	public final Option checkUpdate;
+//	public final Option checkUpdate;
 
 //	public final Option lang;
 //	public final Option noupdatecheck;
-//	public final Option updateMenuFile;
-//	public final Option gui;
 //	public final Option verbose;
 //	public final Option debug;
 //	public final Option onlyCode;
-//	public final Option removeLinebreaks;
-//	public final Option standardSettings;
 
 	
 	public Wiki2xhtmlArgsParser() {
 		inputDir = addStringOption('i', "input-dir");
+		inputDir.setDescription("Input directory containing all source files");
 		outputDir = addStringOption('o', "output-dir");
+		outputDir.setDescription("Output directory for the whole project");
 		styleDir = addStringOption('s', "style");
-		styleOutputDir = addStringOption("style-output-dir"); // Must be relative to the project directory
+		styleDir.setDescription("Style directory containing the style files (templates, CSS files, etc.)");
+		styleOutputDir = addStringOption("style-output-dir");
+		styleOutputDir.setDescription("Output directory for the style files. Must be a sub-directory of the output directory.");
 		
 		menuFile = addStringOption('m', "menu");
+		menuFile.setDescription("Describes the menu of the page");
 		commonFile = addStringOption('c', "common");
 		commonFile.setDescription("File containing the common settings like the header, the homelink, etc.");
-		footerFile = addStringOption('f', "footer");
 		
 		incremental = addBooleanOption("incremental");
-		stdout = addBooleanOption("stdout");
+		incremental.setDescription("Re-builds changed files only. Attention: Does not consider template files; don't use this flag if templates have changed.");
+//		stdout = addBooleanOption("stdout");
 		
 		showHelp = addBooleanOption('h', "help");
-		checkUpdate = addBooleanOption("www");
+		showHelp.setDescription("Displays this help message");
+//		checkUpdate = addBooleanOption("www");
 	}
 	
 	/**
@@ -88,6 +90,7 @@ public class Wiki2xhtmlArgsParser extends CmdLineParser {
 		
 		if ((Boolean)getOptionValue(showHelp, Boolean.FALSE, false)) {
 			System.out.println(help());
+			System.exit(0);
 		}
 		
 		String prefix = (relativeTo == null) ? "" : relativeTo.getAbsolutePath() + File.separator;
@@ -97,13 +100,14 @@ public class Wiki2xhtmlArgsParser extends CmdLineParser {
 		if (project == null) {
 			project = new WikiProject((String)getOptionValue(
 					inputDir, 
-					Constants.Directories.workingDir
+					Constants.Directories.workingDir,
+					false
 					));
 			o.println("New WikiProject created.");
 			o.println("Project working dir is: " + project.projectDirectory().getAbsolutePath());
 		} else {
-			if (getOptionValue(inputDir) != null) {
-				project.setProjectDirectory(new File(prefix + (String)getOptionValue(inputDir)));
+			if (getOptionValue(inputDir, false) != null) {
+				project.setProjectDirectory(new File(prefix + (String)getOptionValue(inputDir, false)));
 			}
 		}
 		
@@ -117,7 +121,7 @@ public class Wiki2xhtmlArgsParser extends CmdLineParser {
 		} else {
 			alternative = Constants.Directories.workingDir + File.separator + Constants.Directories.target;
 		}
-		filename = (String)getOptionValue(outputDir);
+		filename = (String)getOptionValue(outputDir, false);
 		if (filename == null) { filename = alternative; }
 		else { filename = prefix + filename; }
 		success = project.setOutputDirectory(new File(filename));
@@ -130,7 +134,7 @@ public class Wiki2xhtmlArgsParser extends CmdLineParser {
 		} else {
 			alternative = project.projectDirectory().getAbsolutePath() + File.separator + Constants.Directories.style;
 		}
-		filename = (String)getOptionValue(styleDir);
+		filename = (String)getOptionValue(styleDir, false);
 		if (filename == null) { filename = alternative; }
 		else { filename = prefix + filename; }
 		project.setStyleDirectory(new File(filename));
@@ -138,7 +142,7 @@ public class Wiki2xhtmlArgsParser extends CmdLineParser {
 		
 		
 		// Style output directory
-		project.setStyleOutputDirectory((String)getOptionValue(styleOutputDir, project.styleOutputDirectoryName()));
+		project.setStyleOutputDirectory((String)getOptionValue(styleOutputDir, project.styleOutputDirectoryName(), false));
 		o.println("Style output directory is: " + project.styleOutputDirectory().getAbsolutePath());
 		
 		
@@ -181,6 +185,15 @@ public class Wiki2xhtmlArgsParser extends CmdLineParser {
 		}
 		
 		return project;
+	}
+	
+	public String help() {
+		StringBuilder sb = new StringBuilder();
+		sb.append(String.format("wiki2xhtml %s (%s) (GPL)\n(c) Simon A. Eugster <simon.eu@gmail.com>\n", Constants.Wiki2xhtml.versionNumber, Constants.Wiki2xhtml.versionDate));
+		sb.append("Usage:\twiki2xhtml [OPTIONS] [FILES]\n\twiki2xhtml yourfile.args\n\n");
+		sb.append(super.help());
+		sb.append(".args File\tProject file containing all important information (files to parse, flags)");
+		return Indent.indent(sb.toString(), 3);
 	}
 	
 }

@@ -22,8 +22,9 @@ public class FallbackFile {
 	private File file;
 	private URL url;
 	private FallbackLocation location = FallbackLocation.none;
-	
+
 	public static final Vector<FallbackLocation> bottomUpLocations;
+	public static final Vector<FallbackLocation> projectLocationOnly;
 	
 	static {
 		bottomUpLocations = new Vector<FallbackLocation>();
@@ -31,6 +32,8 @@ public class FallbackFile {
 		bottomUpLocations.add(FallbackLocation.project);
 		bottomUpLocations.add(FallbackLocation.style);
 		bottomUpLocations.add(FallbackLocation.jar);
+		projectLocationOnly = new Vector<FallbackFile.FallbackLocation>();
+		projectLocationOnly.add(FallbackLocation.project);
 	}
 	
 	public static enum FallbackLocation {

@@ -38,8 +38,9 @@ public class Main {
 		project = new Wiki2xhtmlArgsParser().readArguments(project, args, null);
 		assert project != null;
 		
-		project.make();
-		
+		if (project.fileCount() > 0) {
+			project.make();
+		}
 		
 	}
 	

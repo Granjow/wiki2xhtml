@@ -34,6 +34,7 @@ import static src.Constants.Updater;
 /**
  * This class checks whether there exists an update of wiki2xhtml
  * by reading out a file in the web.
+ * TODO 0 update
  *
  * @author Simon Eugster
  */

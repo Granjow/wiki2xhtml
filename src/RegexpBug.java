@@ -59,11 +59,15 @@ public class RegexpBug {
 		String rIf = "{{#if:a|b|c}}";
 
 		
-		File f = new File("./a/b//c/../d./e/.f/./g");
-		File f2 = new File(".");
-		System.out.println(f.getCanonicalPath().substring(f2.getCanonicalPath().length()+1));
+		for (String s : "a\tb".split("\\t")) {
+			System.out.println("Element: " + s);
+		}
 		
-		System.out.println("./a/b//c/../d./e/.f/./g".replaceAll("(?<=/|^)\\./", "").replaceAll("//+", "/"));
+//		File f = new File("./a/b//c/../d./e/.f/./g");
+//		File f2 = new File(".");
+//		System.out.println(f.getCanonicalPath().substring(f2.getCanonicalPath().length()+1));
+//		
+//		System.out.println("./a/b//c/../d./e/.f/./g".replaceAll("(?<=/|^)\\./", "").replaceAll("//+", "/"));
 		
 //		testRegexSingleMatch("(?m)^\\{\\{:tplTOC.txt((?:\\|.*)?)\\}\\}", new String[] { "{{:tplTOC.txt}}", "bla\n{{:tplTOC.txt|arg}} etc" });
 		

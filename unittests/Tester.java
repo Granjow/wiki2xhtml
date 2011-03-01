@@ -8,7 +8,10 @@ public class Tester extends TestCase {
     static {
     	// Enables assertions
 //        ClassLoader.getSystemClassLoader().setDefaultAssertionStatus(true);
+    	testSuite = suite();
     }
+    
+    static final TestSuite testSuite; 
 
 	public static TestSuite suite() {
 		TestSuite result = new TestSuite();
@@ -16,6 +19,7 @@ public class Tester extends TestCase {
 		result.addTest(new TestSuite(CleanupTester.class));
 		result.addTest(new TestSuite(FormattingsTester.class));
 		result.addTest(new TestSuite(GalleryTester.class));
+		result.addTest(new TestSuite(HashTester.class));
 		result.addTest(new TestSuite(HeadingTester.class));
 		result.addTest(new TestSuite(LinkTester.class));
 		result.addTest(new TestSuite(ListTester.class));

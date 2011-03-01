@@ -65,8 +65,23 @@ public final class Constants {
 	/** wiki2xhtml settings, like the version number */
 	public static final class Wiki2xhtml {
 
-		public static final String versionNumber = "4.0a2";
-		public static final String versionDate = "Feb 2011";
+		static {
+			// Can be replaced by a script that dynamically builds the version number from the git commits
+			String s = "$VERSION$";
+			if (s.startsWith("$")) {
+				// Hard-coded version number as fallback
+				s = "4.0rc1";
+			}
+			versionNumber = s;
+			s = "$DATE$";
+			if (s.startsWith("$")) {
+				s = "Mar 2011";
+			}
+			versionDate = s;
+		}
+		
+		public static final String versionNumber;
+		public static final String versionDate;
 		/** Old versions which will be ignored by the update checker. */
 		//TODO 0 update version numbers
 		public static final String[] versionsTillNow = new String[] { "3.4b8", "3.3.2", "3.3.1", "3.3", "3.2.1", "3.1.0", "3.0.4" };
