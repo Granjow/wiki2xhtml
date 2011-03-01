@@ -60,6 +60,8 @@ public class Sitemap {
 	public void write() throws IOException {
 		if (_sitemapFile == null) { return; }
 		
+		readList(); // Make sure the list is initialized
+		
 		int counter = 0;
 		StringBuilder sb = new StringBuilder();
 		Iterator<String> it = _sitemapList.iterator();
@@ -82,11 +84,9 @@ public class Sitemap {
 	
 	private void readList() {
 		if (_sitemapFile == null) { return; }
-		if (_sitemapList == null) {
-			_sitemapList = new TreeSet<String>(pathComparator);
-		}
-		if (_append && _sitemapList != null && _sitemapFile.exists() && _sitemapFile.canRead() && _sitemapFile.isFile()) {
+		if (_append && _sitemapList == null && _sitemapFile.exists() && _sitemapFile.canRead() && _sitemapFile.isFile()) {
 			try {
+				_sitemapList = new TreeSet<String>(pathComparator);
 				BufferedReader br = new BufferedReader(new StringReader(IORead_Stats.readSBuilder(_sitemapFile).toString()));
 				String line;
 				while ((line = br.readLine()) != null) {
@@ -97,6 +97,9 @@ public class Sitemap {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
+		}
+		if (_sitemapList == null) {
+			_sitemapList = new TreeSet<String>(pathComparator);
 		}
 	}
 	

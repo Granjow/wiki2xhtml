@@ -35,6 +35,18 @@ import java.util.regex.*;
 public class IOUtils {
 	
 	
+	/** Trims {@code (/tmp/a/file.txt, /tmp)} to {@code a/file.txt} */ 
+	public static final String trimPath(String path, String parent) {
+		if (path.startsWith(parent)) {
+			path = path.substring(parent.length());
+			if (path.charAt(0) == '/') {
+				path = path.substring(1); // Cut off trailing /
+			}
+		}
+		return path;
+	}
+	
+	
 	public static final boolean copyWithRsync(File src, File dst) {
 		
 		boolean worked = false;

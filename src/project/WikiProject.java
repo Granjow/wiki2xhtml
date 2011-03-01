@@ -35,6 +35,7 @@ import src.project.settings.Settings;
 import src.resources.ResProjectSettings.SettingsE;
 import src.utilities.FileChangesMap;
 import src.utilities.IOUtils;
+import src.utilities.StringTools;
 
 /**
  * Bundles multiple WikiFiles and project settings.
@@ -173,6 +174,8 @@ public class WikiProject {
 		updateSitemap();
 		
 		boolean incremental = (Boolean)argsParser.getOptionValue(argsParser.incremental, Boolean.FALSE, false);
+		String pathMenuFile = null;
+		String pathCommonFile = null;
 		
 		// Read the common file
 		String commonFile = (String)argsParser.getOptionValue(argsParser.commonFile, false);
@@ -180,11 +183,24 @@ public class WikiProject {
 			FallbackFile ff = locate(commonFile, FallbackFile.projectLocationOnly);
 			PageSettingsReader psr = new PageSettingsReader(ff.getContent(), (PageSettings) projectSettings);
 			psr.readSettings(false);
-			incremental &= fileChangesMap.queryUnchanged(ff.pathInfo());
+			pathCommonFile = IOUtils.trimPath(ff.pathInfo(), projectDirectory().getAbsolutePath());
+			if (!fileChangesMap.queryUnchanged(pathCommonFile)) {
+				if (incremental) {
+					System.out.println("Common file has changed, re-processing everything.");
+					incremental = false;
+				}
+			}
 		}
 		String menuFile = (String)argsParser.getOptionValue(argsParser.menuFile, false);
 		if (menuFile != null) {
-			incremental &= fileChangesMap.queryUnchanged(menuFile);
+			pathMenuFile = IOUtils.trimPath(locate(menuFile, FallbackFile.projectLocationOnly).pathInfo(), projectDirectory().getAbsolutePath());
+			if (!fileChangesMap.queryUnchanged(pathMenuFile)) {
+				if (incremental) {
+					System.out.println("Menu file has changed, re-processing everything.");
+					incremental = false;
+				}
+			}
+			incremental &= fileChangesMap.queryUnchanged(pathMenuFile);
 		}
 		
 		wikiStyle.copyFiles();
@@ -201,12 +217,15 @@ public class WikiProject {
 				if (f.sitemap) {
 					sitemap.add(f.internalName());
 				}
-				System.out.printf("Processed %s.\n", f.internalName());;
+				System.out.printf("Processed %s (%s).\n", f.internalName(), StringTools.formatTimeMilliseconds(f.timeParsingMillis));
 			}
 		}
 		
 		if (commonFile != null) {
-			fileChangesMap.update(commonFile);
+			fileChangesMap.update(pathCommonFile);
+		}
+		if (menuFile != null) {
+			fileChangesMap.update(pathMenuFile);
 		}
 		
 		sitemap.write();

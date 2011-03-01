@@ -1,4 +1,4 @@
-args=-m menu.txt -c common.txt -s ../style/hd -o ../wiki2xhtml-help
+args=-m menu.txt -c common.txt -s ../style/hd -o ../wiki2xhtml-help --sitemap=http://wiki2xhtml.sourceforge.net
 
 about.txt
 changelog.txt

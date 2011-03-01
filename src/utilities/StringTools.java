@@ -332,7 +332,7 @@ public class StringTools {
 			time = "0 ns";
 		}
 
-		return time;
+		return time.trim();
 	}
 
 	/**

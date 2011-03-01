@@ -48,6 +48,7 @@ public abstract class WikiFile {
 	protected StringBuffer content = null;
 	
 	public final boolean sitemap;
+	public long timeParsingMillis = 0;
 	
 	/** <p>Filename of this file.<br/>
 	 * Usually denotes the file name relative to the project directory. Some examples:</p>
@@ -204,6 +205,7 @@ public abstract class WikiFile {
 	
 	
 	public void parse() {
+		long start = System.currentTimeMillis();
 		WikiTask task = new WikiPreparser();
 		do {
 			if (tasks.contains(task.desc())) {
@@ -212,6 +214,7 @@ public abstract class WikiFile {
 //				System.err.printf("Omitted: %s (%s)\n", task.desc().name, task.desc().description);
 			}
 		} while ((task = task.nextTask()) != null);
+		timeParsingMillis += System.currentTimeMillis() - start;
 	}
 	
 	
