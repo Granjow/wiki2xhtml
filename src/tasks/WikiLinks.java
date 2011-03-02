@@ -62,7 +62,7 @@ public class WikiLinks extends WikiTask {
 			while (m.find()) {
 				out.append(in.subSequence(last, m.start()));
 				last = m.end();
-				out.append(link(m.group(1), m.group(2), file.name, file.getNamespaces()));
+				out.append(link(m.group(1), m.group(2), file.internalName(), file.getNamespaces()));
 				counter++;
 			}
 			if (last > 0) {

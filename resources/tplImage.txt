@@ -1,4 +1,4 @@
-<div class="imgthumb {{{pos|}}}" id="{{{id|missingID}}}">
+<div class="imgthumb {{{location|}}}" id="{{{id|missingID}}}">
 <dl><dt>
 	<a href="{{{link}}}" {{{argsLink|}}}>
 		<img src="{{{thumb|{{{path}}}}}}" {{#if: {{{width|}}} | width="{{{width|}}}" }} {{{args|}}} />

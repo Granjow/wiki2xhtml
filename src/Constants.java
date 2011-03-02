@@ -244,7 +244,7 @@ public final class Constants {
 		public static final String height = "height";
 		/** Image description. */
 		public static final String text = "text";
-		/** Horizontal position. */
+		/** Horizontal position. Can be one of left, center, and right. */
 		public static final String location = "location";
 		/** Argument: Custom link to use.<br/>
 		 * Template: Target link.*/
