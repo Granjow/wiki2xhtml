@@ -43,7 +43,7 @@ public class IOUtils {
 	}
 	
 	
-	public static final boolean copyWithRsync(File src, File dst) {
+	public static final boolean copyWithRsync(File src, File dst, String outPrefix) {
 		
 		boolean worked = false;
 
@@ -58,27 +58,24 @@ public class IOUtils {
 						resourcesFile.getAbsolutePath());
 				System.out.println("Copying files: " + cmd);
 				Process rsync = Runtime.getRuntime().exec(cmd);
+				InputStreamRunner stdoutReader = new InputStreamRunner(rsync.getInputStream(), System.out, outPrefix);
+				InputStreamRunner stderrReader = new InputStreamRunner(rsync.getErrorStream(), System.err, outPrefix);
+				
+				new Thread(stdoutReader).start();
+				new Thread(stderrReader).start();
 				
 				try {
 					rsync.waitFor();
-					InputStream stdout = rsync.getInputStream();
-					InputStreamReader outReader = new InputStreamReader(stdout);
-					BufferedReader br = new BufferedReader(outReader);
-					String line;
-					while ( (line = br.readLine()) != null) {
-						System.out.println("\t" + line);
-					}
-					br = new BufferedReader(new InputStreamReader(rsync.getErrorStream()));
-
-					while ( (line = br.readLine()) != null) {
-						System.err.println("\t" + line);
-					}
 					
 					worked = rsync.exitValue() == 0;
 					
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 					System.err.println("Please check whether rsync is installed!");
+				}
+				finally {
+					stdoutReader.youCanStopNow();
+					stderrReader.youCanStopNow();
 				}
 				
 			} catch (IOException e) {
@@ -89,6 +86,45 @@ public class IOUtils {
 		}
 		
 		return worked;
+	}
+	
+	/** Loops on the input stream, constantly trying to fetch something and put it to the output stream. */
+	private static class InputStreamRunner implements Runnable {
+		boolean stop = false;
+		
+		private final InputStream _in;
+		private final OutputStream _out;
+		private final String _prefix;
+		InputStreamRunner(InputStream in, OutputStream out, String prefix) {
+			_in = in;
+			_out = out;
+			_prefix = prefix;
+			assert _in != null;
+			assert _out != null;
+			assert _prefix != null;
+		}
+		public void run() {
+			String line;
+			BufferedReader br = new BufferedReader(new InputStreamReader(_in));
+			PrintStream o = new PrintStream(_out);
+			while (!stop) {
+				try {
+					while ((line = br.readLine()) != null) {
+						o.println(_prefix + line);
+					}
+				} catch (IOException e) {
+				}
+				try {
+					Thread.sleep(200);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		public void youCanStopNow() {
+			stop = true;
+		}
+		
 	}
 
 	public static boolean copyFile(InputStream is, OutputStream os) {
