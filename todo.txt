@@ -3,6 +3,7 @@ Read CSS settings
 Parse templates in the page template? Move page template to the beginning?
 meta data?
 check if files exist (images ...)
+comments in galleries → images ...
 
 
 Image: → crash
