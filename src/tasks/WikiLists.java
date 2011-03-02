@@ -1,3 +1,21 @@
+/*
+ *   Copyright (C) 2007-2011 Simon Eugster <granjow@users.sf.net>
+
+ *   This program is free software: you can redistribute it and/or modify
+ *   it under the terms of the GNU General Public License as published by
+ *   the Free Software Foundation, either version 3 of the License, or
+ *   (at your option) any later version.
+
+ *   This program is distributed in the hope that it will be useful,
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *   GNU General Public License for more details.
+
+ *   You should have received a copy of the GNU General Public License
+ *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ */
+
 package src.tasks;
 
 import java.io.BufferedReader;
@@ -13,6 +31,18 @@ import src.resources.RegExpressions;
 import src.tasks.Tasks.Task;
 import src.utilities.HandlerLists;
 
+/**
+ * <p>This task creates HTML lists: Unordered lists, ordered lists, and definition lists.</p>
+ * <ul>
+ * <li>{@code * Entry} creates a unordered list entry</li>
+ * <li>{@code # Entry} creates an ordered list entry</li>
+ * <li>{@code ; Entry} creates a defnition term</li>
+ * <li>{@code : Entry} creates a definition definition</li>
+ * </ul>
+ * <p>Examples:</p>
+ * <p><code>* Level 1<br/>** Level 2</code></p>
+ * <p><code>; Definition<br/>: A definition is <a href="http://en.wikipedia.org/wiki/Definition">this</a></code></p>
+ */
 public class WikiLists extends WikiTask {
 
 	public Task desc() {
@@ -26,9 +56,6 @@ public class WikiLists extends WikiTask {
 
 	/**
 	 * Build the Lists with a *, # at the beginning.
-	 *
-	 * @param in - input
-	 * @return input with lists
 	 */
 	public void parse(WikiFile file) {
 		Statistics.getInstance().sw.timeCreatingLists.continueTime();

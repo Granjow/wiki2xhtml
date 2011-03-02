@@ -36,7 +36,6 @@ public class IOWrite {
 
 	/**
 	 * Creates a file and its parent paths if it does not exist already
-	 * @param f
 	 * @throws IOException Crating new file failed
 	 */
 	public static void createIfNotExists(File f) throws IOException {
@@ -63,7 +62,6 @@ public class IOWrite {
 	 * @param f - output file
 	 * @param s - String to write
 	 * @param append - appends the StringBuffer, if true
-	 * @return WriteSuccess
 	 */
 	public static void writeString(File f, String s, boolean append) throws IOException {
 		FileWriter fw = null;

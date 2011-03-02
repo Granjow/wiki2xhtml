@@ -1,12 +1,5 @@
-package src.utilities;
-
-import java.util.ArrayList;
-import java.util.Vector;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 /*
- *   Copyright (C) 2007-2010 Simon Eugster <granjow@users.sf.net>
+ *   Copyright (C) 2007-2011 Simon A. Eugster <simon.eu@gmail.com>
 
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -20,14 +13,20 @@ import java.util.regex.Pattern;
 
  *   You should have received a copy of the GNU General Public License
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
- *
  */
+
+
+package src.utilities;
+
+import java.util.ArrayList;
+import java.util.Vector;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 
 /**
  *
  * Tools for the work with Strings.
- *
- * @author Simon Eugster
  */
 public class StringTools {
 
@@ -170,8 +169,6 @@ public class StringTools {
 
 	/**
 	 * Adds quotation marks if the String contains a space.
-	 * @param s
-	 * @return
 	 */
 	public static String quoteIfContainingSpace(String s) {
 		if (s.indexOf(" ") > 0) {
@@ -183,9 +180,6 @@ public class StringTools {
 
 	/**
 	 * Counts how many times a pattern occurs in a string
-	 * @param s
-	 * @param pattern
-	 * @return
 	 */
 	public static int countString(String s, String pattern) {
 		int counter = 0, last = -1;
@@ -198,8 +192,6 @@ public class StringTools {
 	/**
 	 * Fills a StringBuffer with spaces to a certain length
 	 *
-	 * @param s
-	 * @param length
 	 * @return Input StringBuffer filled with spaces, if it wasn't longer than
 	 *         max length
 	 */
@@ -214,14 +206,12 @@ public class StringTools {
 	/**
 	 * Removes all chars at the beginning and/or at the end of the input.
 	 *
-	 * @param s input
+	 * @param in input
 	 * @param c Char to remove
 	 * @param start Remove at the beginning?
 	 * @param end Remove at the end?
-	 * @return
 	 */
-	public static StringBuffer removeChars(StringBuffer in, char c, boolean start,
-										   boolean end) {
+	public static StringBuffer removeChars(StringBuffer in, char c, boolean start, boolean end) {
 		if (in == null)
 			return new StringBuffer();
 		StringBuffer s = new StringBuffer(in);
@@ -242,10 +232,6 @@ public class StringTools {
 
 	/**
 	 * Removes e.g. all new lines (\n)
-	 *
-	 * @param in
-	 * @param pattern
-	 * @return
 	 */
 	public static StringBuffer removeAllChars(StringBuffer in, String pattern) {
 		if (pattern != null && pattern.length() > 0) {
@@ -259,7 +245,6 @@ public class StringTools {
 	}
 
 	/**
-	 * @param milliSeconds
 	 * @return A (human readable) string of a time in milliseconds, up to days
 	 */
 	public static String formatTimeMilliseconds(long milliSeconds) {
@@ -276,12 +261,11 @@ public class StringTools {
 		NANOSECOND
 	}
 
-	/** @see {@link #formatTimeNanoseconds(long, Precision)} */
+	/** @see #formatTimeNanoseconds(long, Precision) */
 	public static String formatTimeNanoseconds(long nanoSeconds) {
 		return formatTimeNanoseconds(nanoSeconds, Precision.NANOSECOND);
 	}
 	/**
-	 * @param nanoSeconds
 	 * @return A (human readable) string of a time in nanoseconds, up to days
 	 */
 	public static String formatTimeNanoseconds(long nanoSeconds, Precision precision) {
@@ -335,33 +319,6 @@ public class StringTools {
 		return time.trim();
 	}
 
-	/**
-	 * Replaces the find expression as long as it can be found. See {@link #replaceAllU(StringBuffer, String, String)}.
-	 * @param in
-	 * @param find
-	 * @param replace
-	 */
-	public static StringBuffer replaceAll(StringBuffer in, String find, String replace) {
-		ArrayList<Integer> positions = new ArrayList<Integer>();
-		int last = 0;
-		int l = find.length();
-		while ((last = in.indexOf(find, last)) >= 0) {
-			positions.add(last);
-			last += l;
-		}
-		for (int i = positions.size(); i > 0; i--) {
-			in.delete(positions.get(i-1), positions.get(i-1) + l);
-			in.insert(positions.get(i-1), replace);
-		}
-		return in;
-	}
-
-	/**
-	 * @param in
-	 * @param find
-	 * @param replace
-	 * @return
-	 */
 	public static StringBuffer replaceOnce(StringBuffer in, String pattern, String replace) {
 		int pos;
 		int l = pattern.length();

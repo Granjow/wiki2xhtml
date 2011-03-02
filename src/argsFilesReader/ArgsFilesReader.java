@@ -27,6 +27,7 @@ import java.io.StringReader;
 
 import src.Constants;
 import src.Wiki2xhtmlArgsParser;
+import src.Constants.FileArgs;
 import src.project.WikiProject;
 import src.project.WikiProject.InvalidLocationException;
 import src.project.file.LocalWikiFile;
@@ -44,13 +45,9 @@ public class ArgsFilesReader {
 	 * this config file. The <code>dir=</code> is valid for all files below 
 	 * util a new <code>dir=</code> entry is met. Spaces can be escaped by preceding a backslash.</dd>
 	 * <dt>Files</dt><dd>Any other line. The filename is the first entry in the line 
-	 * (without spaces). Possible additional arguments: See {@link Constants.Arguments.FileArgs}.</dd>
-	 * <dt>Examples</dt><dd><code>secret.txt nositemap</dd><dd><code>.htaccess nobuild nositemap</dd> 
+	 * (without spaces). Possible additional arguments: See {@link FileArgs}.</dd>
+	 * <dt>Examples</dt><dd><code>secret.txt nositemap</dd><dd><code>index.txt</dd> 
 	 * </dl>
-	 * @param filename
-	 * @throws UnknownOptionException 
-	 * @throws IllegalOptionValueException 
-	 * @since wiki2xhtml 2.4
 	 * TODO Doc arg list
 	 */
 	public static void readArgsFile(WikiProject project, File file) throws IllegalOptionValueException, UnknownOptionException {
@@ -104,7 +101,7 @@ public class ArgsFilesReader {
 						s = ((dir.length() > 0) ? dir + File.separator : "") + largs[0].replace("\\ ", " ");
 //						System.out.printf("File is %s\n", s);
 						if (largs.length > 1) {
-							if (largs[1].contains(Constants.Arguments.FileArgs.noSitemap)) {
+							if (largs[1].contains(Constants.FileArgs.noSitemap)) {
 								sitemap = false;
 								System.out.printf("No sitemap entry for %s\n", s);
 							}

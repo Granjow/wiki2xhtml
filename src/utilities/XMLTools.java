@@ -6,6 +6,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import src.Resources;
+import src.Resources.XmlNames;
 
 /*
  *   Copyright (C) 2007-2010 Simon Eugster <granjow@users.sf.net>
@@ -33,8 +34,7 @@ public final class XMLTools {
 
 	/**
 	 * Extracts all NameChars defined for XML 1.0.
-	 * @see {@link Resources.XmlNames}
-	 * @param s
+	 * @see XmlNames
 	 * @return Valid NameChar sequence
 	 */
 	public static final String getXmlNameChar(final String s) {
@@ -53,7 +53,6 @@ public final class XMLTools {
 
 	/**
 	 * Extracts all NameChars defined for XML 1.0
-	 * @param s
 	 * @return Valid NameChar sequence
 	 */
 	public static final String getXmlNameChar(final String s, final String extension) {
@@ -80,8 +79,6 @@ public final class XMLTools {
 	 * <code>class="a b" style="width: 10px;"</code><br />
 	 * (for <code>valueSeparator = " "</code> and <code>argumentSeparator = " "</code>.)
 	 * </p>
-	 * @param args
-	 * @return
 	 */
 	public static final String mergeArguments(final String args, final String valueSeparator, 
 			final String argumentSeparator, final boolean acceptSingleArgs) {

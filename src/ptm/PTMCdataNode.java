@@ -21,9 +21,9 @@ package src.ptm;
  * <p>Handles CDATA sections.<p>
  * <p>CDATA sections may contain any kind of text: It will not be evaluated. This is very useful for passing
  * special characters like a pipe symbol as an argument.</p>
- * <p>Example: {@code {{:template|This <![CDATA[|]]> is a pipe symbol passed to the template.}}</p>
+ * <p>Example: <code>{{:template|This <![CDATA[|]]> is a pipe symbol passed to the template.}}</code></p>
  * <p>Note that <em>nesting</em> is not possible for CDATA sections.
- * @see <a href="http://en.wikipedia.org/wiki/CDATA">Wikipedia: CDATA</a> (also about nesting workarounds)
+ * <p>See <a href="http://en.wikipedia.org/wiki/CDATA">Wikipedia: CDATA</a> (also about nesting workarounds) regarding CDATA sections.</p>
  */
 public class PTMCdataNode extends PTMNode {
 	

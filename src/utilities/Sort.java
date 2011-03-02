@@ -1,10 +1,5 @@
-package src.utilities;
-
-import java.io.File;
-import java.io.IOException;
-
 /*
- *   Copyright (C) 2007-2010 Simon Eugster <granjow@users.sf.net>
+ *   Copyright (C) 2007-2011 Simon A. Eugster <simon.eu@gmail.com>
 
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -18,21 +13,22 @@ import java.io.IOException;
 
  *   You should have received a copy of the GNU General Public License
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
- *
  */
+
+
+package src.utilities;
+
+import java.io.File;
+import java.io.IOException;
+
 
 /**
  * Provides some sorting algorithms
- *
- * @author Simon Eugster
- * ,		hb9eia
  */
 public class Sort {
 
 	/**
 	 * Shellsort implementation.
-	 * @param <T>
-	 * @param array
 	 */
 	public static <T extends Comparable<? super T>> void shellsort(T[] array) {
 		if (array == null || array.length == 0)
@@ -43,8 +39,6 @@ public class Sort {
 
 	/**
 	 * Quicksort implementation.
-	 * @param <T>
-	 * @param array
 	 */
 	public static <T extends Comparable<? super T>> void quicksort(T[] array) {
 		quicksort(array, 0, array.length - 1);
@@ -52,17 +46,12 @@ public class Sort {
 
 	/**
 	 * Simplesort, slow sorting algorithm
-	 * @param <T>
-	 * @param array
 	 */
 	public static <T extends Comparable<? super T>> void simplesort(T[] array) {
 		simplesort(array, 0, array.length);
 	}
 
 	/**
-	 * @param <T>
-	 * @param t1
-	 * @param t2
 	 * @return true if t1 < t2
 	 */
 	private static <T extends Comparable<? super T>> boolean less(T t1, T t2) {
@@ -70,10 +59,6 @@ public class Sort {
 	}
 	/**
 	 * Swaps elements in field at position i and j
-	 * @param <T>
-	 * @param field
-	 * @param i
-	 * @param j
 	 */
 	private static <T extends Comparable<? super T>> void exch(T[] field, int i, int j) {
 		T temp = field[i];
@@ -82,10 +67,6 @@ public class Sort {
 	}
 	/**
 	 * Swaps elements in field at position i and j if j < i
-	 * @param <T>
-	 * @param field
-	 * @param i
-	 * @param j
 	 */
 	private static <T extends Comparable<? super T>> void compExch (T[] field, int i, int j) {
 		if (less(field[j], field[i]))
@@ -94,10 +75,6 @@ public class Sort {
 
 	/**
 	 * Simplesort implementation. Slow.
-	 * @param <T>
-	 * @param field
-	 * @param begin
-	 * @param end
 	 */
 	private static <T extends Comparable<? super T>> void simplesort (T[] field, int begin, int end) {
 		for (int i = begin + 1; i <= end; i++) {
@@ -130,7 +107,7 @@ public class Sort {
 
 	/**
 	 * Quicksort
-	 * @param s Array to sort
+	 * @param t Array to sort
 	 * @param l left position
 	 * @param r right position
 	 */
@@ -143,10 +120,6 @@ public class Sort {
 
 	/**
 	 * Used for Quicksort
-	 * @param t
-	 * @param l
-	 * @param r
-	 * @return
 	 */
 	private static <T extends Comparable<? super T>> int partition(T[] t, int l, int r) {
 		int i = l-1;
@@ -168,7 +141,6 @@ public class Sort {
 
 	/**
 	 * Bench for Quicksort and Shellsort
-	 * @param n
 	 */
 	public static void bench(int n) {
 		Long[] d = new Long[n];

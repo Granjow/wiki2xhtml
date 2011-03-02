@@ -262,7 +262,6 @@ public class WikiMenu {
 	}
 
 	/**
-	 * @param v
 	 * @return true, if any of the entries is open
 	 */
 	private boolean checkOpen(Vector<MenuEntry> v) {
@@ -308,10 +307,6 @@ public class WikiMenu {
 		return v;
 	}
 
-	/**
-	 * @param link
-	 * @return
-	 */
 	private Vector<Short> findByLink(String link) {
 		Vector<Short> v = new Vector<Short>();
 
@@ -384,7 +379,7 @@ public class WikiMenu {
 			open = false;
 		}
 
-		/** @returns true, if the entry is marked as open */
+		/** @return true, if the entry is marked as open */
 		public boolean isOpen() {
 			return open;
 		}

@@ -162,7 +162,7 @@ public final class RegExpressions {
 	/** <p>Matches <br/>$$<br/>code blocks<br/>$$</p>
 	 * <p>The first <code>$$</code> may be followed by <code>((arguments))</code>.</p>
 	 * <p>Pattern groups: <code>$$\n((1:args))\n2:code\n$$</code></p>
-	 * @see {@link #textCode} */
+	 * @see #textCode */
 	public static final Pattern textCodeBlock = Pattern.compile(
 				"(?x)(?s)" +
 				"(?:^|\\n)\\$\\$" +

@@ -1,3 +1,21 @@
+/*
+ *   Copyright (C) 2007-2011 Simon Eugster <granjow@users.sf.net>
+
+ *   This program is free software: you can redistribute it and/or modify
+ *   it under the terms of the GNU General Public License as published by
+ *   the Free Software Foundation, either version 3 of the License, or
+ *   (at your option) any later version.
+
+ *   This program is distributed in the hope that it will be useful,
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *   GNU General Public License for more details.
+
+ *   You should have received a copy of the GNU General Public License
+ *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ */
+
 package src.tasks;
 
 import java.util.ArrayList;
@@ -14,24 +32,6 @@ import src.tasks.Tasks.Task;
 import static src.Constants.Links.LinksE;
 import static src.resources.RegExpressions.RELink;
 
-
-/*
- *   Copyright (C) 2007-2010 Simon Eugster <granjow@users.sf.net>
-
- *   This program is free software: you can redistribute it and/or modify
- *   it under the terms of the GNU General Public License as published by
- *   the Free Software Foundation, either version 3 of the License, or
- *   (at your option) any later version.
-
- *   This program is distributed in the hope that it will be useful,
- *   but WITHOUT ANY WARRANTY; without even the implied warranty of
- *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *   GNU General Public License for more details.
-
- *   You should have received a copy of the GNU General Public License
- *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
- *
- */
 
 /**
  * Inserts links (external and internal ones).
@@ -75,7 +75,8 @@ public class WikiLinks extends WikiTask {
 	}
 
 	/** 
-	 * @param ignoreQueryFragment Is page#heading or page?a=b to be treated as selflink? See: {@link http://tools.ietf.org/html/rfc3986#section-3}
+	 * @param ignoreQueryFragment Is page#heading or page?a=b to be treated as selflink? 
+	 * See <a href="http://tools.ietf.org/html/rfc3986#section-3">RFC 3986</a> for details.
 	 * @return <code>true</code> if the link is leading to the current page.
 	 */
 	private static final boolean selflink(final String uri, final String pagename, final boolean ignoreQueryFragment) {

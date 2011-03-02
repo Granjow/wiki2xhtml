@@ -24,8 +24,8 @@ import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import src.Constants;
 import src.Constants.Template_Images;
+import src.Constants.Template_References;
 import src.project.WikiProject;
 import src.project.settings.GalleryProperties;
 import src.project.settings.ImageProperties;
@@ -56,7 +56,7 @@ public abstract class WikiFile {
 	 * <li><code>project/filename1</code> with <code>filename1 = index.txt</code><li>
 	 * <li><code>project/filename2</code> with <code>filename2 = pics/summer2010.txt</code></li>
 	 * </ul> 
-	 * @see {@link #internalName()} -- the name used for linking.
+	 * @see #internalName()
 	 * @deprecated until correct usage of internalName is checked.
 	 */
 	public final String name;
@@ -64,7 +64,7 @@ public abstract class WikiFile {
 	/**
 	 * <p>An internal representation of the output file name, which always uses / as file separator
 	 * and nothing else. To be used in Wiki-Links, for OS-wide consistency.</p>
-	 * @see {@link #name}
+	 * @see #name
 	 */
 	public String internalName() { return internalName; }
 	public final Generators generators;
@@ -82,8 +82,8 @@ public abstract class WikiFile {
 	public ArrayList<ImageProperties> imagePropertiesList = new ArrayList<ImageProperties>();
 	/** @see #addGalleryProperties(GalleryProperties) for inserting new properties! */
 	public ArrayList<GalleryProperties> galleryPropertiesList = new ArrayList<GalleryProperties>();
-	/** List of reference bindings.
-	 * @see {@link Constants.Template_References} for the bound names */
+	/** <p>List of reference bindings.</p>
+	 * <p>See {@link Template_References} for the bound names.</p> */
 	public HashMap<String, PTMState> references = null;
 	/** List of available link namespaces */
 	private ArrayList<NamespaceObject> linkNamespaces;

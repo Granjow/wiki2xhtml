@@ -8,6 +8,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 
+import src.argsFilesReader.ArgsFilesReader;
+import src.project.file.Generators;
 import src.project.settings.Settings.Checker;
 import src.project.settings.Settings.ValuePreparser;
 import src.resources.ResProjectSettings;
@@ -110,18 +112,19 @@ public final class Constants {
 
 		public static final String imagepageCaption = ResProjectSettings.ImagepageCaptionAlternatives.description.key();
 	}
+	
+	
 
-
-	/** Command line arguments for wiki2xhtml */
-	public static final class Arguments {
-
-		public static final class FileArgs {
-			
-			public static final String noSitemap = "nositemap";
-			public static final String noParse = "noparse";
-			
-		}
-
+	/**
+	 * <p>These additional arguments can be set in {@code .args} files. </p>
+	 * <p>Example: <br/><code>index.txt<br/>non-public.txt nositemap</code></p>
+	 * @see ArgsFilesReader#readArgsFile(src.project.WikiProject, File)
+	 */
+	public static final class FileArgs {
+		
+		/** Does not build a sitemap for the given file. */
+		public static final String noSitemap = "nositemap";
+		
 	}
 	
 	public static final class Links {
@@ -394,6 +397,8 @@ public final class Constants {
 
 		public static final class Title {
 
+			/** If this tag occurs in the page title, it will be replaced by the project title.
+			 * @see Generators#title(src.project.file.WikiFile, String) */
 			public static final String titleTag = "%s";
 			public static final String pageTag = "%p";
 			

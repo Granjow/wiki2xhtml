@@ -30,7 +30,7 @@ import src.GenerateID;
 
 /**
  * <p>Detects changes on files based on their MD5 hash.</p>
- * <p>Contains {@code<Name, Hash>} entries.</p>
+ * <p>Contains {@code <Name, Hash>} entries.</p>
  */
 public class FileChangesMap extends HashMap<String, String> {
 	private static final long serialVersionUID = 1L;

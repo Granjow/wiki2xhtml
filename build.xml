@@ -1,11 +1,11 @@
 <?xml version="1.0"?> 
 <project name="wiki2xhtml" basedir="." default="build-jar">
 
+  <property name="docs" value="javadoc"/>
   <property name="build" value="build"/>
-  <property name="build.sources" value="build/sources"/>
-  <property name="build.classes" value="build/bin"/>
-  <property name="build.libs" value="build/bin/lib"/>
-  <property name="build.test" value="build-test"/>
+  <property name="build.sources" value="${build}/sources"/>
+  <property name="build.classes" value="${build}/bin"/>
+  <property name="build.libs" value="${build.classes}/lib"/>
   <property name="path.test" value="unittests"/>
   <property name="path.gettext" value="./lib/gettext-commons-0.9.6.jar"/>
   <property name="path.junit" value="./lib/junit-4.8.2.jar"/>
@@ -67,6 +67,7 @@
   
   <target name="clean" description="Removes the build files">
     <delete dir="${build}"/>
+    <delete dir="${docs}"/>
   </target>
   
   
@@ -131,6 +132,11 @@
       
       <test name="unittests.Tester"  />
     </junit>
+  </target>
+  
+  
+  <target name="build-docs" description="Builds the documentation">
+    <javadoc packagenames="src.*" sourcepath="." destdir="${docs}" private="true" />
   </target>
   
   

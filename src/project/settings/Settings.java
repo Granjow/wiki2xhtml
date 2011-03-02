@@ -50,7 +50,7 @@ public abstract class Settings<K extends Comparable<?>, V extends Comparable<?>>
 	
 	//////// BOOL+SIMILAR ///////
 	
-	/** @returns true if <code>property</code> is set. */
+	/** @return {@code true} if the given {@code property} is set. */
 	public boolean isSet(final K property) {
 		return settingsMap.containsKey(property);
 	}
@@ -58,7 +58,7 @@ public abstract class Settings<K extends Comparable<?>, V extends Comparable<?>>
 	/**
 	 * <p>Checks with the checkers added via {@link #addChecker(Checker, Comparable)}
 	 * whether the <code>value</code> is valid for the given <code>property</code>.</p>
-	 * <p>Invalid values cannot be set with {@link #set_(Object, Comparable)}.</p>
+	 * <p>Invalid values cannot be set with {@link #set_(Comparable, Comparable)}.</p>
 	 * @return <code>true</code> if <code>value</code> may be set.
 	 */
 	public boolean isValid(final K property, final V value) {

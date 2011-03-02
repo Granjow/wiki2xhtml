@@ -126,7 +126,6 @@ public class ImageProperties extends StringSettings<EImageProperties> {
 	
 	/**
 	 * Replaces characters like "&amp;" and " " by "&amp;amp;" and "%20"
-	 * @param s
 	 * @return W3C conform URI String
 	 */
 	private static String htmlURI(String s) {
@@ -213,8 +212,8 @@ public class ImageProperties extends StringSettings<EImageProperties> {
 	 * <li>%b &#x2013; without extension: <code>image</code></li>
 	 * <li>%e &#x2013; file extension: <code>.jpg</code></li>
 	 * </ul>
-	 * @param nameThumb The name of the thumbnail
-	 * @return The location of a thumbnail
+	 * in the given {@code dirPattern}.
+	 * @param imgPath The path of the thumbnail
 	 */
 	public static final String getThumbnailSource(String imgPath, String dirPattern) {
 		assert dirPattern != null;

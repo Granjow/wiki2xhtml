@@ -26,11 +26,7 @@ import java.util.regex.*;
  */
 
 /**
- *
  * Various input/output utilities.
- *
- * @author Simon Eugster
- * ,		hb9eia
  */
 public class IOUtils {
 	
@@ -242,9 +238,6 @@ public class IOUtils {
 
 	/**
 	 * Returns the file extension.
-	 *
-	 * @param filename
-	 * @return
 	 */
 	public static String getFileExtensionS(String filename) {
 		String ext = new String();
@@ -292,7 +285,7 @@ public class IOUtils {
 	}
 
 	/**
-	 * @param extensions available extension
+	 * @param extension available extension
 	 * @param directory the working directory (null for default)
 	 * @param title the title (null for default)
 	 * @param append append selected extension
@@ -310,7 +303,7 @@ public class IOUtils {
 
 	/**
 	 * @param extensions available extensions
-	 * @param directory the working directory (null for default
+	 * @param directory the working directory (null for default)
 	 * @param title the title (null for default)
 	 * @param append append selected extension
 	 * @return The selected file or null
@@ -380,9 +373,7 @@ public class IOUtils {
 	}
 
 	/**
-	 * @author Simon Eugster
-	 * @param append -
-	 *            append selected extension
+	 * @param append Append the selected file name extension
 	 * @return selected file
 	 */
 	public static File openInFileDialog(boolean append) {
@@ -494,12 +485,8 @@ public class IOUtils {
 	}
 
 	/**
-	 * Returns the short path name and eventually removes a part of the path
+	 * @return The short path name and eventually removes a part of the path
 	 * (usually java.class.dir)
-	 *
-	 * @param f
-	 * @param remove
-	 * @return
 	 */
 	public static String getShortPath(File f, String remove) {
 		StringBuffer shortPath = new StringBuffer();

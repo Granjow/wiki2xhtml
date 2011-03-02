@@ -41,7 +41,7 @@ public class Generators {
 	}
 	
 	/**
-	 * @return The page title, replacing %s and %p by standard title and page number
+	 * @see #title(WikiFile, String)
 	 */
 	public String title(final WikiFile file) {
 		String title = file.getProperty(SettingsE.title, false);
@@ -55,8 +55,8 @@ public class Generators {
 	}
 	
 	/**
-	 * @param pattern Input title
-	 * @return The pattern with %s and %p replaced; see {@link #title()}
+	 * @return The given pattern with {@code %s} replaced by the title that has been set
+	 * for the project (See {@link SettingsE#title}). 
 	 */
 	public String title(final WikiFile file, final String pattern) {
 		String title = pattern;

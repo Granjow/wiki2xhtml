@@ -1,6 +1,7 @@
 package src.tasks;
 
 import src.Resources;
+import src.Resources.XmlNames;
 import src.project.file.WikiFile;
 import src.tasks.Tasks.Task;
 import src.utilities.XMLTools;
@@ -9,8 +10,8 @@ import src.utilities.XMLTools;
 /**
  * <p>Removes all characters that are not valid XML Name characters within <code>&lt;xmlname&gt;</code> tags.</p>
  * <p>Can e.g. be used when wanting to make sure there a no wrong characters within an XHTML property.</p>
- * @see {@link XMLTools#getXmlNameChar}
- * @see {@link Resources.XmlNames}
+ * @see XMLTools#getXmlNameChar(String)
+ * @see XmlNames
  */
 public class XMLNames extends WikiTask {
 	public Task desc() {

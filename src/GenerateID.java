@@ -84,7 +84,7 @@ public class GenerateID {
 
 	/**
 	 * Get the hex value of an Integer.
-	 * @see toHexBi(BigInteger input) for bigger integers
+	 * @see #toHexBi(BigInteger, boolean) for bigger integers
 	 * @param input is the Integer to calculate the hex value from
 	 * @return the input in hexadecimal description
 	 */
@@ -107,7 +107,6 @@ public class GenerateID {
 
 	/**
 	 * Get the hex value of a BigInteger.
-	 * @see toHex(long input)
 	 * @param input is the BigInteger to calculate the hex value from
 	 * @return the input in hexadecimal description
 	 */
@@ -179,25 +178,5 @@ public class GenerateID {
 		}
 
 		return hmd5.toString();
-	}
-
-	/**
-	 * @see Integer.parseInt("hex", 16)
-	 * @see Long.parseLong("hex", 16)
-	 * @param hex is the hex value
-	 * @return The integer value of a hex char
-	 */
-	public static long hexToLong(String hex) {
-		long l = 0;
-		p(Long.getLong("0x14B95DA92B6CBD"));
-		hex = hex.toLowerCase();
-		hex = new StringBuffer(hex).reverse().toString();
-
-		for (int i = 0; i < hex.length(); i++) {
-			l += "0123456789abcdef".indexOf(hex.charAt(i)) * Math.pow(16, i);
-
-		}
-
-		return l;
 	}
 }

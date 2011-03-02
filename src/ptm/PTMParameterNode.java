@@ -49,7 +49,8 @@ public class PTMParameterNode extends PTMNode {
 	}
 	
 	/**
-	 * @see {@link PTMFunctionIf#PTMFunctionIf(StringBuffer, int, PTMObject)}
+	 * <p>See the source code of {@link PTMFunctionIf#PTMFunctionIf(StringBuffer, int, PTMNode, PTMRootNode)} for an accurate description
+	 * of each steps accomplished here.</p> 
 	 */
 	public PTMParameterNode(StringBuffer content, int beginIndex, PTMNode parent, PTMRootNode root) throws ObjectNotApplicableException {
 		super(content, beginIndex, parent, root);
