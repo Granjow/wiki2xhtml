@@ -120,6 +120,18 @@ public class PTMObjectFactory {
 			}
 		}
 		
+		// Parser function {{#time: format }}
+		if (obj == null) {
+			if (allowedChildnodes.contains(PTMObjects.Function) || allowedChildnodes.contains(PTMObjects.FunctionTime)) {
+				m = PTMFunctionTime.startPattern.matcher(indicator);
+				if (m.find()) {
+					try {
+						obj = new PTMFunctionTime(content, index, parent, root);
+					} catch (ObjectNotApplicableException e) { obj = null; }
+				}
+			}
+		}
+		
 		// Template {{:template|args}}
 		if (obj == null) {
 			if (allowedChildnodes.contains(PTMObjects.Template)) {

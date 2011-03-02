@@ -39,7 +39,10 @@ public class PTMArgumentValueNode extends PTMNode {
 			}
 		} while (obj != null);
 		if (!nameEndReached) {
-			throw new ObjectNotApplicableException("No end of name in sight.");
+			throw new ObjectNotApplicableException(
+					String.format("No end of the value in sight in <<%s>>.", 
+							content.subSequence(beginIndex, endIndex > beginIndex + 30 ? beginIndex + 30 : endIndex)
+							));
 		}
 		
 		assert endIndex > this.beginIndex;

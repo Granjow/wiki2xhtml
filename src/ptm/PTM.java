@@ -37,12 +37,13 @@ public class PTM {
 		FunctionIfeq,
 		FunctionIfvalexists,
 		FunctionSwitch,
+		FunctionTime,
 		Parameter,
 		Template,
 		Argument,
 		ArgumentName,
 		ArgumentValue,
-		CDATA
+		CDATA,
 	}
 
 	public static final int recursionMaxDepth = 50;

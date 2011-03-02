@@ -3,6 +3,9 @@ package src;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Formatter;
 
 import src.project.FallbackFile;
 import src.project.WikiProject;
@@ -12,9 +15,17 @@ import src.project.file.LocalWikiFile;
 import src.project.file.WikiFile;
 import src.utilities.IOWrite;
 
+@SuppressWarnings("unused")
 public class Testground {
 
 	public static void main(String[] args) throws IOException, InvalidLocationException, InvalidOutputDirectoryLocationException {
+		Date now = new Date();
+		System.out.println(now.toString());
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd E hh:mm:ss");
+		System.out.println(formatter.format(now));
+	}
+	
+	private void sampleProject() throws IOException, InvalidLocationException, InvalidOutputDirectoryLocationException {
 		WikiProject proj = new WikiProject(".");
 		FallbackFile ff = proj.locate("tplImage.txt");
 		System.out.println(ff.pathInfo());

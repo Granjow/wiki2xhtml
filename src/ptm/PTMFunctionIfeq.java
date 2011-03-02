@@ -73,7 +73,7 @@ public class PTMFunctionIfeq extends PTMFunctionNode {
 		} while (obj != null);
 		
 		if (!functionEndReached) {
-			throw new ObjectNotApplicableException("End of the expression could not be found.");
+			throw new ObjectNotApplicableException("End of the #ifeq expression could not be found.");
 		}
 		
 		try {
@@ -83,7 +83,7 @@ public class PTMFunctionIfeq extends PTMFunctionNode {
 			}
 		} catch (StringIndexOutOfBoundsException e) {}
 		if (!functionEndReached) {
-			throw new ObjectNotApplicableException("End of the If expression could not be located.");
+			throw new ObjectNotApplicableException("End of the #ifeq expression could not be located.");
 		}
 		
 		if (childTree.size() < 3) {

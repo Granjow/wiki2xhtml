@@ -2,6 +2,8 @@ package unittests;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import org.junit.Test;
 
@@ -55,6 +57,17 @@ public class ParserFunctionsTester extends junit.framework.TestCase {
 		assertEquals("correct", p("{{#switch: \t| a=incorrect |=correct}}"));
 		assertEquals("correct", p("{{#switch: newline\t\n| a=incorrect \n|b=incorrect\n|newline=correct}}"));
 		assertEquals(" correct", p("{{#switch: nonexistant| a=incorrect |b=incorrect| #default = correct}}"));
+	}
+	
+	@Test
+	public void testTime() {
+		Date now = new Date();
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+		assertEquals(formatter.format(now), p("{{#time:yyyy-MM-dd}}"));
+		assertEquals("{{#time:yyyy-MM-dd", p("{{#time:yyyy-MM-dd"));
+		
+		formatter = new SimpleDateFormat("yyyy-MM|dd");
+		assertEquals(formatter.format(now), p("{{#time:yyyy-MM<![CDATA[|]]>dd}}"));
 	}
 	
 	@Test

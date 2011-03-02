@@ -1,14 +1,5 @@
-package src.ptm;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import src.ptm.PTM.PTMObjects;
-
 /*
- *   Copyright (C) 2010 Simon Eugster <granjow@users.sf.net>
+ *   Copyright (C) 2010-2011 Simon Eugster <granjow@users.sf.net>
 
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -23,6 +14,16 @@ import src.ptm.PTM.PTMObjects;
  *   You should have received a copy of the GNU General Public License
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
+package src.ptm;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import src.ptm.PTM.PTMObjects;
+
 
 /**
  * <p>Handles an if function.</p>
@@ -96,7 +97,7 @@ public class PTMFunctionIf extends PTMFunctionNode {
 		} while (obj != null);
 		
 		if (!functionEndReached) {
-			throw new ObjectNotApplicableException("End of the expression could not be found.");
+			throw new ObjectNotApplicableException("End of the #if expression could not be found.");
 		}
 		
 		// Check that we're not at the EOF but really at the end of a function
@@ -108,7 +109,7 @@ public class PTMFunctionIf extends PTMFunctionNode {
 			}
 		} catch (StringIndexOutOfBoundsException e) {}
 		if (!functionEndReached) {
-			throw new ObjectNotApplicableException("End of the If expression could not be located.");
+			throw new ObjectNotApplicableException("End of the #if expression could not be located.");
 		}
 		
 		if (childTree.size() < 2) {
