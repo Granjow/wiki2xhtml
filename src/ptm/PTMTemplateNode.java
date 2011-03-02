@@ -105,10 +105,21 @@ public class PTMTemplateNode extends PTMNode {
 
 	public String evaluate() throws RecursionException {
 
-		File template;
-		if (root.templateDirectory() != null) {
-			template = new File(root.templateDirectory().getAbsolutePath() + File.separator + childTree.get(0).evaluate().trim());
-		} else {
+		String templateName = childTree.get(0).evaluate().trim();
+		File template = null;
+		if (root.templateDirectories() != null) {
+			for (File f : root.templateDirectories()) {
+				template = new File(f.getAbsolutePath() + File.separator + templateName);
+				if (template.exists()) {
+//					System.out.printf("\tFound template for %s at %s.\n", templateName, template.getAbsolutePath());
+					break;
+				} else {
+//					System.out.printf("\tCould not find template for %s at %s.\n", templateName, template.getAbsolutePath());
+					template = null;
+				}
+			}
+		}
+		if (template == null) {
 			template = new File(childTree.get(0).evaluate().trim());
 		}
 		
@@ -130,7 +141,7 @@ public class PTMTemplateNode extends PTMNode {
 //					state.printValues();
 					for (String key : root.sigma.keySet()) {
 						if (!state.containsKey(key) || PTMState.forwardState.equals(state.resolve(key))) {
-							System.out.printf("Re-binding %s to %s (template value is %s).\n", key, root.sigma.resolve(key), state.resolve(key));
+//							System.out.printf("Re-binding %s to %s (template value is %s).\n", key, root.sigma.resolve(key), state.resolve(key));
 							state.bind(key, root.sigma.resolve(key));
 						} else {
 							System.out.printf("%s is already bound to %s.\n", key, state.resolve(key));

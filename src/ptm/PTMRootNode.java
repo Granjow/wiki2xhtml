@@ -2,9 +2,9 @@ package src.ptm;
 
 import java.io.File;
 import java.util.List;
+import java.util.Vector;
 
 import src.ptm.PTM.PTMObjects;
-import src.utilities.StringTools;
 
 /*
  *   Copyright (C) 2010 Simon Eugster <granjow@users.sf.net>
@@ -28,9 +28,9 @@ import src.utilities.StringTools;
  */
 public class PTMRootNode extends PTMNode {
 	
-	private File templateDirectory = null;
-	public File templateDirectory() { return templateDirectory; }
-	public void setTemplateDirectory(File dir) { templateDirectory = dir; }
+	private Vector<File> templateDirectories = null;
+	public Vector<File> templateDirectories() { return templateDirectories; }
+	public void setTemplateDirectories(Vector<File> dir) { templateDirectories = dir; }
 
 	public PTMRootNode(StringBuffer content, PTMState sigma) {
 		this(content, sigma, null);

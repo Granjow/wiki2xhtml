@@ -43,7 +43,6 @@ public class Wiki2xhtmlArgsParser extends CmdLineParser {
 	
 	
 	public final Option incremental;
-//	public final Option stdout;
 	
 	public final Option showHelp;
 	public final Option showVersion;
@@ -76,7 +75,6 @@ public class Wiki2xhtmlArgsParser extends CmdLineParser {
 		
 		incremental = addBooleanOption("incremental");
 		incremental.setDescription("Re-builds changed files only. Attention: Does not consider template files; don't use this flag if templates have changed.");
-//		stdout = addBooleanOption("stdout");
 		
 		showHelp = addBooleanOption('h', "help");
 		showHelp.setDescription("Displays this help message");

@@ -3,6 +3,7 @@ package src.ptm;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Vector;
 
 import src.ptm.PTMObject.RecursionException;
 
@@ -93,7 +94,13 @@ public class PTM {
 	public static final String parse(StringBuffer content, File templateDirectory) throws RecursionException {
 		if (content.length() > 0) {
 			PTMRootNode root = new PTMRootNode(content, new PTMState());
-			root.setTemplateDirectory(templateDirectory);
+			
+			Vector<File> dirVec = new Vector<File>();
+			if (templateDirectory != null) {
+				dirVec.add(templateDirectory);
+			}
+			root.setTemplateDirectories(dirVec);
+			
 			return root.evaluate();
 		} else {
 			return new String();

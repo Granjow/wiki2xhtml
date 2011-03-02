@@ -54,7 +54,7 @@ public class SettingsTester extends junit.framework.TestCase {
 	
 	@Test
 	public void testBindings() throws IOException {
-		StringBuffer sb = new StringBuffer("{{Bind:a=b}}\nhall{{Bind:c=d}}o");
+		StringBuffer sb = new StringBuffer("{{Bind:a=b}}\nhall{{Bind:c=d\ne=f}}o");
 		
 		VirtualWikiFile vf = new VirtualWikiFile(VirtualWikiFile.createTempProject(), "a.html", false, sb);
 		vf.removeAllTasks();
@@ -62,7 +62,7 @@ public class SettingsTester extends junit.framework.TestCase {
 		vf.parse();
 
 		assertEquals("hallo", vf.getContent().toString().trim());
-		assertEquals("a=b\nc=d", vf.getProperty(SettingsE.bind, false));
+		assertEquals(String.format("a=b%1sc=d\ne=f", SettingsE.bind.separator()), vf.getProperty(SettingsE.bind, false));
 	}
 	
 	@Test public void testChecker() {

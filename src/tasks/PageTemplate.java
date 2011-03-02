@@ -18,6 +18,9 @@
 package src.tasks;
 
 
+import java.io.File;
+import java.util.Vector;
+
 import src.Constants.Template_Page;
 import src.project.WikiMenu;
 import src.project.file.WikiFile;
@@ -52,7 +55,7 @@ public class PageTemplate extends WikiTask {
 		// Add project-wide name/value bindings set with {{Bind:name=value}} (overwritten by newer values below)
 		bindings = file.project.getProperty(SettingsE.bind);
 		if (bindings != null) {
-			sigma.bindValuesFromList(bindings.split("\\n"));
+			sigma.bindValuesFromList(bindings.split(SettingsE.bind.separator()));
 		}
 		
 		// Add general name/value bindings
@@ -70,13 +73,20 @@ public class PageTemplate extends WikiTask {
 		// Add page specific name/value bindings
 		bindings = file.getProperty(SettingsE.bind, false);
 		if (bindings != null) {
-			sigma.bindValuesFromList(bindings.split("\\n"));
+			sigma.bindValuesFromList(bindings.split(SettingsE.bind.separator()));
 		}
 		
 		
 		// Apply the template
 		PTMRootNode root = new PTMRootNode(content, sigma);
-		root.setTemplateDirectory(file.project.projectDirectory());
+		Vector<File> dirVec = new Vector<File>();
+		File currentDir = new File(file.name).getAbsoluteFile().getParentFile();
+		if (currentDir.exists()) {
+			dirVec.add(currentDir);
+		}
+		dirVec.add(file.project.projectDirectory());
+		dirVec.add(file.project.styleDirectory());
+		root.setTemplateDirectories(dirVec);
 		
 		try {
 			file.setContent(new StringBuffer(root.evaluate()));

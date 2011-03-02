@@ -24,7 +24,7 @@ public final class ResProjectSettings {
 	 */
 	public static enum SettingsE {
 		/** Meta data: Author */			author ("Author"),
-		/** Name/Value bindings */			bind ("Bind", true, "\n", Checkers.equalSignChecker),
+		/** Name/Value bindings */			bind ("Bind", true, "NEXTBINDING", Checkers.equalSignChecker),
 		/** Meta data: Page description */	desc ("Desc(?:ription)?"),
 		/** Footer */						footer ("Footer"),
 		/**
@@ -84,7 +84,7 @@ public final class ResProjectSettings {
 			this.separator = separator;
 			this.checker = checker;
 			this.preparser = adjuster;
-			regex = Pattern.compile("(?m)\\{\\{" + keyword() + ":((?:(?!\\}\\}).)+)\\}\\}"); // basically {{Key:*}}
+			regex = Pattern.compile("(?s)\\{\\{" + keyword() + ":((?:(?!\\}\\}).)+)\\}\\}"); // basically {{Key:*}}
 		}
 	
 		public String keyword() { return property; }
@@ -142,8 +142,6 @@ public final class ResProjectSettings {
 //		number ("number", "The number of the image on the current page"),
 		longdesc ("ld", "Long image description"),
 		pageCreated ("pageCreated", "Image page created?"),
-		/* TODO Doc removed.
-		pageWidth ("pageWidth", "Width of the image on the image page"),*/
 		path ("path", "Image path"),
 		pos ("pos", "Desired thumbnail position: left, center, right"),
 		prev ("prev", "Link to previous image on the page"),  // TODO fill in

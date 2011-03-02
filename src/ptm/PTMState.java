@@ -111,9 +111,9 @@ public class PTMState extends HashMap<String, PTMArgumentValueNode> {
 					value = line.substring(pos+1);
 					if (key.length() > 0 && value.length() > 0) {
 						b(key, value);
-						System.out.printf("Bound %s to %s.\n", key, value);
+//						System.out.printf("Bound %s to %s.\n", key, value);
 					} else {
-						System.out.printf("Did not bind %s to %s.\n", key, value);
+//						System.out.printf("Did not bind %s to %s.\n", key, value);
 					}
 				}
 			}

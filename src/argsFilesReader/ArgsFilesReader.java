@@ -57,7 +57,6 @@ public class ArgsFilesReader {
 		String args = "";
 		String dir = "";
 		boolean sitemap;
-		boolean parse;
 		
 		try {
 			StringBuffer content = IORead_Stats.readSBuffer(file);
@@ -97,7 +96,6 @@ public class ArgsFilesReader {
 					// File.
 //					System.out.printf("File read: %s\n", line);
 					sitemap = true;
-					parse = true;
 					
 					// Split at spaces, except when preceded by a \
 					// TODO Doc: \ for spaces, noparse removed
