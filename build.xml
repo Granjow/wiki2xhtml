@@ -124,6 +124,7 @@
   
   
   <target name="run-tests" depends="build-sources" description="Compiles the unit tests">
+    <echo>Run ant with the flag «-lib ./lib» if junit fails.</echo>
     <junit printsummary="on" showoutput="false" failureproperty="junit.fail">
       <classpath refid="classpath.junit"/>
       <classpath>
