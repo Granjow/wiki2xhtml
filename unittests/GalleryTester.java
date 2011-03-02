@@ -50,6 +50,13 @@ public class GalleryTester extends junit.framework.TestCase {
 		assertEquals("::img.jpg;t=Hello gallery!::", p("<gallery>\nImage:img.jpg|Hello gallery!\n</gallery>", textTemplate, container));
 	}
 	
+	@Test
+	public void testPaths() throws IOException {
+		final String container = "{{{content}}}";
+		assertEquals("dir/img.jpg", p("{{DirImages:dir}}\n<gallery>\nImage:img.jpg\n</gallery>", template, container));
+		assertEquals("./img.jpg", p("{{DirImages:dir}}\n<gallery>\nImage:./img.jpg\n</gallery>", template, container));
+	}
+	
 
 	private static final String p(String testString, String templateGallery, String templateContainer) throws IOException {
 		TestObject to = new TestObject(testString, "");
@@ -65,6 +72,7 @@ public class GalleryTester extends junit.framework.TestCase {
 
 		void fillTasks(VirtualWikiFile vf) {
 			vf.addTask(Task.Galleries);
+			vf.addTask(Task.Settings);
 		}
 
 		public String real() throws IOException {

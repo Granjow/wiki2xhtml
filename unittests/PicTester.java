@@ -57,6 +57,13 @@ public class PicTester extends junit.framework.TestCase {
 	}
 	
 	@Test
+	public void testImagePath() throws IOException {
+		final String template = "{{{thumb|--{{{path}}}}}}";
+		assertEquals("--images/img.jpg", ps("{{DirImages:images}}[[Image:img.jpg]]", template));
+		assertEquals("--./img.jpg", ps("{{DirImages:images}}[[Image:./img.jpg]]", template));
+	}
+	
+	@Test
 	public void testLink() throws IOException {
 		final String template = "{{#if:{{{link|}}}|l={{{link}}}}}";
 		assertEquals("l=linked", p("[[Image:img.jpg|link=linked]]", template));

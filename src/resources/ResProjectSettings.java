@@ -4,6 +4,7 @@ import java.util.regex.Pattern;
 
 import src.Constants.Checkers;
 import src.Constants.Preparsers;
+import src.project.settings.ImageProperties;
 import src.project.settings.Settings.Checker;
 import src.project.settings.Settings.ValuePreparser;
 
@@ -18,9 +19,8 @@ public final class ResProjectSettings {
 	}
 	
 	/**
-	 * This settings can be applied to either a page or the whole project.
-	 * Can be read automatically. 
-	 * TODO doc ..asCaption
+	 * <p>This settings can be applied to either a page or the whole project, with {@code {{Name:Arguments}}}. </p>
+	 * <p>Example: {@code {{Thumbnails:images-sea/thumbs/%f}}}</p>
 	 */
 	public static enum SettingsE {
 		/** Meta data: Author */			author ("Author"),
@@ -56,7 +56,9 @@ public final class ResProjectSettings {
 		 * @since 3.3.2 
 		 */									reckAlternative ("ReckAlternative"),
 		/** Text title/header */			textHeader ("TextHeader"),
-		/** Thumbnails directory */			thumbsDir ("Thumbnails"),
+		/** Thumbnails path
+		 * @see ImageProperties#getThumbnailSource(String, String) about resolving. */			
+											thumbsDir ("Thumbnails"),
 		/** Width of thumbnails */			thumbWidth ("ThumbWidthImages", Checkers.sizeChecker),
 		/**
 		 * Page title; replacement for %s 

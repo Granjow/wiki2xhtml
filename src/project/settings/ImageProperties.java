@@ -275,13 +275,24 @@ public class ImageProperties extends StringSettings<EImageProperties> {
 		Matcher mUserVar;
 		Pattern pCaption = Pattern.compile("(?i)(?:c(?:aption)?=)(.+)");
 		Matcher mCaption;
+		
+		String pathPrefix = parentFile.getProperty(SettingsE.imagesDir, true);
+		if (pathPrefix == null) {
+			pathPrefix = "";
+		} else if (pathPrefix.length() > 0 && !pathPrefix.endsWith("/")) {
+			pathPrefix += "/";
+		}
 
 		for (ArgumentItem ai : a) {
 			
 			mPImage = pImage.matcher(ai.fullArg);
 			if (mPImage.matches() && props.get(Constants.Template_Images.path) == null) {
 				// Image:<path>
-				props.put(Constants.Template_Images.path, mPImage.group(1));
+				String path = mPImage.group(1);
+				if (!path.startsWith("./")) {
+					path = pathPrefix + path;
+				}
+				props.put(Constants.Template_Images.path, path);
 				continue;
 			}
 

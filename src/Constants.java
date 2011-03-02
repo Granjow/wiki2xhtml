@@ -209,8 +209,7 @@ public final class Constants {
 		public static final String number = "number";
 	}
 
-	/** Arguments for images
-	 * TODO Doc everything*/
+	/** Arguments available for image templates */
 	public static final class Template_Images {
 
 		/** Clear before and after (insert clear=both) to put it on a new line */
@@ -273,7 +272,7 @@ public final class Constants {
 
 	}
 	
-	/** Additional parameters available for image page templates */
+	/** Parameters available for image page templates, additionally to {@link Template_Images}. */
 	public static final class Template_ImagePage {
 		public static final String nextPage = "nextPage";
 		public static final String prevPage = "prevPage";
@@ -319,51 +318,6 @@ public final class Constants {
 		public static final String ol = "ol";
 		public static final String ul = "ul";
 		public static final String id = "id";
-	}
-
-	/** Tags used in templates */
-	@Deprecated public static final class TemplateTags {
-
-		/** @since wiki2xhtml 3.4 */
-		public static final String args = "[args]";
-		/** @since wiki2xhtml 3.4 */
-		public static final String argsLink = "[argsLink]";
-		public static final String caption = "[caption]";
-		/** Direct link to image */
-		public static final String imagePath = "[imagepath]";
-		public static final String imageName = "[imagename]";
-		public static final String imageCaption = "[imagecaption]";
-		public static final String pre = "[pre]";
-		public static final String back = "[back]";
-		public static final String nextImage = "[nextimage]";
-		public static final String prevImage = "[previmage]";
-		public static final String width = "[width]";
-		public static final String alt = "[alt]";
-
-		public static final String pos = "[pos]";
-		/** Link to image or image page */
-		public static final String link = "[link]";
-		/** Thumbnail source */
-		public static final String thumb = "[thumb]";
-		public static final String desc = "[desc]";
-		/** Description, as XML name (without special characters).
-		 * @since wiki2xhtml 3.3 */
-		public static final String descXmlName = "[descxmlname]";
-		public static final String id = "[id]";
-
-		public static final String meta = "[meta]";
-		public static final String title = "[title]";
-		public static final String head = "[head]";
-		public static final String textheader = "[textheader]";
-		public static final String menu = "[menu]";
-		public static final String footer = "[footer]";
-		public static final String h1 = "[h1]";
-		public static final String homelink = "[homelink]";
-		public static final String content = "[content]";
-		
-		/** @since wiki2xhtml 3.4 */
-		public static final String toc = "[toc]";
-
 	}
 	
 	public static final class Checkers {

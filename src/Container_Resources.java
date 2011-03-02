@@ -27,14 +27,6 @@ import src.utilities.IORead_Stats;
  * @author Simon Eugster
  */
 public class Container_Resources {
-
-	private Container_Resources() { }
-	private static Container_Resources cr = new Container_Resources();
-
-	/** Singleton */
-	public static Container_Resources getInstance() {
-		return cr;
-	}
 	
 	/** Location of some fallback resources delivered by wiki2xhtml */
 	public static final String resdir = "/resources/";
