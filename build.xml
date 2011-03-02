@@ -137,6 +137,10 @@
   
   <target name="build-docs" description="Builds the documentation">
     <javadoc packagenames="src.*" sourcepath="." destdir="${docs}" private="true" />
+    <copy file="./resources/javadoc-stylesheet.css" tofile="${docs}/stylesheet.css" overwrite="yes"/>
+    <exec executable="./betterJavadoc.sh">
+      <arg line="${docs}"/>
+    </exec>
   </target>
   
   
