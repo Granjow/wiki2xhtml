@@ -25,7 +25,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import src.Constants.Template_TOC;
-import src.Container_Resources;
+import src.Constants;
 import src.Statistics;
 import src.project.FallbackFile;
 import src.project.file.WikiFile;
@@ -34,9 +34,14 @@ import src.ptm.PTMRootNode;
 import src.ptm.PTMState;
 import src.tasks.Tasks.Task;
 
+/** 
+ * Builds the Table of Contents from all wiki headings found in the file. The TOC is now
+ * inserted like any ordinary template using {@code {{:tplTOC.txt}}}, with the parameters
+ * listed in {@link Template_TOC} added to the ones that are (optionally) already passed
+ * to the template.
+ */
 public class WikiTOC extends WikiTask {
 	
-	// TODO Doc TOC insertion changed
 	private static final Pattern pHeading = Pattern.compile("^(=={1,5})(.*[^=])\\1(?:[^=]|$)");
 	private static final Pattern pTOC = Pattern.compile("(?m)^\\{\\{:tplTOC.txt((?:\\|.*)?)\\}\\}");
 	
@@ -78,7 +83,7 @@ public class WikiTOC extends WikiTask {
 				
 				StringBuffer tplTOC = null;
 				try {
-					FallbackFile ff = file.project.locate(Container_Resources.sTplTOC);
+					FallbackFile ff = file.project.locate(Constants.Templates.sTplTOC);
 					tplTOC = ff.getContent();
 				} catch (Exception e) {
 					tplTOC = new StringBuffer(e.getMessage());

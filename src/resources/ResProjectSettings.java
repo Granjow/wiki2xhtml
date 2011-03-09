@@ -38,7 +38,6 @@ public final class ResProjectSettings {
 		/** Width for images on image pages 
 		 */									imagepageImgWidth ("ImageWidthImagepage", Checkers.sizeChecker),
 		/** What to use as imagepage title alternative
-		 * @since wiki2xhtml 3.5 (multiple arguments before)
 		 */ 								imagepageTitle ("ImagepageTitle"),
 		/** Directory for image pages
 		 * Guaranteed to end with a slash */	
@@ -49,12 +48,7 @@ public final class ResProjectSettings {
 		/** Custom meta data */				meta ("Meta", true, "\n"),
 		/** 
 		 * Namespace for links (Like w=http://de.wikipedia.org/wiki/%s) 
-		 * @since wiki2xhtml 3.4 
 		 */									namespace("Namespace", true, "\n"),
-		/**
-		 * Alternative reck file to use 
-		 * @since 3.3.2 
-		 */									reckAlternative ("ReckAlternative"),
 		/** Text title/header */			textHeader ("TextHeader"),
 		/** Thumbnails path
 		 * @see ImageProperties#getThumbnailSource(String, String) about resolving. */			

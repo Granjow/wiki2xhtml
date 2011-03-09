@@ -24,7 +24,7 @@ import java.util.regex.Pattern;
 
 import src.Constants.Template_Gallery;
 import src.Constants.Template_Images;
-import src.Container_Resources;
+import src.Constants;
 import src.project.FallbackFile;
 import src.project.file.WikiFile;
 import src.ptm.PTMObject.RecursionException;
@@ -128,7 +128,7 @@ public class GalleryProperties extends StringSettings<EGalleryProperties> {
 		
 		sigma.bind(EGalleryProperties.content.property, content.toString());
 		
-		FallbackFile template = parentFile.project.locate(Container_Resources.sTplGalleryContainer);
+		FallbackFile template = parentFile.project.locate(Constants.Templates.sTplGalleryContainer);
 		
 		PTMRootNode root = new PTMRootNode(template.getContent(), sigma);
 		try {

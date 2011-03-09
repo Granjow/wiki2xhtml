@@ -1,7 +1,7 @@
 <?xml version="1.0"?> 
 <project name="wiki2xhtml" basedir="." default="build-jar">
 
-  <property name="docs" value="javadoc"/>
+  <property name="docs" value="wiki2xhtml-help/javadoc"/>
   <property name="build" value="build"/>
   <property name="build.sources" value="${build}/sources"/>
   <property name="build.classes" value="${build}/bin"/>

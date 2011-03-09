@@ -1,6 +1,6 @@
 package src.project;
 
-import src.Container_Resources;
+import src.Constants;
 import src.project.FallbackFile.NoFileFoundException;
 import src.utilities.IOUtils;
 
@@ -13,7 +13,7 @@ public class WikiStyle {
 	}
 	
 	public final FallbackFile pageTemplate() throws NoFileFoundException {
-		return _project.locate(Container_Resources.sTplPage);
+		return _project.locate(Constants.Templates.sTplPage);
 	}
 	
 	public final void copyFiles() {

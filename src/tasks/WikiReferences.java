@@ -23,7 +23,7 @@ import java.util.TreeSet;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import src.Container_Resources;
+import src.Constants;
 import src.Constants.Template_References;
 import src.Statistics;
 import src.project.FallbackFile;
@@ -89,7 +89,7 @@ public class WikiReferences extends WikiTask {
 			
 			StringBuffer template = null;
 			try {
-				template = file.project.locate(Container_Resources.sTplCiteRef).getContent();
+				template = file.project.locate(Constants.Templates.sTplCiteRef).getContent();
 			} catch (Exception e) {
 				template = new StringBuffer(e.getMessage());
 			}
@@ -164,7 +164,7 @@ public class WikiReferences extends WikiTask {
 		StringBuffer template = null;
 		
 		try {
-			template = new FallbackFile(Container_Resources.sTplCiteNote, file.project).getContent();
+			template = new FallbackFile(Constants.Templates.sTplCiteNote, file.project).getContent();
 		} catch (Exception e) {
 			e.printStackTrace();
 			template = new StringBuffer(e.getMessage());

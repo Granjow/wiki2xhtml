@@ -30,6 +30,9 @@ import src.ptm.PTMState;
 import src.resources.ResProjectSettings.SettingsE;
 import src.tasks.Tasks.Task;
 
+/**
+ * Builds an XHTML page using the page template, and generates the menu.
+ */
 public class PageTemplate extends WikiTask {
 	
 	public WikiTask nextTask() {

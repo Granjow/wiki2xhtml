@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.Vector;
 
-import src.Container_Resources;
+import src.Constants;
 import src.utilities.IORead_Stats;
 
 
@@ -99,7 +99,7 @@ public class FallbackFile {
 			case jar:
 				url = this.getClass().getResource(filename);
 				if (url == null) {
-					url = this.getClass().getResource(Container_Resources.resdir + filename);
+					url = this.getClass().getResource(Constants.Templates.resdir + filename);
 				}
 				if (url != null) {
 					this.url = url;

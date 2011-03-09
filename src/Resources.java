@@ -22,33 +22,9 @@ import java.util.regex.Pattern;
  */
 
 /**
- *
- * Contains various resources which are used in wiki2xhtml.
- *
- * @author Simon Eugster
+ * Contains various (internal) resource strings which are used in wiki2xhtml.
  */
 public class Resources {
-	public static String activeTextClass = "menuTextActive";
-	public static String openTextClass = "menuTextTopen";
-	public static String closedTextClass = "menuTextClosed";
-
-	public static String activeItemClass = "menuItemActive";
-	public static String openItemClass = "menuItemOpen";
-	public static String closedItemClass = "menuItemClosed";
-
-	public static String activeListClass = "menuListActive";
-	public static String openListClass = "menuListOpen";
-	public static String closedListClass = "menuListClosed";
-
-	public static String menuList = "menuList";
-
-	/** The CSS class name for external links */
-	public static String classExtLink = "external";
-
-	/** ASCII Characters */
-	public final static String ascii =  " !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~";
-	/** Pattern for ASCII characters */
-	public final static String pNotAscii = "[^-+a-zA-Z !\\\"#$%&'()*,./0123456789:;<=>?@\\[\\\\\\]^_`\\{|\\}~]";
 
 	public final static String[][] entities = {{"&amp;", "&"}, {"%20", " "}};
 
@@ -76,25 +52,12 @@ public class Resources {
 	static String ddClose = "</dd>", ddOpen = "<dd>";
 	static String ddOpen1 = "<dd";
 
-	static String preClose = "</pre>", preOpen = "<pre>";
-
-	static String pClose = "</p>", pOpen = "<p>";
-
-	public static String metaOpen = "\n  <meta name=\"";
-	public static String metaMiddle = "\" content=\"";
-	public static String metaClose = "\" />";
-	public static String metaOpenAlt = "\n  <meta http-equiv=\"";
 	
 	public static final String xmlNameOpen = "<xmlname>";
 	public static final String xmlNameClose = "</xmlname>";
 
 
-	static final String operatingSystem = java.lang.System.getProperty("os.name");
-	static final String userDir = java.lang.System.getProperty("user.dir");
-	static final String fileSep = java.lang.System.getProperty("file.separator");
-	static final String lineSep = java.lang.System.getProperty("line.separator");
-
-
+	private static final String lineSep = java.lang.System.getProperty("line.separator");
 	public static String openItem(char c, int indent, String argument) {
 
 		StringBuffer sIndent = new StringBuffer();
@@ -117,10 +80,6 @@ public class Resources {
 	}
 
 	/**
-	 *
-	 * @param c
-	 * @param indent
-	 * @param argument
 	 * @return Tags ul, ol or dl
 	 */
 	public static String openList(char c, int indent, String argument) {
@@ -189,7 +148,6 @@ public class Resources {
 
 	/**
 	 * XML 1.0 names defined in the <a href="http://www.w3.org/TR/xml#NT-Name">XML 1.0 W3C Recommendation</a>
-	 *
 	 */
 	public static final class XmlNames {
 

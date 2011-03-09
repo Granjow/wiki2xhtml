@@ -1,17 +1,3 @@
-args=-m menu.txt -c common.txt -s ../style/hd -o ../wiki2xhtml-help --sitemap=http://wiki2xhtml.sourceforge.net
+args=-s ../style/hd -o ../wiki2xhtml-help --sitemap=http://wiki2xhtml.sourceforge.net
 
-about.txt
-changelog.txt
-doc.txt
-download.txt
-ex-php-reload.php
-examples.txt
-faq.txt
 index.txt
-links.txt
-news.txt
-php.txt
-quickref.txt
-quickstart.txt
-thanks.txt
-usage.txt

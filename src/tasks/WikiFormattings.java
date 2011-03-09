@@ -22,7 +22,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import src.Constants.Template_Blocks;
-import src.Container_Resources;
+import src.Constants;
+import src.Constants.Templates;
 import src.Statistics;
 import src.project.FallbackFile;
 import src.project.file.WikiFile;
@@ -34,7 +35,17 @@ import src.tasks.Tasks.Task;
 import src.utilities.Tuple;
 
 /**
- * Handles ''italic'', '''bold''' text.
+ * <p>Handles {@code ''italic text''}, {@code '''bold text'''}, and {@code $$code$$}.</p>
+ * <p>Code uses the template defined in {@link Templates}. Additional arguments can be passed
+ * to this shorthand (which is not as powerful as an ordinary template) with:</p>
+ * <p>{@code $$((arguments))text$$}</p>
+ * <p>{@code style=} and {@code class=} arguments are extracted from the arguments and delivered in the 
+ * parameters defined in {@link Template_Blocks}. To distinguish between an inline code section and a 
+ * code block as a searate paragraph, for the latter the following syntax can be used:</p>
+ * <p><code> $$((args)<br/>
+ * text<br/>
+ * $$</code></p>
+ * <p>This sets {@link Template_Blocks#isBlock} to "true".</p>
  */
 public class WikiFormattings extends WikiTask {
 
@@ -132,7 +143,7 @@ public class WikiFormattings extends WikiTask {
 		
 		StringBuffer template;
 		try {
-			template = new FallbackFile(Container_Resources.sTplCode, file.project).getContent();
+			template = new FallbackFile(Constants.Templates.sTplCode, file.project).getContent();
 		} catch (Exception e) {
 			e.printStackTrace();
 			template = new StringBuffer(e.getMessage());

@@ -69,12 +69,12 @@ public class Generators {
 					+ title.substring(pos + 2, title.length());
 		}
 
-		pos = title.indexOf(Constants.Tags.Title.pageTag);
-		if (pos >= 0) {
-			title = title.substring(0, pos)
-					+ page(file, DisplayRule.pageXofY)
-					+ title.substring(pos + 2, title.length());
-		}
+//		pos = title.indexOf(Constants.Tags.Title.pageTag);
+//		if (pos >= 0) {
+//			title = title.substring(0, pos)
+//					+ page(file, DisplayRule.pageXofY)
+//					+ title.substring(pos + 2, title.length());
+//		}
 		return title;
 	}
 	

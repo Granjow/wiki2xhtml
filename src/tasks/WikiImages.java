@@ -22,7 +22,7 @@ import java.io.IOException;
 import java.util.regex.Matcher;
 
 import src.Constants.Template_ImagePage;
-import src.Container_Resources;
+import src.Constants;
 import src.Statistics;
 import src.Constants.Template_Images;
 import src.project.FallbackFile;
@@ -38,7 +38,9 @@ import src.resources.ResProjectSettings.EImageProperties;
 import src.tasks.Tasks.Task;
 import src.utilities.IOWrite_Stats;
 
-
+/**
+ * Inserts images.
+ */
 public class WikiImages extends WikiTask {
 
 	public Task desc() {
@@ -160,7 +162,7 @@ public class WikiImages extends WikiTask {
 		boolean generated = false;
 		if (!"true".equals(prop.argumentBindings.resolve(Template_Images.direct))) {
 			try {
-				FallbackFile template = prop.parentFile.project.locate(Container_Resources.sTplImagepage);
+				FallbackFile template = prop.parentFile.project.locate(Constants.Templates.sTplImagepage);
 				
 				if (prop.nextIP != null) {
 					String s = prop.nextIP.getImagepagePath();

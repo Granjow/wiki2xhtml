@@ -1,4 +1,5 @@
-doc/.wiki2xhtml-hashes
+*/.wiki2xhtml-hashes
+*/*/.wiki2xhtml-hashes
 wiki2xhtml.jar
 l10n/po/*~
 *~

@@ -2,6 +2,7 @@ package src.benchmark;
 
 import src.utilities.StringTools;
 
+/** Testing: String vs. StringBuffer benchmarks. */
 public class Strings {
 	
 	private static final int it = 100000;
@@ -92,8 +93,8 @@ public class Strings {
 	}
 	
 	public static void main(String[] args) {
-		createInstances();
-//		testSubstring(1234, 1111, 1000);
+//		createInstances();
+		testSubstring(1234, 1111, 1000);
 //		testSubstring(1234, 111, 100);
 	}
 

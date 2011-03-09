@@ -25,11 +25,6 @@ import src.Constants;
 
 /**
  * Handles program settings, like «check for updates on startup»
- *
- * @author Simon Eugster
- *
- * @since wiki2xhtml 3.3
- *
  */
 
 public class ProgramSettings {
@@ -87,8 +82,6 @@ public class ProgramSettings {
 
 	/**
 	 * Sets <em>key</em> to <em>value</em>.
-	 * @param key
-	 * @param value
 	 */
 	public void set(String key, boolean value) {
 
@@ -103,8 +96,6 @@ public class ProgramSettings {
 
 	/**
 	 * Sets <em>key</em> to <em>value</em>.
-	 * @param key
-	 * @param value
 	 */
 	public void set(String key, String value) {
 

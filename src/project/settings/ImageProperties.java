@@ -26,7 +26,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import src.Constants;
-import src.Container_Resources;
 import src.Resources;
 import src.Constants.Template_Images;
 import src.argumentHandler.ArgumentItem;
@@ -170,10 +169,10 @@ public class ImageProperties extends StringSettings<EImageProperties> {
 	public FallbackFile getTemplate() throws NoFileFoundException {
 		switch (context) {
 		case gallery:
-			return parentFile.project.locate(Container_Resources.sTplGallery);
+			return parentFile.project.locate(Constants.Templates.sTplGallery);
 		case thumb:
 		default:
-			return parentFile.project.locate(Container_Resources.sTplImage);
+			return parentFile.project.locate(Constants.Templates.sTplImage);
 		}
 	}
 	

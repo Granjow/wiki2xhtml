@@ -29,18 +29,12 @@ import src.utilities.IOWrite_Stats;
 
 /**
  * Reads and writes program settings.
- *
- * @since wiki2xhtml 3.3
- *
- * @author Simon Eugster
  */
 final class ProgramSettingsWriter {
 
 
 	/**
 	 * Reads the program configuration
-	 * @param ps
-	 * @return success
 	 */
 	public static boolean readSettings(ProgramSettings ps) {
 
@@ -85,8 +79,6 @@ final class ProgramSettingsWriter {
 
 	/**
 	 * Writes the program configuration
-	 * @param ps
-	 * @return success
 	 */
 	public static boolean writeSettings(ProgramSettings ps) {
 

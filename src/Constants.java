@@ -12,9 +12,15 @@ import src.argsFilesReader.ArgsFilesReader;
 import src.project.file.Generators;
 import src.project.settings.Settings.Checker;
 import src.project.settings.Settings.ValuePreparser;
+import src.ptm.PTMParameterNode;
 import src.resources.ResProjectSettings;
 import src.resources.ResProjectSettings.ImagepageCaptionAlternatives;
 import src.resources.ResProjectSettings.SettingsE;
+import src.tasks.PageTemplate;
+import src.tasks.WikiFormattings;
+import src.tasks.WikiImages;
+import src.tasks.WikiReferences;
+import src.tasks.WikiTOC;
 
 
 /*
@@ -36,11 +42,12 @@ import src.resources.ResProjectSettings.SettingsE;
  */
 
 /**
- * Contains constants and standard settings.
- *
- * @since wiki2xhtml 3.3
- *
- * @author Simon Eugster
+ * Contains constants, like template file names, and standard settings.
+ * Important for working with wiki2xhtml is 
+ * the class {@link Templates} which contains the file names of used templates, all {@code Template_*}
+ * classes which define the arguments that are available in these templates and which can be used 
+ * as parameters there (see {@link PTMParameterNode}), and the {@link Tags} class, listing the available 
+ * tags that can be replaced.
  */
 public final class Constants {
 
@@ -72,7 +79,7 @@ public final class Constants {
 			String s = "$VERSION$";
 			if (s.startsWith("$")) {
 				// Hard-coded version number as fallback
-				s = "4.0rc1";
+				s = "4.0rc4";
 			}
 			versionNumber = s;
 			s = "$DATE$";
@@ -87,7 +94,6 @@ public final class Constants {
 		/** Old versions which will be ignored by the update checker. */
 		//TODO 0 update version numbers
 		public static final String[] versionsTillNow = new String[] { "3.4b8", "3.3.2", "3.3.1", "3.3", "3.2.1", "3.1.0", "3.0.4" };
-		public static final String webpage = "http://wiki2xhtml.sf.net";
 		public static final URL[] getUpdateURLs() {
 			try {
 				return new URL[] { new URL("http://granjow.net/wiki2xhtml") };
@@ -175,17 +181,6 @@ public final class Constants {
 
 	}
 
-	/** Parser functions */
-	public static final class ParserFunctions {
-
-		public static final String pIf = "#if:";
-		public static final String pIfeq = "#ifeq:";
-		public static final String pSwitch = "#switch:";
-
-		public static final String defaultValue = "#default";
-
-	}
-
 	/** Positions */
 	public static final class Position {
 
@@ -195,6 +190,55 @@ public final class Constants {
 
 	}
 	
+	/** 
+	 * Lists used template names. These templates are provided by wiki2xhtml and will be used 
+	 * as fallback if the user does not provide an alternative template (in the input directory 
+	 * or in the style directory). See the {@code Constants.Template_*} classes for a list of available parameters.
+	 */
+	public static final class Templates {
+		
+		/** Location of some fallback resources delivered by wiki2xhtml */
+		public static final String resdir = "/resources/";
+
+		/** Template for a single image */
+		public static final String sTplImage = "tplImage.txt";
+		
+		/** Template for a single gallery entry (an image). */
+		public static final String sTplGallery = "tplGallery.txt";
+		/** Template for the container (e.g. a div) surrounding the gallery entries. */
+		public static final String sTplGalleryContainer = "tplGalleryContainer.txt";
+		
+		/** Template for an image page showing the image in larger size */
+		public static final String sTplImagepage = "tplImagepage.txt";
+		
+		/** Template for the in-text link to the reference note
+		 * @see Constants.Template_References */
+		public static final String sTplCiteRef = "tplCiteRef.txt";
+		/** Template for the reference note at the bottom of the page
+		 * @see Constants.Template_References */
+		public static final String sTplCiteNote = "tplCiteNote.txt";
+		
+		/** Template for $$code blocks$$ 
+		 * @see Constants.Template_Blocks */ 
+		public static final String sTplCode = "tplCode.txt";
+		
+		/** Template for the whole page
+		 * @see Constants.Template_Page */
+		public static final String sTplPage = "tplPage.txt";
+
+		/** Template for the Table of Contents */
+		public static final String sTplTOC = "tplTOC.txt";
+		
+		/** Contains a list of files to copy */
+		public static final String sStyleResources = "resources.txt";
+		
+		/** Template for recursion warnings */
+		public static final String srecursionTemplateName = "tplRecursion.txt";
+	}
+	
+	/**
+	 * Arguments available for the $$code$$ shorthand's template. See {@link WikiFormattings}.
+	 */
 	public static final class Template_Blocks {
 		public static final String isBlock = "isBlock";
 		public static final String text = "text";
@@ -207,12 +251,18 @@ public final class Constants {
 		public static final String style = "style";
 	}
 	
+	/** 
+	 * Arguments available for the gallery container template. See {@link Template_Images} for arguments
+	 * available for gallery entry templates.
+	 */
 	public static final class Template_Gallery {
+		/** Unique ID of this gallery */
 		public static final String id = "id";
+		/** Galleries are numbered on each page; This property contains the gallery number. */
 		public static final String number = "number";
 	}
 
-	/** Arguments available for image templates */
+	/** Arguments available for image templates (i.e. image and gallery entries). See {@link WikiImages}. */
 	public static final class Template_Images {
 
 		/** Clear before and after (insert clear=both) to put it on a new line */
@@ -253,7 +303,7 @@ public final class Constants {
 		public static final String id = "id";
 		/** Image caption */
 		public static final String caption = "caption";
-		/** Alternative description (if the image cannot be displayed). @since wiki2xhtml 4.0 */
+		/** Alternative description (if the image cannot be displayed). */
 		public static final String alt = "alt";
 		
 		/** Number of the image on the current page */
@@ -270,7 +320,7 @@ public final class Constants {
 		/** Long description of the image */
 		public static final String longDesc = "longdesc";
 		
-		/** To comment out a gallery entry */
+		/** To comment out a gallery entry. Lines starting with this prefix are ignored. */
 		public static final String galleryComment = "//";
 
 	}
@@ -283,6 +333,7 @@ public final class Constants {
 		public static final String sourcePage = "sourcePage";
 	}
 	
+	/** Template for the final page. See {@link PageTemplate}. */
 	public static final class Template_Page {
 		public static final String h1 = "h1";
 		public static final String homelink = "homelink";
@@ -296,6 +347,7 @@ public final class Constants {
 		public static final String author = "author";
 	}
 	
+	/** Template for handling {@link WikiReferences} */
 	public static final class Template_References {
 		/** Reference text */
 		public static final String text = "text";
@@ -314,6 +366,7 @@ public final class Constants {
 		
 	}
 	
+	/** Template for the Table of Contents. See {@link WikiTOC}. */
 	public static final class Template_TOC {
 		public static final String isBlock = "isBlock";
 		public static final String level = "level";
@@ -391,8 +444,11 @@ public final class Constants {
 
 //		public static final String splitPageNav = "{{$SplitPageNav}}";
 		
+		/** wiki2xhtml version used for generating the page */
 		public static final String version = "{{$Version}}";
-		public static final String pagename = "{{$Pagename}}"; // TODO Doc {{$Pagename}}
+		/** Name of the current page */
+		public static final String pagename = "{{$Pagename}}";
+		/** wiki2xhtml with a link to the project page and the version number */ 
 		public static final String wiki2xhtml = "{{$wiki2xhtml}}";
 
 		public static final class Title {
@@ -400,12 +456,7 @@ public final class Constants {
 			/** If this tag occurs in the page title, it will be replaced by the project title.
 			 * @see Generators#title(src.project.file.WikiFile, String) */
 			public static final String titleTag = "%s";
-			public static final String pageTag = "%p";
-			
-			/** @since wiki2xhtml 3.4 */
-			public static final String imgCaption = "%caption";
-			public static final String imgName = "%name";
-			public static final String imgPath = "%path";
+//			public static final String pageTag = "%p";
 
 		}
 
