@@ -34,6 +34,7 @@ public class PTM {
 	public static enum PTMObjects {
 		Text,
 		Function,
+		FunctionDebug,
 		FunctionIf,
 		FunctionIfeq,
 		FunctionIfvalexists,

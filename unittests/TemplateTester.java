@@ -101,6 +101,12 @@ public class TemplateTester extends junit.framework.TestCase {
 		// No assertion required. If recursion is not detected, this method will just fail.
 	}
 	
+	@Test
+	public void testDebugOutput() throws Exception {
+		// This is a simple check that merely tests if the debug function has been processed.
+		assertTrue(p("{{#debug:list}}", "{{:%s|one|two}}").contains("Debug information"));
+	}
+	
 	
 	static final String p(String tpl, String txt) throws IOException, RecursionException {
 		File f = File.createTempFile("tpl", ".txt");
