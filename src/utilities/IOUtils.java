@@ -82,7 +82,10 @@ public class IOUtils {
 				e.printStackTrace();
 			}
 		} else {
-			System.out.printf("Resources file (%s) does not exist, not copying additional files.\n", resourcesFile.getAbsolutePath());
+			System.out.printf("Resources file (%s) does not exist, not copying additional files.\n" +
+					"\tYou can add files and directories to copy with «+ file» or exclude them with «- file», " +
+					"one per line.\n" +
+					"\tSee also: http://www.samba.org/ftp/rsync/rsync.html, INCLUDE/EXCLUDE PATTERN RULES \n", resourcesFile.getAbsolutePath());
 		}
 		
 		return worked;
