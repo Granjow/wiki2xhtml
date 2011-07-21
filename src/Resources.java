@@ -4,7 +4,7 @@ import java.util.regex.Pattern;
 
 
 /*
- *   Copyright (C) 2007-2010 Simon Eugster <granjow@users.sf.net>
+ *   Copyright (C) 2007-2011 Simon Eugster <granjow@users.sf.net>
 
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -28,14 +28,27 @@ public class Resources {
 
 	public final static String[][] entities = {{"&amp;", "&"}, {"%20", " "}};
 
-	public static final String[] tagsBlockW3 = new String[] {"p", "h1", "h2", "h3", "h4", "h5", "h6", "ul", "ol",
-			"pre", "dl", "div", "noscript", "blockquote", "form", "hr", "table", "fieldset", "address"
+	public static final String[] tagsBlockW3 = new String[] {"p", "h1", "h2", "h3", "h4", "h5", "h6", "ul", "ol"
+			, "pre", "dl", "div", "noscript", "blockquote", "form", "hr", "table", "fieldset", "address"
+			// HTML5 (Correctness unchecked)
+			, "section", "article", "aside", "hgroup", "header", "footer", "nav", "figure", "figcaption"
+			, "video", "audio", "source", "track", "mark", "progress", "meter", "time", "ruby", "rt", "rp"
+			, "bdi", "wbr", "canvas", "command", "details", "datalist", "keygen", "output"
 															};
-	public static final String[] tagsBlockNoParagraphsInside = new String[] {"gallery", "nowiki", "div", "h1", "h2", "h3", "h4", "h5", "h6",
-			"ul", "ol", "pre", "dl", "noscript", "blockquote", "form", "table", "fieldset", "address", "code", "\\?"
+	public static final String[] tagsBlockNoParagraphsInside = new String[] {"gallery", "nowiki", "div", "h1", "h2", "h3", "h4", "h5", "h6"
+			, "ul", "ol", "pre", "dl", "noscript", "blockquote", "form", "table", "fieldset", "address", "code", "\\?"
+			// HTML5
+			, "section", "article", "aside", "hgroup", "header", "footer", "nav", "figure", "figcaption"
+			, "video", "audio", "source", "track", "mark", "progress", "meter", "time", "ruby", "rt", "rp"
+			, "bdi", "wbr", "canvas", "command", "details", "datalist", "keygen", "output"
 																			};
-	public static final String[] tagsBlockAll = new String[] {"p", "gallery", "div", "h1", "h2", "h3", "h4", "h5", "h6",
-			"ul", "ol", "pre", "dl", "noscript", "blockquote", "form", "table", "fieldset", "address", "references", "toc",
+	public static final String[] tagsBlockAll = new String[] {"p", "gallery", "div", "h1", "h2", "h3", "h4", "h5", "h6"
+			, "ul", "ol", "pre", "dl", "noscript", "blockquote", "form", "table", "fieldset", "address"
+			, "references", "toc"
+			// HTML5
+			, "section", "article", "aside", "hgroup", "header", "footer", "nav", "figure", "figcaption"
+			, "video", "audio", "source", "track", "mark", "progress", "meter", "time", "ruby", "rt", "rp"
+			, "bdi", "wbr", "canvas", "command", "details", "datalist", "keygen", "output"
 															 };
 
 	static String ulClose = "</ul>\n", ulOpen = "<ul>";
