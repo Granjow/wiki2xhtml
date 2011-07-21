@@ -5,6 +5,7 @@ import java.util.regex.Pattern;
 import src.Constants.Checkers;
 import src.Constants.Preparsers;
 import src.project.settings.ImageProperties;
+import src.project.settings.PageSettingsReader;
 import src.project.settings.Settings.Checker;
 import src.project.settings.Settings.ValuePreparser;
 
@@ -21,6 +22,7 @@ public final class ResProjectSettings {
 	/**
 	 * <p>This settings can be applied to either a page or the whole project, with {@code {{Name:Arguments}}}. </p>
 	 * <p>Example: {@code {{Thumbnails:images-sea/thumbs/%f}}}</p>
+	 * <p>The settings are read out in the {@link PageSettingsReader}.</p>
 	 */
 	public static enum SettingsE {
 		/** Meta data: Author */			author ("Author"),
@@ -188,9 +190,6 @@ public final class ResProjectSettings {
 			public static final char separator = ':';
 			public static final String arg = separator + "([^}]+)";
 			public static final String argSize = separator + "(\\d+(?:%|px))";
-			
-			/** For namespaces: If namespace w is defined, then the w: in the name of a link to w:Somewhere will be cut off */
-			public static final String argCut = "|cut";
 	
 			public static final class Args {
 				// Standard arguments

@@ -31,6 +31,12 @@ public class LinkTester extends junit.framework.TestCase {
 	}
 	
 	@Test
+	public void testMailto() throws IOException {
+		assertEquals("<a href=\"mailto:example@example.org\" class=\"internal\">example@example.org</a>", p("[[mailto:example@example.org]]"));
+		assertEquals("<a href=\"mailto:example@example.org\" class=\"internal\">Example address</a>", p("[[mailto:example@example.org|Example address]]"));
+	}
+	
+	@Test
 	public void testArguments() throws IOException {
 		assertEquals("<a href=\"this-File.php?query=bla\" class=\"internal\">this-File.php?query=bla</a>", p("[[" + TestObject.thisFile() + "?query=bla]]"));
 		assertEquals("<strong class=\"selflink\">this-File.php?query=bla</strong>", p("[[" + TestObject.thisFile() + "?query=bla|disable]]"));

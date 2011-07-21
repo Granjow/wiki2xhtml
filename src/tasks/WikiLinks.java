@@ -26,7 +26,7 @@ import java.util.regex.Pattern;
 import src.Statistics;
 import src.argumentHandler.*;
 import src.project.file.WikiFile;
-import src.resources.ResProjectSettings.Settings;
+import src.resources.ResProjectSettings.SettingsE;
 import src.tasks.Tasks.Task;
 
 import static src.Constants.Links.LinksE;
@@ -34,7 +34,16 @@ import static src.resources.RegExpressions.RELink;
 
 
 /**
- * Inserts links (external and internal ones).
+ * <p>Inserts links (external and internal ones).</p>
+ * <p><code>[[index.html Internal link]]<br/>
+ * [http://example.org External link]</code></p>
+ * <h3>Namespaces</h3>
+ * <p>It is possible to abbreviate links by adding a namespace via the property {@link SettingsE#namespace}. Example:</p>
+ * <p><code>{{Namespace:w=http://en.wikipedia.org/wiki/%s}}<br/>{{Namespace:w:de=http://de.wikipedia.org/wiki/%s|cut}}<br/>
+ * [[w:Main_page]]<br/>
+ * [[w:de:Hauptseite]]</code></p>
+ * <p>This will make the first link go to the main page of the English Wikipedia, the second one to the German Wikipedia. 
+ * The additional <code>cut</code> argument involves that the link name shows <em>Hauptseite</em> and not <em>w:de:Hauptseite</em>.</p>
  */
 public class WikiLinks extends WikiTask {
 	
@@ -51,8 +60,7 @@ public class WikiLinks extends WikiTask {
 		StringBuffer out;
 		Matcher m;
 		int last;
-		short counter = 0;
-
+		
 		for (Pattern p : new Pattern[] {RELink.linkExternalWikitype, RELink.linkExternalUri, RELink.linkExternalUriShortened, 
 				RELink.linkInternalShort, RELink.linkInternalDescPipe, RELink.linkInternalDescSpace}) {
 			in = file.getContent();
@@ -63,7 +71,6 @@ public class WikiLinks extends WikiTask {
 				out.append(in.subSequence(last, m.start()));
 				last = m.end();
 				out.append(link(m.group(1), m.group(2), file.internalName(), file.getNamespaces()));
-				counter++;
 			}
 			if (last > 0) {
 				// Content has changed; append rest
@@ -244,10 +251,15 @@ public class WikiLinks extends WikiTask {
 
 	
 	/**
-	 * Represents a namespace that can be applied to links.
+	 * <p>Represents a namespace (like w for http://en.wikipedia.org/wiki/%s) that can be applied to links.</p>
+	 * <p>Namespace names will be cut away if the argument {@link NamespaceObject#cut} is set
+	 * (see {@link NamespaceObject#NamespaceObject(String, String)}.</p>
 	 * @since wiki2xhtml 3.4
 	 */
 	public static final class NamespaceObject {
+
+		/** For namespaces: If namespace w is defined, then the w: in the name of a link to w:Somewhere will be cut off */
+		public static final String argCut = "|cut";
 		
 		private static final char sep = ':';
 		
@@ -255,11 +267,23 @@ public class WikiLinks extends WikiTask {
 		private String value;
 		private boolean cut = false;
 		
+		/** Creates a list of default namespace objects like <code>mailto:</code> */
+		public static ArrayList<NamespaceObject> defaultNamespaces() {
+			ArrayList<NamespaceObject> list = new ArrayList<WikiLinks.NamespaceObject>();
+			list.add(new NamespaceObject("mailto", "mailto:%s" + argCut));
+			return list;
+		}
+		
+		/**
+		 * @param key Namespace key
+		 * @param value Value; The %s will be replaced by the link target. If the value
+		 * ends with {@link #argCut}, the namespace name will be cut off from the visible link name.
+		 */
 		public NamespaceObject(String key, String value) {
 			this.key = key;
-			if (value.endsWith(Settings.argCut)) {
+			if (value.endsWith(argCut)) {
 				cut = true;
-				this.value = value.substring(0, value.length() - Settings.argCut.length());
+				this.value = value.substring(0, value.length() - argCut.length());
 			} else {
 				this.value = value;
 			}

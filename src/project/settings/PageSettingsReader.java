@@ -5,6 +5,10 @@ import java.util.regex.Pattern;
 
 import src.resources.ResProjectSettings.SettingsE;
 
+
+/**
+ * <p>Reads the {@link SettingsE} from pages or the common page.</p>
+ */
 public class PageSettingsReader  {
 
 	private final SettingsReader<SettingsE, String> reader;

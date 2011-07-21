@@ -34,6 +34,7 @@ import src.project.settings.PageSettings;
 import src.ptm.PTMState;
 import src.resources.ResProjectSettings.SettingsE;
 import src.resources.ResProjectSettings.SettingsLocalE;
+import src.tasks.WikiLinks;
 import src.tasks.WikiPreparser;
 import src.tasks.WikiTask;
 import src.tasks.Tasks.Task;
@@ -175,10 +176,17 @@ public abstract class WikiFile {
 		return nr;
 	}
 	
+	/**
+	 * Returns a list of namespaces (default ones from {@link NamespaceObject#defaultNamespaces()}
+	 * plus custom ones set with {@link SettingsE#namespace}). For the usage see {@link WikiLinks}.
+	 */
 	public final ArrayList<NamespaceObject> getNamespaces() {
 		
 		// Put all namespaces into linkNamespaces if it hasn't been initialized yet
 		if (linkNamespaces.size() == 0) {
+			// Add some default namespaces
+			linkNamespaces.addAll(NamespaceObject.defaultNamespaces());
+			
 			StringBuilder allNamespaces = new StringBuilder();
 			
 			if (project != null && project.isPropertySet(SettingsE.namespace)) {
