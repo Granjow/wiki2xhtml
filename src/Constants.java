@@ -240,15 +240,10 @@ public final class Constants {
 	 * Arguments available for the $$code$$ shorthand's template. See {@link WikiFormattings}.
 	 */
 	public static final class Template_Blocks {
+		/** <code>true</code> if this is a code block and not inline code */
 		public static final String isBlock = "isBlock";
+		/** The text given */
 		public static final String text = "text";
-		/** Additional tag parameters (style="..." e.g.) */
-		public static final String args = "args";
-		/** Additional class=".." definitions, without the class= (class names only) */
-		public static final String classes = "classes";
-		/** Additional style="..." definitions extracted from the arguments.
-		 * Also for being used like <code>style="color: #444; {{{style|}}}"</code> in the template. */
-		public static final String style = "style";
 	}
 	
 	/** 

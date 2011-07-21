@@ -5,6 +5,9 @@ import src.Constants.Wiki2xhtml;
 import src.project.file.WikiFile;
 import src.tasks.Tasks.Task;
 
+/**
+ * Inserts some {@link Tags} like wiki2xhtml's version number
+ */
 public class WikiTags extends WikiTask {
 
 	public WikiTask nextTask() {

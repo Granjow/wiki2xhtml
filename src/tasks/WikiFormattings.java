@@ -32,20 +32,25 @@ import src.ptm.PTMRootNode;
 import src.ptm.PTMState;
 import src.resources.RegExpressions;
 import src.tasks.Tasks.Task;
-import src.utilities.Tuple;
 
 /**
  * <p>Handles {@code ''italic text''}, {@code '''bold text'''}, and {@code $$code$$}.</p>
- * <p>Code uses the template defined in {@link Templates}. Additional arguments can be passed
- * to this shorthand (which is not as powerful as an ordinary template) with:</p>
- * <p>{@code $$((arguments))text$$}</p>
- * <p>{@code style=} and {@code class=} arguments are extracted from the arguments and delivered in the 
- * parameters defined in {@link Template_Blocks}. To distinguish between an inline code section and a 
- * code block as a searate paragraph, for the latter the following syntax can be used:</p>
- * <p><code> $$((args)<br/>
+ * <h3>Code</h3>
+ * <p>The template defined in {@link Templates} is used for this code block (and can be overridden,
+ * as always, by putting your own file with this name in your base or style directory).</p>
+ * <p>This is a simplified version of a real template and therefore less powerful with argument passing
+ * regarding nested arguments. Arguments are separated by a <code>|</code>. Always. Here is a usage example
+ * for some inline code:</p>
+ * <p>{@code $$((figcaption=An HTML5 caption|id=sampleBlock))text$$}</p>
+ * <p>or, as code block (this will set the {@link Template_Blocks#isBlock} argument to "true"):</p>
+ * <p><code> $$((figcaption=An HTML5 caption|id=sampleBlock))<br/>
  * text<br/>
  * $$</code></p>
- * <p>This sets {@link Template_Blocks#isBlock} to "true".</p>
+ * <p>The HTML5 template might look like this:</p>
+ * <p><code>&lt;figure class="code{{#if:{{{isBlock|}}}| block}}"{{#if:{{{id|}}}| id="{{{id}}}"}}&gt;<br/>
+ * &lt;figcaption&gt;{{{figcaption|}}}&lt;/figcaption&gt;<br/>
+ * {{{text}}}<br/>
+ * &lt;/figure&gt;</code></p>
  */
 public class WikiFormattings extends WikiTask {
 
@@ -136,7 +141,6 @@ public class WikiFormattings extends WikiTask {
 		return out;
 	}
 	
-	//TODO Doc removed functions, arguments
 	public static final StringBuffer makeCode(final WikiFile file, final StringBuffer input) {
 
 		Statistics.getInstance().sw.timeFormattingCode.continueTime();
@@ -152,11 +156,8 @@ public class WikiFormattings extends WikiTask {
 		
 		StringBuffer in = input;
 		StringBuffer out = new StringBuffer();
-		StringTuple tuple;
 		String s;
 		String args;
-		String argClass;
-		String argStyle;
 
 		PTMState sigma;
 		
@@ -174,25 +175,14 @@ public class WikiFormattings extends WikiTask {
 			while (m.find()) {
 				out.append(in.substring(last, m.start()));
 				
-				args = (m.group(2) != null ? " " + m.group(2).trim() : "");
-				if (args.length() > 0) {
-					tuple = extractClassArgs(args);
-					argClass = tuple.k();
-					args = tuple.v();
-					tuple = extractStyleArgs(args);
-					argStyle = tuple.k();
-					args = tuple.v().trim();
-					args = " " + args;
-				} else {
-					argClass = "";
-					argStyle = "";
-				}
-				
+				args = (m.group(2) != null ? m.group(2).trim() : "");
+
 				sigma = new PTMState()
-					.b(Template_Blocks.args, args)
-					.b(Template_Blocks.classes, argClass)
-					.b(Template_Blocks.style, argStyle)
 					.b(Template_Blocks.text, m.group(3));
+				
+				if (args.length() > 0) {
+					sigma.bindValuesFromList(args.split("\\|"));
+				}
 				
 				out.append(m.group(1));
 				
@@ -227,26 +217,15 @@ public class WikiFormattings extends WikiTask {
 			while (m.find()) {
 				out.append(in.substring(last, m.start()));
 				
-				args = (m.group(1) != null ? " " + m.group(1).trim() : "");
-				if (args.length() > 0) {
-					tuple = extractClassArgs(args);
-					argClass = tuple.k();
-					args = tuple.v();
-					tuple = extractStyleArgs(args);
-					argStyle = tuple.k();
-					args = tuple.v().trim();
-					args = " " + args;
-				} else {
-					argClass = "";
-					argStyle = "";
-				}
+				args = (m.group(1) != null ? m.group(1).trim() : "");
 				
 				sigma = new PTMState()
-					.b(Template_Blocks.args, args)
-					.b(Template_Blocks.classes, argClass)
-					.b(Template_Blocks.style, argStyle)
 					.b(Template_Blocks.text, m.group(2))
 					.b(Template_Blocks.isBlock, "true");
+				
+				if (args.length() > 0) {
+					sigma.bindValuesFromList(args.split("\\|"));
+				}
 				
 				try {
 					s = new PTMRootNode(template, sigma).evaluate();
@@ -267,42 +246,6 @@ public class WikiFormattings extends WikiTask {
 		Statistics.getInstance().sw.timeFormattingCode.stop();
 
 		return out;
-	}
-	
-	private static final Pattern pClassArgs = Pattern.compile("class=\"([^\"]+)\"");
-	/**
-	 * @return <ClassArgs, RemainingArgs>
-	 */
-	private static final StringTuple extractClassArgs(String args) {
-		Matcher m = pClassArgs.matcher(args);
-		if (m.find()) {
-			String classArgs = m.group(1);
-			String rest = args.substring(0, m.start()) + args.substring(m.end());
-			return new StringTuple(classArgs, rest);
-		} else {
-			return new StringTuple("", args); 
-		}
-	}
-	
-	private static final Pattern pStyleArgs = Pattern.compile("style=\"([^\"]+)\"");
-	/**
-	 * @return <ClassArgs, RemainingArgs>
-	 */
-	private static final StringTuple extractStyleArgs(String args) {
-		Matcher m = pStyleArgs.matcher(args);
-		if (m.find()) {
-			String classArgs = m.group(1);
-			String rest = args.substring(0, m.start()) + args.substring(m.end());
-			return new StringTuple(classArgs, rest);
-		} else {
-			return new StringTuple("", args); 
-		}
-	}
-	
-	private static final class StringTuple extends Tuple<String, String> {
-		public StringTuple(String classArgs, String rest) {
-			super(classArgs, rest);
-		}
 	}
 
 }

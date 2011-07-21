@@ -28,15 +28,15 @@ public class FormattingsTester extends TestCase {
 	@Test
 	public void testCode() throws IOException {
 		assertEquals("<code>code here</code>", p("$$code here$$"));
-		assertEquals("<code id=\"myID\">code here</code>", p("$$((id=\"myID\"))code here$$"));
-		assertEquals("<code style=\"w: 100px;h: 200px;\" class=\"c d\" >code here</code>", p2("$$((style=\"h: 200px;\" class=\"d\"))code here$$"));
+		assertEquals("<code id=\"myID\">code here</code>", p("$$((args= id=\"myID\"))code here$$"));
+		assertEquals("<code style=\"w: 100px;h: 200px;\" class=\"c d\">code here</code>", p2("$$((style=h: 200px;|classes=d))code here$$"));
 	}
 	
 	@Test
 	public void testCodeBlock() throws IOException {
 		assertEquals("true<code>code here</code>", p("$$\ncode here\n$$"));
 		assertEquals("no$$code here$$", p("no$$\ncode here\n$$"));
-		assertEquals("true<code style=\"w: 100px;h: 200px;\" class=\"c d\" >code here</code>", p2("$$((style=\"h: 200px;\" class=\"d\"))\ncode here\n$$"));
+		assertEquals("true<code style=\"w: 100px;h: 200px;\" class=\"c d\">code here</code>", p2("$$((style=h: 200px;|classes=d))\ncode here\n$$"));
 	}
 	
 	@Test
