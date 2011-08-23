@@ -116,7 +116,7 @@ public class WikiProject {
 			String menuLocation = (String)argsParser.getOptionValue(argsParser.menuFile, false);
 			if (menuLocation != null) {
 				try {
-					FallbackFile fMenu = locate(menuLocation);
+					FallbackFile fMenu = locateDefault(menuLocation, null);
 					String content = fMenu.getContent().toString();
 					wikiMenu = new WikiMenu();
 					wikiMenu.readNewMenu(content);
@@ -138,7 +138,7 @@ public class WikiProject {
 		if (f.validLocation()) {
 			fileMap.put(nextID(), f);
 		} else {
-			throw new InvalidLocationException(String.format("File %s is not at a valid location.", f.name));
+			throw new InvalidLocationException(String.format("File %s is not at a valid location.", f.projectAbsoluteName()));
 		}
 	}
 	
@@ -208,12 +208,17 @@ public class WikiProject {
 		
 		// Make the project
 		for (WikiFile f : fileMap.values()) {
-			if (incremental && fileChangesMap.queryUnchanged(f.name)) {
+			if (incremental && fileChangesMap.queryUnchanged(f.projectAbsoluteName())) {
 				System.out.printf("Skipping %s (unchanged).\n", f.internalName());
 			} else {
 				f.parse();
 				f.write();
-				fileChangesMap.update(f.name);
+				fileChangesMap.update(f.projectAbsoluteName());
+				if (f.includedFiles.size() > 0) {
+					for (String s : f.includedFiles) {
+						fileChangesMap.updateInclude(f.projectAbsoluteName(), s);
+					}
+				}
 				if (f.sitemap) {
 					sitemap.add(f.internalName());
 				}
@@ -236,9 +241,18 @@ public class WikiProject {
 	
 	
 	
-	/** See {@link FallbackFile} */
-	public final FallbackFile locate(String filename) throws NoFileFoundException {
-		return new FallbackFile(filename, this);
+	/** 
+	 * @param requester Can be <code>null</code>. Denotes the file requesting <code>filename</code>. Should be set
+	 * if <code>filename</code> is included by <code>requester</code>, i.e. if <code>requester</code> needs to be 
+	 * updated if <code>filename</code> changes.
+	 * @see {@link FallbackFile} 
+	 */
+	public final FallbackFile locateDefault(String filename, WikiFile requester) throws NoFileFoundException {
+		FallbackFile ff = new FallbackFile(filename, this);
+		if (requester != null && ff.file() != null) {
+			requester.includedFiles.add(ff.file().getAbsolutePath().substring(requester.project.projectDirectory().getAbsolutePath().length()+1));
+		}
+		return ff;
 	}
 	/** See {@link FallbackFile} */
 	public final FallbackFile locate(String filename, Vector<FallbackLocation> fallback) throws NoFileFoundException {

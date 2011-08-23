@@ -31,6 +31,8 @@ public class PTMRootNode extends PTMNode {
 	private Vector<File> templateDirectories = null;
 	public Vector<File> templateDirectories() { return templateDirectories; }
 	public void setTemplateDirectories(Vector<File> dir) { templateDirectories = dir; }
+	
+	public Vector<String> includedTemplates = null;
 
 	public PTMRootNode(StringBuffer content, PTMState sigma) {
 		this(content, sigma, null);
@@ -47,6 +49,8 @@ public class PTMRootNode extends PTMNode {
 		if (sigma != null) { this.sigma = sigma; }
 		
 		if (allowedChildNodes == null) { allowedChildNodes = PTM.defaultChildren; }
+		
+		includedTemplates = new Vector<String>();
 		
 		@SuppressWarnings("unused")
 		long start = System.currentTimeMillis();

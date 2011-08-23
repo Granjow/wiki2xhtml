@@ -212,9 +212,9 @@ public class WikiLinks extends WikiTask {
 
 				name = m.group(1);
 				if (checklist.contains(name)) {
-					System.err.printf("Warning: Duplicate mark (%s) in %s! Mark removed.\n", name, file.name);
+					System.err.printf("Warning: Duplicate mark (%s) in %s! Mark removed.\n", name, file.projectAbsoluteName());
 				} else if (name.indexOf("\"") >= 0) {
-					System.err.printf("Warning: Mark must not contain such a character (%s) in %s! Mark removed.\n", "\"", file.name);
+					System.err.printf("Warning: Mark must not contain such a character (%s) in %s! Mark removed.\n", "\"", file.projectAbsoluteName());
 				} else {
 					checklist.add(name);
 					out.append("<a id=\"");

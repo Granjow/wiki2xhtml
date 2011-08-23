@@ -83,7 +83,7 @@ public class PageTemplate extends WikiTask {
 		// Apply the template
 		PTMRootNode root = new PTMRootNode(content, sigma);
 		Vector<File> dirVec = new Vector<File>();
-		File currentDir = new File(file.name).getAbsoluteFile().getParentFile();
+		File currentDir = new File(file.projectAbsoluteName()).getAbsoluteFile().getParentFile();
 		if (currentDir.exists()) {
 			dirVec.add(currentDir);
 		}

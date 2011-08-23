@@ -13,7 +13,7 @@ public class WikiStyle {
 	}
 	
 	public final FallbackFile pageTemplate() throws NoFileFoundException {
-		return _project.locate(Constants.Templates.sTplPage);
+		return _project.locateDefault(Constants.Templates.sTplPage, null);
 	}
 	
 	public final void copyFiles() {

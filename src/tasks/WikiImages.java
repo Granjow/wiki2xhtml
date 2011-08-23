@@ -171,7 +171,7 @@ public class WikiImages extends WikiTask {
 		boolean generated = false;
 		if (!"true".equals(prop.argumentBindings.resolve(Template_Images.direct))) {
 			try {
-				FallbackFile template = prop.parentFile.project.locate(Constants.Templates.sTplImagepage);
+				FallbackFile template = prop.parentFile.project.locateDefault(Constants.Templates.sTplImagepage, prop.parentFile);
 				
 				if (prop.nextIP != null) {
 					String s = prop.nextIP.getImagepagePath();

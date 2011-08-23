@@ -89,7 +89,7 @@ public class WikiReferences extends WikiTask {
 			
 			StringBuffer template = null;
 			try {
-				template = file.project.locate(Constants.Templates.sTplCiteRef).getContent();
+				template = file.project.locateDefault(Constants.Templates.sTplCiteRef, file).getContent();
 			} catch (Exception e) {
 				template = new StringBuffer(e.getMessage());
 			}

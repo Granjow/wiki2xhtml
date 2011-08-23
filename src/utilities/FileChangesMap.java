@@ -22,7 +22,9 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.io.StringReader;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import src.GenerateID;
@@ -32,13 +34,18 @@ import src.GenerateID;
  * <p>Detects changes on files based on their MD5 hash.</p>
  * <p>Contains {@code <Name, Hash>} entries.</p>
  */
-public class FileChangesMap extends HashMap<String, String> {
-	private static final long serialVersionUID = 1L;
+public class FileChangesMap {
+	private HashMap<String, String> map;
+	private HashMap<String, List<String>> includes;
 
 	public FileChangesMap(File baseDir, String hashFile) {
 		assert baseDir != null;
+		
 		_baseDir = baseDir;
 		_hashFile = new File(baseDir.getAbsolutePath() + File.separator + hashFile);
+		map = new HashMap<String, String>();
+		includes = new HashMap<String, List<String>>();
+		
 		read();
 	}
 	
@@ -49,11 +56,23 @@ public class FileChangesMap extends HashMap<String, String> {
 	public boolean queryUnchanged(final String filename) {
 		boolean unchanged = false;
 		
-		if (containsKey(filename)) {
+		if (map.containsKey(filename)) {
 			try {
 				String hash = hash(filename);
-				String oldHash = get(filename);
+				String oldHash = map.get(filename);
 				unchanged = hash.equals(oldHash);
+				
+				if (unchanged) {
+					if (includes.containsKey(filename)) {
+						for (String s : includes.get(filename)) {
+							if (!queryUnchanged(s)) {
+								unchanged = false;
+								System.out.println("         Included file " + s + " has changed.");
+								break;
+							}
+						}
+					}
+				}
 			} catch (IOException e) { e.printStackTrace(); }
 		}
 		
@@ -65,18 +84,45 @@ public class FileChangesMap extends HashMap<String, String> {
 	 */
 	public void update(final String filename) throws IOException {
 		String hash = hash(filename);
-		put(filename, hash);
+		map.put(filename, hash);
 		write();
 	}
 	
+	
 	/**
-	 * File format: HASH1 NAME1\nHASH2 NAME2\n
+	 * Updates the hashes and bindings for a file including another one (templates) and writes the updated hash file.
+	 */
+	public void updateInclude(final String filename, final String includedFile) throws IOException {
+		if (!includes.containsKey(filename)) {
+			ArrayList<String> list = new ArrayList<String>();
+			includes.put(filename, list);
+		}
+		
+		if (!includes.get(filename).contains(includedFile)) {
+			includes.get(filename).add(includedFile);
+			System.err.printf("\t%s includes %s\n", filename, includedFile);
+		}
+		update(filename);
+		update(includedFile);
+	}
+	
+	/**
+	 * <p>File format: </p>
+	 * <code>HASH1 NAME1\n<br/>
+	 * HASH2 NAME2\n<br/>
+	 * NAME1 USES NAME2\n
+	 * </code>
 	 * @throws IOException
 	 */
 	private void write() throws IOException {
 		StringBuffer sb = new StringBuffer();
-		for (Map.Entry<String, String> e : entrySet()) {
+		for (Map.Entry<String, String> e : map.entrySet()) {
 			sb.append(String.format("%s %s\n", e.getValue(), e.getKey()));
+		}
+		for (Map.Entry<String, List<String>> e : includes.entrySet()) {
+			for (String s : e.getValue()) {
+				sb.append(String.format("%s USES %s\n", e.getKey(), s));
+			}
 		}
 		IOWrite_Stats.writeString(_hashFile, sb.toString(), false);
 	}
@@ -87,11 +133,25 @@ public class FileChangesMap extends HashMap<String, String> {
 			BufferedReader br = new BufferedReader(new StringReader(sb.toString()));
 			String line;
 			while ((line = br.readLine()) != null) {
-				String[] entry = line.split(" ", 2);
-				if (entry.length < 2) { continue; }
-				if (entry[0].trim().length() <= 0) { continue; }
-				if (entry[1].trim().length() <= 0) { continue; }
-				put(entry[1], entry[0]);
+				
+				String[] entry;
+				if ( (entry = line.split(" USES ")).length == 2 ) {
+					entry[0] = entry[0].trim();
+					entry[1] = entry[1].trim();
+					if (entry[0].length() <= 0 || entry[1].length() <= 0) { continue; }
+					if (includes.containsKey(entry[0]) && !includes.get(entry[0]).contains(entry[1])) {
+						includes.get(entry[0]).add(entry[1]);
+					} else {
+						ArrayList<String> list = new ArrayList<String>();
+						list.add(entry[1]);
+						includes.put(entry[0], list);
+					}
+				} else if ( (entry = line.split(" ")).length == 2 ) {
+					entry[0] = entry[0].trim();
+					entry[1] = entry[1].trim();
+					if (entry[0].length() <= 0 || entry[1].length() <= 0) { continue; }
+					map.put(entry[1], entry[0]);
+				}
 			}
 		} catch (IOException e) {
 //			System.out.println("Hash file does not exist: " + _hashFile.getAbsolutePath());

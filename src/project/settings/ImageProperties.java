@@ -169,10 +169,10 @@ public class ImageProperties extends StringSettings<EImageProperties> {
 	public FallbackFile getTemplate() throws NoFileFoundException {
 		switch (context) {
 		case gallery:
-			return parentFile.project.locate(Constants.Templates.sTplGallery);
+			return parentFile.project.locateDefault(Constants.Templates.sTplGallery, parentFile);
 		case thumb:
 		default:
-			return parentFile.project.locate(Constants.Templates.sTplImage);
+			return parentFile.project.locateDefault(Constants.Templates.sTplImage, parentFile);
 		}
 	}
 	

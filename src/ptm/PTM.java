@@ -90,9 +90,11 @@ public class PTM {
 		return f;
 	}
 	
-	/** Applies all parser functions to the input string 
-	 * @throws RecursionException */
-	public static final String parse(StringBuffer content, File templateDirectory) throws RecursionException {
+	/**
+	 * Applies all parser functions to the input string
+	 * @param includedFiles_out Will be filled with the included templates if not <code>null</code>.
+	 */
+	public static final String parse(StringBuffer content, File templateDirectory, List<String> includedFiles_out) throws RecursionException {
 		if (content.length() > 0) {
 			PTMRootNode root = new PTMRootNode(content, new PTMState());
 			
@@ -102,7 +104,12 @@ public class PTM {
 			}
 			root.setTemplateDirectories(dirVec);
 			
-			return root.evaluate();
+			String evaluated = root.evaluate();
+			if (includedFiles_out != null) {
+				includedFiles_out.addAll(root.includedTemplates);
+			}
+			
+			return evaluated;
 		} else {
 			return new String();
 		}

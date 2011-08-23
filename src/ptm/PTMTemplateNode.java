@@ -123,6 +123,11 @@ public class PTMTemplateNode extends PTMNode {
 			template = new File(childTree.get(0).evaluate().trim());
 		}
 		
+		if (template.exists()) {
+//			System.out.println("Adding included template: " + template.getName());
+			root.includedTemplates.add(template.getName());
+		}
+		
 		try {
 			// Read the template from the template file and parse it.
 			// Detect recursion via maximum depth (a calls b, b calls a).

@@ -28,7 +28,7 @@ public class XMLNames extends WikiTask {
 			out.append(in.substring(last, first));
 			second = in.indexOf(Resources.xmlNameClose);
 			if (second < 0) {
-				System.err.printf("No closing tag found for %s in %s!\n", Resources.xmlNameOpen, file.name);
+				System.err.printf("No closing tag found for %s in %s!\n", Resources.xmlNameOpen, file.projectAbsoluteName());
 				break;
 			}
 			out.append(XMLTools.getXmlNameChar(in.substring(first + Resources.xmlNameOpen.length(), second)));

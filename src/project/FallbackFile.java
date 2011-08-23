@@ -83,12 +83,22 @@ public class FallbackFile {
 			file = null;
 			switch (location) {
 			case system:
-				if (file == null) file = new File(filename);
+				if (file == null) {
+					file = new File(filename);
+//					System.err.printf("Checking %s ... exists? %s\n", file.getAbsolutePath(), file.exists());
+				}
 				// Fall through
 			case project:
-				if (file == null) file = new File(project.projectDirectory().getAbsolutePath() + File.separatorChar + filename);
+				if (file == null) {
+					file = new File(project.projectDirectory().getAbsolutePath() + File.separatorChar + filename);
+//					System.err.printf("Checking %s ... exists? %s\n", file.getAbsolutePath(), file.exists());
+				}
+				
 			case style:
-				if (file == null) file = new File(project.styleDirectory().getAbsolutePath() + File.separatorChar + filename); 
+				if (file == null) {
+					file = new File(project.styleDirectory().getAbsolutePath() + File.separatorChar + filename); 
+//					System.err.printf("Checking %s ... exists? %s\n", file.getAbsolutePath(), file.exists());
+				}
 				if (file.exists()) {
 					this.location = location;
 					this.url = null;
@@ -105,6 +115,7 @@ public class FallbackFile {
 					this.url = url;
 					this.file = null;
 					this.location = location;
+//					System.err.printf("Found %s in the .jar file.", filename);
 					break forLoop;
 				}
 				break;

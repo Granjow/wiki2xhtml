@@ -83,7 +83,7 @@ public class WikiTOC extends WikiTask {
 				
 				StringBuffer tplTOC = null;
 				try {
-					FallbackFile ff = file.project.locate(Constants.Templates.sTplTOC);
+					FallbackFile ff = file.project.locateDefault(Constants.Templates.sTplTOC, file);
 					tplTOC = ff.getContent();
 				} catch (Exception e) {
 					tplTOC = new StringBuffer(e.getMessage());

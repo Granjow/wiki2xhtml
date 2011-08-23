@@ -128,7 +128,7 @@ public class GalleryProperties extends StringSettings<EGalleryProperties> {
 		
 		sigma.bind(EGalleryProperties.content.property, content.toString());
 		
-		FallbackFile template = parentFile.project.locate(Constants.Templates.sTplGalleryContainer);
+		FallbackFile template = parentFile.project.locateDefault(Constants.Templates.sTplGalleryContainer, parentFile);
 		
 		PTMRootNode root = new PTMRootNode(template.getContent(), sigma);
 		try {

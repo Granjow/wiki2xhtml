@@ -27,7 +27,7 @@ public class Testground {
 	
 	private void sampleProject() throws IOException, InvalidLocationException, InvalidOutputDirectoryLocationException {
 		WikiProject proj = new WikiProject(".");
-		FallbackFile ff = proj.locate("tplImage.txt");
+		FallbackFile ff = proj.locateDefault("tplImage.txt", null);
 		System.out.println(ff.pathInfo());
 		
 		File f = new File("/tmp/w2xtest/index.txt");

@@ -54,13 +54,13 @@ public abstract class WikiFile {
 	/** <p>Filename of this file.<br/>
 	 * Usually denotes the file name relative to the project directory. Some examples:</p>
 	 * <ul>
-	 * <li><code>project/filename1</code> with <code>filename1 = index.txt</code><li>
+	 * <li><code>project/filename1</code> with <code>filename1 = index.txt</code></li>
 	 * <li><code>project/filename2</code> with <code>filename2 = pics/summer2010.txt</code></li>
 	 * </ul> 
 	 * @see #internalName()
-	 * @deprecated until correct usage of internalName is checked.
+	 * @see #projectAbsoluteName()
 	 */
-	public final String name;
+	private final String name;
 	private String internalName;
 	/**
 	 * <p>An internal representation of the output file name, which always uses / as file separator
@@ -68,6 +68,7 @@ public abstract class WikiFile {
 	 * @see #name
 	 */
 	public String internalName() { return internalName; }
+	public String projectAbsoluteName() { return name; }
 	public final Generators generators;
 	
 	public final WikiProject project;
@@ -78,6 +79,7 @@ public abstract class WikiFile {
 	private PageSettings pageSettings = new PageSettings();
 	private LocalSettings localSettings = new LocalSettings();
 	
+	public ArrayList<String> includedFiles = new ArrayList<String>();
 	public ArrayList<String> nowiki = new ArrayList<String>();
 	/** @see #addImageProperties(ImageProperties) for inserting new properties! */
 	public ArrayList<ImageProperties> imagePropertiesList = new ArrayList<ImageProperties>();
