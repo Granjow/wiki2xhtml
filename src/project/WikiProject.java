@@ -232,6 +232,7 @@ public class WikiProject {
 		if (menuFile != null) {
 			fileChangesMap.update(pathMenuFile);
 		}
+		fileChangesMap.updateIncludedHashes();
 		
 		sitemap.write();
 		

@@ -37,6 +37,8 @@ import src.GenerateID;
 public class FileChangesMap {
 	private HashMap<String, String> map;
 	private HashMap<String, List<String>> includes;
+	
+	private List<String> includesToUpdate;
 
 	public FileChangesMap(File baseDir, String hashFile) {
 		assert baseDir != null;
@@ -45,6 +47,7 @@ public class FileChangesMap {
 		_hashFile = new File(baseDir.getAbsolutePath() + File.separator + hashFile);
 		map = new HashMap<String, String>();
 		includes = new HashMap<String, List<String>>();
+		includesToUpdate = new ArrayList<String>();
 		
 		read();
 	}
@@ -102,8 +105,19 @@ public class FileChangesMap {
 			includes.get(filename).add(includedFile);
 			System.err.printf("\t%s includes %s\n", filename, includedFile);
 		}
-		update(filename);
-		update(includedFile);
+		
+		if (!includesToUpdate.contains(includedFile)) {
+			includesToUpdate.add(includedFile);
+			System.err.println(includedFile + " needs to be updated.");
+		}
+	}
+	
+	public void updateIncludedHashes() throws IOException {
+		for (String s : includesToUpdate) {
+			System.err.printf("Updating %s.\n", s);
+			update(s);
+		}
+		includesToUpdate.clear();
 	}
 	
 	/**

@@ -59,10 +59,14 @@ public class HashTester extends junit.framework.TestCase {
 
 		FileChangesMap map = new FileChangesMap(dir, ".hashes");
 		map.updateInclude(f1.getName(), f2.getName());
+		map.update(f1.getName());
+		assertFalse(map.queryUnchanged(f1.getName()));
+		map.updateIncludedHashes();
 		assertTrue(map.queryUnchanged(f1.getName()));
 		
 		map = new FileChangesMap(dir, ".hashes");
 		assertTrue(map.queryUnchanged(f1.getName()));
+		System.gc();
 	}
 	
 	@Test
@@ -75,6 +79,8 @@ public class HashTester extends junit.framework.TestCase {
 
 		FileChangesMap map = new FileChangesMap(dir, ".hashes");
 		map.updateInclude(f1.getName(), f2.getName());
+		map.update(f1.getName());
+		map.updateIncludedHashes();
 		assertTrue(map.queryUnchanged(f1.getName()));
 		
 		map = new FileChangesMap(dir, ".hashes");
@@ -85,6 +91,8 @@ public class HashTester extends junit.framework.TestCase {
 		IOWrite.writeString(f2, "Changed again", false);
 		assertFalse(map.queryUnchanged(f1.getName()));
 		map.updateInclude(f1.getName(), f2.getName());
+		assertFalse(map.queryUnchanged(f1.getName()));
+		map.updateIncludedHashes();
 		assertTrue(map.queryUnchanged(f1.getName()));
 		
 	}
