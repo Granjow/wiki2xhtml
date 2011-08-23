@@ -84,6 +84,7 @@ public class WikiLists extends WikiTask {
 			for (String line = b.readLine(); line != null; line = b.readLine()) {
 				
 				if (line.trim().length() == 0) {
+					out.append(line + "\n");
 					continue;
 				}
 				

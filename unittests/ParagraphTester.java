@@ -50,6 +50,7 @@ public class ParagraphTester extends junit.framework.TestCase {
 
 		void fillTasks(VirtualWikiFile vf) {
 			vf.addTask(Task.Paragraphs);
+			vf.addTask(Task.Lists);
 		}
 
 		public String real() throws IOException {
