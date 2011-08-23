@@ -108,7 +108,6 @@ public class FileChangesMap {
 		
 		if (!includesToUpdate.contains(includedFile)) {
 			includesToUpdate.add(includedFile);
-			System.err.println(includedFile + " needs to be updated.");
 		}
 	}
 	

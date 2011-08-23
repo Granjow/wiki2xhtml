@@ -82,6 +82,11 @@ public class WikiLists extends WikiTask {
 			int i;
 
 			for (String line = b.readLine(); line != null; line = b.readLine()) {
+				
+				if (line.trim().length() == 0) {
+					continue;
+				}
+				
 				i = 0; // free variable
 
 				oldList = newList.clone();

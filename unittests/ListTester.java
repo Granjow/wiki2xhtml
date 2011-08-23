@@ -42,6 +42,11 @@ public class ListTester extends junit.framework.TestCase {
 		assertEquals("<dl><dt>Def</dt></dl>.", p2(";Def\n."));
 	}
 	
+	@Test
+	public void testNewline() throws IOException {
+		assertEquals("<ul><li>bla</li><li>blah</li></ul>.", p2("*bla\n\n*blah\n."));
+	}
+	
 
 	private static final String p(String testString) throws IOException {
 		TestObject to = new TestObject(testString, "");
