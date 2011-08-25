@@ -30,6 +30,13 @@ public class TemplateTester extends junit.framework.TestCase {
 	}
 	
 	@Test
+	public void testPTMArgumentNames() throws IOException, RecursionException {
+		assertEquals("Argument <===Title===>.", p("Argument <{{{1}}}>.", "{{:%s|1====Title===}}"));
+		assertEquals("Argument <===Title===>.", p("Argument <{{{1}}}>.", "{{:%s|===Title===}}"));
+		assertEquals("Argument < \t===Title===>.", p("Argument <{{{1}}}>.", "{{:%s| \t===Title===}}"));
+	}
+	
+	@Test
 	public void testResolving() throws Exception {
 		assertEquals("one", p("{{{1}}}", "{{:%s|one}}"));
 //		assertEquals("{{{1}}}", p("{{{1}}}", "{{:%s}}")); // Really desired?

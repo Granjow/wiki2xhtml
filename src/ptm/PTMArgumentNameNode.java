@@ -24,11 +24,27 @@ public class PTMArgumentNameNode extends PTMNode {
 
 	public PTMArgumentNameNode(StringBuffer content, int beginIndex, PTMNode parent, PTMRootNode root, final AbortFunction abortParent) throws ObjectNotApplicableException {
 		super(content, beginIndex, parent, root);
-		AbortFunction abort = new AbortFunction() {
-			public boolean abort(StringBuffer content, int index) {
-				return abortParent.abort(content, index) || content.charAt(index) == separator;
+		
+		AbortFunction abort;
+		
+		{
+			// Check if this name starts with the separator already (i.e. would be empty)
+			int i = 0;
+			while (("" + content.charAt(beginIndex+i)).matches("\\s")) { i++; }
+			
+			if (content.charAt(beginIndex+i) == separator) {
+				// Name would be empty: Treat it as a value, i.e. abort when the parent would abort.
+				abort = abortParent;
+			} else {
+				// Does not start with the separator. Abort either when the parent would (scope ended)
+				// or when the expression hits a separator (name ends).
+				abort = new AbortFunction() {
+					public boolean abort(StringBuffer content, int index) {
+						return abortParent.abort(content, index) || content.charAt(index) == separator;
+					}
+				};
 			}
-		};
+		}
 		endIndex = beginIndex;
 		
 		boolean nameEndReached = false;
