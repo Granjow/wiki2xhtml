@@ -6,6 +6,7 @@
   <property name="build.sources" value="${build}/sources"/>
   <property name="build.classes" value="${build}/bin"/>
   <property name="build.libs" value="${build.classes}/lib"/>
+  <property name="build.version" value="${ant.java.version}"/>
   <property name="path.test" value="unittests"/>
   <property name="path.gettext" value="./lib/gettext-commons-0.9.6.jar"/>
   <property name="path.junit" value="./lib/junit-4.8.2.jar"/>
@@ -90,12 +91,16 @@
   <target name="build-sources" depends="copy-sources" description="Builds wiki2xhtml">
     <mkdir dir="${build.classes}"/>
     
+    <echo message="Building for Java ${build.version}."/>
+    <echo message="Target version can be changed with -Dbuild.version=1.6 (or accordingly)."/>
     <javac srcdir="${build.sources}"
            destdir="${build.classes}"
            debug="true"
            deprecation="false"
            optimize="true"
            includeAntRuntime="false"
+	   target="${build.version}"
+	   source="${build.version}"
            >
       <classpath refid="classpath"/>
     </javac>
