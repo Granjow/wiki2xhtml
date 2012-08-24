@@ -40,6 +40,7 @@ public class Wiki2xhtmlArgsParser extends CmdLineParser {
 	public final Option commonFile;
 	
 	public final Option sitemap;
+	public final Option additionalBlockTags;
 	
 	
 	public final Option incremental;
@@ -72,6 +73,9 @@ public class Wiki2xhtmlArgsParser extends CmdLineParser {
 		
 		sitemap = addStringOption("sitemap");
 		sitemap.setDescription("Creates a site map with the given prefix as URL.");
+		
+		additionalBlockTags = addStringOption('5', "blocktags");
+		additionalBlockTags.setDescription("Add additional (e.g. custom) HTML5 block tags where wiki2xhtml should not add paragraphs."); 
 		
 		incremental = addBooleanOption("incremental");
 		incremental.setDescription("Re-builds changed files only. Attention: Does not consider template files; don't use this flag if templates have changed.");
@@ -155,6 +159,11 @@ public class Wiki2xhtmlArgsParser extends CmdLineParser {
 		// Style output directory
 		project.setStyleOutputDirectory((String)getOptionValue(styleOutputDir, project.styleOutputDirectoryName(), false));
 		o.println("Style output directory is: " + project.styleOutputDirectory().getAbsolutePath());
+		
+		// Additional HTML5 block tags
+		if ((String)getOptionValue(additionalBlockTags, false) != null) {
+			Resources.addHtml5BlockTags((String)getOptionValue(additionalBlockTags, false));
+		}
 		
 		
 		// Input files

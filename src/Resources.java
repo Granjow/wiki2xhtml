@@ -1,5 +1,6 @@
 package src;
 
+import java.util.ArrayList;
 import java.util.regex.Pattern;
 
 
@@ -28,28 +29,55 @@ public class Resources {
 
 	public final static String[][] entities = {{"&amp;", "&"}, {"%20", " "}};
 
-	public static final String[] tagsBlockW3 = new String[] {"p", "h1", "h2", "h3", "h4", "h5", "h6", "ul", "ol"
-			, "pre", "dl", "div", "noscript", "blockquote", "form", "hr", "table", "fieldset", "address"
-			// HTML5 (Correctness unchecked)
-			, "section", "article", "aside", "hgroup", "header", "footer", "nav", "figure", "figcaption"
-			, "video", "audio", "source", "track", "mark", "progress", "meter", "time", "ruby", "rt", "rp"
-			, "bdi", "wbr", "canvas", "command", "details", "datalist", "keygen", "output"
-															};
-	public static final String[] tagsBlockNoParagraphsInside = new String[] {"gallery", "nowiki", "div", "h1", "h2", "h3", "h4", "h5", "h6"
-			, "ul", "ol", "pre", "dl", "noscript", "blockquote", "form", "table", "fieldset", "address", "code", "\\?"
-			// HTML5
-			, "section", "article", "aside", "hgroup", "header", "footer", "nav", "figure", "figcaption"
-			, "video", "audio", "source", "track", "mark", "progress", "meter", "time", "ruby", "rt", "rp"
-			, "bdi", "wbr", "canvas", "command", "details", "datalist", "keygen", "output"
-																			};
-	public static final String[] tagsBlockAll = new String[] {"p", "gallery", "div", "h1", "h2", "h3", "h4", "h5", "h6"
-			, "ul", "ol", "pre", "dl", "noscript", "blockquote", "form", "table", "fieldset", "address"
-			, "references", "toc"
-			// HTML5
-			, "section", "article", "aside", "hgroup", "header", "footer", "nav", "figure", "figcaption"
-			, "video", "audio", "source", "track", "mark", "progress", "meter", "time", "ruby", "rt", "rp"
-			, "bdi", "wbr", "canvas", "command", "details", "datalist", "keygen", "output"
-															 };
+
+	private static ArrayList<String> tagsBlockNoParagraphsInsideList = new ArrayList<String>();
+	private static ArrayList<String> tagsBlockAdditionalList = new ArrayList<String>();
+	
+	public static void addHtml5BlockTags(String csv) {
+		String[] tags = csv.split(",");
+		for (int i = 0; i < tags.length; i++) {
+			if (!tagsBlockNoParagraphsInsideList.contains(tags[i])) {
+				tagsBlockNoParagraphsInsideList.add(tags[i]);
+			}
+			if (!tagsBlockAdditionalList.contains(tags[i])) {
+				tagsBlockAdditionalList.add(tags[i]);
+			}
+		}
+	}
+	
+	static {
+		String[] list;
+		
+		list = new String[] {"gallery", "nowiki", "div", "h1", "h2", "h3", "h4", "h5", "h6"
+				, "ul", "ol", "pre", "dl", "noscript", "blockquote", "form", "table", "fieldset", "address", "code", "\\?"
+				// HTML5
+				, "section", "article", "aside", "hgroup", "header", "footer", "menu", "nav", "figure", "figcaption"
+				, "video", "audio", "source", "track", "mark", "progress", "meter", "time", "ruby", "rt", "rp"
+				, "bdi", "wbr", "canvas", "command", "details", "datalist", "keygen", "output"
+			};
+		for (String s : list) {
+			tagsBlockNoParagraphsInsideList.add(s);
+		}
+		
+		list = new String[] {"p", "gallery", "div", "h1", "h2", "h3", "h4", "h5", "h6"
+				, "ul", "ol", "pre", "dl", "noscript", "blockquote", "form", "table", "fieldset", "address"
+				, "references", "toc"
+				// HTML5
+				, "section", "article", "aside", "hgroup", "header", "footer", "menu", "nav", "figure", "figcaption"
+				, "video", "audio", "source", "track", "mark", "progress", "meter", "time", "ruby", "rt", "rp"
+				, "bdi", "wbr", "canvas", "command", "details", "datalist", "keygen", "output"
+			};
+		for (String s : list) {
+			tagsBlockAdditionalList.add(s);
+		}
+	}
+
+	public static final String[] tagsBlockNoParagraphsInside() {
+		return tagsBlockNoParagraphsInsideList.toArray(new String[] {});
+	}
+	public static final String[] tagsBlockAll() {
+		return tagsBlockAdditionalList.toArray(new String[] {});
+	}
 
 	static String ulClose = "</ul>\n", ulOpen = "<ul>";
 	static String ulOpenHalf = "<ul";

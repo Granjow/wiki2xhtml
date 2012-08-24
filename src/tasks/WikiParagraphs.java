@@ -51,7 +51,7 @@ public class WikiParagraphs extends WikiTask {
 		Statistics.getInstance().sw.timeInsertingParagraphs.continueTime();
 
 		/* Temporarily remove blocks which may not contain a paragraph */
-		for (String remove : Resources.tagsBlockNoParagraphsInside) {
+		for (String remove : Resources.tagsBlockNoParagraphsInside()) {
 
 //			Placeholder p = new Placeholder("<" + remove + "[^>]*>", "</" + remove + ">");	// Not working! Matches <p*> and therefore also <param> (not desired).
 			// Either <p> or <p\s[^>]*>.
@@ -67,7 +67,7 @@ public class WikiParagraphs extends WikiTask {
 
 		/* Create block pattern (no paragraphs allowed there) */
 		StringBuffer blocks = new StringBuffer();
-		for (String s : Resources.tagsBlockAll) {
+		for (String s : Resources.tagsBlockAll()) {
 			blocks.append(s + "|");
 		}
 		
