@@ -43,9 +43,9 @@ import src.utilities.IOWrite_Stats;
  * <p>Inserts images.</p>
  * <p>Example invocation:</p>
  * <p><code>[[Image:path/to/image.jpg|thumb|left|Description]]</code></p>
- * <p>User-defined arguments (can be used in the template for the image page, see {@link Templates})
- * <em>must</em> start with <code>var</code>; See the function {@link ImageProperties#readArguments(String)}. Example:</p>
- * <p><code>[[Image:mainGUI.png|varCustomID=mainGUI]]</code></p>
+ * <p>User-defined arguments can be used in the template for the image page, see {@link Templates} and
+ * the function {@link ImageProperties#readArguments(String)}. Example:</p>
+ * <p><code>[[Image:mainGUI.png|customID=mainGUI]]</code></p>
  * <p>(This could e.g. be used together with an according image template that checks this name and uses its value 
  * as ID if it is given. Simplifies linking to an image from a different place without having to insert the (often changing)
  * generated image ID.)</p> 

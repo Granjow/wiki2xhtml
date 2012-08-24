@@ -260,12 +260,14 @@ public final class Constants {
 	/** Arguments available for image templates (i.e. image and gallery entries). See {@link WikiImages}. */
 	public static final class Template_Images {
 
-		/** Clear before and after (insert clear=both) to put it on a new line */
+		/** Clear before and after (insert clear=both) to put it on a new line
+		 * @deprecated */
 		public static final String clear = "clear";
 		/** <p>Don't create an image page, link directly.</p>
 		 * <p>contains {@code "true"} (i.e. is not empty) if this property is set.</p> */
 		public static final String direct = "direct";
-		/** Do not scale the image on the image page. */
+		/** Do not scale the image on the image page.
+		 * @deprecated */
 		public static final String noscale = "noscale";
 		/**This argument has two different meanings (which don't imply each other): 
 		 * <ol>
@@ -292,13 +294,16 @@ public final class Constants {
 		/** Horizontal position. Can be one of left, center, and right. */
 		public static final String location = "location";
 		/** Argument: Custom link to use.<br/>
-		 * Template: Target link.*/
+		 * Template: Target link.
+		 * @deprecated */
 		public static final String link = "link";
 		/** Image ID for linking/anchoring */
 		public static final String id = "id";
-		/** Image caption */
+		/** Image caption
+		 * @deprecated */
 		public static final String caption = "caption";
-		/** Alternative description (if the image cannot be displayed). */
+		/** Alternative description (if the image cannot be displayed).
+		 * @deprecated */
 		public static final String alt = "alt";
 		
 		/** Number of the image on the current page */
@@ -312,7 +317,8 @@ public final class Constants {
 		 * <p>Available in the template only.</p> */
 		public static final String rowEnd = "rowEnd";
 
-		/** Long description of the image */
+		/** Long description of the image
+		 * @deprecated */
 		public static final String longDesc = "longdesc";
 		
 		/** To comment out a gallery entry. Lines starting with this prefix are ignored. */

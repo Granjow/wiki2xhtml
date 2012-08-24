@@ -269,7 +269,7 @@ public class ImageProperties extends StringSettings<EImageProperties> {
 		Matcher mSize;
 		Pattern pImage = Pattern.compile("(?i)(?:image|bild|file):(.+)");
 		Matcher mPImage;
-		Pattern pUserVar = Pattern.compile("(?i)(var[a-z0-9_-]+)=(.+)");
+		Pattern pUserVar = Pattern.compile("(?i)([a-z][a-z0-9_-]+)=(.+)");
 		Matcher mUserVar;
 		Pattern pCaption = Pattern.compile("(?i)(?:c(?:aption)?=)(.+)");
 		Matcher mCaption;
@@ -332,57 +332,34 @@ public class ImageProperties extends StringSettings<EImageProperties> {
 				continue;
 			}
 			
+
+			// Deprecated //
+			if (ai.fullArg.startsWith(Constants.Template_Images.link + SEP)) {
+				parentFile.project.deprecator.removedForTemplateMessage("link= argument for Images", parentFile);
+			}
+			if (ai.fullArg.startsWith(Constants.Template_Images.alt + SEP)) {
+				parentFile.project.deprecator.removedForTemplateMessage("alt= argument for Images", parentFile);
+			}
+			mCaption = pCaption.matcher(ai.fullArg);
+			if (mCaption.matches()) {
+				parentFile.project.deprecator.removedForTemplateMessage("caption= and c= argument for Images", parentFile);
+			}
+			if (Constants.Template_Images.noscale.equals(ai.fullArg)) {
+				parentFile.project.deprecator.removedForTemplateMessage("noscale argument for Images", parentFile);
+			}
+			if (Constants.Template_Images.clear.equals(ai.fullArg)) {
+				parentFile.project.deprecator.removedForTemplateMessage("clear argument for Images", parentFile);
+			}
+			if (ai.fullArg.startsWith("ld" + SEP)) {
+				parentFile.project.deprecator.removedForTemplateMessage("ld= argument for Images", parentFile);
+			}
+			
 			mUserVar = pUserVar.matcher(ai.fullArg);
 			if (mUserVar.find()) {
 				// varSomething=myVar
 				// User defined parameter. The parameter name has to start with «var» and may only contain
 				// valid characters; See pUserVar.
 				props.put(mUserVar.group(1), mUserVar.group(2));
-				continue;
-			}
-			
-			if (ai.fullArg.startsWith(Constants.Template_Images.link + SEP)) {
-				// link=<custom link>
-				props.put(Constants.Template_Images.link, ai.fullArg.substring(Constants.Template_Images.link.length()+1));
-				continue;
-			}
-			
-			if (ai.fullArg.startsWith(Constants.Template_Images.alt + SEP)) {
-				// alt=<alternative text>
-				props.put(Constants.Template_Images.alt, ai.fullArg.substring(Constants.Template_Images.alt.length()+1));
-				continue;
-			}
-			
-			mCaption = pCaption.matcher(ai.fullArg);
-			if (mCaption.matches()) {
-				// caption=<image caption>
-				props.put(Constants.Template_Images.caption, mCaption.group(1));
-				continue;
-			}
-
-
-			if (Constants.Template_Images.noscale.equals(ai.fullArg)) {
-				// noscale
-				// Indicates that the image should not be scaled on the image page
-				props.put(Constants.Template_Images.noscale, "true");
-				continue;
-			}
-			
-			if (Constants.Template_Images.clear.equals(ai.fullArg)) {
-				// clear
-				props.put(Constants.Template_Images.clear, "both");
-				continue;
-			}
-			if (ai.fullArg.startsWith(Constants.Template_Images.clear + SEP)) {
-				// clear=<left/right>
-				props.put(Constants.Template_Images.clear, ai.fullArg.substring(Constants.Template_Images.clear.length() + 1));
-				continue;
-			}
-			
-
-			if (ai.fullArg.startsWith("ld" + SEP)) {
-				// ld=<long description>
-				props.put(Constants.Template_Images.longDesc, ai.fullArg.substring(3));
 				continue;
 			}
 

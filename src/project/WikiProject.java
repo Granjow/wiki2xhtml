@@ -25,6 +25,7 @@ import java.util.Vector;
 import src.Constants;
 import src.Statistics;
 import src.Wiki2xhtmlArgsParser;
+import src.commentator.Deprecator;
 import src.project.FallbackFile.FallbackLocation;
 import src.project.FallbackFile.NoFileFoundException;
 import src.project.file.VirtualWikiFile;
@@ -237,6 +238,8 @@ public class WikiProject {
 		sitemap.write();
 		
 		Statistics.getInstance().sw.timeOverall.stop();
+		
+		deprecator.printAllWarnings();
 		System.out.printf("Total time taken: %s\n", Statistics.getInstance().sw.timeOverall.getStoppedTimeString());
 	}
 	
@@ -302,6 +305,8 @@ public class WikiProject {
 	public Sitemap sitemap = null;
 	public WikiStyle wikiStyle = new WikiStyle(this);
 	public Wiki2xhtmlArgsParser argsParser = null;
+	
+	public Deprecator deprecator = new Deprecator();
 	
 	// Settings
 	private Settings<SettingsE, String> projectSettings = new PageSettings();

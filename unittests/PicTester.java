@@ -84,8 +84,8 @@ public class PicTester extends junit.framework.TestCase {
 		final String template1 = "{{#if:{{{varUser1|}}}|u1={{{varUser1}}}}}";
 		assertEquals("u1=hello wiki!", p("[[Image:img.jpg|varUser1=hello wiki!]]", template1));
 		
-		final String template2 = "<a href=\"{{{path}}}\"{{#if:{{{varLinkArg|}}}| {{{varLinkArg}}}}}>img</a>";
-		assertEquals("<a href=\"img.jpg\" rel=\"shadowbox[abc]\">img</a>", p("[[Image:img.jpg|varLinkArg=rel=\"shadowbox[abc]\"]]", template2));
+		final String template2 = "<a href=\"{{{path}}}\"{{#if:{{{linkArg|}}}| {{{linkArg}}}}}>img</a>";
+		assertEquals("<a href=\"img.jpg\" rel=\"shadowbox[abc]\">img</a>", p("[[Image:img.jpg|linkArg=rel=\"shadowbox[abc]\"]]", template2));
 	}
 	
 	@Test
@@ -96,37 +96,11 @@ public class PicTester extends junit.framework.TestCase {
 	}
 	
 	@Test
-	public void testAlt() throws IOException {
-		final String template = "{{#if:{{{alt|}}}|alt={{{alt}}}}}";
-		assertEquals("alt=nothing", p("[[Image:img.jpg|alt=nothing]]", template));
-	}
-	
-	@Test
-	public void testSmall() throws IOException {
-		final String template = "{{#if:{{{noscale|}}}|true|false}}";
-		assertEquals("true", p("[[Image:img.jpg|noscale]]", template));
-		assertEquals("false", p("[[Image:img.jpg]]", template));
-	}
-	
-	@Test
-	public void testLongdesc() throws IOException {
-		final String template = "{{#if:{{{longdesc|}}}|ld:{{{longdesc}}}}}";
-		assertEquals("ld:Long description.", p("[[Image:img.jpg|ld=Long description.]]", template));
-	}
-	
-	@Test
 	public void testClear() throws IOException {
 		final String template = "{{#if:{{{clear|}}}|clear:{{{clear}}}}}";
-		assertEquals("clear:both", p("[[Image:img.jpg|clear]]", template));
+		assertEquals("clear:both", p("[[Image:img.jpg|clear=both]]", template));
 		assertEquals("clear:left", p("[[Image:img.jpg|clear=left]]", template));
 		assertEquals("clear:right", p("[[Image:img.jpg|clear=right]]", template));
-	}
-	
-	@Test
-	public void testCaption() throws IOException {
-		final String template = "{{#if:{{{caption|}}}|cap={{{caption}}}}}";
-		assertEquals("cap=image title", p("[[Image:img.jpg|caption=image title]]", template));
-		assertEquals("cap=image title", p("[[Image:img.jpg|c=image title]]", template));
 	}
 	
 	
