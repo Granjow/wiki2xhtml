@@ -96,6 +96,15 @@ public class PicTester extends junit.framework.TestCase {
 	}
 	
 	@Test
+	public void testLinks() throws IOException {
+		final String template = "{{#if:{{{text|}}}|text={{{text}}}}}";
+		assertEquals("text=this is a [[link]]", p("[[Image:img.jpg|this is a [[link]]]]", template));
+		assertEquals("text=The <a href=\"http://vimeo.com/10756036\" class=\"external\">Rusto Fat</a>.", 
+				pl("[[Image:rusto-fat.jpg|The <a href=\"http://vimeo.com/10756036\" class=\"external\">Rusto Fat</a>.]]", template));
+		
+	}
+	
+	@Test
 	public void testClear() throws IOException {
 		final String template = "{{#if:{{{clear|}}}|clear:{{{clear}}}}}";
 		assertEquals("clear:both", p("[[Image:img.jpg|clear=both]]", template));
@@ -117,22 +126,36 @@ public class PicTester extends junit.framework.TestCase {
 		to.writeFile("tplImage.txt", template);
 		return to.real();
 	}
+	private static final String pl(String testString, String template) throws IOException {
+		TestObject to = new TestObject(testString, "", true);
+		to.writeFile("tplImage.txt", template);
+		return to.real();
+	}
 	private static final String p(String testString) throws IOException {
 		final String template1 = "<img src=\"{{{path}}}\"/>";
 		return p(testString, template1);
 	}
 	
 	private static class TestObject extends unittests.TestObject {
+		
+		private final boolean withLinks;
 		public TestObject(String test, String result) throws IOException {
+			this(test, result, false);
+		}
+		public TestObject(String test, String result, boolean withLinks) throws IOException {
 			super(test, result);
+			this.withLinks = withLinks;
 		}
 
 		void fillTasks(VirtualWikiFile vf) {
 			vf.addTask(Task.Images);
+			if (withLinks) {
+				vf.addTask(Task.Links);
+			}
 		}
 
 		public String real() throws IOException {
-			return super.real().replace("\n", "").replace(" <", "<");
+			return super.real().replace("\n", "");
 		}
 	}
 	private static class TestObject2 extends TestObject {

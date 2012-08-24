@@ -269,7 +269,7 @@ public class ImageProperties extends StringSettings<EImageProperties> {
 		Matcher mSize;
 		Pattern pImage = Pattern.compile("(?i)(?:image|bild|file):(.+)");
 		Matcher mPImage;
-		Pattern pUserVar = Pattern.compile("(?i)([a-z][a-z0-9_-]+)=(.+)");
+		Pattern pUserVar = Pattern.compile("(?i)^([a-z][a-z0-9_-]*)=(.+)");
 		Matcher mUserVar;
 		Pattern pCaption = Pattern.compile("(?i)(?:c(?:aption)?=)(.+)");
 		Matcher mCaption;
@@ -356,7 +356,7 @@ public class ImageProperties extends StringSettings<EImageProperties> {
 			
 			mUserVar = pUserVar.matcher(ai.fullArg);
 			if (mUserVar.find()) {
-				// varSomething=myVar
+				// key=var
 				// User defined parameter. The parameter name has to start with «var» and may only contain
 				// valid characters; See pUserVar.
 				props.put(mUserVar.group(1), mUserVar.group(2));
