@@ -1,3 +1,5 @@
+Generate summary page with warnings (templates, syntax, etc.)
+
 TODO?
 Read CSS settings
 Parse templates in the page template? Move page template to the beginning?
@@ -19,14 +21,9 @@ de.wikipedia.org/wiki/Webtypografie
 utf-8 ...
 gui: style dir auwählbar
 
-later:
-doc: LAMP
-Eclipse: tptp
-
 doc:-> siehe changelog
 test: .jar alleine?
 leere zeile in codeblock wird zerrissen
-portabel/stick
 doc: templates
 tabellen: transponieren mit :{| ... |}?
 

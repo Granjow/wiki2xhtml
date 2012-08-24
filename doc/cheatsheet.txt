@@ -1,0 +1,48 @@
+{{H1:Cheatsheet for wiki2xhtml 4.0}}
+
+== Syntax overview ==
+
+=== Lists ===
+<table class="col2"><tbody><tr><td>
+
+;Definition item
+:Definition
+* Unordered
+# Ordered
+#* Subitem
+
+</td><td>
+
+$$
+<nowiki>
+;Definition item\\ 
+:Definition\\ 
+* Unordered\\ 
+# Ordered\\ 
+#* Subitem
+</nowiki>
+$$
+
+</td></tr></tbody></table>
+
+<table class="col2"><tbody><tr><td>
+
+;class="red"|Definition item
+:class="red"|Definition
+*class="red"|Unordered
+#class="red"|Ordered
+#* class="red"|Subitem
+
+</td><td>
+
+$$
+<nowiki>
+;class="red"|Definition item\\ 
+:class="red"|Definition\\ 
+*class="red"|Unordered\\ 
+#class="red"|Ordered\\ 
+#* class="red"|Subitem
+</nowiki>
+$$
+
+</td></tr></tbody></table>

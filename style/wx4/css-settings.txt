@@ -1,0 +1,2 @@
+{{GalleryImagesPerLine:3}}
+{{ThumbWidthImages:250}}

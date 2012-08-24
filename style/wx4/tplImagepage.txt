@@ -1,0 +1,33 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" 
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<head>
+  <title>{{{title|{{{path}}} }}}</title>
+  <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" type="text/css" media="screen, projection, tv" href="{{{back}}}style/style_image.css" />
+</head>
+<body>
+<div id="wrap">
+
+
+<div id="nav">
+{{#if:{{{prevPage}}}|<a href="{{{prevPage}}}">‹ prev</a>}}
+{{#if:{{{nextPage}}}|<a href="{{{nextPage}}}">next ›</a>}}
+<a href="{{{back}}}{{{sourcePage}}}#{{{id}}}">« back</a>
+<br />
+</div>
+
+<a href="{{{back}}}{{{path}}}" id="image">
+<span id="name"><h1>{{{caption}}}</h1></span>
+<img src="{{{back}}}{{{path}}}" />
+</a>
+
+<div id="desc">
+{{{text}}}
+</div>
+
+</div><!-- end wrap -->
+
+<!-- Created with wiki2xhtml {{$version}} -->
+<!-- {{$wiki2xhtml}} -->
+</body>
+</html>

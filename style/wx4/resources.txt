@@ -1,0 +1,5 @@
++ *.png
++ *.css
+- resources.txt
+- tpl*.txt
+- *~

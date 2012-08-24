@@ -1,0 +1,3 @@
+#!link_deactivate!link_strong
+* Home,index.html
+* Cheatsheet,cheatsheet.html

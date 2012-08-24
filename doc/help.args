@@ -1,3 +1,4 @@
-args=-s ../style/hd -o ../wiki2xhtml-help --sitemap=http://wiki2xhtml.sourceforge.net
+args=-s ../style/wx4 -o ../wiki2xhtml-help --sitemap=http://wiki2xhtml.sourceforge.net --menu=menu.txt
 
 index.txt
+cheatsheet.txt
