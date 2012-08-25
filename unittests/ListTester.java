@@ -39,6 +39,7 @@ public class ListTester extends junit.framework.TestCase {
 		assertEquals("<dl><dt>Def</dt></dl>", p2(";Def"));
 		assertEquals("<dl><dt>Def</dt><dd>Text</dd></dl>", p2(";Def\n:Text"));
 		assertEquals("<dl><dt>Def</dt><dd>Text</dd><dd>Text2</dd></dl>", p2(";Def\n:Text\n: Text2"));
+		assertEquals("<dl><dt>Def</dt><dd>Text</dd><dt>Def2</dt><dd>Text2</dd></dl>", p2(";Def\n:Text\n;Def2\n: Text2"));
 		assertEquals("<dl><dt>Def</dt></dl>.", p2(";Def\n."));
 	}
 	

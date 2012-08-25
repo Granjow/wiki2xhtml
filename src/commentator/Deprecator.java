@@ -21,7 +21,9 @@ public class Deprecator {
 	
 	public void printAllWarnings()
 	{
-		System.err.println("The following arguments are now UNSUPPORTED in wiki2xhtml and templates:\n" + allRemovedForTemplate);
+		if (allRemovedForTemplate.length() > 0) {
+			System.err.println("The following arguments are now UNSUPPORTED in wiki2xhtml and templates:\n" + allRemovedForTemplate);
+		}
 	}
 	
 

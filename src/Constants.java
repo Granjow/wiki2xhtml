@@ -79,12 +79,12 @@ public final class Constants {
 			String s = "$VERSION$";
 			if (s.startsWith("$")) {
 				// Hard-coded version number as fallback
-				s = "4.0rc4";
+				s = "4.0rc5";
 			}
 			versionNumber = s;
 			s = "$DATE$";
 			if (s.startsWith("$")) {
-				s = "Mar 2011";
+				s = "Aug 2012";
 			}
 			versionDate = s;
 		}
