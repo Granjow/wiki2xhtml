@@ -96,6 +96,29 @@ public class HashTester extends junit.framework.TestCase {
 		assertTrue(map.queryUnchanged(f1.getName()));
 		
 	}
+	
+	@Test
+	public void testStyleChanged() throws IOException {
+		File dir = buildTempDir();
+		File f1 = buildTempFile(dir);
+		File f2 = buildTempFile(dir);
+		File f3 = buildTempFile(dir);
+		IOWrite.writeString(f1, "Unchanged", false);
+		IOWrite.writeString(f2, "Unchanged", false);
+		IOWrite.writeString(f3, "Unchanged", false);
+
+		FileChangesMap map = new FileChangesMap(dir, ".hashes");
+		map.updateInclude(".", f1.getName());
+		map.update(f2.getName());
+		map.update(f3.getName());
+		map.updateIncludedHashes();
+		assertTrue(map.queryUnchanged(f2.getName()));
+		assertTrue(map.queryUnchanged(f3.getName()));
+		
+		IOWrite.writeString(f1, "Changed", false);
+		assertFalse(map.queryUnchanged(f2.getName()));
+		assertFalse(map.queryUnchanged(f3.getName()));
+	}
 
 	
 	private static final File buildTempFile(final File dir) throws IOException {

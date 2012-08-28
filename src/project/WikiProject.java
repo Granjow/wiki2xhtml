@@ -233,6 +233,9 @@ public class WikiProject {
 		if (menuFile != null) {
 			fileChangesMap.update(pathMenuFile);
 		}
+		if (wikiStyle.pageTemplate().pathInfo() != null) {
+			fileChangesMap.updateInclude(".", wikiStyle.pageTemplate().pathInfo());
+		}
 		fileChangesMap.updateIncludedHashes();
 		
 		sitemap.write();

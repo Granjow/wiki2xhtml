@@ -35,7 +35,9 @@ import src.GenerateID;
  * <p>Contains {@code <Name, Hash>} entries.</p>
  */
 public class FileChangesMap {
+	/** Files and their hash values */
 	private HashMap<String, String> map;
+	/** List of files included by one file */
 	private HashMap<String, List<String>> includes;
 	
 	private List<String> includesToUpdate;
@@ -57,7 +59,16 @@ public class FileChangesMap {
 	 * @return {@code false} if the file hash has changed.
 	 */
 	public boolean queryUnchanged(final String filename) {
+		return queryUnchanged(filename, true);
+	}
+	public boolean queryUnchanged(final String filename, boolean checkDir) {
 		boolean unchanged = false;
+		
+		if (checkDir) {
+			if (!queryDirUnchanged()) {
+				return false;
+			}
+		}
 		
 		if (map.containsKey(filename)) {
 			try {
@@ -68,7 +79,7 @@ public class FileChangesMap {
 				if (unchanged) {
 					if (includes.containsKey(filename)) {
 						for (String s : includes.get(filename)) {
-							if (!queryUnchanged(s)) {
+							if (!queryUnchanged(s, false)) {
 								unchanged = false;
 								System.out.println("         Included file " + s + " has changed.");
 								break;
@@ -79,6 +90,20 @@ public class FileChangesMap {
 			} catch (IOException e) { e.printStackTrace(); }
 		}
 		
+		return unchanged;
+	}
+	
+	private boolean queryDirUnchanged() {
+		boolean unchanged = true;
+		if (includes.containsKey(".")) {
+			for (String s : includes.get(".")) {
+				if (!queryUnchanged(s, false)) {
+					unchanged = false;
+					System.out.println("         Included file " + s + " has changed.");
+					break;
+				}
+			}
+		}
 		return unchanged;
 	}
 	
@@ -96,21 +121,25 @@ public class FileChangesMap {
 	 * Updates the hashes and bindings for a file including another one (templates) and writes the updated hash file.
 	 */
 	public void updateInclude(final String filename, final String includedFile) throws IOException {
+		// Add a new key if necessary
 		if (!includes.containsKey(filename)) {
 			ArrayList<String> list = new ArrayList<String>();
 			includes.put(filename, list);
 		}
 		
+		// Insert the included file into the key's list
 		if (!includes.get(filename).contains(includedFile)) {
 			includes.get(filename).add(includedFile);
 			System.err.printf("\t%s includes %s\n", filename, includedFile);
 		}
 		
+		// The hash needs to be updated
 		if (!includesToUpdate.contains(includedFile)) {
 			includesToUpdate.add(includedFile);
 		}
 	}
 	
+	/** Updates the hashes for the included files marked as updated via updateInclude. */
 	public void updateIncludedHashes() throws IOException {
 		for (String s : includesToUpdate) {
 			System.err.printf("Updating %s.\n", s);
@@ -176,7 +205,11 @@ public class FileChangesMap {
 	private final File _hashFile;
 	
 	private String hash(String filename) throws IOException {
-		return GenerateID.getMD5Hex(IORead_Stats.readSBuilder(new File(_baseDir.getAbsolutePath() + File.separator + filename)).toString(), "", true);
+		if (new File(_baseDir.getAbsolutePath() + File.separator + filename).exists()) {
+			return GenerateID.getMD5Hex(IORead_Stats.readSBuilder(new File(_baseDir.getAbsolutePath() + File.separator + filename)).toString(), "", true);
+		} else {
+			return GenerateID.getMD5Hex(IORead_Stats.readSBuilder(new File(filename)).toString(), "", true);			
+		}
 	}
 
 }
