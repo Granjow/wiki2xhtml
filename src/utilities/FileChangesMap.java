@@ -130,7 +130,7 @@ public class FileChangesMap {
 		// Insert the included file into the key's list
 		if (!includes.get(filename).contains(includedFile)) {
 			includes.get(filename).add(includedFile);
-			System.err.printf("\t%s includes %s\n", filename, includedFile);
+			//System.err.printf("\t%s includes %s\n", filename, includedFile);
 		}
 		
 		// The hash needs to be updated
@@ -142,7 +142,7 @@ public class FileChangesMap {
 	/** Updates the hashes for the included files marked as updated via updateInclude. */
 	public void updateIncludedHashes() throws IOException {
 		for (String s : includesToUpdate) {
-			System.err.printf("Updating %s.\n", s);
+			//System.err.printf("Updating %s.\n", s);
 			update(s);
 		}
 		includesToUpdate.clear();
