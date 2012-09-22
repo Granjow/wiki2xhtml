@@ -47,6 +47,8 @@ public class Wiki2xhtmlArgsParser extends CmdLineParser {
 	
 	public final Option showHelp;
 	public final Option showVersion;
+	
+	public final Option noWarnings;
 //	public final Option checkUpdate;
 
 //	public final Option lang;
@@ -85,6 +87,9 @@ public class Wiki2xhtmlArgsParser extends CmdLineParser {
 		
 		showVersion = addBooleanOption("version");
 		showVersion.setDescription("Display the wiki2xhtml version number");
+		
+		noWarnings = addBooleanOption("no-warnings");
+		noWarnings.setDescription("Do not display deprecation warnings");
 //		checkUpdate = addBooleanOption("www");
 	}
 	
@@ -128,6 +133,7 @@ public class Wiki2xhtmlArgsParser extends CmdLineParser {
 		
 		
 		project.argsParser = this;
+		project.showWarnings = !(Boolean)getOptionValue(noWarnings, new Boolean(false), false);
 		
 		
 		// Output directory

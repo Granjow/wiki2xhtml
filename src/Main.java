@@ -19,6 +19,7 @@ package src;
 
 
 import java.io.IOException;
+import java.util.Arrays;
 
 import src.project.WikiProject;
 import src.project.WikiProject.InvalidOutputDirectoryLocationException;
@@ -36,6 +37,7 @@ public class Main {
 		WikiProject project = null;
 		
 		project = new Wiki2xhtmlArgsParser().readArguments(project, args, null);
+		System.out.println("Arguments read in main: " + Arrays.toString(args));
 		assert project != null;
 		
 		if (project.fileCount() > 0) {

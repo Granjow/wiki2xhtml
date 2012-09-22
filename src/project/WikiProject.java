@@ -242,7 +242,9 @@ public class WikiProject {
 		
 		Statistics.getInstance().sw.timeOverall.stop();
 		
-		deprecator.printAllWarnings();
+		if (showWarnings) {
+			deprecator.printAllWarnings();
+		}
 		System.out.printf("Total time taken: %s\n", Statistics.getInstance().sw.timeOverall.getStoppedTimeString());
 	}
 	
@@ -309,6 +311,7 @@ public class WikiProject {
 	public WikiStyle wikiStyle = new WikiStyle(this);
 	public Wiki2xhtmlArgsParser argsParser = null;
 	
+	public boolean showWarnings = false;
 	public Deprecator deprecator = new Deprecator();
 	
 	// Settings
