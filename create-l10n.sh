@@ -1,3 +1,5 @@
+#!/bin/sh
+
 if [ -e /usr/lib/jvm/java-gcj-4.4/bin/javac ]
 then
     export JAVAC=/usr/lib/jvm/java-gcj-4.4/bin/javac

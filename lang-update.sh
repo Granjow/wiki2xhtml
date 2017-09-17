@@ -1,3 +1,5 @@
+#!/bin/sh
+
 xgettext -ktrc:1c,2 -ktrnc:1c,2,3 -ktr -kmarktr -ktrn:1,2 --from-code=UTF-8 -o l10n/po/keys.pot `find . -name "*.java" |grep "src/"`
 msgmerge -U l10n/po/de.po l10n/po/keys.pot
 msgmerge -U l10n/po/de_CH.po l10n/po/keys.pot

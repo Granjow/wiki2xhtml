@@ -1,3 +1,5 @@
+#!/bin/sh
+
 echo "Generating .po files ..."
 ./lang-update.sh
 echo "Generating l10n class files ..."
