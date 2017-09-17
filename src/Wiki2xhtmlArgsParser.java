@@ -175,6 +175,11 @@ public class Wiki2xhtmlArgsParser extends CmdLineParser {
 		// Input files
 		File f;
 		for (String s : getRemainingArgs()) {
+
+			if (s.length() == 0) {
+				System.out.println("Ignoring zero-length argument");
+				continue;
+			}
 			
 			if (s.endsWith(".args") && new File(s).exists()) {
 				// .args files do not need to be prefixed! Check without first.

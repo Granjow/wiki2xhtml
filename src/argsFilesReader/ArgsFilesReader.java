@@ -75,7 +75,7 @@ public class ArgsFilesReader {
 					
 				} else if (line.startsWith("args=")) {
 					args += " " + line.substring("args=".length());
-					new Wiki2xhtmlArgsParser().readArguments(project, line.substring("args=".length()).split("\\s"), file.getParentFile());
+					new Wiki2xhtmlArgsParser().readArguments(project, line.substring("args=".length()).split("\\s+"), file.getParentFile());
 					System.out.printf("Arguments read: %s\n", args);
 					
 				} else if (line.startsWith("dir=")) {
